@@ -14,11 +14,20 @@ class OficioSearch extends Oficio
     /**
      * {@inheritdoc}
      */
+    public $param;
+    public $from_date;
+    public $to_date;
+    public $ids;
+    public $ano_listagem;
+
     public function rules()
     {
         return [
             [['id', 'contrato_id', 'emprrendimento_id'], 'integer'],
             [['tipo', 'emprrendimento_desc', 'datacadastro', 'data', 'fluxo', 'emissor', 'receptor', 'num_processo', 'num_protocolo', 'Num_sei', 'assunto', 'diretorio', 'status'], 'safe'],
+            [['from_date', 'to_date', 'ano_listagem'], 'safe'],
+            [['ids', ], 'safe'],
+            [['param'], 'string', 'on' => 'MY_SCENARIO'],
         ];
     }
 
@@ -46,9 +55,18 @@ class OficioSearch extends Oficio
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'=> [
+                'defaultOrder' => [
+                    'data' => SORT_DESC
+                ],
+            ],
+            'pagination' => [
+                'pageSize' => 50,
+            ],
         ]);
 
-        $this->load($params);
+        // $this->load($params);
+        (isset($params['OficioSearch'])?$this->load($params):$this->load($params,''));
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
@@ -63,10 +81,11 @@ class OficioSearch extends Oficio
             'emprrendimento_id' => $this->emprrendimento_id,
             'datacadastro' => $this->datacadastro,
             'data' => $this->data,
+            'tipo' => $this->tipo,
+            'status' => $this->status, 
         ]);
 
-        $query->andFilterWhere(['like', 'tipo', $this->tipo])
-            ->andFilterWhere(['like', 'emprrendimento_desc', $this->emprrendimento_desc])
+        $query->andFilterWhere(['like', 'emprrendimento_desc', $this->emprrendimento_desc])
             ->andFilterWhere(['like', 'fluxo', $this->fluxo])
             ->andFilterWhere(['like', 'emissor', $this->emissor])
             ->andFilterWhere(['like', 'receptor', $this->receptor])
@@ -74,8 +93,14 @@ class OficioSearch extends Oficio
             ->andFilterWhere(['like', 'num_protocolo', $this->num_protocolo])
             ->andFilterWhere(['like', 'Num_sei', $this->Num_sei])
             ->andFilterWhere(['like', 'assunto', $this->assunto])
-            ->andFilterWhere(['like', 'diretorio', $this->diretorio])
-            ->andFilterWhere(['like', 'status', $this->status]);
+            ->andFilterWhere(['like', 'diretorio', $this->diretorio]);
+        
+        $query->andFilterWhere(['between', 'data', $this->from_date, $this->to_date]);
+        if ($this->ano_listagem != 'all') {
+            $query->andFilterWhere([
+                'YEAR(data)' => $this->ano_listagem,
+            ]);
+        }
 
         return $dataProvider;
     }

@@ -5,7 +5,8 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
-
+use yii\widgets\Pjax;
+use kartik\date\DatePicker;
 /** @var yii\web\View $this */
 /** @var app\models\OficioSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
@@ -21,6 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Create Oficio', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
+    <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
@@ -46,6 +48,17 @@ $this->params['breadcrumbs'][] = $this->title;
             //'diretorio',
             //'status',
             [
+                'attribute' => 'id',
+                'header' => 'Ver +',
+                'format' => 'raw',
+                'value' => function($data) {
+                    
+                    return $this->render('view', [
+                        'id' => $data->id
+                    ]);
+                }
+            ],
+            [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Oficio $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
@@ -54,5 +67,6 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
 
+    <?php Pjax::end(); ?>
 
 </div>

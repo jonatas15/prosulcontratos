@@ -108,7 +108,7 @@ $this->title = 'PROSUL-DENIT';
                                         3 em andamento <br>
                                         1 concluído
                                     </p>
-                                    <a href="#" class="btn btn-info text-white">Visualizar</a>
+                                    <a href="'.Yii::$app->homeUrl.'contrato/view?id='.$contrato->id.'&abativa=aba_dados" class="btn btn-info text-white">Visualizar</a>
                                 </div>
                                 <div class="card-footer text-muted">
                                     2 dias atrás
@@ -131,7 +131,7 @@ $this->title = 'PROSUL-DENIT';
                                         3 em andamento <br>
                                         1 concluído
                                     </p>
-                                    <a href="#" class="btn btn-info text-white">Visualizar</a>
+                                    <a href="'.Yii::$app->homeUrl.'contrato/view?id='.$contrato->id.'&abativa=aba_oficios" class="btn btn-info text-white">Visualizar</a>
                                 </div>
                                 <div class="card-footer text-muted">
                                     2 dias atrás
@@ -154,7 +154,7 @@ $this->title = 'PROSUL-DENIT';
                                         3 em andamento <br>
                                         1 concluído
                                     </p>
-                                    <a href="#" class="btn btn-info text-white">Visualizar</a>
+                                    <a href="'.Yii::$app->homeUrl.'contrato/view?id='.$contrato->id.'&abativa=aba_ordens" class="btn btn-info text-white">Visualizar</a>
                                 </div>
                                 <div class="card-footer text-muted">
                                     2 dias atrás
@@ -177,7 +177,7 @@ $this->title = 'PROSUL-DENIT';
                                         3 em andamento <br>
                                         1 concluído
                                     </p>
-                                    <a href="#" class="btn btn-info text-white">Visualizar</a>
+                                    <a href="'.Yii::$app->homeUrl.'contrato/view?id='.$contrato->id.'&abativa=aba_licensas" class="btn btn-info text-white">Visualizar</a>
                                 </div>
                                 <div class="card-footer text-muted">
                                     2 dias atrás
@@ -200,7 +200,7 @@ $this->title = 'PROSUL-DENIT';
                                         3 em andamento <br>
                                         1 concluído
                                     </p>
-                                    <a href="#" class="btn btn-info text-white">Visualizar</a>
+                                    <a href="'.Yii::$app->homeUrl.'contrato/view?id='.$contrato->id.'&abativa=aba_produtos" class="btn btn-info text-white">Visualizar</a>
                                 </div>
                                 <div class="card-footer text-muted">
                                     2 dias atrás

@@ -58,9 +58,33 @@ $config = [
                         'language' => 'pt',
                         'version' => '3.1.18'
                     ]
-                ]
+                ],
+                'kartik\form\ActiveFormAsset' => [
+                    'bsDependencyEnabled' => false // do not load bootstrap assets for a specific asset bundle
+                ],
             ]
         ],
+    ],
+    'modules' => [
+        // 'financeiro' => [
+        //     'class' => 'app\modules\financeiro\FinanceiroModule',
+        // ],
+        // 'markdown' => [
+        //     'class' => 'kartik\markdown\Module',
+        //     // the controller action route used for markdown editor preview
+        //     'previewAction' => '/markdown/parse/preview',
+            
+        //     // the list of custom conversion patterns for post processing
+        //     'customConversion' => [
+        //         '<table>' => '<table class="table table-bordered table-striped">'
+        //     ],
+            
+        //     // whether to use PHP SmartyPantsTypographer to process Markdown output
+        //     'smartyPants' => false
+        // ],
+        'gridview' =>  [
+             'class' => '\kartik\grid\Module'
+         ],
     ],
     'params' => $params,
 ];

@@ -32,6 +32,7 @@ use Yii;
  */
 class Oficio extends \yii\db\ActiveRecord
 {
+    // public $ano_listagem;
     /**
      * {@inheritdoc}
      */

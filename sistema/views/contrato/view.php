@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+
 use yii\bootstrap5\Tabs;
 // MAPA início
 use dosamigos\google\maps\LatLng;
@@ -16,6 +17,7 @@ use dosamigos\google\maps\Map;
 use dosamigos\google\maps\services\DirectionsRequest;
 use dosamigos\google\maps\overlays\Polygon;
 use dosamigos\google\maps\layers\BicyclingLayer;
+
 // MAPA fim
 
 /** @var yii\web\View $this */
@@ -41,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <hr>
     
     
-    <?php $detalhamento = '<br><div class="row"><div class="col-md-6">'.DetailView::widget([
+    <?php $detalhamento = '<div class="col-md-6">'.DetailView::widget([
         'model' => $model,
         'attributes' => [
             'id',
@@ -65,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'data_base',
             'vigencia',
         ],
-    ]).'</div></div><br>';  
+    ]).'</div>';  
     
     // Opções do Mapa
 
@@ -166,17 +168,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 30%
             </div>
         </div>
-        <br>
         <?= $map->display(); ?>
     </div>
     <div class="row">
         <div class="clearfix"></div>
-        <br>
-        <div class="progress">
-                <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 10%">
-                    10%
-                </div>
-            </div>
         <br>
         <br>
     </div>
@@ -194,44 +189,122 @@ $this->params['breadcrumbs'][] = $this->title;
             ]);
             $gestaooficios .= '</div>';
             $gestaooficios .= '</div>';
-            ########################## GESTÃO DE OFÍCIOS #############################
-
-
+            ########################## ORDENS DE SERVIÇO #############################
+            $searchModelOrdens = new \app\models\OrdensdeservicoSearch();
+            $dataProviderOrdens = $searchModelOrdens->search(['contrato_id'=>$model->id]);
+            $gestaoordens = '<div class="row">';
+            $gestaoordens .= '<div class="col-md-12">';
+            $gestaoordens .= '<br>';
+            $gestaoordens .= $this->render(Yii::$app->homeUrl.'ordensdeservico/indexcontrato', [
+                'searchModel' => $searchModelOrdens,
+                'dataProvider' => $dataProviderOrdens
+            ]);
+            $gestaoordens .= '</div>';
+            $gestaoordens .= '</div>';
+            ############################# LICENCIAMENTOS ################################
+            $searchModelLicenciamento = new \app\models\LicenciamentoSearch();
+            $dataProviderLicenciamento = $searchModelLicenciamento->search(['contrato_id'=>$model->id]);
+            $gestaolicenciamento = '<div class="row">';
+            $gestaolicenciamento .= '<div class="col-md-12">';
+            $gestaolicenciamento .= '<br>';
+            $gestaolicenciamento .= $this->render(Yii::$app->homeUrl.'licenciamento/indexcontrato', [
+                'searchModel' => $searchModelLicenciamento,
+                'dataProvider' => $dataProviderLicenciamento
+            ]);
+            $gestaolicenciamento .= '</div>';
+            $gestaolicenciamento .= '</div>';
+            ################################ PRODUTOS ###################################
+            $searchModelProduto = new \app\models\ProdutoSearch();
+            $dataProviderProduto = $searchModelProduto->search(['contrato_id'=>$model->id]);
+            $gestaoprodutos = '<div class="row">';
+            $gestaoprodutos .= '<div class="col-md-12">';
+            $gestaoprodutos .= '<br>';
+            $gestaoprodutos .= $this->render(Yii::$app->homeUrl.'produto/indexcontrato', [
+                'searchModel' => $searchModelProduto,
+                'dataProvider' => $dataProviderProduto
+            ]);
+            $gestaoprodutos .= '</div>';
+            $gestaoprodutos .= '</div>';
+            #############################################################################
+            $ativo = $_REQUEST['abativa'];
+            switch ($ativo) {
+                case 'aba_dados':
+                    $aba_dados = true;
+                    $aba_oficios = false;
+                    $aba_ordens = false;
+                    $aba_licensas = false;
+                    $aba_produtos = false;
+                    break;
+                case 'aba_oficios':
+                    $aba_dados = false;
+                    $aba_oficios = true;
+                    $aba_ordens = false;
+                    $aba_licensas = false;
+                    $aba_produtos = false;
+                    break;
+                case 'aba_ordens':
+                    $aba_dados = false;
+                    $aba_oficios = false;
+                    $aba_ordens = true;
+                    $aba_licensas = false;
+                    $aba_produtos = false;
+                    break;
+                case 'aba_licensas':
+                    $aba_dados = false;
+                    $aba_oficios = false;
+                    $aba_ordens = false;
+                    $aba_licensas = true;
+                    $aba_produtos = false;
+                    break;
+                case 'aba_produtos':
+                    $aba_dados = false;
+                    $aba_oficios = false;
+                    $aba_ordens = false;
+                    $aba_licensas = false;
+                    $aba_produtos = true;
+                    break;
+                
+                default:
+                    
+                    break;
+            }
             echo Tabs::widget([
                 'items' => [
                     [
                         'label' => '📄 Dados Contratuais',
-                        'content' => $detalhamento,
+                        'content' => '<div class="row">'.$this->render('update', [
+                            'model' => $model
+                        ]).'</div>',
                         'options' => ['id' => 'aba_dados'],
-                        // 'active' => true
+                        'active' => $aba_dados
                     ],
                     [
                         'label' => '📄 Gestão de Ofícios',
                         'content' => $gestaooficios,
                         'headerOptions' => ['...'],
                         'options' => ['id' => 'aba_oficios'],
-                        'active' => true
+                        'active' => $aba_oficios
                     ],
                     [
                         'label' => '📋 Ordens de Serviço',
-                        'content' => 'Anim pariatur cliche...',
+                        'content' => $gestaoordens,
                         'headerOptions' => ['...'],
                         'options' => ['id' => 'aba_ordens'],
-                        // 'active' => true
+                        'active' => $aba_ordens
                     ],
                     [
                         'label' => '✅ Licenciamentos',
-                        'content' => 'Anim pariatur cliche...',
+                        'content' => $gestaolicenciamento,
                         'headerOptions' => ['...'],
                         'options' => ['id' => 'aba_licensas'],
-                        // 'active' => true
+                        'active' => $aba_licensas
                     ],
                     [
                         'label' => '📦 Produtos',
-                        'content' => 'Anim pariatur cliche...',
+                        'content' => $gestaoprodutos,
                         'headerOptions' => ['...'],
                         'options' => ['id' => 'aba_produtos'],
-                        // 'active' => true
+                        'active' => $aba_produtos
                     ],
                     // [
                     //     'label' => 'Dropdown',

@@ -89,12 +89,24 @@ class ContratoController extends Controller
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
+    
+    public function dataprobanco ($data) {
+        $arr = explode('/', $data);
+        return $arr[2].'-'.$arr[1].'-'.$arr[0];
+    }
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            $model->data_assinatura = $model->data_assinatura ? $this->dataprobanco($model->data_assinatura) : '';
+            $model->data_final = $model->data_final ? $this->dataprobanco($model->data_final) : '';
+            $model->data_base = $model->data_base ? $this->dataprobanco($model->data_base) : '';
+            $model->vigencia = $model->vigencia ? $this->dataprobanco($model->vigencia) : '';
+
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('update', [
