@@ -76,7 +76,7 @@ use miloschuman\highcharts\Highcharts;
 </style>
 <div class="oficio-index">
 
-    <h3><img src="/logo/upload-files-icon.png" class="icone-modulo" width="25" />  Contrato: Gestão de Ofícios</h3>
+    <h3><img src="/web/logo/upload-files-icon.png" class="icone-modulo" width="25" />  Contrato: Gestão de Ofícios</h3>
     <?php /**
     <p>
         <?= Html::a('Create Oficio', ['create'], ['class' => 'btn btn-success']) ?>
@@ -180,11 +180,21 @@ use miloschuman\highcharts\Highcharts;
     ]); ?>
     
     <?php 
+        $req = Yii::$app->request;
+        $request = $req->get('OficioSearch');
+        $pesquisou = $req->getBodyParam('OficioSearch');
+        // echo 'O pre';
+        // echo '<pre>';
+        // print_r($pesquisou);
+        // echo '</pre>';
+        // echo "vai ".$pesquisou->Num_sei;
+        // echo '<br>';
+        // if ($req->isAjax) {
+        //     echo "the request is AJAX";
+        //  }
+        // exit;
 
-
-
-        $s_tipo = $_REQUEST['OficioSearch']['tipo'] ? $_REQUEST['OficioSearch']['tipo'] : '';
-        $s_nsei = $_REQUEST['OficioSearch']['Num_sei'] ? $_REQUEST['OficioSearch']['Num_sei'] : '';
+        $s_nsei = $pesquisou['Num_sei'] ? $pesquisou['Num_sei'] : '';
         $ano_listagem = $_REQUEST['OficioSearch']['ano_listagem'] ? $_REQUEST['OficioSearch']['ano_listagem'] : '';
         $status = $_REQUEST['OficioSearch']['status'] ? $_REQUEST['OficioSearch']['status'] : '';
         # Intervalo de data #######################################################################

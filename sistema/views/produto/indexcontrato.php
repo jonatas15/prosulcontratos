@@ -75,7 +75,7 @@ use kartik\date\DatePicker;
 </style>
 <div class="ordensdeservico-index">
 
-    <h3><img src="/logo/upload-files-icon.png" class="icone-modulo" width="25" /> Contrato: Produtos</h3>
+    <h3><img src="/web/logo/upload-files-icon.png" class="icone-modulo" width="25" /> Contrato: Produtos</h3>
     <div class="clearfix">
         <br />
     </div>

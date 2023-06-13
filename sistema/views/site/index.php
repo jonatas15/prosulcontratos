@@ -5,7 +5,7 @@
 use yii\bootstrap5\Accordion;
 use app\models\Contrato;
 
-$this->title = 'PROSUL-DENIT';
+$this->title = 'PROSUL-DNIT';
 ?>
 <style>
     .card-header {
@@ -101,7 +101,7 @@ $this->title = 'PROSUL-DENIT';
                                 </div>
                                 <div class="card-body">
                                     <h5 class="card-title">
-                                        <img src="/logo/contract-icon.png" class="icone-modulo" />
+                                        <img src="'.Yii::$app->homeUrl.'logo/contract-icon.png" class="icone-modulo" />
                                     </h5>
                                     <p class="card-text">
                                         5 módulos
@@ -126,7 +126,7 @@ $this->title = 'PROSUL-DENIT';
                                 </div>
                                 <div class="card-body">
                                     <h5 class="card-title">
-                                    <img src="/logo/upload-files-icon.png" class="icone-modulo" />
+                                    <img src="'.Yii::$app->homeUrl.'logo/upload-files-icon.png" class="icone-modulo" />
                                     </h5>
                                     <p class="card-text">
                                         155 registros feitos <br>
@@ -149,7 +149,7 @@ $this->title = 'PROSUL-DENIT';
                                 </div>
                                 <div class="card-body">
                                     <h5 class="card-title">
-                                    <img src="/logo/surveys-icon.png" class="icone-modulo" />
+                                    <img src="'.Yii::$app->homeUrl.'logo/surveys-icon.png" class="icone-modulo" />
                                     </h5>
                                     <p class="card-text">
                                         0 registros feitos <br>
@@ -172,7 +172,7 @@ $this->title = 'PROSUL-DENIT';
                                 </div>
                                 <div class="card-body">
                                     <h5 class="card-title">
-                                    <img src="/logo/notary-icon.png" class="icone-modulo" />
+                                    <img src="'.Yii::$app->homeUrl.'logo/notary-icon.png" class="icone-modulo" />
                                     </h5>
                                     <p class="card-text">
                                         0 registros feitos <br>
@@ -195,7 +195,7 @@ $this->title = 'PROSUL-DENIT';
                                 </div>
                                 <div class="card-body">
                                     <h5 class="card-title">
-                                    <img src="/logo/slideshow-icon.png" class="icone-modulo" />
+                                    <img src="'.Yii::$app->homeUrl.'logo/slideshow-icon.png" class="icone-modulo" />
                                     </h5>
                                     <p class="card-text">
                                         0 registros feitos <br>

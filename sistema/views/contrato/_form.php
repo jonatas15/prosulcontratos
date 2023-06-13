@@ -27,7 +27,7 @@ $model->vigencia = $model->vigencia ? date('d/m/Y', strtotime($model->vigencia))
 
     <?php $form = ActiveForm::begin([
         'options' => [],
-        'action' => [Yii::$app->homeUrl.'contrato/update?id='.$model->id]
+        'action' => ['contrato/update?id='.$model->id]
     ]); ?>
     <div class="row">
     <div class="col-md-12">

@@ -92,7 +92,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 <header id="header">
     <?php
     NavBar::begin([
-        'brandLabel' => 'Prosul',
+        'brandLabel' => 'Prosul - DNIT',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-expand-md navbar-dark bg-dark fixed-top',

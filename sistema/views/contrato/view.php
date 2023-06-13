@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
 </style>
 <div class="contrato-view">
 
-    <h3 class="text-uppercase"><img src="/logo/contract-icon.png" class="icone-modulo" width="25" /> <?= Html::encode($this->title) ?></h3>
+    <h3 class="text-uppercase"><img src="/web/logo/contract-icon.png" class="icone-modulo" width="25" /> <?= Html::encode($this->title) ?></h3>
     <hr>
     
     
@@ -195,18 +195,28 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         <!-- <div class="col"></div> -->
         <div class="col">
-            <a target="_blank" class="btn btn-info text-white" style="width:100%;font-weight:bolder" href="https://drive.google.com/drive/u/0/folders/17tibbErWqOxvXvrIPxtuIeiaVP1ta4vQ">
+            <a target="_blank" class="btn btn-primary text-white" style="width:100%;font-weight:bolder" href="http://prosul.bmt.eng.br/#/empreendimentos?contrato_id=1">
+                Empreendimentos
+            </a>
+        </div>
+        <div class="col">
+            <a target="_blank" class="btn btn-primary text-white" style="width:100%;font-weight:bolder" href="https://drive.google.com/drive/u/0/folders/17tibbErWqOxvXvrIPxtuIeiaVP1ta4vQ">
                 Equipe
             </a>
         </div>
         <div class="col">
-            <a target="_blank" class="btn btn-info text-white" style="width:100%;font-weight:bolder" href="https://drive.google.com/drive/u/0/folders/1h9QY9ybCKnFm6uh3P9FAKbReBGlSX3aM">
+            <a target="_blank" class="btn btn-primary text-white" style="width:100%;font-weight:bolder" href="https://drive.google.com/drive/u/0/folders/1h9QY9ybCKnFm6uh3P9FAKbReBGlSX3aM">
                 Cronograma
             </a>
         </div>
         <div class="col">
-            <a target="_blank" class="btn btn-info text-white" style="width:100%;font-weight:bolder" href="https://drive.google.com/drive/u/0/folders/1rTVS4XHhvJFJTRP5fmWe_WkEFdP4dwhS">
+            <a target="_blank" class="btn btn-primary text-white" style="width:100%;font-weight:bolder" href="https://drive.google.com/drive/u/0/folders/1rTVS4XHhvJFJTRP5fmWe_WkEFdP4dwhS">
                 Impacto Contratual
+            </a>
+        </div>
+        <div class="col">
+            <a target="_blank" class="btn btn-primary text-white" style="width:100%;font-weight:bolder" href="https://docs.google.com/spreadsheets/d/1ykXt_3lxOgUdw0l9SLUMDacd-ym1pHmR/edit#gid=574077694">
+                Monitoramento Contratual
             </a>
         </div>
     </div>
@@ -222,7 +232,7 @@ $this->params['breadcrumbs'][] = $this->title;
             $gestaooficios = '<div class="row">';
             $gestaooficios .= '<div class="col-md-12">';
             $gestaooficios .= '<br>';
-            $gestaooficios .= $this->render(Yii::$app->homeUrl.'oficio/indexcontrato', [
+            $gestaooficios .= $this->render('/oficio/indexcontrato', [
                 'searchModel' => $searchModelOficio,
                 'dataProvider' => $dataProviderOficio
             ]);
@@ -234,7 +244,7 @@ $this->params['breadcrumbs'][] = $this->title;
             $gestaoordens = '<div class="row">';
             $gestaoordens .= '<div class="col-md-12">';
             $gestaoordens .= '<br>';
-            $gestaoordens .= $this->render(Yii::$app->homeUrl.'ordensdeservico/indexcontrato', [
+            $gestaoordens .= $this->render('/ordensdeservico/indexcontrato', [
                 'searchModel' => $searchModelOrdens,
                 'dataProvider' => $dataProviderOrdens
             ]);
@@ -246,7 +256,7 @@ $this->params['breadcrumbs'][] = $this->title;
             $gestaolicenciamento = '<div class="row">';
             $gestaolicenciamento .= '<div class="col-md-12">';
             $gestaolicenciamento .= '<br>';
-            $gestaolicenciamento .= $this->render(Yii::$app->homeUrl.'licenciamento/indexcontrato', [
+            $gestaolicenciamento .= $this->render('/licenciamento/indexcontrato', [
                 'searchModel' => $searchModelLicenciamento,
                 'dataProvider' => $dataProviderLicenciamento
             ]);
@@ -258,7 +268,7 @@ $this->params['breadcrumbs'][] = $this->title;
             $gestaoprodutos = '<div class="row">';
             $gestaoprodutos .= '<div class="col-md-12">';
             $gestaoprodutos .= '<br>';
-            $gestaoprodutos .= $this->render(Yii::$app->homeUrl.'produto/indexcontrato', [
+            $gestaoprodutos .= $this->render('/produto/indexcontrato', [
                 'searchModel' => $searchModelProduto,
                 'dataProvider' => $dataProviderProduto
             ]);
