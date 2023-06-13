@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\bootstrap5\Accordion;
 
 use yii\bootstrap5\Tabs;
 // MAPA início
@@ -24,7 +25,7 @@ use dosamigos\google\maps\layers\BicyclingLayer;
 /** @var app\models\Contrato $model */
 
 $this->title = $model->titulo;
-$this->params['breadcrumbs'][] = ['label' => 'Contratos', 'url' => ['index']];
+// $this->params['breadcrumbs'][] = ['label' => 'Contratos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -35,6 +36,10 @@ $this->params['breadcrumbs'][] = $this->title;
     .tab-content {
         border: 1px solid lightgray;
         border-top: 0 !important;
+    }
+    .nav-link.active {
+        background-color: gray !important;
+        color: white !important;
     }
 </style>
 <div class="contrato-view">
@@ -71,7 +76,7 @@ $this->params['breadcrumbs'][] = $this->title;
     
     // Opções do Mapa
 
-    $coord = new LatLng(['lat' => 39.720089311812094, 'lng' => 2.91165944519042]);
+    $coord = new LatLng(['lat' => -27.5969, 'lng' => -48.5495]);
     $map = new Map([
         'center' => $coord,
         'zoom' => 14,
@@ -163,16 +168,50 @@ $this->params['breadcrumbs'][] = $this->title;
     
     ?>
     <div class="row">
-        <div class="progress">
-            <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" style="width: 30%">
-                30%
-            </div>
-        </div>
-        <?= $map->display(); ?>
+        
+        <?php 
+            echo Accordion::widget([
+                'items' => [
+                    [
+                        'label' => '🌐 Ver o Mapa',
+                        'content' => '<div class="progress">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" style="width: 30%">
+                                30%
+                            </div>
+                        </div>'.$map->display(),
+                        // 'contentOptions' => ['class' => 'in']
+                        // 'clientOptions' => ['collapsible' => true, 'active' => false],
+                        'clientOptions' => ['active' => 0]
+                    ]
+                ]
+            ]);
+        ?>
+        <?php //= $map->display(); ?>
     </div>
     <div class="row">
         <div class="clearfix"></div>
         <br>
+    </div>
+    <div class="row">
+        <!-- <div class="col"></div> -->
+        <div class="col">
+            <a target="_blank" class="btn btn-info text-white" style="width:100%;font-weight:bolder" href="https://drive.google.com/drive/u/0/folders/17tibbErWqOxvXvrIPxtuIeiaVP1ta4vQ">
+                Equipe
+            </a>
+        </div>
+        <div class="col">
+            <a target="_blank" class="btn btn-info text-white" style="width:100%;font-weight:bolder" href="https://drive.google.com/drive/u/0/folders/1h9QY9ybCKnFm6uh3P9FAKbReBGlSX3aM">
+                Cronograma
+            </a>
+        </div>
+        <div class="col">
+            <a target="_blank" class="btn btn-info text-white" style="width:100%;font-weight:bolder" href="https://drive.google.com/drive/u/0/folders/1rTVS4XHhvJFJTRP5fmWe_WkEFdP4dwhS">
+                Impacto Contratual
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="clearfix"></div>
         <br>
     </div>
     <div class="row">
@@ -279,7 +318,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'active' => $aba_dados
                     ],
                     [
-                        'label' => '📄 Gestão de Ofícios',
+                        'label' => '📋 Gestão de Ofícios',
                         'content' => $gestaooficios,
                         'headerOptions' => ['...'],
                         'options' => ['id' => 'aba_oficios'],
@@ -293,14 +332,14 @@ $this->params['breadcrumbs'][] = $this->title;
                         'active' => $aba_ordens
                     ],
                     [
-                        'label' => '✅ Licenciamentos',
+                        'label' => '📋 Licenciamentos',
                         'content' => $gestaolicenciamento,
                         'headerOptions' => ['...'],
                         'options' => ['id' => 'aba_licensas'],
                         'active' => $aba_licensas
                     ],
                     [
-                        'label' => '📦 Produtos',
+                        'label' => '📋 Produtos',
                         'content' => $gestaoprodutos,
                         'headerOptions' => ['...'],
                         'options' => ['id' => 'aba_produtos'],
@@ -325,3 +364,10 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
         
 </div>
+<?php 
+$this->registerJs(<<<JS
+    $('#w1-collapse0').collapse("hide");
+JS);
+?>
+
+

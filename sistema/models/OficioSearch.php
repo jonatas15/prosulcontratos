@@ -61,7 +61,7 @@ class OficioSearch extends Oficio
                 ],
             ],
             'pagination' => [
-                'pageSize' => 50,
+                'pageSize' => 500,
             ],
         ]);
 

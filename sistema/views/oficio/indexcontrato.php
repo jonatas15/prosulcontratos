@@ -9,6 +9,7 @@ use yii\widgets\Pjax;
 use yii\widgets\ActiveForm;
 use kartik\date\DatePicker;
 // use dosamigos\datepicker\DatePicker;
+use miloschuman\highcharts\Highcharts;
 
 // use yii\bootstrap5\Modal;
 // Modal::begin([
@@ -75,7 +76,7 @@ use kartik\date\DatePicker;
 </style>
 <div class="oficio-index">
 
-    <h3><img src="/logo/upload-files-icon.png" class="icone-modulo" width="25" />  Contrato: Getão de Ofícios</h3>
+    <h3><img src="/logo/upload-files-icon.png" class="icone-modulo" width="25" />  Contrato: Gestão de Ofícios</h3>
     <?php /**
     <p>
         <?= Html::a('Create Oficio', ['create'], ['class' => 'btn btn-success']) ?>
@@ -256,6 +257,237 @@ use kartik\date\DatePicker;
             'status' => $status,
         ]);
     ?>
+    <div class="row">
+        <div class="col">
+        <?php
+            $resolvidos = Oficio::find()->where([
+                'status' => 'Resolvido'
+            ])->count();
+            $nao_resolvidos = Oficio::find()->where([
+                'status' => 'Não resolvido'
+            ])->count();
+            $informativos = Oficio::find()->where([
+                'status' => 'Informativo'
+            ])->count();
+            $em_andamento = Oficio::find()->where([
+                'status' => 'Em Andamento'
+            ])->count();
+            echo Highcharts::widget([
+                'scripts' => [
+                    'modules/exporting',
+                    'themes/grid-light',
+                ],
+                'options' => [
+                    'chart' => [
+                        'type' => 'pie'
+                    ],
+                    'title' => ['text' => 'Status de Registro'],
+                    'xAxis' => [
+                        'categories' => 'Status de Registro'
+                    ],
+                    'yAxis' => [
+                        'title' => ['text' => 'Status']
+                    ],
+                    // 'legend' => [
+                    //     'layout' => 'vertical',
+                    //     'align' => 'right',
+                    // ],
+                    'series' =>  [
+                        [
+                            'name' => 'Status',
+                            'data' => [
+                                [
+                                    'name' => 'Informativo',
+                                    'y' => $informativos,
+                                    'color' => 'lightgray'
+                                ],
+                                [
+                                    'name' => 'Em andamento',
+                                    'y' => $em_andamento,
+                                    'color' => '#f3f0c6',
+                                ],
+                                [
+                                    'name' => 'Resolvido',
+                                    'y' => $resolvidos,
+                                    'color' => 'lightgreen',
+                                ],
+                                [
+                                    'name' => 'Não resolvido',
+                                    'y' => $nao_resolvidos,
+                                    'color' => 'red',
+                                ],
+                            ],
+                            'showInLegend' => true,
+                            'dataLabels' => [
+                                'enabled' => false,
+                            ],
+                        ],
+                    ],
+                ]
+            ]);
+        ?>
+        </div>
+        <?php /** 
+        <div class="col">
+            <?php
+                $NT = Oficio::find()->where([
+                    'tipo' => 'NT'
+                ])->count();
+                $OfíciosDNIT = Oficio::find()->where([
+                    'tipo' => 'Ofícios DNIT'
+                ])->count();
+                $OfíciosProsul = Oficio::find()->where([
+                    'tipo' => 'Ofícios Prosul'
+                ])->count();
+                $OS = Oficio::find()->where([
+                    'tipo' => 'OS'
+                ])->count();
+                $OSE = Oficio::find()->where([
+                    'tipo' => 'OSE'
+                ])->count();
+                echo Highcharts::widget([
+                    'scripts' => [
+                        'modules/exporting',
+                        'themes/grid-light',
+                    ],
+                    'options' => [
+                        'chart' => [
+                            'type' => 'bar'
+                        ],
+                        'title' => ['text' => 'Tipos de Registro'],
+                        'xAxis' => [
+                            'categories' => [
+                                'NT',
+                                'Ofícios DNIT',
+                                'Ofícios Prosul',
+                                'OS',
+                                'OSE',
+                            ]
+                        ],
+                        'yAxis' => [
+                            'title' => ['text' => 'Tipos']
+                        ],
+                        // 'legend' => [
+                        //     'layout' => 'vertical',
+                        //     'align' => 'right',
+                        // ],
+                        'series' =>  [
+                            [
+                                'name' => 'Tipo',
+                                'data' => [
+                                    [
+                                        'name' => 'NT',
+                                        'y' => $NT,
+                                        'color' => 'cyan',
+                                    ],
+                                    [
+                                        'name' => 'Ofícios DNIT',
+                                        'y' => $OfíciosDNIT,
+                                        'color' => '#40E0D0',
+                                    ],
+                                    [
+                                        'name' => 'Ofícios Prosul',
+                                        'y' => $OfíciosProsul,
+                                        'color' => 'blue',
+                                    ],
+                                    [
+                                        'name' => 'OS',
+                                        'y' => $OS,
+                                        'color' => 'orange',
+                                    ],
+                                    [
+                                        'name' => 'OSE',
+                                        'y' => $OSE,
+                                        'color' => 'red',
+                                    ],
+                                ],
+                                'showInLegend' => false,
+                                'dataLabels' => [
+                                    'enabled' => true,
+                                ],
+                            ],
+                        ],
+                    ]
+                ]);
+            ?>
+        </div>
+        */?>
+        <div class="col-md-8">
+            <?php
+                function retornaserie ($campo, $status, $ano) {
+                    $contagem = Oficio::find()->where([
+                        $campo => $status,
+                        'YEAR(data)' => $ano,
+                    ])->count();
+                    return $contagem;
+                }
+
+                echo Highcharts::widget([
+                    'scripts' => [
+                        'modules/exporting',
+                        'themes/grid-light',
+                    ],
+                    'options' => [
+                        'chart' => [
+                            'type' => 'column'
+                        ],
+                        'title' => ['text' => 'Todos os Registros'],
+                        'xAxis' => [
+                            'categories' => [
+                                '2023',
+                                '2022',
+                            ]
+                        ],
+                        'yAxis' => [
+                            'title' => ['text' => 'Status']
+                        ],
+                        'series' => [
+                            ['name' => 'Não Resolvido', 'data' => [
+                                retornaserie('status', 'Não Resolvido', '2023'),
+                                retornaserie('status', 'Não Resolvido', '2022'),
+                            ], 'color' => 'red'],
+                            ['name' => 'Resolvido', 'data' => [
+                                retornaserie('status', 'Resolvido', '2023'),
+                                retornaserie('status', 'Resolvido', '2022'),
+                            ], 'color' => 'blue'],
+                            ['name' => 'Informativo', 'data' =>[
+                                retornaserie('status', 'Informativo', '2023'),
+                                retornaserie('status', 'Informativo', '2022'),
+                            ], 'color' => 'cyan'],
+                            ['name' => 'Em Andamento', 'data' => [
+                                retornaserie('status', 'Em Andamento', '2023'),
+                                retornaserie('status', 'Em Andamento', '2022'),
+                            ], 'color' => 'green'],
+                            [
+                                'type' => 'spline',
+                                'name' => 'Emissor: CGMAB',
+                                'data' => [
+                                    retornaserie('emissor', 'CGMAB', '2023'),
+                                    retornaserie('emissor', 'CGMAB', '2022'),
+                                ],
+                                'marker' => [
+                                    'lineWidth' => 2
+                                ],
+                            ],
+                            [
+                                'type' => 'spline',
+                                'name' => 'Emissor: PROSUL',
+                                'data' => [
+                                    retornaserie('emissor', 'PROSUL', '2023'),
+                                    retornaserie('emissor', 'PROSUL', '2022'),
+                                ],
+                                'marker' => [
+                                    'lineWidth' => 2
+                                ],
+                            ],
+                            
+                        ]
+                    ]
+                ]);
+            
+            ?>
+        </div>
+    </div>
     <div class="row" style="background-color: ghostwhite; padding: 10px 5px">
         <!-- <h4 style="padding:5px">Pesquisa:</h4> -->
         <?php $form = ActiveForm::begin(['options' => [
@@ -400,7 +632,15 @@ use kartik\date\DatePicker;
             ],
             'tipo',
             'emissor',
-            'emprrendimento_desc',
+            // 'emprrendimento_desc',
+            [
+                'attribute' => 'emprrendimento_desc',
+                'format' => 'raw',
+                'value' => function($data) {
+                    // return '<a class="btn btn-link" target="_blank" href="/empreendimento">'.$data->emprrendimento_desc.'</a>';
+                    return $data->emprrendimento_desc;
+                }
+            ],
             //'datacadastro',
             // 'data',
             'Num_sei',
@@ -415,13 +655,32 @@ use kartik\date\DatePicker;
             //'num_processo',
             //'num_protocolo',
             //'assunto:ntext',
-            //'diretorio',
-            'status',
+            // 'diretorio',
+            [
+                'attribute' => 'diretorio',
+                'format' => 'raw',
+                'value' => function($data) {
+                    return '<a class="btn btn-link" target="_blank" href="'.$linklink.'">'.$data->diretorio.'</a>';
+                    // return $data->emprrendimento_desc;
+                }
+            ],
+            // 'status',
+            [
+                'attribute' => 'status',
+                'format' => 'raw',
+                'value' => function($data) {
+                    $corstatus = str_replace(' ','-',$data->status);
+                    $corstatus = str_replace('ã','a',$corstatus);
+                    $corstatus = strtolower($corstatus);
+                    return '<b class="cr-'.$corstatus.'-tx">'.$data->status.'</b>';
+                }
+            ],
             [
                 'attribute' => 'id',
                 'header' => 'Detalhes',
                 'headerOptions' => [
-                    'width' => '5%'
+                    'width' => '5%',
+                    'color' => 'red'
                 ],
                 'format' => 'raw',
                 'value' => function($data) {        
@@ -440,6 +699,21 @@ use kartik\date\DatePicker;
                 'value' => function($data) {
                     return '<center>'.
                     $this->render('_docs', [
+                        'id' => $data->id
+                    ])
+                    .'</center>';
+                }
+            ],
+            [
+                'attribute' => 'id',
+                'header' => 'MSG',
+                'headerOptions' => [
+                    'width' => '5%'
+                ],
+                'format' => 'raw',
+                'value' => function($data) {
+                    return '<center>'.
+                    $this->render('mensagens', [
                         'id' => $data->id
                     ])
                     .'</center>';

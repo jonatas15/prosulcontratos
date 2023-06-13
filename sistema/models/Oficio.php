@@ -68,20 +68,20 @@ class Oficio extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'contrato_id' => 'Contrato ID',
-            'emprrendimento_id' => 'Emprrendimento ID',
+            'contrato_id' => 'Contrato',
+            'emprrendimento_id' => 'Empreendimento',
             'tipo' => 'Tipo',
-            'emprrendimento_desc' => 'Emprrendimento Desc',
-            'datacadastro' => 'Datacadastro',
+            'emprrendimento_desc' => 'Emprrendimento',
+            'datacadastro' => 'Data de Cadastro',
             'data' => 'Data',
             'fluxo' => 'Fluxo',
             'emissor' => 'Emissor',
             'receptor' => 'Receptor',
-            'num_processo' => 'Num Processo',
-            'num_protocolo' => 'Num Protocolo',
-            'Num_sei' => 'Num Sei',
+            'num_processo' => 'Nº Processo',
+            'num_protocolo' => 'Nº Protocolo',
+            'Num_sei' => 'Nº SEI',
             'assunto' => 'Assunto',
-            'diretorio' => 'Diretorio',
+            'diretorio' => 'Diretório',
             'status' => 'Status',
         ];
     }

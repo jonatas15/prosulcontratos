@@ -53,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'raw',
                 'value' => function($data) {
                     
-                    return $this->render('view', [
+                    return $this->render('detalhes', [
                         'id' => $data->id
                     ]);
                 }

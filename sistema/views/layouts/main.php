@@ -34,6 +34,57 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         text-align: center !important;
         margin: 0 auto !important;
     }
+    .breadcrumb {
+        background-color: rgba(0, 0, 0, 0.05);
+    }
+    .bradscrumbs {
+        /* color: red !important; */
+        padding: 10px !important;
+        /* border: 1px solid red */
+    }
+    .breadcrumb-item.active {
+        color: var(--bs-breadcrumb-item-active-color);
+        padding: 10px !important;
+        background-color: rgba(0, 0, 0, 0.05);
+        font-weight: 900;
+    }
+    .float-right {
+        float: right !important;
+    }
+    .float-left {
+        float: left !important;
+    }
+    .cr-nao-resolvido-bg {
+        background-color: red !important;
+        color: white !important;
+    }
+    .cr-nao-resolvido-tx {
+        color: red !important;
+    }
+
+    .cr-resolvido-bg {
+        background-color: green !important;
+        color: white !important;
+    }
+    .cr-resolvido-tx {
+        color: green !important;
+    }
+
+    .cr-em-andamento-bg {
+        background-color: blue !important;
+        color: white !important;
+    }
+    .cr-em-andamento-tx {
+        color: orange !important;
+    }
+
+    .cr-informativo-bg {
+        background-color: lightblue !important;
+        color: black !important;
+    }
+    .cr-informativo-tx {
+        color: gray !important;
+    }
 </style>
 <body class="d-flex flex-column h-100">
 <?php $this->beginBody() ?>
@@ -76,7 +127,10 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 <main id="main" class="flex-shrink-0" role="main">
     <div class="container">
         <?php if (!empty($this->params['breadcrumbs'])): ?>
-            <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
+            <?= Breadcrumbs::widget([
+                'itemTemplate' => "<li class='bradscrumbs'><b>{link} <i class='bi bi-chevron-double-right'></i> </b></li>", // template for all links
+                'links' => $this->params['breadcrumbs']
+            ]) ?>
         <?php endif ?>
         <?= Alert::widget() ?>
         <?= $content ?>

@@ -104,14 +104,16 @@ $this->title = 'PROSUL-DENIT';
                                         <img src="/logo/contract-icon.png" class="icone-modulo" />
                                     </h5>
                                     <p class="card-text">
-                                        4 registros feitos <br>
-                                        3 em andamento <br>
-                                        1 concluído
+                                        5 módulos
+                                        <br>
+                                        158 Registros
+                                        <br>
+                                        <br>
                                     </p>
                                     <a href="'.Yii::$app->homeUrl.'contrato/view?id='.$contrato->id.'&abativa=aba_dados" class="btn btn-info text-white">Visualizar</a>
                                 </div>
                                 <div class="card-footer text-muted">
-                                    2 dias atrás
+                                    1 dia atrás
                                 </div>
                             </div>
                         ';
@@ -127,14 +129,14 @@ $this->title = 'PROSUL-DENIT';
                                     <img src="/logo/upload-files-icon.png" class="icone-modulo" />
                                     </h5>
                                     <p class="card-text">
-                                        4 registros feitos <br>
-                                        3 em andamento <br>
-                                        1 concluído
+                                        155 registros feitos <br>
+                                        11 em andamento <br>
+                                        8 concluídos
                                     </p>
                                     <a href="'.Yii::$app->homeUrl.'contrato/view?id='.$contrato->id.'&abativa=aba_oficios" class="btn btn-info text-white">Visualizar</a>
                                 </div>
                                 <div class="card-footer text-muted">
-                                    2 dias atrás
+                                    0 dias atrás
                                 </div>
                             </div>
                         ';
@@ -150,9 +152,9 @@ $this->title = 'PROSUL-DENIT';
                                     <img src="/logo/surveys-icon.png" class="icone-modulo" />
                                     </h5>
                                     <p class="card-text">
-                                        4 registros feitos <br>
-                                        3 em andamento <br>
-                                        1 concluído
+                                        0 registros feitos <br>
+                                        0 em andamento <br>
+                                        0 concluído
                                     </p>
                                     <a href="'.Yii::$app->homeUrl.'contrato/view?id='.$contrato->id.'&abativa=aba_ordens" class="btn btn-info text-white">Visualizar</a>
                                 </div>
@@ -173,9 +175,9 @@ $this->title = 'PROSUL-DENIT';
                                     <img src="/logo/notary-icon.png" class="icone-modulo" />
                                     </h5>
                                     <p class="card-text">
-                                        4 registros feitos <br>
-                                        3 em andamento <br>
-                                        1 concluído
+                                        0 registros feitos <br>
+                                        0 em andamento <br>
+                                        0 concluído
                                     </p>
                                     <a href="'.Yii::$app->homeUrl.'contrato/view?id='.$contrato->id.'&abativa=aba_licensas" class="btn btn-info text-white">Visualizar</a>
                                 </div>
@@ -196,9 +198,9 @@ $this->title = 'PROSUL-DENIT';
                                     <img src="/logo/slideshow-icon.png" class="icone-modulo" />
                                     </h5>
                                     <p class="card-text">
-                                        4 registros feitos <br>
-                                        3 em andamento <br>
-                                        1 concluído
+                                        0 registros feitos <br>
+                                        0 em andamento <br>
+                                        0 concluído
                                     </p>
                                     <a href="'.Yii::$app->homeUrl.'contrato/view?id='.$contrato->id.'&abativa=aba_produtos" class="btn btn-info text-white">Visualizar</a>
                                 </div>
