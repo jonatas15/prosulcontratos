@@ -268,7 +268,7 @@ use miloschuman\highcharts\Highcharts;
         ]);
     ?>
     <div class="row">
-        <div class="col">
+        <div class="col-2">
         <?php
             $resolvidos = Oficio::find()->where([
                 'status' => 'Resolvido'
@@ -422,12 +422,13 @@ use miloschuman\highcharts\Highcharts;
             ?>
         </div>
         */?>
-        <div class="col-md-8">
+        <div class="col-md-10">
             <?php
-                function retornaserie ($campo, $status, $ano) {
+                function retornaserie ($campo, $status, $ano, $mes) {
                     $contagem = Oficio::find()->where([
                         $campo => $status,
                         'YEAR(data)' => $ano,
+                        'MONTH(data)' => $mes,
                     ])->count();
                     return $contagem;
                 }
@@ -441,11 +442,15 @@ use miloschuman\highcharts\Highcharts;
                         'chart' => [
                             'type' => 'column'
                         ],
-                        'title' => ['text' => 'Todos os Registros'],
+                        'title' => ['text' => 'Todos os Registros (2023)'],
                         'xAxis' => [
                             'categories' => [
-                                '2023',
-                                '2022',
+                                'Janeiro',
+                                'Fevereiro',
+                                'Março',
+                                'Abril',
+                                'Maio',
+                                'Junho',
                             ]
                         ],
                         'yAxis' => [
@@ -453,27 +458,47 @@ use miloschuman\highcharts\Highcharts;
                         ],
                         'series' => [
                             ['name' => 'Não Resolvido', 'data' => [
-                                retornaserie('status', 'Não Resolvido', '2023'),
-                                retornaserie('status', 'Não Resolvido', '2022'),
+                                retornaserie('status', 'Não Resolvido', '2023', '01'),
+                                retornaserie('status', 'Não Resolvido', '2023', '02'),
+                                retornaserie('status', 'Não Resolvido', '2023', '03'),
+                                retornaserie('status', 'Não Resolvido', '2023', '04'),
+                                retornaserie('status', 'Não Resolvido', '2023', '05'),
+                                retornaserie('status', 'Não Resolvido', '2023', '06'),
                             ], 'color' => 'red'],
                             ['name' => 'Resolvido', 'data' => [
-                                retornaserie('status', 'Resolvido', '2023'),
-                                retornaserie('status', 'Resolvido', '2022'),
-                            ], 'color' => 'blue'],
+                                retornaserie('status', 'Resolvido', '2023', '01'),
+                                retornaserie('status', 'Resolvido', '2023', '02'),
+                                retornaserie('status', 'Resolvido', '2023', '03'),
+                                retornaserie('status', 'Resolvido', '2023', '04'),
+                                retornaserie('status', 'Resolvido', '2023', '05'),
+                                retornaserie('status', 'Resolvido', '2023', '06'),
+                            ], 'color' => 'lightgreen'],
                             ['name' => 'Informativo', 'data' =>[
-                                retornaserie('status', 'Informativo', '2023'),
-                                retornaserie('status', 'Informativo', '2022'),
-                            ], 'color' => 'cyan'],
+                                retornaserie('status', 'Informativo', '2023', '01'),
+                                retornaserie('status', 'Informativo', '2023', '02'),
+                                retornaserie('status', 'Informativo', '2023', '03'),
+                                retornaserie('status', 'Informativo', '2023', '04'),
+                                retornaserie('status', 'Informativo', '2023', '05'),
+                                retornaserie('status', 'Informativo', '2023', '06'),
+                            ], 'color' => 'lightgray'],
                             ['name' => 'Em Andamento', 'data' => [
-                                retornaserie('status', 'Em Andamento', '2023'),
-                                retornaserie('status', 'Em Andamento', '2022'),
-                            ], 'color' => 'green'],
+                                retornaserie('status', 'Em Andamento', '2023', '01'),
+                                retornaserie('status', 'Em Andamento', '2023', '02'),
+                                retornaserie('status', 'Em Andamento', '2023', '03'),
+                                retornaserie('status', 'Em Andamento', '2023', '04'),
+                                retornaserie('status', 'Em Andamento', '2023', '05'),
+                                retornaserie('status', 'Em Andamento', '2023', '06'),
+                            ], 'color' => '#f3f0c6'],
                             [
                                 'type' => 'spline',
                                 'name' => 'Emissor: CGMAB',
                                 'data' => [
-                                    retornaserie('emissor', 'CGMAB', '2023'),
-                                    retornaserie('emissor', 'CGMAB', '2022'),
+                                    retornaserie('emissor', 'CGMAB', '2023', '01'),
+                                    retornaserie('emissor', 'CGMAB', '2023', '02'),
+                                    retornaserie('emissor', 'CGMAB', '2023', '03'),
+                                    retornaserie('emissor', 'CGMAB', '2023', '04'),
+                                    retornaserie('emissor', 'CGMAB', '2023', '05'),
+                                    retornaserie('emissor', 'CGMAB', '2023', '06'),
                                 ],
                                 'marker' => [
                                     'lineWidth' => 2
@@ -483,8 +508,12 @@ use miloschuman\highcharts\Highcharts;
                                 'type' => 'spline',
                                 'name' => 'Emissor: PROSUL',
                                 'data' => [
-                                    retornaserie('emissor', 'PROSUL', '2023'),
-                                    retornaserie('emissor', 'PROSUL', '2022'),
+                                    retornaserie('emissor', 'PROSUL', '2023', '01'),
+                                    retornaserie('emissor', 'PROSUL', '2023', '02'),
+                                    retornaserie('emissor', 'PROSUL', '2023', '03'),
+                                    retornaserie('emissor', 'PROSUL', '2023', '04'),
+                                    retornaserie('emissor', 'PROSUL', '2023', '05'),
+                                    retornaserie('emissor', 'PROSUL', '2023', '06'),
                                 ],
                                 'marker' => [
                                     'lineWidth' => 2
