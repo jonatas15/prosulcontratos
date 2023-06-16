@@ -73,6 +73,10 @@ use miloschuman\highcharts\Highcharts;
     .datepicker {
         z-index: 1151 !important;
     }
+    .text-status {
+        color: red !important;
+        text-transform: capitalize !important;
+    }
 </style>
 <div class="oficio-index">
 
@@ -195,6 +199,7 @@ use miloschuman\highcharts\Highcharts;
         // exit;
 
         $s_nsei = $pesquisou['Num_sei'] ? $pesquisou['Num_sei'] : '';
+        $s_tipo = $pesquisou['tipo'] ? $pesquisou['tipo'] : '';
         $ano_listagem = $_REQUEST['OficioSearch']['ano_listagem'] ? $_REQUEST['OficioSearch']['ano_listagem'] : '';
         $status = $_REQUEST['OficioSearch']['status'] ? $_REQUEST['OficioSearch']['status'] : '';
         # Intervalo de data #######################################################################
@@ -268,75 +273,6 @@ use miloschuman\highcharts\Highcharts;
         ]);
     ?>
     <div class="row">
-        <div class="col-2">
-        <?php
-            $resolvidos = Oficio::find()->where([
-                'status' => 'Resolvido'
-            ])->count();
-            $nao_resolvidos = Oficio::find()->where([
-                'status' => 'Não resolvido'
-            ])->count();
-            $informativos = Oficio::find()->where([
-                'status' => 'Informativo'
-            ])->count();
-            $em_andamento = Oficio::find()->where([
-                'status' => 'Em Andamento'
-            ])->count();
-            echo Highcharts::widget([
-                'scripts' => [
-                    'modules/exporting',
-                    'themes/grid-light',
-                ],
-                'options' => [
-                    'chart' => [
-                        'type' => 'pie'
-                    ],
-                    'title' => ['text' => 'Status de Registro'],
-                    'xAxis' => [
-                        'categories' => 'Status de Registro'
-                    ],
-                    'yAxis' => [
-                        'title' => ['text' => 'Status']
-                    ],
-                    // 'legend' => [
-                    //     'layout' => 'vertical',
-                    //     'align' => 'right',
-                    // ],
-                    'series' =>  [
-                        [
-                            'name' => 'Status',
-                            'data' => [
-                                [
-                                    'name' => 'Informativo',
-                                    'y' => $informativos,
-                                    'color' => 'lightgray'
-                                ],
-                                [
-                                    'name' => 'Em andamento',
-                                    'y' => $em_andamento,
-                                    'color' => '#f3f0c6',
-                                ],
-                                [
-                                    'name' => 'Resolvido',
-                                    'y' => $resolvidos,
-                                    'color' => 'lightgreen',
-                                ],
-                                [
-                                    'name' => 'Não resolvido',
-                                    'y' => $nao_resolvidos,
-                                    'color' => 'red',
-                                ],
-                            ],
-                            'showInLegend' => true,
-                            'dataLabels' => [
-                                'enabled' => false,
-                            ],
-                        ],
-                    ],
-                ]
-            ]);
-        ?>
-        </div>
         <?php /** 
         <div class="col">
             <?php
@@ -422,13 +358,20 @@ use miloschuman\highcharts\Highcharts;
             ?>
         </div>
         */?>
-        <div class="col-md-10">
+        <div class="col">
             <?php
                 function retornaserie ($campo, $status, $ano, $mes) {
                     $contagem = Oficio::find()->where([
                         $campo => $status,
                         'YEAR(data)' => $ano,
                         'MONTH(data)' => $mes,
+                    ])->count();
+                    return $contagem;
+                }
+                function retornatipo ($campo, $status, $tipo) {
+                    $contagem = Oficio::find()->where([
+                        $campo => $status,
+                        'tipo' => $tipo
                     ])->count();
                     return $contagem;
                 }
@@ -527,6 +470,137 @@ use miloschuman\highcharts\Highcharts;
             ?>
         </div>
     </div>
+    <div class="row">
+        <hr>
+    </div>
+    <div class="row">
+        <div class="col">
+            <?php
+                $resolvidos = Oficio::find()->where([
+                    'status' => 'Resolvido'
+                ])->count();
+                $nao_resolvidos = Oficio::find()->where([
+                    'status' => 'Não resolvido'
+                ])->count();
+                $informativos = Oficio::find()->where([
+                    'status' => 'Informativo'
+                ])->count();
+                $em_andamento = Oficio::find()->where([
+                    'status' => 'Em Andamento'
+                ])->count();
+                echo Highcharts::widget([
+                    'scripts' => [
+                        'modules/exporting',
+                        'themes/grid-light',
+                    ],
+                    'options' => [
+                        'chart' => [
+                            'type' => 'pie'
+                        ],
+                        'title' => ['text' => 'Status (Todos os registros)'],
+                        'yAxis' => [
+                            'title' => ['text' => 'Status']
+                        ],
+                        // 'legend' => [
+                        //     'layout' => 'vertical',
+                        //     'align' => 'right',
+                        // ],
+                        'series' =>  [
+                            [
+                                'name' => 'Status',
+                                'data' => [
+                                    [
+                                        'name' => 'Informativo',
+                                        'y' => $informativos,
+                                        'color' => 'lightgray'
+                                    ],
+                                    [
+                                        'name' => 'Em andamento',
+                                        'y' => $em_andamento,
+                                        'color' => '#f3f0c6',
+                                    ],
+                                    [
+                                        'name' => 'Resolvido',
+                                        'y' => $resolvidos,
+                                        'color' => 'lightgreen',
+                                    ],
+                                    [
+                                        'name' => 'Não resolvido',
+                                        'y' => $nao_resolvidos,
+                                        'color' => 'red',
+                                    ],
+                                ],
+                                'showInLegend' => true,
+                                'dataLabels' => [
+                                    'enabled' => false,
+                                ],
+                            ],
+                        ],
+                    ]
+                ]);
+            ?>
+        </div>
+        <?php $tipos = ['NT', 'Ofícios DNIT', 'Ofícios Prosul', 'OS', 'OSE']; ?>
+        <?php foreach ($tipos as $tipo): ?>
+            <div class="col">
+                <?php 
+                    echo Highcharts::widget([
+                        'scripts' => [
+                            'modules/exporting',
+                            'themes/grid-light',
+                        ],
+                        'options' => [
+                            'chart' => [
+                                'type' => 'pie'
+                            ],
+                            'title' => ['text' => '<label class="text-status">Status: </label>'.$tipo],
+                            'yAxis' => [
+                                'title' => ['text' => 'Status']
+                            ],
+                            // 'legend' => [
+                            //     'layout' => 'vertical',
+                            //     'align' => 'right',
+                            // ],
+                            'series' =>  [
+                                [
+                                    'name' => 'Status',
+                                    'data' => [
+                                        [
+                                            'name' => 'Informativo',
+                                            'y' => retornatipo ('status', 'Informativo', $tipo),
+                                            'color' => 'lightgray'
+                                        ],
+                                        [
+                                            'name' => 'Em andamento',
+                                            'y' => retornatipo ('status', 'Em Andamento', $tipo),
+                                            'color' => '#f3f0c6',
+                                        ],
+                                        [
+                                            'name' => 'Resolvido',
+                                            'y' => retornatipo ('status', 'Resolvido', $tipo),
+                                            'color' => 'lightgreen',
+                                        ],
+                                        [
+                                            'name' => 'Não resolvido',
+                                            'y' => retornatipo ('status', 'Não Resolvido', $tipo),
+                                            'color' => 'red',
+                                        ],
+                                    ],
+                                    'showInLegend' => true,
+                                    'dataLabels' => [
+                                        'enabled' => false,
+                                    ],
+                                ],
+                            ],
+                        ]
+                    ]);
+                ?>
+            </div>
+        <?php endforeach; ?>
+    </div>
+    <div class="row" style="border-top: 1px solid lightgray;background-color: ghostwhite;padding-top: 10px !important;position:relative">
+        <h4 style="text-align:center;padding: 5px">Pesquisa</h4>
+    </div>
     <div class="row" style="background-color: ghostwhite; padding: 10px 5px">
         <!-- <h4 style="padding:5px">Pesquisa:</h4> -->
         <?php $form = ActiveForm::begin(['options' => [
@@ -594,8 +668,16 @@ use miloschuman\highcharts\Highcharts;
                 <?= $form->field($searchModel, 'ano_listagem')->dropDownList([
                     '2023'=>'Ano 2023',
                     '2022'=>'Ano 2022',
-                    '2021'=>'Ano 2021',
-                    '2020'=>'Ano 2020',
+                    'all'=>'Todos os registros',
+                ])->label(false) ?>
+            </div>    
+            <div class="col-md-2">
+                <?= $form->field($searchModel, 'tipo')->dropDownList([
+                    'NT' => 'NT',
+                    'Ofícios DNIT' => 'Ofícios DNIT',
+                    'Ofícios Prosul' => 'Ofícios Prosul',
+                    'OS' => 'OS',
+                    'OSE' => 'OSE',
                     'all'=>'Todos os registros',
                 ])->label(false) ?>
             </div>    
