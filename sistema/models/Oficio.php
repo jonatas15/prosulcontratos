@@ -36,6 +36,8 @@ class Oficio extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+    public $contagem_emp;
+    
     public static function tableName()
     {
         return 'oficio';

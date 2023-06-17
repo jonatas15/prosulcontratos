@@ -19,12 +19,13 @@ class OficioSearch extends Oficio
     public $to_date;
     public $ids;
     public $ano_listagem;
+    public $contagem_emp;
 
     public function rules()
     {
         return [
             [['id', 'contrato_id', 'emprrendimento_id'], 'integer'],
-            [['tipo', 'emprrendimento_desc', 'datacadastro', 'data', 'fluxo', 'emissor', 'receptor', 'num_processo', 'num_protocolo', 'Num_sei', 'assunto', 'diretorio', 'status'], 'safe'],
+            [['tipo', 'emprrendimento_desc', 'datacadastro', 'data', 'fluxo', 'emissor', 'receptor', 'num_processo', 'num_protocolo', 'Num_sei', 'assunto', 'diretorio', 'status', 'contagem_emp'], 'safe'],
             [['from_date', 'to_date', 'ano_listagem'], 'safe'],
             [['ids', ], 'safe'],
             [['param'], 'string', 'on' => 'MY_SCENARIO'],
@@ -81,7 +82,6 @@ class OficioSearch extends Oficio
             'emprrendimento_id' => $this->emprrendimento_id,
             'datacadastro' => $this->datacadastro,
             'data' => $this->data,
-            'tipo' => $this->tipo,
             'status' => $this->status, 
         ]);
 
@@ -99,6 +99,11 @@ class OficioSearch extends Oficio
         if ($this->ano_listagem != 'all') {
             $query->andFilterWhere([
                 'YEAR(data)' => $this->ano_listagem,
+            ]);
+        }
+        if ($this->tipo != 'all') {
+            $query->andFilterWhere([
+                'tipo' => $this->tipo,
             ]);
         }
 

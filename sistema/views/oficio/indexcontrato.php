@@ -11,6 +11,8 @@ use kartik\date\DatePicker;
 // use dosamigos\datepicker\DatePicker;
 use miloschuman\highcharts\Highcharts;
 
+use yii\bootstrap5\Accordion;
+
 // use yii\bootstrap5\Modal;
 // Modal::begin([
 //         'title' => '<h2>Hello world</h2>',
@@ -76,6 +78,9 @@ use miloschuman\highcharts\Highcharts;
     .text-status {
         color: red !important;
         text-transform: capitalize !important;
+    }
+    .input-group-addon {
+        background-color: gainsboro;
     }
 </style>
 <div class="oficio-index">
@@ -158,11 +163,12 @@ use miloschuman\highcharts\Highcharts;
     </div>
     <?php
         ########################################## TIPO ##########################################
-        $search_tipos = Oficio::find()->select('tipo')->groupBy('tipo')->all();
-        $lista_tipos = [];
-        foreach ($search_tipos as $value):
-            $lista_tipos[$value->tipo] = $value->tipo;
-        endforeach;
+        // $search_empreendimentos = Oficio::find()->select('emprrendimento_desc, count(emprrendimento_desc) as contagem_emp')->groupBy('emprrendimento_desc')->all();
+        // $lista_empreendimentos = [];
+        // foreach ($search_empreendimentos as $value):
+        //     $lista_empreendimentos[$value->emprrendimento_desc] = $value->emprrendimento_desc;
+        //     $lista_empreendimentos[$value->emprrendimento_desc.'(count)'] = $value->contagem_emp;
+        // endforeach;
         ######################################### STATUS #########################################
         // $search_status = Oficio::find()->select('status')->groupBy('status')->all();
         // $lista_status = [];
@@ -171,7 +177,7 @@ use miloschuman\highcharts\Highcharts;
         // endforeach;
         ########################################## AVAL ##########################################
         // echo '<pre>';
-        // print_r($lista_status);
+        // print_r($lista_empreendimentos);
         // echo '</pre>';
     ?>
     <?php 
@@ -376,7 +382,7 @@ use miloschuman\highcharts\Highcharts;
                     return $contagem;
                 }
 
-                echo Highcharts::widget([
+                $graf_temporal = Highcharts::widget([
                     'scripts' => [
                         'modules/exporting',
                         'themes/grid-light',
@@ -462,6 +468,21 @@ use miloschuman\highcharts\Highcharts;
                                     'lineWidth' => 2
                                 ],
                             ],
+                            [
+                                'type' => 'spline',
+                                'name' => 'Empreendimento: Administrativo',
+                                'data' => [
+                                    retornaserie('emprrendimento_desc', 'Administrativo', '2023', '01'),
+                                    retornaserie('emprrendimento_desc', 'Administrativo', '2023', '02'),
+                                    retornaserie('emprrendimento_desc', 'Administrativo', '2023', '03'),
+                                    retornaserie('emprrendimento_desc', 'Administrativo', '2023', '04'),
+                                    retornaserie('emprrendimento_desc', 'Administrativo', '2023', '05'),
+                                    retornaserie('emprrendimento_desc', 'Administrativo', '2023', '06'),
+                                ],
+                                'marker' => [
+                                    'lineWidth' => 2
+                                ],
+                            ],
                             
                         ]
                     ]
@@ -476,6 +497,9 @@ use miloschuman\highcharts\Highcharts;
     <div class="row">
         <div class="col">
             <?php
+                $graf_tipos_status = "";
+                $graf_tipos_status .= '<div class="row"><div class="col">';
+
                 $resolvidos = Oficio::find()->where([
                     'status' => 'Resolvido'
                 ])->count();
@@ -488,7 +512,7 @@ use miloschuman\highcharts\Highcharts;
                 $em_andamento = Oficio::find()->where([
                     'status' => 'Em Andamento'
                 ])->count();
-                echo Highcharts::widget([
+                $graf_tipos_status .= Highcharts::widget([
                     'scripts' => [
                         'modules/exporting',
                         'themes/grid-light',
@@ -538,13 +562,15 @@ use miloschuman\highcharts\Highcharts;
                         ],
                     ]
                 ]);
+                $graf_tipos_status .= "</div>";
             ?>
         </div>
         <?php $tipos = ['NT', 'Ofícios DNIT', 'Ofícios Prosul', 'OS', 'OSE']; ?>
         <?php foreach ($tipos as $tipo): ?>
             <div class="col">
-                <?php 
-                    echo Highcharts::widget([
+                <?php
+                    $graf_tipos_status .= "<div class='col'>";
+                    $graf_tipos_status .= Highcharts::widget([
                         'scripts' => [
                             'modules/exporting',
                             'themes/grid-light',
@@ -594,9 +620,32 @@ use miloschuman\highcharts\Highcharts;
                             ],
                         ]
                     ]);
-                ?>
+                    $graf_tipos_status .= "</div>";
+                    ?>
             </div>
-        <?php endforeach; ?>
+            <?php endforeach; ?>
+            <?php $graf_tipos_status .= "</div>"; ?>
+    </div>
+    <div class="row">
+        <?php
+            echo Accordion::widget([
+                'items' => [
+                    [
+                        'label' => '⏳ Gráfico: Linha do Tempo',
+                        'content' => $graf_temporal,
+                        'clientOptions' => ['active' => 0]
+                    ],
+                    [
+                        'label' => '📊 Gráfico: Status',
+                        'content' => $graf_tipos_status,
+                        'clientOptions' => ['active' => 0]
+                    ]
+                ]
+            ]);
+        ?>
+    </div>
+    <div class="row">
+        <br />
     </div>
     <div class="row" style="border-top: 1px solid lightgray;background-color: ghostwhite;padding-top: 10px !important;position:relative">
         <h4 style="text-align:center;padding: 5px">Pesquisa</h4>
@@ -608,12 +657,14 @@ use miloschuman\highcharts\Highcharts;
             'autocomplete'=>"off"  
         ]]); ?>
         <div class="row">
-            <div class="col-md-3">
-                <label class="control-label summary" for="pagina-roa_programa">SEI</label>
-                <?= $form->field($searchModel, 'Num_sei')->textInput(['maxlength' => true])->label(false) ?>
+            <div class="col-md-2">
+                <label class="control-label summary" for="pagina-roa_programa"><b>SEI</b></label>
+                <!-- <br /> -->
+                <?= $form->field($searchModel, 'Num_sei')->textInput(['maxlength' => true, 'placeholder' => 'Nº ou trecho'])->label(false) ?>
             </div>
             <div class="col-md-4">
-                <label class="control-label summary" for="from_date">Por data</label>
+                <label class="control-label summary" for="from_date"><b>Por data</b></label>
+                <!-- <br /> -->
                 <?php
                     $layout3 = '<span class="input-group-addon">De</span>
                     {input1}
@@ -643,24 +694,37 @@ use miloschuman\highcharts\Highcharts;
                     ]);
                 ?>
             </div>
-            <div class="col-md-5">
-                <label class="control-label summary">Últimos dias</label><br>
-                <label for="check-hoje-<?=$tipodepagina?>" style="padding:1%">
-                    <input type="radio" name="OficioSearch[intervalo_data]" value="check-hoje" id="check-hoje-<?=$tipodepagina?>" style="" <?=$radiohoje?>>
-                    Hoje
-                </label>
-                <label for="check-ultimos-dias-<?=$tipodepagina?>" style="padding:1%">
-                    <input type="radio" name="OficioSearch[intervalo_data]" value="check-ultimos-dias" id="check-ultimos-dias-<?=$tipodepagina?>" style="" <?=$radiosete?>>
-                    Últimos 7 dias
-                </label>
-                <label for="check-ultimo-mes-<?=$tipodepagina?>" style="padding:1%">
-                    <input type="radio" name="OficioSearch[intervalo_data]" value="check-ultimo-mes" id="check-ultimo-mes-<?=$tipodepagina?>" style="" <?=$radiotrinta?>>
-                    Últimos 30 dias
-                </label>
-                <label for="check-todos-<?=$tipodepagina?>" style="padding:1%">
-                    <input type="radio" name="OficioSearch[intervalo_data]" value="0" id="check-todos-<?=$tipodepagina?>" style="">
-                    Todos
-                </label>
+            <div class="col-md-6">
+                <div class="row">
+                    <label class="control-label summary"><b>Últimos dias</b></label>
+                    <br>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label for="check-hoje-<?=$tipodepagina?>" style="padding:1%">
+                            <input type="radio" name="OficioSearch[intervalo_data]" value="check-hoje" id="check-hoje-<?=$tipodepagina?>" style="" <?=$radiohoje?>>
+                            Hoje
+                        </label>
+                    </div>
+                    <div class="col">
+                        <label for="check-ultimos-dias-<?=$tipodepagina?>" style="padding:1%">
+                            <input type="radio" name="OficioSearch[intervalo_data]" value="check-ultimos-dias" id="check-ultimos-dias-<?=$tipodepagina?>" style="" <?=$radiosete?>>
+                            Últimos 7 dias
+                        </label>
+                    </div>
+                    <div class="col">
+                        <label for="check-ultimo-mes-<?=$tipodepagina?>" style="padding:1%">
+                            <input type="radio" name="OficioSearch[intervalo_data]" value="check-ultimo-mes" id="check-ultimo-mes-<?=$tipodepagina?>" style="" <?=$radiotrinta?>>
+                            Últimos 30 dias
+                        </label>
+                    </div>
+                    <div class="col">
+                        <label for="check-todos-<?=$tipodepagina?>" style="padding:1%">
+                            <input type="radio" name="OficioSearch[intervalo_data]" value="0" id="check-todos-<?=$tipodepagina?>" style="">
+                            Todos
+                        </label>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -673,15 +737,18 @@ use miloschuman\highcharts\Highcharts;
             </div>    
             <div class="col-md-2">
                 <?= $form->field($searchModel, 'tipo')->dropDownList([
+                    'all'=>'Selecione o Tipo',
                     'NT' => 'NT',
                     'Ofícios DNIT' => 'Ofícios DNIT',
                     'Ofícios Prosul' => 'Ofícios Prosul',
                     'OS' => 'OS',
                     'OSE' => 'OSE',
-                    'all'=>'Todos os registros',
                 ])->label(false) ?>
             </div>    
-            <div class="col-md-8 form-group">
+            <div class="col-md-7 form-group">
+                <label for="">
+                    <b>Status:</b>
+                </label>
                 <?php // = $form->field($searchModel, 'status')->dropDownList([ 'Não Resolvido' => 'Não Resolvido', 'Parcialmente Resolvido' => 'Parcialmente Resolvido', 'Em andamento' => 'Em andamento', 'Resolvido' => 'Resolvido', ], ['prompt' => '']);?>
                 <label for="nao-resolvido-<?=$tipodepagina?>" style="padding:1%">
                     <input type="checkbox" name="OficioSearch[status][1]" value="Informativo" id="nao-resolvido-<?=$id?>" style="" <?=$campo_status_1?>>
@@ -704,7 +771,7 @@ use miloschuman\highcharts\Highcharts;
                     Com CNC
                 </label> -->
             </div>
-            <div class="col-md-2 form-group">
+            <div class="col-md-1 form-group">
                 <img id="loading1" src="<?=Yii::$app->homeUrl?>arquivo/loading_blue.gif" width="40" style="float:right;margin-left: 12px;margin-top: -3px;display:none">
                 <?php             
                     echo Html::submitButton('Pesquisar', [
