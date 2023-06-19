@@ -1,20 +1,26 @@
 <?php
-
-use yii\helpers\Html;
-
-/** @var yii\web\View $this */
-/** @var app\models\Oficio $model */
-
-$this->title = 'Create Oficio';
-$this->params['breadcrumbs'][] = ['label' => 'Oficios', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+    use yii\helpers\Html;
+    use yii\bootstrap5\Modal;
+?>
+<?php
+Modal::begin([
+    'title' => "Novo Ofício",
+    'options' => [
+        'id' => 'cadastrar-novo-oficio',
+        'tabindex' => false,
+    ],
+    'size' => 'modal-xl',
+    'toggleButton' => [
+        'label' => '<i class="bi bi-card-list"></i> Novo Ofício',
+        'class' => 'btn btn-primary text-white  float-right'
+    ],
+]);
 ?>
 <div class="oficio-create">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <?= $this->render('_form', [
         'model' => $model,
+        'action' => '/oficio/create',
+        'contrato_id' => $contrato_id
     ]) ?>
-
 </div>
+<?php Modal::end(); ?>

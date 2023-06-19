@@ -85,7 +85,18 @@ use yii\bootstrap5\Accordion;
 </style>
 <div class="oficio-index">
 
-    <h3><img src="/web/logo/upload-files-icon.png" class="icone-modulo" width="25" />  Contrato: Gestão de Ofícios</h3>
+    <h3><img src="/logo/upload-files-icon.png" class="icone-modulo" width="25" />  Contrato: Gestão de Ofícios</h3>
+    <div class="row">
+        <div class="col-md-12">
+            <?php 
+                $modelnovooficio = new Oficio();
+            ?>
+            <?= $this->render('create', [
+                'model' => $modelnovooficio,
+                'contrato_id' => $contrato_id
+            ]) ?>
+        </div>
+    </div>
     <?php /**
     <p>
         <?= Html::a('Create Oficio', ['create'], ['class' => 'btn btn-success']) ?>
@@ -772,7 +783,7 @@ use yii\bootstrap5\Accordion;
                 </label> -->
             </div>
             <div class="col-md-1 form-group">
-                <img id="loading1" src="<?=Yii::$app->homeUrl?>arquivo/loading_blue.gif" width="40" style="float:right;margin-left: 12px;margin-top: -3px;display:none">
+                <img id="loading1" src="<?=Yii::$app->homeUrl?>arquivos/loading_blue.gif" width="40" style="float:right;margin-left: 12px;margin-top: -3px;display:none">
                 <?php             
                     echo Html::submitButton('Pesquisar', [
                         'class' => 'btn btn-primary',

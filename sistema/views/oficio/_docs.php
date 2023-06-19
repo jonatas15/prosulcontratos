@@ -6,6 +6,7 @@ Modal::begin([
         'label' => '<i class="bi bi-filetype-doc"></i>',
         'class' => 'btn btn-primary'
     ],
+    'size' => 'modal-xl',
     'options' => [
         'tabindex' => "false"
     ]

@@ -47,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
 </style>
 <div class="contrato-view">
 
-    <h3 class="text-uppercase"><img src="/web/logo/contract-icon.png" class="icone-modulo" width="25" /> <?= Html::encode($this->title) ?></h3>
+    <h3 class="text-uppercase"><img src="/logo/contract-icon.png" class="icone-modulo" width="25" /> <?= Html::encode($this->title) ?></h3>
     <hr>
     
     
@@ -237,7 +237,8 @@ $this->params['breadcrumbs'][] = $this->title;
             $gestaooficios .= '<br>';
             $gestaooficios .= $this->render('/oficio/indexcontrato', [
                 'searchModel' => $searchModelOficio,
-                'dataProvider' => $dataProviderOficio
+                'dataProvider' => $dataProviderOficio,
+                'contrato_id' => $model->id
             ]);
             $gestaooficios .= '</div>';
             $gestaooficios .= '</div>';
@@ -249,7 +250,8 @@ $this->params['breadcrumbs'][] = $this->title;
             $gestaoordens .= '<br>';
             $gestaoordens .= $this->render('/ordensdeservico/indexcontrato', [
                 'searchModel' => $searchModelOrdens,
-                'dataProvider' => $dataProviderOrdens
+                'dataProvider' => $dataProviderOrdens,
+                'contrato_id' => $model->id
             ]);
             $gestaoordens .= '</div>';
             $gestaoordens .= '</div>';
@@ -261,7 +263,8 @@ $this->params['breadcrumbs'][] = $this->title;
             $gestaolicenciamento .= '<br>';
             $gestaolicenciamento .= $this->render('/licenciamento/indexcontrato', [
                 'searchModel' => $searchModelLicenciamento,
-                'dataProvider' => $dataProviderLicenciamento
+                'dataProvider' => $dataProviderLicenciamento,
+                'contrato_id' => $model->id
             ]);
             $gestaolicenciamento .= '</div>';
             $gestaolicenciamento .= '</div>';
@@ -273,7 +276,8 @@ $this->params['breadcrumbs'][] = $this->title;
             $gestaoprodutos .= '<br>';
             $gestaoprodutos .= $this->render('/produto/indexcontrato', [
                 'searchModel' => $searchModelProduto,
-                'dataProvider' => $dataProviderProduto
+                'dataProvider' => $dataProviderProduto,
+                'contrato_id' => $model->id
             ]);
             $gestaoprodutos .= '</div>';
             $gestaoprodutos .= '</div>';

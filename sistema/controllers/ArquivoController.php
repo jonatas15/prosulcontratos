@@ -2,16 +2,18 @@
 
 namespace app\controllers;
 
-use app\models\Oficio;
-use app\models\OficioSearch;
+use app\models\Arquivo;
+use app\models\ArquivoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
+use yii\web\UploadedFile;
+
 /**
- * OficioController implements the CRUD actions for Oficio model.
+ * ArquivoController implements the CRUD actions for Arquivo model.
  */
-class OficioController extends Controller
+class ArquivoController extends Controller
 {
     /**
      * @inheritDoc
@@ -32,13 +34,13 @@ class OficioController extends Controller
     }
 
     /**
-     * Lists all Oficio models.
+     * Lists all Arquivo models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new OficioSearch();
+        $searchModel = new ArquivoSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -47,45 +49,38 @@ class OficioController extends Controller
         ]);
     }
 
-    public function actionIndexcontrato()
-    {
-        return $this->render('indexcontrato', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider
-        ]);
-    }
-
     /**
-     * Displays a single Oficio model.
+     * Displays a single Arquivo model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    // public function actionView($id)
-    // {
-    //     return $this->render('view', [
-    //         'model' => $this->findModel($id),
-    //     ]);
-    // }
+    public function actionView($id)
+    {
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
+    }
 
     /**
-     * Creates a new Oficio model.
+     * Creates a new Arquivo model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Oficio();
+        $model = new Arquivo();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
-                $model->data = $this->dataprobanco($model->data);
-                if ($model->save()) {
-                    return $this->redirect([
-                        'update',
-                        'id' => $model->id,
-                        'abativa' => 'arquivos',
-                    ]);
+                $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
+                foreach ($model->imageFiles as $file) {
+                    $arquivo = $this->clean($file->baseName) . '.' . $this->clean($file->extension);
+                    \Yii::$app->db->createCommand("insert into arquivo (tipo, src) VALUES ('$model->tipo', '$arquivo')")->execute(); 
+                }
+                // exit();
+                if ($model->upload()) {
+                    return $this->redirect(['index']);
                 }
             }
         } else {
@@ -98,25 +93,18 @@ class OficioController extends Controller
     }
 
     /**
-     * Updates an existing Oficio model.
+     * Updates an existing Arquivo model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function dataprobanco ($data) {
-        $arr = explode('/', $data);
-        return $arr[2].'-'.$arr[1].'-'.$arr[0];
-    }
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post())) {
-
-            if ($model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
+        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
@@ -125,7 +113,7 @@ class OficioController extends Controller
     }
 
     /**
-     * Deletes an existing Oficio model.
+     * Deletes an existing Arquivo model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -139,18 +127,25 @@ class OficioController extends Controller
     }
 
     /**
-     * Finds the Oficio model based on its primary key value.
+     * Finds the Arquivo model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Oficio the loaded model
+     * @return Arquivo the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function findModel($id)
+    protected function findModel($id)
     {
-        if (($model = Oficio::findOne(['id' => $id])) !== null) {
+        if (($model = Arquivo::findOne(['id' => $id])) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+    protected function clean($string) {
+        $string = str_replace(' ', '_', $string); // Replaces all spaces with hyphens.
+        $string = preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
+        $string = preg_replace('/-+/', '_', $string); // Replaces multiple hyphens with single one.
+        $string = strtolower($string);
+        return $string;
+     }
 }
