@@ -2,46 +2,55 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\widgets\FileInput;
 
 /** @var yii\web\View $this */
 /** @var app\models\Arquivo $model */
 /** @var yii\widgets\ActiveForm $form */
+
+\Yii::$app->language ="pt-BR";
+
 ?>
 
 <div class="arquivo-form">
 
     <?php $form = ActiveForm::begin([
+        'action' => '/arquivo/create',
         'options' => [
             'enctype' => 'multipart/form-data'
         ]
     ]); ?>
-
-    <?= $form->field($model, 'tipo')->dropDownList([ 'imagem' => 'Imagem', 'logo' => 'Logo', 'video' => 'Video', 'documento' => 'Documento', 'planilia' => 'Planilia', 'outros' => 'Outros', ], ['prompt' => '']) ?>
-
-    <?php //= $form->field($model, 'datacadastro')->textInput() ?>
-
-    <?= $form->field($model, 'src')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'contrato_id')->textInput() ?>
-
-    <?= $form->field($model, 'oficio_id')->textInput() ?>
-
-    <?= $form->field($model, 'ordensdeservico_id')->textInput() ?>
-
-    <?= $form->field($model, 'empreendimento_id')->textInput() ?>
-
-    <?= $form->field($model, 'produto_id')->textInput() ?>
-
-    <?= $form->field($model, 'licenciamento_id')->textInput() ?>
-
-    <?= $form->field($model, 'pasta')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'ref')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'imageFiles[]')->fileInput(['multiple' => true, 'accept' => 'image/*']) ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+    <div class="row">
+        <div class="col-md-6">
+            <?= $form->field($model, 'tipo')->dropDownList([ 'imagem' => 'Imagem', 'logo' => 'Logo', 'video' => 'Video', 'documento' => 'Documento', 'planilia' => 'Planilia', 'outros' => 'Outros', ], ['prompt' => 'Selecione']) ?>
+            <?= $form->field($model, 'src')->hiddenInput(['value' => 'arquivos'])->label(false) ?>
+            <?= $form->field($model, 'contrato_id')->hiddenInput(['value' => $contrato_id])->label(false) ?>
+            <?= $form->field($model, 'oficio_id')->hiddenInput(['value' => $oficio_id])->label(false) ?>
+            <?= $form->field($model, 'ordensdeservico_id')->hiddenInput(['value' => $ordensdeservico_id])->label(false) ?>
+            <?= $form->field($model, 'empreendimento_id')->hiddenInput(['value' => $empreendimento_id])->label(false) ?>
+            <?= $form->field($model, 'produto_id')->hiddenInput(['value' => $produto_id])->label(false) ?>
+            <?= $form->field($model, 'licenciamento_id')->hiddenInput(['value' => $licenciamento_id])->label(false) ?>
+        </div>
+        <div class="col-md-6"><?= $form->field($model, 'pasta')->textInput(['maxlength' => true]) ?></div>
+        <div class="col-md-12"><?= $form->field($model, 'ref')->textInput(['maxlength' => true]) ?></div>
+        <div class="col-md-12">
+            <?php
+                echo $form->field($model, 'imageFiles[]')->widget(FileInput::classname(), [
+                    'language' => 'pt-BR',
+                    'options' => [
+                        'multiple' => true
+                    ],
+                    'pluginOptions' => [
+                        'previewFileType' => 'any',
+                    ]
+                ])->label("Subir Arquivos");
+            ?>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group float-right">
+                <?= Html::submitButton('Salvar', ['class' => 'btn btn-success float-right']) ?>
+            </div>
+        </div>
     </div>
 
     <?php ActiveForm::end(); ?>

@@ -12,9 +12,20 @@ Modal::begin([
     ]
 ]);
 
-echo 'Aguardando Registros';
-echo '<br>';
-echo '<br>';
-echo '<i class="fas fa-cog fa-spin fa-5x"></i>';
+$searchModelArquivo = new \app\models\ArquivoSearch();
+$dataProviderArquivo = $searchModelArquivo->search(['oficio_id'=>$oficio_id]);
+$gestaoarquivos  = '<div class="row">';
+$gestaoarquivos .= '<div class="col-md-12">';
+$gestaoarquivos .= '<br>';
+$gestaoarquivos .= $this->render('/arquivo/index', [
+    'searchModel' => $searchModelArquivo,
+    'dataProvider' => $dataProviderArquivo,
+    'oficio_id' => $oficio_id,
+    'funcionalidades' => false
+]);
+$gestaoarquivos .= '</div>';
+$gestaoarquivos .= '</div>';
+
+echo $gestaoarquivos;
 
 Modal::end();

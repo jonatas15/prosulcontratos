@@ -2,20 +2,34 @@
 
 use yii\helpers\Html;
 use yii\bootstrap5\Tabs;
-
-########################## GESTÃO DE ARQUIVOS #############################
+?>
+<style>
+    .nav-link.active {
+        background-color: gray !important;
+        color: white !important;
+    }
+</style>
+<?php
+############################### GESTÃO DE ARQUIVOS #############################
+/**
+    Nota: temos que criar uma modal pro upload de multiplos arquivos
+    que cria multiplos registros
+*/
+############################### GESTÃO DE ARQUIVOS #############################
 $searchModelArquivo = new \app\models\ArquivoSearch();
 $dataProviderArquivo = $searchModelArquivo->search(['oficio_id'=>$model->id]);
-$gestaoarquivos = '<div class="row">';
+$gestaoarquivos  = '<div class="row">';
 $gestaoarquivos .= '<div class="col-md-12">';
 $gestaoarquivos .= '<br>';
 $gestaoarquivos .= $this->render('/arquivo/index', [
     'searchModel' => $searchModelArquivo,
     'dataProvider' => $dataProviderArquivo,
-    'oficio_id' => $model->id
+    'oficio_id' => $model->id,
+    'funcionalidades' => true
 ]);
 $gestaoarquivos .= '</div>';
 $gestaoarquivos .= '</div>';
+############################### GESTÃO DE GUIAS ################################
 $aba_dados = false;
 $aba_arquivos = false;
 $ativo = $_REQUEST['abativa'];

@@ -90,15 +90,19 @@ Modal::begin([
     ],
 ]);
 ?>
-<div class="row"><hr></div>
-<div class="row">
-    <div class="progress">
-        <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 10%">
-            10%
+<div class="row mb-100">
+    <div class="col">
+
+        <strong>Em construção</strong>
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%">
+                25%
+            </div>
         </div>
+        <br>
+        <br>
+        <br>
     </div>
-    <br>
-    <br>
 </div>
 <div class="row">
     <div class="col-md-4">

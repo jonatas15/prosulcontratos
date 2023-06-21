@@ -229,7 +229,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="row">
         <?php 
-            ########################## GESTÃO DE OFÍCIOS #############################
+            ############################ GESTÃO DE OFÍCIOS ###############################
             $searchModelOficio = new \app\models\OficioSearch();
             $dataProviderOficio = $searchModelOficio->search(['contrato_id'=>$model->id]);
             $gestaooficios = '<div class="row">';
@@ -242,7 +242,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ]);
             $gestaooficios .= '</div>';
             $gestaooficios .= '</div>';
-            ########################## ORDENS DE SERVIÇO #############################
+            ############################# ORDENS DE SERVIÇO #############################
             $searchModelOrdens = new \app\models\OrdensdeservicoSearch();
             $dataProviderOrdens = $searchModelOrdens->search(['contrato_id'=>$model->id]);
             $gestaoordens = '<div class="row">';

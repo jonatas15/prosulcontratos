@@ -897,10 +897,24 @@ use yii\bootstrap5\Accordion;
                 'format' => 'raw',
                 'value' => function($data) {
                     return '<center>'.
-                    $this->render('_docs', [
-                        'id' => $data->id
-                    ])
-                    .'</center>';
+                    // $this->render('_docs', [
+                    //     'oficio_id' => $data->id
+                    //     ])
+                    // }
+                    "<a class='btn btn-primary' href='/oficio/update?id=$data->id&abativa=arquivos' target=''>
+                        <i class='bi bi-filetype-doc'></i>
+                    </a>".
+                    '</center>';
+                }
+            ],
+            [
+                'header' => 'Editar',
+                'format' => 'raw',
+                'headerOptions' => [
+                    'width' => '5%'
+                ],
+                'value' => function($data) {
+                    return '<a href="/oficio/update?id='.$data->id.'" class="btn btn-primary"><i class="bi bi-pencil"></i></a>';
                 }
             ],
             [
@@ -918,15 +932,7 @@ use yii\bootstrap5\Accordion;
                     .'</center>';
                 }
             ],
-            [
-                'header' => 'Oper.',
-                'headerOptions' => [
-                    'width' => '5%'
-                ],
-                'value' => function($data) {
-                    return 'Em @Dev';
-                }
-            ]
+            
             // [
             //     'class' => ActionColumn::className(),
             //     'urlCreator' => function ($action, Oficio $model, $key, $index, $column) {

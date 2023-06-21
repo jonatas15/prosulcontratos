@@ -76,11 +76,13 @@ class ArquivoController extends Controller
                 $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
                 foreach ($model->imageFiles as $file) {
                     $arquivo = $this->clean($file->baseName) . '.' . $this->clean($file->extension);
-                    \Yii::$app->db->createCommand("insert into arquivo (tipo, src) VALUES ('$model->tipo', '$arquivo')")->execute(); 
+                    $campos = "tipo, src, oficio_id, pasta, ref";
+                    $valores = "'$model->tipo', '$arquivo', '$model->oficio_id', '$model->pasta', '$model->ref'";
+                    \Yii::$app->db->createCommand("insert into arquivo ($campos) VALUES ($valores)")->execute(); 
                 }
                 // exit();
                 if ($model->upload()) {
-                    return $this->redirect(['index']);
+                    return $this->redirect(\Yii::$app->request->referrer);
                 }
             }
         } else {

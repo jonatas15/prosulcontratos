@@ -29,14 +29,19 @@ function tacadiv($col, $conteudo) {
         ])->label('Empreendimentos Cadastrados')) ?>
         <?= tacadiv('4', $form->field($model, 'emprrendimento_desc')->textInput(['maxlength' => true])) ?>
         <?php //= tacadiv('6', $form->field($model, 'datacadastro')->textInput()) ?>
-        <?= tacadiv('4', $form->field($model, 'data')->textInput()) ?>
-        <?= tacadiv('4', $form->field($model, 'fluxo')->textInput(['maxlength' => true])) ?>
-        <?= tacadiv('4', $form->field($model, 'emissor')->textInput(['maxlength' => true])) ?>
-        <?= tacadiv('4', $form->field($model, 'receptor')->textInput(['maxlength' => true])) ?>
-        <?= tacadiv('4', $form->field($model, 'num_processo')->textInput(['maxlength' => true])) ?>
-        <?= tacadiv('4', $form->field($model, 'num_protocolo')->textInput(['maxlength' => true])) ?>
-        <?= tacadiv('4', $form->field($model, 'Num_sei')->textInput(['maxlength' => true])) ?>
-        <?= tacadiv('4', $form->field($model, 'status')->dropDownList([
+        <?php 
+            $model->data = ($model->data ? $this->context->dataproview($model->data) : '');
+        ?>
+        <?= tacadiv('3', $form->field($model, 'data')->widget(\yii\widgets\MaskedInput::class, [
+            'mask' => '99/99/9999',
+        ])) ?>
+        <?= tacadiv('3', $form->field($model, 'fluxo')->textInput(['maxlength' => true])) ?>
+        <?= tacadiv('3', $form->field($model, 'emissor')->textInput(['maxlength' => true])) ?>
+        <?= tacadiv('3', $form->field($model, 'receptor')->textInput(['maxlength' => true])) ?>
+        <?= tacadiv('3', $form->field($model, 'num_processo')->textInput(['maxlength' => true])) ?>
+        <?= tacadiv('3', $form->field($model, 'num_protocolo')->textInput(['maxlength' => true])) ?>
+        <?= tacadiv('3', $form->field($model, 'Num_sei')->textInput(['maxlength' => true])) ?>
+        <?= tacadiv('3', $form->field($model, 'status')->dropDownList([
             'Informativo' => 'Informativo',
             'Em Andamento' => 'Em Andamento',
             'Resolvido' => 'Resolvido',
@@ -46,7 +51,12 @@ function tacadiv($col, $conteudo) {
         <?= tacadiv('12', $form->field($model, 'diretorio')->textInput(['maxlength' => true])) ?>
         <div class="col-md-12">
             <div class="form-group">
-                <?= Html::submitButton('Salvar', ['class' => 'btn btn-success']) ?>
+                <?= Html::submitButton('Salvar', [
+                    'class' => 'btn btn-success float-right',
+                    'style' => [
+                        'width' => '200px'
+                    ]
+                ]) ?>
             </div>
         </div>
 

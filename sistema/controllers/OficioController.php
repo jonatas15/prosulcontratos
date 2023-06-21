@@ -108,14 +108,27 @@ class OficioController extends Controller
         $arr = explode('/', $data);
         return $arr[2].'-'.$arr[1].'-'.$arr[0];
     }
+    public function dataproview ($data) {
+        $arr = explode('-', $data);
+        return $arr[2].'-'.$arr[1].'-'.$arr[0];
+    }
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
+        
         if ($this->request->isPost && $model->load($this->request->post())) {
-
+            
+            $model->data = $this->dataprobanco($model->data);
             if ($model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                // return $this->redirect(Yii::$app->request->referrer);
+                if ($model->save()) {
+                    return $this->redirect([
+                        'update',
+                        'id' => $model->id,
+                        'abativa' => 'arquivos',
+                    ]);
+                }
             }
         }
 
