@@ -13,6 +13,13 @@ use yii\bootstrap5\Accordion;
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 // $this->params['breadcrumbs'][] = $this->title;
+/**
+ * Time Line de registro e edição nas mensagens
+ * Colocar relação com outros ofícios
+ * Aviso por email () 
+ * 
+ * Sistema Ofícios puxar tabela do Drive - registrar a fonte (pelo sistema ou pelo drive)
+ */
 ?>
 <div class="arquivo-index">
 
@@ -65,7 +72,7 @@ use yii\bootstrap5\Accordion;
             foreach ($arquivos_na_pasta as $arq) {
                 if ($arq->tipo == 'imagem') {
                     $item_content .= "<div class='col-md-4'>";
-                    $item_content .= "<a href='/arquivos/$arq->src' target='_blank'>".Html::img("/arquivos/$arq->src", [
+                    $item_content .= "<a href='".Yii::$app->homeUrl."arquivos/$arq->src' target='_blank'>".Html::img(Yii::$app->homeUrl."arquivos/$arq->src", [
                         'style' => [
                             'width' => '100%',
                             'padding-bottom' => '5%'
@@ -76,7 +83,7 @@ use yii\bootstrap5\Accordion;
                 } else {
                     $item_content .= "<div class='col-md-4' style='text-align: center;padding: 3%'>";
                     $item_content .= Html::a("<h1><i class=\"bi bi-filetype-doc\"></i></h1>Ver documento:<br>".mb_strimwidth($arq->src, 0, 25, "..."), [
-                        "/arquivos/$arq->src"], 
+                        "arquivos/$arq->src"], 
                     [
                         'target' => '_blank',
                         'class' => 'btn btn-primary'

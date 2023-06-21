@@ -15,7 +15,7 @@ use kartik\widgets\FileInput;
 <div class="arquivo-form">
 
     <?php $form = ActiveForm::begin([
-        'action' => '/arquivo/create',
+        'action' => Yii::$app->homeUrl.'arquivo/create',
         'options' => [
             'enctype' => 'multipart/form-data'
         ]

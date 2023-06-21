@@ -111,7 +111,7 @@ Modal::begin([
                 <span style="z-index: 100000 !important;" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success fs-7">
                     o
                 </span>
-                <img class="avataruser" src="/usuarios/userpng.png" alt="Avatar">
+                <img class="avataruser" src="<?=Yii::$app->homeUrl?>usuarios/userpng.png" alt="Avatar">
             </div>
             <div class="col-md-8">
                 <label class="nomegestor" for="">
@@ -124,7 +124,7 @@ Modal::begin([
                 <span style="z-index: 100000 !important;" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger fs-7">
                     o
                 </span>
-                <img class="avataruser" src="/usuarios/bandmember.jpg" alt="Avatar">
+                <img class="avataruser" src="<?=Yii::$app->homeUrl?>usuarios/bandmember.jpg" alt="Avatar">
             </div>
             <div class="col-md-8">
                 <label class="nomegestor" for="">Gestor</label>
@@ -132,7 +132,7 @@ Modal::begin([
         </div>
         <div class="row" style="padding: 10px;">
             <div class="col-md-4">
-                <img class="avataruser" src="/usuarios/userpng.png" alt="Avatar">
+                <img class="avataruser" src="<?=Yii::$app->homeUrl?>usuarios/userpng.png" alt="Avatar">
             </div>
             <div class="col-md-8">
                 <label class="nomegestor" for="">Fiscal</label>
@@ -141,20 +141,20 @@ Modal::begin([
     </div>
     <div class="col-md-8">
         <div class="container-chat">
-        <img src="/usuarios/bandmember.jpg" alt="Avatar">
-        <p>Hello. How are you today?</p>
+        <img src="<?=Yii::$app->homeUrl?>usuarios/bandmember.jpg" alt="Avatar">
+        <p>Novo Documento Enviado</p>
         <span class="time-right">11:00</span>
         </div>
 
         <div class="container-chat darker">
-        <img src="/usuarios/userpng.png" alt="Avatar" class="right">
-        <p>Hey! I'm fine. Thanks for asking!</p>
+        <img src="<?=Yii::$app->homeUrl?>usuarios/userpng.png" alt="Avatar" class="right">
+        <p>Empreendimento finalizado</p>
         <span class="time-left">11:01</span>
         </div>
 
         <div class="container-chat">
-        <img src="/usuarios/bandmember.jpg" alt="Avatar">
-        <p>Sweet! So, what do you wanna do today?</p>
+        <img src="<?=Yii::$app->homeUrl?>usuarios/bandmember.jpg" alt="Avatar">
+        <p>Conferir planilias</p>
         <span class="time-right">11:02</span>
         </div>
 

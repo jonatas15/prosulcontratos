@@ -65,7 +65,7 @@ $this->params['breadcrumbs'][] = 'Atualizar '.$model->tipo . '- ' . $model->id;
                 'label' => '📋 Ofício',
                 'content' => '<div class="row">'.$this->render('_form', [
                     'model' => $model,
-                    'action' => 'update?id='.$model->id
+                    'action' => 'oficio/update?id='.$model->id //A Yii->homeUrl fica na _form
                 ]).'</div>',
                 'options' => ['id' => 'aba_dados'],
                 'active' => $aba_dados

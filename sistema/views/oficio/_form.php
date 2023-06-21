@@ -18,7 +18,7 @@ function tacadiv($col, $conteudo) {
 <div class="oficio-form">
 
     <?php $form = ActiveForm::begin([
-        'action' => $action
+        'action' => Yii::$app->homeUrl.$action
     ]); ?>
 
     <?= $form->field($model, 'contrato_id')->hiddenInput(['value' => $contrato_id])->label(false) ?>

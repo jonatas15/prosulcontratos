@@ -73,7 +73,7 @@ class Oficio extends \yii\db\ActiveRecord
             'contrato_id' => 'Contrato',
             'emprrendimento_id' => 'Empreendimento',
             'tipo' => 'Tipo',
-            'emprrendimento_desc' => 'Emprrendimento',
+            'emprrendimento_desc' => 'Empreendimento',
             'datacadastro' => 'Data de Cadastro',
             'data' => 'Data',
             'fluxo' => 'Fluxo',

@@ -2,6 +2,7 @@
 
 use app\models\Oficio;
 use yii\helpers\Html;
+use yii\web\JsExpression;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
@@ -580,6 +581,12 @@ use yii\bootstrap5\Accordion;
         <?php foreach ($tipos as $tipo): ?>
             <div class="col">
                 <?php
+                    $tipo_titulo = $tipo;
+                    switch ($tipo) {
+                        case 'NT': $tipo_titulo = "Notas Técnicas"; break;
+                        case 'OS': $tipo_titulo = "Ordens de Serviço"; break;
+                        case 'OSE': $tipo_titulo = "Ordens de Serviço Específicas"; break;
+                    }
                     $graf_tipos_status .= "<div class='col'>";
                     $graf_tipos_status .= Highcharts::widget([
                         'scripts' => [
@@ -590,27 +597,33 @@ use yii\bootstrap5\Accordion;
                             'chart' => [
                                 'type' => 'pie'
                             ],
-                            'title' => ['text' => '<label class="text-status">Status: </label>'.$tipo],
+                            'title' => ['text' => $tipo_titulo],
                             'yAxis' => [
                                 'title' => ['text' => 'Status']
                             ],
-                            // 'legend' => [
-                            //     'layout' => 'vertical',
-                            //     'align' => 'right',
-                            // ],
                             'series' =>  [
                                 [
                                     'name' => 'Status',
+                                    "cursor" => "pointer",
+                                    "point" => [
+                                        "events" => [
+                                            "click" => new JsExpression('function(){
+                                                console.log(this.options.url)
+                                            }')
+                                        ],
+                                    ],
                                     'data' => [
                                         [
                                             'name' => 'Informativo',
                                             'y' => retornatipo ('status', 'Informativo', $tipo),
-                                            'color' => 'lightgray'
+                                            'color' => 'lightgray',
+                                            'url' => 'google.com.br'
                                         ],
                                         [
                                             'name' => 'Em andamento',
                                             'y' => retornatipo ('status', 'Em Andamento', $tipo),
                                             'color' => '#f3f0c6',
+                                            'url' => 'yahoo.com.br'
                                         ],
                                         [
                                             'name' => 'Resolvido',
@@ -647,7 +660,7 @@ use yii\bootstrap5\Accordion;
                         'clientOptions' => ['active' => 0]
                     ],
                     [
-                        'label' => '📊 Gráfico: Status',
+                        'label' => '📊 Gráfico: Tipos de Ofício',
                         'content' => $graf_tipos_status,
                         'clientOptions' => ['active' => 0]
                     ]
@@ -901,7 +914,7 @@ use yii\bootstrap5\Accordion;
                     //     'oficio_id' => $data->id
                     //     ])
                     // }
-                    "<a class='btn btn-primary' href='/oficio/update?id=$data->id&abativa=arquivos' target=''>
+                    "<a class='btn btn-primary' href='".Yii::$app->homeUrl."oficio/update?id=$data->id&abativa=arquivos' target=''>
                         <i class='bi bi-filetype-doc'></i>
                     </a>".
                     '</center>';
@@ -914,7 +927,7 @@ use yii\bootstrap5\Accordion;
                     'width' => '5%'
                 ],
                 'value' => function($data) {
-                    return '<a href="/oficio/update?id='.$data->id.'" class="btn btn-primary"><i class="bi bi-pencil"></i></a>';
+                    return '<a href="'.Yii::$app->homeUrl.'oficio/update?id='.$data->id.'" class="btn btn-primary"><i class="bi bi-pencil"></i></a>';
                 }
             ],
             [
