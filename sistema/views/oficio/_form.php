@@ -49,6 +49,7 @@ function tacadiv($col, $conteudo) {
         ])) ?>
         <?= tacadiv('12', $form->field($model, 'assunto')->textInput()) ?>
         <?= tacadiv('12', $form->field($model, 'diretorio')->textInput(['maxlength' => true])) ?>
+        <?= tacadiv('12', $form->field($model, 'link_diretorio')->textInput()) ?>
         <div class="col-md-12">
             <div class="form-group">
                 <?= Html::submitButton('Salvar', [

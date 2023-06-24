@@ -872,7 +872,7 @@ use yii\bootstrap5\Accordion;
                 'attribute' => 'diretorio',
                 'format' => 'raw',
                 'value' => function($data) {
-                    return '<a class="btn btn-link" target="_blank" href="'.$linklink.'">'.$data->diretorio.'</a>';
+                    return '<a class="btn btn-link" target="_blank" href="'.$data->link_diretorio.'">'.$data->diretorio.'</a>';
                     // return $data->emprrendimento_desc;
                 }
             ],

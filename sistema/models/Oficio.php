@@ -22,6 +22,7 @@ use Yii;
  * @property string|null $Num_sei
  * @property string|null $assunto
  * @property string|null $diretorio
+ * @property string|null $link_diretorio
  * @property string|null $status
  *
  * @property Arquivo[] $arquivos
@@ -52,7 +53,7 @@ class Oficio extends \yii\db\ActiveRecord
             [['contrato_id'], 'required'],
             [['contrato_id', 'emprrendimento_id'], 'integer'],
             [['datacadastro', 'data'], 'safe'],
-            [['assunto'], 'string'],
+            [['assunto', 'link_diretorio'], 'string'],
             [['tipo'], 'string', 'max' => 45],
             [['emprrendimento_desc'], 'string', 'max' => 150],
             [['fluxo', 'emissor', 'receptor', 'num_processo', 'num_protocolo', 'Num_sei'], 'string', 'max' => 200],
@@ -84,6 +85,7 @@ class Oficio extends \yii\db\ActiveRecord
             'Num_sei' => 'Nº SEI',
             'assunto' => 'Assunto',
             'diretorio' => 'Diretório',
+            'link_diretorio' => 'Link: Diretório',
             'status' => 'Status',
         ];
     }
