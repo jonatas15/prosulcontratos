@@ -918,7 +918,8 @@ use yii\bootstrap5\Accordion;
                         <i class='bi bi-filetype-doc'></i>
                     </a>".
                     '</center>';
-                }
+                },
+                'visible' => in_array(Yii::$app->user->identity->nivel, ['administrador', 'gestor']) ? true : false
             ],
             [
                 'header' => 'Editar',
@@ -928,7 +929,8 @@ use yii\bootstrap5\Accordion;
                 ],
                 'value' => function($data) {
                     return '<a href="'.Yii::$app->homeUrl.'oficio/update?id='.$data->id.'" class="btn btn-primary"><i class="bi bi-pencil"></i></a>';
-                }
+                },
+                'visible' => in_array(Yii::$app->user->identity->nivel, ['administrador', 'gestor']) ? true : false
             ],
             [
                 'attribute' => 'id',

@@ -26,11 +26,11 @@ use Yii;
  */
 class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
-    public $id;
-    public $username;
-    public $password;
-    public $authKey;
-    public $accessToken;
+    // public $id;
+    // public $username;
+    // public $password;
+    // public $authKey;
+    // public $accessToken;
     /**
      * {@inheritdoc}
      */
@@ -97,72 +97,45 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return static::findOne($id);
     }
 
+
     /**
      * {@inheritdoc}
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        // foreach (self::$users as $user) {
-        //     if ($user['accessToken'] === $token) {
-        //         return new static($user);
-        //     }
-        // }
-
-        return null;
+        throw new  yii\base\UnknownPropertyException();
     }
-
-    
-
-    /**
-     * Finds user by username
-     *
-     * @param string $username
-     * @return static|null
-     */
-    public static function findByUsername($username)
-    {
-        // foreach (self::$users as $user) {
-        //     if (strcasecmp($user['login'], $username) === 0) {
-        //         return new static($user);
-        //     }
-        // }
-
-        // return null;
-        return self::findOne(['login' => $username]);
-    }
-
-    /**
+ 
+        /**
      * {@inheritdoc}
      */
     public function getId()
     {
         return $this->id;
     }
-
+ 
     /**
      * {@inheritdoc}
      */
     public function getAuthKey()
     {
-        // return $this->authKey;
+        // throw new  yii\base\UnknownPropertyException();
     }
 
-    /**
-     * {@inheritdoc}
-     */
+
     public function validateAuthKey($authKey)
     {
-        // return $this->authKey === $authKey;
+        // throw new  yii\base\UnknownPropertyException();
     }
 
-    /**
-     * Validates password
-     *
-     * @param string $password password to validate
-     * @return bool if password provided is valid for current user
-     */
+
+    public static function findByUsername($username){
+        return self::findOne(['login'=>$username]);
+    }
+ 
     public function validatePassword($password)
     {
         return $this->senha === $password;
     }
+
 }

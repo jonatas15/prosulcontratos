@@ -54,6 +54,12 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     .float-left {
         float: left !important;
     }
+    .text-right {
+        text-align: right !important;
+    }
+    .text-left {
+        text-align: left !important;
+    }
     .cr-nao-resolvido-bg {
         background-color: red !important;
         color: white !important;
@@ -95,26 +101,52 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         'brandLabel' => 'Prosul - DNIT',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar-expand-md navbar-dark bg-dark fixed-top',
+            'class' => 'nnavbar navbar-expand-lg navbar-dark bg-dark fixed-top navbar-collapse fixed-top',
             'id' => 'my-menu',
         ]
     ]);
     echo Nav::widget([
         'options' => [
-            'class' => 'navbar-nav',
+            'class' => 'navbar-nav me-auto mb-2 mb-lg-0',
             'style' => 'align:center'
         ],
         'items' => [
             // ['label' => 'Início', 'url' => ['/site/index']],
             ['label' => 'Empreendimentos', 'url' => ['/empreendimento']],
-            ['label' => Yii::$app->user->identity->login.' - Login', 'url' => ['/empreendimento']],
             // ['label' => 'Contact', 'url' => ['/site/contact']],
-            \Yii::$app->user->isGuest
-                ? ['label' => 'Login - '.Yii::$app->user->identity->login, 'url' => ['/site/login']]
+            // Yii::$app->user->isGuest
+            //     ? ['label' => 'Login', 'url' => ['/site/login']]
+            //     : '<li class="nav-item">'
+            //         . Html::beginForm(['/site/logout'])
+            //         . Html::submitButton(
+            //             'Logout (' . Yii::$app->user->identity->login . ')',
+            //             ['class' => 'nav-link btn btn-link logout']
+            //         )
+            //         . Html::endForm()
+            //         . '</li>'
+        ]
+    ]);
+    echo Nav::widget([
+        'encodeLabels' => false,
+        'options' => [
+            'class' => 'navbar-nav'
+        ],
+        'items' => [
+            ['label' => 'Usuários', 'items' => [
+                ['label' => 'Usuários', 'url' => ['/usuario']],
+                ['label' => 'Cadastrar Novo', 'url' => ['/usuario/create']],
+                ['label' => 'Editar meus dados', 'url' => ['/usuario/update',
+                    'id' => Yii::$app->user->identity->id
+                ]],
+            ]],
+            Yii::$app->user->isGuest
+                ? ['label' => ' Login' ,'items' => [
+                    ['label'=>'Login', 'url'=>['/site/login']],
+                ]]
                 : '<li class="nav-item">'
                     . Html::beginForm(['/site/logout'])
                     . Html::submitButton(
-                        'Logout (' . Yii::$app->user->identity->login . ')',
+                        'Logout (' . Yii::$app->user->identity->nome . ')',
                         ['class' => 'nav-link btn btn-link logout']
                     )
                     . Html::endForm()

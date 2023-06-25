@@ -14,6 +14,14 @@ $this->title = 'Empreendimentos';
 $this->params['breadcrumbs'][] = ['label' => 'Contrato 1', 'url' => ['contrato/view?id=1']];
 $this->params['breadcrumbs'][] = ['label' => 'Ofício: 154', 'url' => ['contrato/view?id=1&abativa=aba_oficios']];
 $this->params['breadcrumbs'][] = $this->title;
+
+$templategeral_grid = '';
+switch (Yii::$app->user->identity->nivel) {
+    case 'administrador': $templategeral_grid = '{view}{update}{delete}'; break;
+    case 'gestor': $templategeral_grid = '{view}{update}'; break;
+    case 'fiscal': $templategeral_grid = '{view}'; break;
+}
+
 ?>
 <div class="empreendimento-index">
 
@@ -46,8 +54,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
 
-                'id',
-                // 'prazo',
+                // 'id',
+                'prazo',
                 // 'datacadastro',
                 [
                     'attribute' => 'datacadastro',
@@ -81,7 +89,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     'class' => ActionColumn::className(),
                     'urlCreator' => function ($action, Empreendimento $model, $key, $index, $column) {
                         return Url::toRoute([$action, 'id' => $model->id]);
-                    }
+                    },
+                    'template' => $templategeral_grid
                 ],
             ],
         ]); ?>

@@ -23,6 +23,9 @@ $config = [
             'identityClass' => 'app\models\Usuario',
             'enableAutoLogin' => true,
         ],
+        // 'authManager' => [
+        //     'class' => 'yii\rbac\DbManager',
+        // ],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],

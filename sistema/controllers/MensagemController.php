@@ -2,87 +2,43 @@
 
 namespace app\controllers;
 
-use app\models\Empreendimento;
-use app\models\EmpreendimentoSearch;
+use app\models\Mensagem;
+use app\models\MensagemSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
-use yii\filters\AccessControl;
-use yii\web\ForbiddenHttpException;
-
-use Yii;
-
-
 /**
- * EmpreendimentoController implements the CRUD actions for Empreendimento model.
+ * MensagemController implements the CRUD actions for Mensagem model.
  */
-class EmpreendimentoController extends Controller
+class MensagemController extends Controller
 {
     /**
      * @inheritDoc
      */
-    // public function behaviors()
-    // {
-    //     return array_merge(
-    //         parent::behaviors(),
-    //         [
-    //             'verbs' => [
-    //                 'class' => VerbFilter::className(),
-    //                 'actions' => [
-    //                     'delete' => ['POST'],
-    //                 ],
-    //             ],
-    //         ]
-    //     );
-    // }
     public function behaviors()
-   {
-       return [
-           'verbs' => [
-               'class' => VerbFilter::className(),
-               'actions' => [
-                   'delete' => ['POST'],
-               ],
-           ],
-           'access' => [
-               'class' => AccessControl::className(),
-               'only' => ['index', 'view', 'update', 'create',  'delete'],
-               'rules' => [
-                   [
-                       'allow' => false,
-                       'actions' => [],
-                       'roles' => ['?'],
-                   ],
-                   [
-                       'allow' => true,
-                       'actions' => ['index', 'view', 'update', 'create',  'delete'],
-                       'roles' => ['@'],
-                   ],
-               ],
-               'denyCallback' => function($rule, $action) {
-                   if (Yii::$app->user->isGuest) {
-                       Yii::$app->user->loginRequired();
-                   }
-                   else {
-                       throw new ForbiddenHttpException('Somente administradores podem entrar nessa página.');
-                   }                   
-               }
-
-
-           ],
-       ];
-   }
-
+    {
+        return array_merge(
+            parent::behaviors(),
+            [
+                'verbs' => [
+                    'class' => VerbFilter::className(),
+                    'actions' => [
+                        'delete' => ['POST'],
+                    ],
+                ],
+            ]
+        );
+    }
 
     /**
-     * Lists all Empreendimento models.
+     * Lists all Mensagem models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new EmpreendimentoSearch();
+        $searchModel = new MensagemSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -92,7 +48,7 @@ class EmpreendimentoController extends Controller
     }
 
     /**
-     * Displays a single Empreendimento model.
+     * Displays a single Mensagem model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -105,13 +61,13 @@ class EmpreendimentoController extends Controller
     }
 
     /**
-     * Creates a new Empreendimento model.
+     * Creates a new Mensagem model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Empreendimento();
+        $model = new Mensagem();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -127,7 +83,7 @@ class EmpreendimentoController extends Controller
     }
 
     /**
-     * Updates an existing Empreendimento model.
+     * Updates an existing Mensagem model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -147,7 +103,7 @@ class EmpreendimentoController extends Controller
     }
 
     /**
-     * Deletes an existing Empreendimento model.
+     * Deletes an existing Mensagem model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -156,19 +112,20 @@ class EmpreendimentoController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
+
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Empreendimento model based on its primary key value.
+     * Finds the Mensagem model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Empreendimento the loaded model
+     * @return Mensagem the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Empreendimento::findOne(['id' => $id])) !== null) {
+        if (($model = Mensagem::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

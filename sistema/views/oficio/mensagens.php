@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\bootstrap5\Modal;
 use app\models\Oficio;
+use app\models\Usuario;
+use app\models\Mensagem;
 
 $model = Oficio::find()->where(['id' => $id])->one();
 
@@ -67,7 +69,7 @@ $model = Oficio::find()->where(['id' => $id])->one();
 .avataruser {
     border-radius: 50% !important;
     width: 70px;
-    border: 1px solid;
+    border: 1px solid black;
     background-color: black;
     float: left;
 }
@@ -106,61 +108,56 @@ Modal::begin([
 </div>
 <div class="row">
     <div class="col-md-4">
-        <div class="row" style="padding: 10px;">
-            <div class="col-md-4" style="position: relative">
+        <div class="row bg-primary text-white card mt-2 mb-3" style="flex-direction:row;">
+            <div class="col-md-4" style="position: relative; ">
                 <span style="z-index: 100000 !important;" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success fs-7">
-                    o
+                    <i class="bi bi-gear"></i></a>
                 </span>
                 <img class="avataruser" src="<?=Yii::$app->homeUrl?>usuarios/userpng.png" alt="Avatar">
             </div>
             <div class="col-md-8">
-                <label class="nomegestor" for="">
-                    Administrador<br>
-                </label>
+                <div class="col">
+                    <strong><?=Yii::$app->user->identity->nome?></strong>
+                </div>
+                <div class="col">
+                    <?=Yii::$app->user->identity->nivel?><br>
+                </div>
             </div>
         </div>
-        <div class="row" style="padding: 10px;">
-            <div class="col-md-4" style="position: relative">
-                <span style="z-index: 100000 !important;" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger fs-7">
-                    o
-                </span>
-                <img class="avataruser" src="<?=Yii::$app->homeUrl?>usuarios/bandmember.jpg" alt="Avatar">
-            </div>
-            <div class="col-md-8">
-                <label class="nomegestor" for="">Gestor</label>
-            </div>
-        </div>
-        <div class="row" style="padding: 10px;">
-            <div class="col-md-4">
-                <img class="avataruser" src="<?=Yii::$app->homeUrl?>usuarios/userpng.png" alt="Avatar">
-            </div>
-            <div class="col-md-8">
-                <label class="nomegestor" for="">Fiscal</label>
-            </div>
-        </div>
+        <?php foreach(Usuario::find()->limit(5)->all() as $user): ?>
+            <?php if ($user->id != Yii::$app->user->identity->id) : ?>
+                <div class="row  card mt-2 mb-3" style="flex-direction:row;">
+                    <div class="col-md-4" style="position: relative; ">
+                        <span style="z-index: 100000 !important;" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success fs-7">
+                            <i class="bi bi-gear"></i></a>
+                        </span>
+                        <img class="avataruser" src="<?=Yii::$app->homeUrl?>usuarios/userpng.png" alt="Avatar">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="col">
+                            <strong><?=$user->nome?></strong>
+                        </div>
+                        <div class="col">
+                            <?=$user->nivel?><br>
+                        </div>
+                    </div>
+                </div>
+            <?php endif; ?>
+        <?php endforeach; ?>
     </div>
     <div class="col-md-8">
-        <div class="container-chat">
-        <img src="<?=Yii::$app->homeUrl?>usuarios/bandmember.jpg" alt="Avatar">
-        <p>Novo Documento Enviado</p>
-        <span class="time-right">11:00</span>
-        </div>
-
+        <?php foreach(\app\models\Mensagem::find()->where([
+            'oficio_id' => $id
+        ])->limit(3)->orderBy(['datacadastro' => SORT_ASC])->all() as $msg):?>
+            <div class="container-chat">
+                <img src="<?=Yii::$app->homeUrl?>usuarios/bandmember.jpg" alt="Avatar">
+                <p><?=$msg->texto?></p>
+                <span class="time-right"><?=date('d/m/Y H:i', strtotime($msg->datacadastro))?></span>
+            </div>
+        <?php endforeach; ?>
         <div class="container-chat darker">
-        <img src="<?=Yii::$app->homeUrl?>usuarios/userpng.png" alt="Avatar" class="right">
-        <p>Empreendimento finalizado</p>
-        <span class="time-left">11:01</span>
-        </div>
-
-        <div class="container-chat">
-        <img src="<?=Yii::$app->homeUrl?>usuarios/bandmember.jpg" alt="Avatar">
-        <p>Conferir planilias</p>
-        <span class="time-right">11:02</span>
-        </div>
-
-        <div class="container-chat darker">
-            <textarea name="" id="" cols="30" rows="5" style="width:100%"></textarea>
-            <button class="btn btn-primary text-white" style="float: right">Enviar</button>
+            <textarea name="" id="textmensagem-<?=$id?>" cols="30" rows="5" style="width:100%"></textarea>
+            <button id="enviarmensagem-<?=$id?>" class="btn btn-primary text-white" style="float: right">Enviar</button>
         </div>
     </div>
 </div>

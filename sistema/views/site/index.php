@@ -19,7 +19,22 @@ $this->title = 'PROSUL-DNIT';
     }
 </style>
 <div class="site-index">
-
+    
+    <div class="row">
+        <?php 
+                // $identity = \app\models\Usuario::findByUsername('jonataswd');
+                // Yii::$app->user->login($identity);
+                /**
+                 * 
+                    <ul>
+                        <li>User: <?= \app\models\Usuario::findByUsername('jonataswd')->nome; ?></li>
+                        <li>Logado: <?= Yii::$app->user->isGuest; ?></li>
+                        <li>User: <?= Yii::$app->user->identity->nome; ?></li>
+                        <li>User ID: <?= Yii::$app->user->identity->id; ?></li>
+                    </ul>
+                */
+            ?>
+    </div>
     <div class="jumbotron text-center bg-transparent mt-5 mb-5">
         <!-- <h3 class="display-4">Bem vindo!</h3> -->
 

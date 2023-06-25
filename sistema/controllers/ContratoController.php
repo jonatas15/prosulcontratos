@@ -8,6 +8,11 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
+use yii\filters\AccessControl;
+use yii\web\ForbiddenHttpException;
+
+use Yii;
+
 /**
  * ContratoController implements the CRUD actions for Contrato model.
  */
@@ -16,19 +21,41 @@ class ContratoController extends Controller
     /**
      * @inheritDoc
      */
-    public function behaviors()
-    {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
-                    ],
-                ],
-            ]
-        );
+    public function behaviors() {
+       return [
+           'verbs' => [
+               'class' => VerbFilter::className(),
+               'actions' => [
+                   'delete' => ['POST'],
+               ],
+           ],
+           'access' => [
+               'class' => AccessControl::className(),
+               'only' => ['index', 'view', 'update', 'create',  'delete'],
+               'rules' => [
+                   [
+                       'allow' => false,
+                       'actions' => [],
+                       'roles' => ['?'],
+                   ],
+                   [
+                       'allow' => true,
+                       'actions' => ['index', 'view', 'update', 'create',  'delete'],
+                       'roles' => ['@'],
+                   ],
+               ],
+               'denyCallback' => function($rule, $action) {
+                   if (Yii::$app->user->isGuest) {
+                       Yii::$app->user->loginRequired();
+                   }
+                   else {
+                       throw new ForbiddenHttpException('Somente administradores podem entrar nessa página.');
+                   }                   
+               }
+
+
+           ],
+       ];
     }
 
     /**
