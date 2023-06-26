@@ -113,7 +113,12 @@ Modal::begin([
                 <span style="z-index: 100000 !important;" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success fs-7">
                     <i class="bi bi-gear"></i></a>
                 </span>
-                <img class="avataruser" src="<?=Yii::$app->homeUrl?>usuarios/userpng.png" alt="Avatar">
+                <img 
+                    class="avataruser" 
+                    src="<?=Yii::$app->user->identity->foto ? Yii::$app->homeUrl.'usuarios/'.Yii::$app->user->identity->foto : Yii::$app->homeUrl.'usuarios/userpng.png'?>"
+                    alt="Avatar"
+                    style="object-fit: cover; border-radius: 30px;width:60px;height:60px"
+                >
             </div>
             <div class="col-md-8">
                 <div class="col">
@@ -131,7 +136,12 @@ Modal::begin([
                         <span style="z-index: 100000 !important;" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success fs-7">
                             <i class="bi bi-gear"></i></a>
                         </span>
-                        <img class="avataruser" src="<?=Yii::$app->homeUrl?>usuarios/userpng.png" alt="Avatar">
+                        <img 
+                            class="avataruser" 
+                            src="<?=$user->foto ? Yii::$app->homeUrl.'usuarios/'.$user->foto : Yii::$app->homeUrl.'usuarios/userpng.png'?>"
+                            alt="Avatar"
+                            style="object-fit: cover; border-radius: 30px;width:60px;height:60px"
+                        >
                     </div>
                     <div class="col-md-8">
                         <div class="col">
@@ -146,19 +156,61 @@ Modal::begin([
         <?php endforeach; ?>
     </div>
     <div class="col-md-8">
-        <?php foreach(\app\models\Mensagem::find()->where([
-            'oficio_id' => $id
-        ])->limit(3)->orderBy(['datacadastro' => SORT_ASC])->all() as $msg):?>
+        <?php
+            $ultimas3mensagens = \app\models\Mensagem::find()->where([
+                'oficio_id' => $id
+            ])->orderBy(['datacadastro' => SORT_DESC])->limit(3)->all();
+            $reversed = array_reverse($ultimas3mensagens);
+        ?>
+        <?php foreach($reversed as $msg):?>
             <div class="container-chat">
-                <img src="<?=Yii::$app->homeUrl?>usuarios/bandmember.jpg" alt="Avatar">
+                <?php 
+                    $usuariofalando = Yii::$app->homeUrl.'usuarios/';
+                    if ($msg->usuario->foto) {
+                        $usuariofalando .= $msg->usuario->foto;
+                    } else {
+                        $usuariofalando .= "bandmember.jpg";
+                    }
+                ?>
+                <img src="<?=$usuariofalando?>" alt="Avatar" style="object-fit: cover; border-radius: 30px;width:60px;height:60px">
+                <h5 style="text-align: left;"><strong><?=$msg->usuario->nome?></strong></h5>
+                <hr>
                 <p><?=$msg->texto?></p>
                 <span class="time-right"><?=date('d/m/Y H:i', strtotime($msg->datacadastro))?></span>
             </div>
         <?php endforeach; ?>
         <div class="container-chat darker">
-            <textarea name="" id="textmensagem-<?=$id?>" cols="30" rows="5" style="width:100%"></textarea>
+            <div id="div-recemenviada-<?=$id?>" class="container-chat">
+                <div id="recemenviada-<?=$id?>"></div>
+                <span class="time-right"><?=date('d/m/Y H:i')?></span>
+            </div>
+            <textarea name="" id="textmensagem-<?=$id?>" cols="30" rows="5" style="width:100%;padding:2%" placeholder="Sua mensagem aqui"></textarea>
             <button id="enviarmensagem-<?=$id?>" class="btn btn-primary text-white" style="float: right">Enviar</button>
         </div>
     </div>
 </div>
 <?php Modal::end(); ?>
+<?php 
+$js_botao = "'#enviarmensagem-$id'";
+$js_caixa = "'#textmensagem-$id'";
+$js_return = "'#recemenviada-$id'";
+$url = "'".Yii::$app->homeUrl.'mensagem/create'."'";
+$mensageiro = "'".Yii::$app->user->identity->id."'";
+$js = <<<JS
+    $($js_botao).on('click', function() {
+        $.ajax({
+            method: "POST",
+            url: $url,
+            data: {
+                'Mensagem[texto]': $($js_caixa).val(),
+                'Mensagem[usuario_id]': $mensageiro,
+                'Mensagem[oficio_id]': $id
+            }
+        }).done(function(returno) {
+            $($js_caixa).val("");
+            $($js_return).append(returno + "<br>");
+        });
+    });
+JS;
+$this->registerJs($js);
+?>

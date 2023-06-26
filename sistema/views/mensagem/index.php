@@ -15,11 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="mensagem-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Create Mensagem', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    <h3><?= Html::encode($this->title) ?></h3>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
@@ -29,18 +25,18 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+            // 'id',
             'usuario_id',
             'contrato_id',
             'oficio_id',
             'datacadastro',
-            //'texto:ntext',
-            [
-                'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Mensagem $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id' => $model->id]);
-                 }
-            ],
+            'texto:ntext',
+            // [
+            //     'class' => ActionColumn::className(),
+            //     'urlCreator' => function ($action, Mensagem $model, $key, $index, $column) {
+            //         return Url::toRoute([$action, 'id' => $model->id]);
+            //      }
+            // ],
         ],
     ]); ?>
 

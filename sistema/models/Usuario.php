@@ -9,6 +9,8 @@ namespace app\models;
 
 use Yii;
 
+use yii\web\UploadedFile;
+
 /**
  * This is the model class for table "usuario".
  *
@@ -34,6 +36,9 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     /**
      * {@inheritdoc}
      */
+
+    public $imageFile;
+
     public static function tableName()
     {
         return 'usuario';
@@ -45,7 +50,9 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function rules()
     {
         return [
-            [['nivel'], 'string'],
+            [['nivel', 'foto'], 'string'],
+            [['nivel', 'nome', 'email', 'login', 'senha'], 'required'],
+            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
             [['nome', 'email'], 'string', 'max' => 200],
             [['telefone', 'cpf'], 'string', 'max' => 15],
             [['login'], 'string', 'max' => 20],
@@ -67,6 +74,7 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'nivel' => 'Nivel',
             'login' => 'Login',
             'senha' => 'Senha',
+            'imageFile' => 'Foto do Usuário (apenas *png e *.jpg)'
         ];
     }
 
@@ -136,6 +144,16 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function validatePassword($password)
     {
         return $this->senha === $password;
+    }
+
+    public function upload()
+    {
+        if ($this->validate()) {
+            $this->imageFile->saveAs('usuarios/' . $this->imageFile->baseName . '.' . $this->imageFile->extension);
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
