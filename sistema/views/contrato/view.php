@@ -47,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
 </style>
 <div class="contrato-view">
 
-    <h3 class="text-uppercase"><img src="/logo/contract-icon.png" class="icone-modulo" width="25" /> <?= Html::encode($this->title) ?></h3>
+    <h3 class="text-uppercase"><img src="<?=Yii::$app->homeUrl?>logo/contract-icon.png" class="icone-modulo" width="25" /> <?= Html::encode($this->title) ?></h3>
     <hr>
     
     

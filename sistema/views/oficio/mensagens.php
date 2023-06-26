@@ -16,7 +16,7 @@ $model = Oficio::find()->where(['id' => $id])->one();
 // $model = \app\models\Oficio::find()->where(['id' => $id])->one();
 
 ?>
-<style>
+<style scoped>
     /* Chat container-chats */
 .container-chat {
   border: 2px solid #dedede;
@@ -75,7 +75,9 @@ $model = Oficio::find()->where(['id' => $id])->one();
 }
 .nomegestor {
     float: left;
-
+}
+.modal-body {
+    background-color: darkslategray;
 }
 </style>
 <?php
@@ -92,7 +94,7 @@ Modal::begin([
     ],
 ]);
 ?>
-<div class="row mb-100">
+<!-- <div class="row mb-100">
     <div class="col">
 
         <strong>Em construção</strong>
@@ -105,14 +107,14 @@ Modal::begin([
         <br>
         <br>
     </div>
-</div>
-<div class="row">
+</div> -->
+<div class="row" style="padding: 2%">
     <div class="col-md-4">
-        <div class="row bg-primary text-white card mt-2 mb-3" style="flex-direction:row;">
-            <div class="col-md-4" style="position: relative; ">
-                <span style="z-index: 100000 !important;" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success fs-7">
-                    <i class="bi bi-gear"></i></a>
-                </span>
+        <div class="row bg-primary text-white card mt-2 mb-3" style="flex-direction:row;padding: 5px 3px;">
+            <div class="col-md-3" style="position: relative; padding-left: 5px;">
+                <!-- <span style="z-index: 100000 !important;" class="position-absolute top-20 start-100 translate-middle badge rounded-pill fs-7">
+                    <i class="bi bi-circle-fill text-success"></i></a>
+                </span> -->
                 <img 
                     class="avataruser" 
                     src="<?=Yii::$app->user->identity->foto ? Yii::$app->homeUrl.'usuarios/'.Yii::$app->user->identity->foto : Yii::$app->homeUrl.'usuarios/userpng.png'?>"
@@ -120,9 +122,9 @@ Modal::begin([
                     style="object-fit: cover; border-radius: 30px;width:60px;height:60px"
                 >
             </div>
-            <div class="col-md-8">
+            <div class="col-md-9" style="text-align: left">
                 <div class="col">
-                    <strong><?=Yii::$app->user->identity->nome?></strong>
+                    <strong><i class="bi bi-circle-fill text-success"></i> </a><?=Yii::$app->user->identity->nome?></strong>
                 </div>
                 <div class="col">
                     <?=Yii::$app->user->identity->nivel?><br>
@@ -131,27 +133,29 @@ Modal::begin([
         </div>
         <?php foreach(Usuario::find()->limit(5)->all() as $user): ?>
             <?php if ($user->id != Yii::$app->user->identity->id) : ?>
-                <div class="row  card mt-2 mb-3" style="flex-direction:row;">
-                    <div class="col-md-4" style="position: relative; ">
-                        <span style="z-index: 100000 !important;" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success fs-7">
-                            <i class="bi bi-gear"></i></a>
-                        </span>
-                        <img 
-                            class="avataruser" 
-                            src="<?=$user->foto ? Yii::$app->homeUrl.'usuarios/'.$user->foto : Yii::$app->homeUrl.'usuarios/userpng.png'?>"
-                            alt="Avatar"
-                            style="object-fit: cover; border-radius: 30px;width:60px;height:60px"
-                        >
-                    </div>
-                    <div class="col-md-8">
-                        <div class="col">
-                            <strong><?=$user->nome?></strong>
+                <button class="btn marcandousuario" nomeuser="<?=$user->email?>" style="width: 100%;padding: 0px">
+                    <div class="row  card mt-2 mb-3" style="flex-direction:row;padding: 5px 3px;">
+                        <div class="col-md-3" style="position: relative; padding-left: 5px;">
+                            <!-- <span style="z-index: 100000 !important;" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success fs-7">
+                                <i class="bi bi-gear"></i></a>
+                            </span> -->
+                            <img 
+                                class="avataruser" 
+                                src="<?=$user->foto ? Yii::$app->homeUrl.'usuarios/'.$user->foto : Yii::$app->homeUrl.'usuarios/userpng.png'?>"
+                                alt="Avatar"
+                                style="object-fit: cover; border-radius: 30px;width:60px;height:60px"
+                            >
                         </div>
-                        <div class="col">
-                            <?=$user->nivel?><br>
+                        <div class="col-md-9" style="text-align: left">
+                            <div class="col">
+                                <strong><i class="bi bi-circle-fill text-success"></i> <?=$user->nome?></strong>
+                            </div>
+                            <div class="col">
+                                <?=$user->nivel?><br>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </button>
             <?php endif; ?>
         <?php endforeach; ?>
     </div>
@@ -175,7 +179,7 @@ Modal::begin([
                 <img src="<?=$usuariofalando?>" alt="Avatar" style="object-fit: cover; border-radius: 30px;width:60px;height:60px">
                 <h5 style="text-align: left;"><strong><?=$msg->usuario->nome?></strong></h5>
                 <hr>
-                <p><?=$msg->texto?></p>
+                <p align="left"><?=$msg->texto?></p>
                 <span class="time-right"><?=date('d/m/Y H:i', strtotime($msg->datacadastro))?></span>
             </div>
         <?php endforeach; ?>
@@ -184,7 +188,7 @@ Modal::begin([
                 <div id="recemenviada-<?=$id?>"></div>
                 <span class="time-right"><?=date('d/m/Y H:i')?></span>
             </div>
-            <textarea name="" id="textmensagem-<?=$id?>" cols="30" rows="5" style="width:100%;padding:2%" placeholder="Sua mensagem aqui"></textarea>
+            <textarea name="" id="textmensagem-<?=$id?>" cols="30" rows="5" style="width:100%;padding:2%;border:1px lightgrey;" placeholder="Sua mensagem aqui"></textarea>
             <button id="enviarmensagem-<?=$id?>" class="btn btn-primary text-white" style="float: right">Enviar</button>
         </div>
     </div>
@@ -192,6 +196,7 @@ Modal::begin([
 <?php Modal::end(); ?>
 <?php 
 $js_botao = "'#enviarmensagem-$id'";
+$js_marcaruser = "'#marcaruser-$id'";
 $js_caixa = "'#textmensagem-$id'";
 $js_return = "'#recemenviada-$id'";
 $url = "'".Yii::$app->homeUrl.'mensagem/create'."'";
@@ -211,6 +216,22 @@ $js = <<<JS
             $($js_return).append(returno + "<br>");
         });
     });
+    $('.marcandousuario').on('click', function() {
+        $($js_caixa).val("[" + $(this).attr('nomeuser') + "] | " + $($js_caixa).val());
+    });
+    // $($js_marcaruser).on('click', function() {
+    //     $($js_caixa).val("dddd");
+    // });
 JS;
 $this->registerJs($js);
+?>
+<?php /**
+ * 
+    <script>
+    function marcaruser(recebido) {
+        console.log("entrou");
+        $(<?=$js_caixa?>).val("#" + recebido);
+        }
+    </script>
+*/
 ?>

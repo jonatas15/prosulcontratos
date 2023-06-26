@@ -86,12 +86,10 @@ use yii\bootstrap5\Accordion;
 </style>
 <div class="oficio-index">
 
-    <h3><img src="/logo/upload-files-icon.png" class="icone-modulo" width="25" />  Contrato: Gestão de Ofícios</h3>
+    <h3><img src="<?=Yii::$app->homeUrl?>logo/upload-files-icon.png" class="icone-modulo" width="25" />  Contrato: Gestão de Ofícios</h3>
     <div class="row">
         <div class="col-md-12">
-            <?php 
-                $modelnovooficio = new Oficio();
-            ?>
+            <?php $modelnovooficio = new Oficio(); ?>
             <?= $this->render('create', [
                 'model' => $modelnovooficio,
                 'contrato_id' => $contrato_id

@@ -34,7 +34,7 @@ class ContratoController extends Controller
                'only' => ['index', 'view', 'update', 'create',  'delete'],
                'rules' => [
                    [
-                       'allow' => false,
+                       'allow' => true,
                        'actions' => [],
                        'roles' => ['?'],
                    ],

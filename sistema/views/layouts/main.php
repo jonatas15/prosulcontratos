@@ -112,7 +112,11 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         ],
         'items' => [
             // ['label' => 'Início', 'url' => ['/site/index']],
-            ['label' => 'Empreendimentos', 'url' => ['/empreendimento']],
+            [
+                'label' => 'Empreendimentos', 
+                'url' => ['/empreendimento'],
+                'visible' => !Yii::$app->user->isGuest
+            ],
             // ['label' => 'Contact', 'url' => ['/site/contact']],
             // Yii::$app->user->isGuest
             //     ? ['label' => 'Login', 'url' => ['/site/login']]
@@ -132,17 +136,17 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             'class' => 'navbar-nav'
         ],
         'items' => [
-            ['label' => 'Usuários', 'items' => [
-                ['label' => 'Usuários', 'url' => ['/usuario']],
-                ['label' => 'Cadastrar Novo', 'url' => ['/usuario/create']],
-                ['label' => 'Editar meus dados', 'url' => ['/usuario/update',
-                    'id' => Yii::$app->user->identity->id
-                ]],
-            ]],
+            [
+                'label' => 'Usuários', 
+                'items' => [
+                    ['label' => 'Usuários', 'url' => ['/usuario']],
+                    ['label' => 'Cadastrar Novo', 'url' => ['/usuario/create']],
+                    ['label' => 'Editar meus dados', 'url' => ['/usuario/update', 'id' => Yii::$app->user->identity->id]],
+                ],
+                'visible' => !Yii::$app->user->isGuest
+            ],
             Yii::$app->user->isGuest
-                ? ['label' => ' Login' ,'items' => [
-                    ['label'=>'Login', 'url'=>['/site/login']],
-                ]]
+                ? ['label' => ' Login', 'url'=>['/site/login']]
                 : '<li class="nav-item">'
                     . Html::beginForm(['/site/logout'])
                     . Html::submitButton(
