@@ -43,7 +43,7 @@ use yii\bootstrap5\Accordion;
                     // echo 'Id Ofício: '.$oficio_id;
                     echo $this->render('create', [
                         'model' => $novosfiles,
-                        'oficio_id' => $oficio_id
+                        'oficio_id' => $oficio_id  // Substituir variavel e definição por id genérico vindo do módulo
                     ]);
                     Modal::end();
                 endif;

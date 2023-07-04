@@ -8,22 +8,34 @@ use Yii;
  * This is the model class for table "produto".
  *
  * @property int $id
+ * @property int|null $contrato_id
+ * @property int|null $produto_id
+ * @property int|null $empreendimento_id
  * @property int|null $ordensdeservico_id
  * @property string|null $numero
+ * @property string|null $subproduto
  * @property string $datacadastro
- * @property string|null $dataedicao
  * @property string|null $data_validade
  * @property string|null $data_renovacao
- * @property string|null $descricao
- * @property int|null $empreendimento_id
+ * @property string|null $data_entrega
  * @property string|null $fase
- * @property int|null $produto_id
+ * @property string|null $entrega
+ * @property string|null $servico
+ * @property string|null $descricao
+ * @property string|null $aprov_data
+ * @property int|null $aprov_tempo_ultima_revisao
+ * @property int|null $aprov_tempo_total
+ * @property string|null $aprov_versao
+ * @property string|null $diretorio_texto
+ * @property string|null $diretorio_link
  *
+ * @property Contrato $contrato 
  * @property Arquivo[] $arquivos
  * @property Empreendimento $empreendimento
  * @property Ordensdeservico $ordensdeservico
  * @property Produto $produto
  * @property Produto[] $produtos
+ * @property Revisao[] $revisaos
  */
 class Produto extends \yii\db\ActiveRecord
 {
@@ -41,11 +53,14 @@ class Produto extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ordensdeservico_id', 'empreendimento_id', 'produto_id'], 'integer'],
-            [['descricao'], 'string'],
-            [['numero', 'datacadastro', 'dataedicao', 'data_validade', 'data_renovacao'], 'string', 'max' => 45],
+            [['contrato_id', 'produto_id', 'empreendimento_id', 'ordensdeservico_id', 'aprov_tempo_ultima_revisao', 'aprov_tempo_total'], 'integer'],
+            [['datacadastro', 'data_validade', 'data_renovacao', 'data_entrega', 'aprov_data'], 'safe'],
+            [['entrega', 'servico', 'subproduto', 'descricao', 'diretorio_link'], 'string'],
+            [['numero', 'aprov_versao'], 'string', 'max' => 45],
             [['fase'], 'string', 'max' => 150],
+            [['diretorio_texto'], 'string', 'max' => 250],
             [['ordensdeservico_id'], 'exist', 'skipOnError' => true, 'targetClass' => Ordensdeservico::class, 'targetAttribute' => ['ordensdeservico_id' => 'id']],
+            [['contrato_id'], 'exist', 'skipOnError' => true, 'targetClass' => Contrato::class, 'targetAttribute' => ['contrato_id' => 'id']], 
             [['empreendimento_id'], 'exist', 'skipOnError' => true, 'targetClass' => Empreendimento::class, 'targetAttribute' => ['empreendimento_id' => 'id']],
             [['produto_id'], 'exist', 'skipOnError' => true, 'targetClass' => Produto::class, 'targetAttribute' => ['produto_id' => 'id']],
         ];
@@ -58,18 +73,36 @@ class Produto extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'ordensdeservico_id' => 'Ordensdeservico ID',
+            'produto_id' => 'Produto',
+            'empreendimento_id' => 'Empreendimento',
+            'ordensdeservico_id' => 'Ordem de serviço',
             'numero' => 'Numero',
-            'datacadastro' => 'Datacadastro',
-            'dataedicao' => 'Dataedicao',
-            'data_validade' => 'Data Validade',
-            'data_renovacao' => 'Data Renovacao',
-            'descricao' => 'Descricao',
-            'empreendimento_id' => 'Empreendimento ID',
+            'datacadastro' => 'Data de registro',
+            'data_validade' => 'Data de Validade',
+            'data_renovacao' => 'Data de Renovação',
+            'data_entrega' => 'Data de Entrega',
             'fase' => 'Fase',
-            'produto_id' => 'Produto ID',
+            'entrega' => 'Entrega',
+            'servico' => 'Serviço',
+            'descricao' => 'Descrição',
+            'aprov_data' => 'Data de provação',
+            'aprov_tempo_ultima_revisao' => 'Tempo da última aprovação',
+            'aprov_tempo_total' => 'Tempo total',
+            'aprov_versao' => 'Versão de Aprovação',
+            'diretorio_texto' => 'Diretório: Texto',
+            'diretorio_link' => 'Diretório: Link',
         ];
     }
+
+    /** 
+    * Gets query for [[Contrato]]. 
+    * 
+    * @return \yii\db\ActiveQuery 
+    */ 
+   public function getContrato() 
+   { 
+       return $this->hasOne(Contrato::class, ['id' => 'contrato_id']); 
+   }
 
     /**
      * Gets query for [[Arquivos]].
@@ -119,5 +152,15 @@ class Produto extends \yii\db\ActiveRecord
     public function getProdutos()
     {
         return $this->hasMany(Produto::class, ['produto_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Revisaos]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRevisaos()
+    {
+        return $this->hasMany(Revisao::class, ['produto_id' => 'id']);
     }
 }

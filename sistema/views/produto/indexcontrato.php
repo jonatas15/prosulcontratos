@@ -1,6 +1,6 @@
 <?php
 
-use app\models\Oficio;
+use app\models\Produto;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -8,6 +8,73 @@ use yii\grid\GridView;
 use yii\widgets\Pjax;
 use yii\widgets\ActiveForm;
 use kartik\date\DatePicker;
+
+    /**
+    
+        use Box\Spout\Reader\Common\Creator\ReaderEntityFactory;
+
+        $path = Yii::$app->basePath.'/web/arquivos/produtos.xlsx';
+        # open the file
+        $reader = ReaderEntityFactory::createXLSXReader();
+        $reader->open($path);
+        # read each cell of each row of each sheet
+        echo '<table border="2" class="table table-striped table-bordered">';
+        foreach ($reader->getSheetIterator() as $sheet) {
+            foreach ($sheet->getRowIterator() as $row) {
+                echo '<tr>';
+                // foreach ($row->getCells() as $cell) {
+                //     echo '<td>'.$cell->getValue().'</td>';
+                // }
+                // echo $row->getCells()[0];
+                echo '<td>'.$row->getCells()[0].'</td>'; # ID
+                echo '<td>'.$row->getCells()[1].'</td>'; # Empreendimento
+                echo '<td>'.$row->getCells()[2].'</td>'; # OS
+                echo '<td>'.$row->getCells()[3].'</td>'; # Subproduto
+                echo '<td>'.$row->getCells()[4].'</td>'; # Serviço
+                echo '<td>'.$row->getCells()[5].'</td>'; # Entrega
+                echo '<td>'.$row->getCells()[6].'</td>'; # Data de entrega
+                // REVISÕES
+                // echo '<td>'.$row->getCells()[7].'</td>'; # Revisão 1 -Data
+                // echo '<td>'.$row->getCells()[8].'</td>'; # Revisão 1 -Tempo Decorrido blá blá
+                // echo '<td>'.$row->getCells()[9].'</td>'; # # Revisão 1 -Responsável
+                // echo '<td>'.$row->getCells()[10].'</td>'; # # Revisão 1 -Versão Aprovada
+                // Continuando
+                echo '<td>'.$this->context->dataprobanco($row->getCells()[27]).'</td>'; # Data de aprovação
+                echo '<td>'.$row->getCells()[28].'</td>'; # Tempo decorrido 
+                echo '<td>'.$row->getCells()[29].'</td>'; # Versão Aprovada
+                echo '<td>'.$row->getCells()[30].'</td>'; # Diretório
+                echo '<td>'.$contrato_id.'</td>'; # ID DO CONTRATO
+                
+                $novoproduto = new Produto();
+                //Campos importados
+                
+
+                $novoproduto->contrato_id = $contrato_id;
+                $novoproduto->datacadastro = date('Y-m-d H:i:s');
+                $novoproduto->subproduto = (string)$row->getCells()[3];
+                $novoproduto->servico = (string)$row->getCells()[4];
+                $novoproduto->entrega = (string)$row->getCells()[5];
+                $novoproduto->data_entrega = $row->getCells()[6] != '' ? $this->context->dataprobanco($row->getCells()[6]): null;
+                $novoproduto->aprov_data = $row->getCells()[27] != '' ? $this->context->dataprobanco($row->getCells()[27]): null;
+                $novoproduto->aprov_tempo_ultima_revisao = (string)$row->getCells()[28];
+                $novoproduto->aprov_versao = (string)$row->getCells()[29];
+                $novoproduto->diretorio_texto = (string)$row->getCells()[30];
+                // Definições
+                echo '<td>';
+                if ($novoproduto->save()) {
+                    echo "loucuuura papai";
+                } else {
+                    echo "deu m";
+                }
+                echo '</td>';
+                echo '</tr>';
+            }
+        }
+        echo '</table>';
+        $reader->close();
+
+    */
+
 // use dosamigos\datepicker\DatePicker;
 
 // use yii\bootstrap5\Modal;
@@ -75,16 +142,16 @@ use kartik\date\DatePicker;
 </style>
 <div class="ordensdeservico-index">
 
-    <h3><img src="/web/logo/upload-files-icon.png" class="icone-modulo" width="25" /> Contrato: Produtos</h3>
+    <h3><img src="<?=Yii::$app->homeUrl?>logo/upload-files-icon.png" class="icone-modulo" width="25" /> Contrato: Produtos</h3>
     <div class="clearfix">
         <br />
     </div>
     <?php
         ########################################## TIPO ##########################################
-        $search_tipos = Oficio::find()->select('tipo')->groupBy('tipo')->all();
+        $search_tipos = Produto::find()->select('empreendimento_id')->groupBy('empreendimento_id')->all();
         $lista_tipos = [];
         foreach ($search_tipos as $value):
-            $lista_tipos[$value->tipo] = $value->tipo;
+            $lista_tipos[$value->empreendimento] = $value->empreendimento;
         endforeach;
         ######################################### STATUS #########################################
         // $search_status = Oficio::find()->select('status')->groupBy('status')->all();
@@ -315,39 +382,38 @@ use kartik\date\DatePicker;
             'class' => 'yii\bootstrap5\LinkPager'
         ],
         'columns' => [
-            // ['class' => 'yii\grid\SerialColumn'],
-            // 'id',
-            // 'contrato_id',
-            // 'emprrendimento_id',
-            // 'tipo',
             [
                 'attribute' => 'id',
                 'headerOptions' => [
                     'width' => '3%'
                 ]
             ],
-            // 'tipo',
-            // 'emissor',
-            // 'emprrendimento_desc',
-            //'datacadastro',
-            // 'data',
-            // 'Num_sei',
-            'oficio_id',
-            'fase',
-            // 'plano',
+            [
+                'attribute' => 'empreendimento_id',
+                'value' => function() {
+                    return 'a ver';
+                },
+                'headerOptions' => [
+                    'width' => '5%'
+                ]
+            ],
+            [
+                'attribute' => 'ordensdeservico_id',
+                'value' => function() {
+                    return 'a ver';
+                },
+                'headerOptions' => [
+                    'width' => '5%'
+                ]
+            ],
+            // 'fase',
             [
                 'attribute' => 'datacadastro',
                 'value' => function($data) {
                     return date('d/m/Y', strtotime($data->datacadastro));
                 }
             ],
-            // 'fluxo',
-            //'receptor',
-            //'num_processo',
-            //'num_protocolo',
-            //'assunto:ntext',
-            //'diretorio',
-            // 'status',
+            'subproduto',
             [
                 'attribute' => 'id',
                 'header' => 'Detalhes',
@@ -363,17 +429,20 @@ use kartik\date\DatePicker;
             ],
             [
                 'attribute' => 'id',
-                'header' => 'Docs',
+                'header' => 'Revisões',
                 'headerOptions' => [
                     'width' => '5%'
                 ],
                 'format' => 'raw',
-                'value' => function($data) {
+                'value' => function($data) { 
+                    $count_revisoes = \app\models\Revisao::find()->where([
+                        'produto_id' => $data->id
+                    ])->count();       
                     return '<center>'.
-                    $this->render('_docs', [
-                        'id' => $data->id
-                    ])
-                    .'</center>';
+                    "<a class='btn btn-primary' href='".Yii::$app->homeUrl."produto/update?id=$data->id&abativa=reviews' target=''>
+                    📋 $count_revisoes)
+                    </a>".
+                    '</center>';
                 }
             ],
             [

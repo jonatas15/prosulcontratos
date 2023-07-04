@@ -2,16 +2,16 @@
 
 namespace app\controllers;
 
-use app\models\Produto;
-use app\models\ProdutoSearch;
+use app\models\Revisao;
+use app\models\RevisaoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ProdutoController implements the CRUD actions for Produto model.
+ * RevisaoController implements the CRUD actions for Revisao model.
  */
-class ProdutoController extends Controller
+class RevisaoController extends Controller
 {
     /**
      * @inheritDoc
@@ -32,13 +32,13 @@ class ProdutoController extends Controller
     }
 
     /**
-     * Lists all Produto models.
+     * Lists all Revisao models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new ProdutoSearch();
+        $searchModel = new RevisaoSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -48,7 +48,7 @@ class ProdutoController extends Controller
     }
 
     /**
-     * Displays a single Produto model.
+     * Displays a single Revisao model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -61,13 +61,13 @@ class ProdutoController extends Controller
     }
 
     /**
-     * Creates a new Produto model.
+     * Creates a new Revisao model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Produto();
+        $model = new Revisao();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -81,32 +81,9 @@ class ProdutoController extends Controller
             'model' => $model,
         ]);
     }
-    public function actionRevisao()
-    {
-        $model = new \app\models\Revisao();
-
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(\Yii::$app->request->referrer);
-            }
-        } else {
-            return null;
-        }
-    }
-
-    public function actionEditreview($id)
-    {
-        $model = \app\models\Revisao::findOne(['id' => $id]);
-
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(\Yii::$app->request->referrer);
-        }
-
-        return null;
-    }
 
     /**
-     * Updates an existing Produto model.
+     * Updates an existing Revisao model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -126,7 +103,7 @@ class ProdutoController extends Controller
     }
 
     /**
-     * Deletes an existing Produto model.
+     * Deletes an existing Revisao model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -138,30 +115,20 @@ class ProdutoController extends Controller
 
         return $this->redirect(['index']);
     }
-    public function actionDeletereview($id)
-    {
-        \app\models\Revisao::findOne(['id' => $id])->delete();
-        return $this->redirect(\Yii::$app->request->referrer);
-    }
 
     /**
-     * Finds the Produto model based on its primary key value.
+     * Finds the Revisao model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Produto the loaded model
+     * @return Revisao the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Produto::findOne(['id' => $id])) !== null) {
+        if (($model = Revisao::findOne(['id' => $id])) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
-    }
-
-    public function dataprobanco ($data) {
-        $arr = explode('/', $data);
-        return $arr[2].'-'.$arr[1].'-'.$arr[0];
     }
 }

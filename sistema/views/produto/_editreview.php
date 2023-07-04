@@ -1,0 +1,38 @@
+<?php 
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+?>
+<div class="row">
+    <div class="col-1"></div>
+    <div class="col-10">
+        <?php
+        $form = ActiveForm::begin([
+            'action' => [
+                Yii::$app->homeUrl.'produto/editreview',
+                'id' => $id
+            ]
+        ]); ?>
+        <?= $form->field($modelRevisao, 'produto_id')->hiddenInput(['value' => $produto_id])->label(false) ?>
+        <div class="row">
+            <div class="col-md-12"><?= $form->field($modelRevisao, 'titulo')->textInput(['maxlength' => true]) ?></div>
+            <div class="col-md-6"><?= $form->field($modelRevisao, 'data')->textInput() ?></div>
+            <div class="col-md-6"><?= $form->field($modelRevisao, 'tempo_ultima_etapa')->textInput() ?></div>
+            <div class="col-md-6"><?= $form->field($modelRevisao, 'responsavel')->textInput(['maxlength' => true]) ?></div>
+            <div class="col-md-6"><?= $form->field($modelRevisao, 'status')->textInput(['maxlength' => true]) ?></div>
+        </div>
+        <div class="form-group">
+            <?= Html::submitButton('Salvar Alterações', ['class' => 'btn btn-success']) ?>
+        </div>
+        <?php ActiveForm::end(); ?>
+    </div>
+    <div class="col-md-1 mb-10">
+        <br />
+        <?= Html::a('X', ['deletereview', 'id' => $modelRevisao->id], [
+            'class' => 'btn btn-danger',
+            'data' => [
+                'confirm' => 'Deseja realmente excluir a Revisão "'.$modelRevisao->titulo.'"?',
+                'method' => 'post',
+            ],
+        ]) ?>
+    </div>
+</div>

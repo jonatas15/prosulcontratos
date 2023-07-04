@@ -3,9 +3,9 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\bootstrap5\Modal;
-use app\models\Oficio;
+use app\models\Produto;
 
-$model = Oficio::find()->where(['id' => $id])->one();
+$model = Produto::find()->where(['id' => $id])->one();
 
 /** @var yii\web\View $this */
 /** @var app\models\Oficio $model */
@@ -14,103 +14,71 @@ $model = Oficio::find()->where(['id' => $id])->one();
 // $model = \app\models\Oficio::find()->where(['id' => $id])->one();
 
 ?>
-<style>
-    /* Chat container-chats */
-.container-chat {
-  border: 2px solid #dedede;
-  background-color: #f1f1f1;
-  border-radius: 5px;
-  padding: 10px;
-  margin: 10px 0;
-}
-
-/* Darker chat container-chat */
-.darker {
-  border-color: #ccc;
-  background-color: #ddd;
-}
-
-/* Clear floats */
-.container-chat::after {
-  content: "";
-  clear: both;
-  display: table;
-}
-
-/* Style images */
-.container-chat img {
-  float: left;
-  max-width: 60px;
-  width: 100%;
-  margin-right: 20px;
-  border-radius: 50%;
-}
-
-/* Style the right image */
-.container-chat img.right {
-  float: right;
-  margin-left: 20px;
-  margin-right:0;
-}
-
-/* Style time text */
-.time-right {
-  float: right;
-  color: #aaa;
-}
-
-/* Style time text */
-.time-left {
-  float: left;
-  color: #999;
-}
-.avataruser {
-    border-radius: 50% !important;
-    width: 70px;
-    border: 1px solid;
-    background-color: black;
-    float: left;
-}
-.nomegestor {
-    float: left;
-
-}
-</style>
 <?php
 Modal::begin([
-    'title' => $model->tipo .': '.$model->id,
+    'title' => $model->subproduto,
     'options' => [
-        'id' => 'mais-detalhes-'.$model->id,
+        'id' => 'produto-mais-detalhes-'.$model->id,
         'tabindex' => false,
     ],
-    'size' => 'modal-lg',
+    'size' => 'modal-xl',
     'toggleButton' => [
         'label' => '<i class="bi bi-card-list"></i>',
         'class' => 'btn btn-info text-white'
     ],
 ]);
 ?>
-<?= DetailView::widget([
-    'model' => $model,
+<div class="row">
+    <div class="col">
+
+        <?= DetailView::widget([
+            'model' => $model,
     'attributes' => [
         'id',
-        // 'contrato_id',
-        // 'emprrendimento_id',
-        'tipo',
-        'emprrendimento_desc',
+        'produto_id',
+        'empreendimento_id',
+        'ordensdeservico_id',
+        'subproduto',
+        'numero',
         'datacadastro',
-        'data',
-        'fluxo',
-        'emissor',
-        'receptor',
-        'num_processo',
-        'num_protocolo',
-        'Num_sei',
-        'assunto:ntext',
-        'diretorio',
-        'status',
+        'data_validade',
+        'data_renovacao',
+        'data_entrega',
+        'fase',
+        'entrega:ntext',
+        'servico:ntext',
+        'descricao:ntext',
+        'aprov_data',
+        'aprov_tempo_ultima_revisao',
+        'aprov_tempo_total',
+        'aprov_versao',
+        'diretorio_texto',
+        'diretorio_link:ntext',
     ],
-]) ?>
+    ]) ?>
+    </div>
+    <div class="col text-white">
+        <div class="col-md-12">    
+            <h3><strong>Revisões</strong></h3>
+            <hr>
+            <center>
+                Lista todas as revisões já cadastradas<br>
+                ***<br>
+                < nenhuma revisão encontrada >
+            </center>
+        </div>
+        <div class="col-md-12">
+            <hr>   
+        </div>
+        <div class="col-md-12">    
+            <h3><strong>Análises</strong></h3>
+            <hr>
+            tempo decorrido
+            <br>tempo aguardando
+            <br>etc
+        </div>
+    </div>
+</div>
 <div class="row"><hr></div>
 <div class="row">
     <div class="progress">
@@ -120,65 +88,5 @@ Modal::begin([
     </div>
     <br>
     <br>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <div class="row" style="padding: 10px;">
-            <div class="col-md-4" style="position: relative">
-                <span style="z-index: 100000 !important;" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success fs-7">
-                    o
-                </span>
-                <img class="avataruser" src="/usuarios/userpng.png" alt="Avatar">
-            </div>
-            <div class="col-md-8">
-                <label class="nomegestor" for="">
-                    Administrador<br>
-                </label>
-            </div>
-        </div>
-        <div class="row" style="padding: 10px;">
-            <div class="col-md-4" style="position: relative">
-                <span style="z-index: 100000 !important;" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger fs-7">
-                    o
-                </span>
-                <img class="avataruser" src="/usuarios/bandmember.jpg" alt="Avatar">
-            </div>
-            <div class="col-md-8">
-                <label class="nomegestor" for="">Gestor</label>
-            </div>
-        </div>
-        <div class="row" style="padding: 10px;">
-            <div class="col-md-4">
-                <img class="avataruser" src="/usuarios/userpng.png" alt="Avatar">
-            </div>
-            <div class="col-md-8">
-                <label class="nomegestor" for="">Fiscal</label>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-8">
-        <div class="container-chat">
-        <img src="/usuarios/bandmember.jpg" alt="Avatar">
-        <p>Hello. How are you today?</p>
-        <span class="time-right">11:00</span>
-        </div>
-
-        <div class="container-chat darker">
-        <img src="/usuarios/userpng.png" alt="Avatar" class="right">
-        <p>Hey! I'm fine. Thanks for asking!</p>
-        <span class="time-left">11:01</span>
-        </div>
-
-        <div class="container-chat">
-        <img src="/usuarios/bandmember.jpg" alt="Avatar">
-        <p>Sweet! So, what do you wanna do today?</p>
-        <span class="time-right">11:02</span>
-        </div>
-
-        <div class="container-chat darker">
-            <textarea name="" id="" cols="30" rows="5" style="width:100%"></textarea>
-            <button class="btn btn-primary text-white" style="float: right">Enviar</button>
-        </div>
-    </div>
 </div>
 <?php Modal::end(); ?>

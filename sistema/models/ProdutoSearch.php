@@ -11,10 +11,6 @@ use app\models\Produto;
  */
 class ProdutoSearch extends Produto
 {
-    public $param;
-    public $from_date;
-    public $to_date;
-    public $ids;
     public $ano_listagem;
     /**
      * {@inheritdoc}
@@ -22,8 +18,8 @@ class ProdutoSearch extends Produto
     public function rules()
     {
         return [
-            [['id', 'ordensdeservico_id', 'empreendimento_id', 'produto_id'], 'integer'],
-            [['numero', 'datacadastro', 'dataedicao', 'data_validade', 'data_renovacao', 'descricao', 'fase'], 'safe'],
+            [['id', 'produto_id', 'empreendimento_id', 'ordensdeservico_id', 'aprov_tempo_ultima_revisao', 'aprov_tempo_total'], 'integer'],
+            [['numero', 'datacadastro', 'data_validade', 'data_renovacao', 'data_entrega', 'fase', 'entrega', 'servico', 'descricao', 'aprov_data', 'aprov_versao', 'diretorio_texto', 'diretorio_link'], 'safe'],
         ];
     }
 
@@ -64,18 +60,26 @@ class ProdutoSearch extends Produto
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'ordensdeservico_id' => $this->ordensdeservico_id,
-            'empreendimento_id' => $this->empreendimento_id,
             'produto_id' => $this->produto_id,
+            'empreendimento_id' => $this->empreendimento_id,
+            'ordensdeservico_id' => $this->ordensdeservico_id,
+            'datacadastro' => $this->datacadastro,
+            'data_validade' => $this->data_validade,
+            'data_renovacao' => $this->data_renovacao,
+            'data_entrega' => $this->data_entrega,
+            'aprov_data' => $this->aprov_data,
+            'aprov_tempo_ultima_revisao' => $this->aprov_tempo_ultima_revisao,
+            'aprov_tempo_total' => $this->aprov_tempo_total,
         ]);
 
         $query->andFilterWhere(['like', 'numero', $this->numero])
-            ->andFilterWhere(['like', 'datacadastro', $this->datacadastro])
-            ->andFilterWhere(['like', 'dataedicao', $this->dataedicao])
-            ->andFilterWhere(['like', 'data_validade', $this->data_validade])
-            ->andFilterWhere(['like', 'data_renovacao', $this->data_renovacao])
+            ->andFilterWhere(['like', 'fase', $this->fase])
+            ->andFilterWhere(['like', 'entrega', $this->entrega])
+            ->andFilterWhere(['like', 'servico', $this->servico])
             ->andFilterWhere(['like', 'descricao', $this->descricao])
-            ->andFilterWhere(['like', 'fase', $this->fase]);
+            ->andFilterWhere(['like', 'aprov_versao', $this->aprov_versao])
+            ->andFilterWhere(['like', 'diretorio_texto', $this->diretorio_texto])
+            ->andFilterWhere(['like', 'diretorio_link', $this->diretorio_link]);
 
         return $dataProvider;
     }
