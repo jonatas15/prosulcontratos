@@ -12,7 +12,6 @@ use yii\widgets\Pjax;
 
 $this->title = 'Empreendimentos';
 $this->params['breadcrumbs'][] = ['label' => 'Contrato 1', 'url' => ['contrato/view?id=1']];
-$this->params['breadcrumbs'][] = ['label' => 'Ofício: 154', 'url' => ['contrato/view?id=1&abativa=aba_oficios']];
 $this->params['breadcrumbs'][] = $this->title;
 
 $templategeral_grid = '';
@@ -55,6 +54,7 @@ switch (Yii::$app->user->identity->nivel) {
                 ['class' => 'yii\grid\SerialColumn'],
 
                 // 'id',
+                'titulo',
                 'prazo',
                 // 'datacadastro',
                 [
@@ -70,21 +70,21 @@ switch (Yii::$app->user->identity->nivel) {
                     }
                 ],
                 // 'dataupdate',
-                'status',
-                'uf',
-                'segmento',
-                'extensao_km',
+                // 'status',
+                // 'uf',
+                // 'segmento',
+                // 'extensao_km',
                 //'tipo_obra',
                 //'municipios_interceptados:ntext',
                 //'orgao_licenciador',
                 //'ordensdeservico_id',
                 //'oficio_id',
-                [
-                    'attribute' => 'oficio_id',
-                    'value' => function($data) {
-                        return $data->oficio->Num_sei;
-                    }
-                ],
+                // [
+                //     'attribute' => 'oficio_id',
+                //     'value' => function($data) {
+                //         return $data->oficio->Num_sei;
+                //     }
+                // ],
                 [
                     'class' => ActionColumn::className(),
                     'urlCreator' => function ($action, Empreendimento $model, $key, $index, $column) {

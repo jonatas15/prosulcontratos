@@ -24,12 +24,13 @@ use kartik\widgets\FileInput;
         <div class="col-md-6">
             <?= $form->field($model, 'tipo')->dropDownList([ 'imagem' => 'Imagem', 'logo' => 'Logo', 'video' => 'Video', 'documento' => 'Documento', 'planilia' => 'Planilia', 'outros' => 'Outros', ], ['prompt' => 'Selecione']) ?>
             <?= $form->field($model, 'src')->hiddenInput(['value' => 'arquivos'])->label(false) ?>
-            <?= $form->field($model, 'contrato_id')->hiddenInput(['value' => $contrato_id])->label(false) ?>
-            <?= $form->field($model, 'oficio_id')->hiddenInput(['value' => $oficio_id])->label(false) ?>
-            <?= $form->field($model, 'ordensdeservico_id')->hiddenInput(['value' => $ordensdeservico_id])->label(false) ?>
-            <?= $form->field($model, 'empreendimento_id')->hiddenInput(['value' => $empreendimento_id])->label(false) ?>
-            <?= $form->field($model, 'produto_id')->hiddenInput(['value' => $produto_id])->label(false) ?>
-            <?= $form->field($model, 'licenciamento_id')->hiddenInput(['value' => $licenciamento_id])->label(false) ?>
+            <?php // = $form->field($model, 'contrato_id')->hiddenInput(['value' => $contrato_id])->label(false) ?>
+            <?php // = $form->field($model, 'oficio_id')->hiddenInput(['value' => $oficio_id])->label(false) ?>
+            <?php // = $form->field($model, 'ordensdeservico_id')->hiddenInput(['value' => $ordensdeservico_id])->label(false) ?>
+            <?php // = $form->field($model, 'empreendimento_id')->hiddenInput(['value' => $empreendimento_id])->label(false) ?>
+            <?php // = $form->field($model, 'produto_id')->hiddenInput(['value' => $produto_id])->label(false) ?>
+            <?php // = $form->field($model, 'licenciamento_id')->hiddenInput(['value' => $licenciamento_id])->label(false) ?>
+            <?= $form->field($model, $id_tabela_referencia)->hiddenInput(['value' => $id_valor_referencia])->label(false) ?>
         </div>
         <div class="col-md-6"><?= $form->field($model, 'pasta')->textInput(['maxlength' => true]) ?></div>
         <div class="col-md-12"><?= $form->field($model, 'ref')->textInput(['maxlength' => true]) ?></div>

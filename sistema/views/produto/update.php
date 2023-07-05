@@ -8,6 +8,11 @@ use yii\bootstrap5\Tabs;
         background-color: gray !important;
         color: white !important;
     }
+    .bg-gray {
+        background-color: lightgray;
+        border-color: gray;
+        padding: 0 50px !important;
+    }
 </style>
 <?php
 ############################### GESTÃO DE ARQUIVOS #############################
@@ -24,8 +29,9 @@ $gestaoarquivos .= '<br>';
 $gestaoarquivos .= $this->render('/arquivo/index', [
     'searchModel' => $searchModelArquivo,
     'dataProvider' => $dataProviderArquivo,
-    'produto_id' => $model->id,
-    'funcionalidades' => true
+    'funcionalidades' => true,
+    'id_tabela_referencia' => 'produto_id',
+    'id_valor_referencia' => $model->id,
 ]);
 $gestaoarquivos .= '</div>';
 $gestaoarquivos .= '</div>';
@@ -88,13 +94,13 @@ $this->params['breadcrumbs'][] = 'Atualizar '.$model->id . '- ' . $model->subpro
                 'label' => '📋 Editar Produto',
                 'content' => '<div class="row">'.$this->render('_form', [
                     'model' => $model,
-                    'action' => 'oficio/update?id='.$model->id //A Yii->homeUrl fica na _form
+                    'action' => 'produto/update?id='.$model->id //A Yii->homeUrl fica na _form
                 ]).'</div>',
                 'options' => ['id' => 'aba_dados'],
                 'active' => $aba_dados
             ],
             [
-                'label' => '📋✔️ Revisões',
+                'label' => '📋 Revisões',
                 'content' => $gestarevisao,
                 'options' => ['id' => 'aba_reviews'],
                 'active' => $aba_reviews

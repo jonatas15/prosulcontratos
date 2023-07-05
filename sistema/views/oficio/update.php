@@ -25,7 +25,9 @@ $gestaoarquivos .= $this->render('/arquivo/index', [
     'searchModel' => $searchModelArquivo,
     'dataProvider' => $dataProviderArquivo,
     'oficio_id' => $model->id,
-    'funcionalidades' => true
+    'funcionalidades' => true,
+    'id_tabela_referencia' => 'oficio_id',
+    'id_valor_referencia' => $model->id,
 ]);
 $gestaoarquivos .= '</div>';
 $gestaoarquivos .= '</div>';

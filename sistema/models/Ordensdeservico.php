@@ -8,6 +8,7 @@ use Yii;
  * This is the model class for table "ordensdeservico".
  *
  * @property int $id
+ * @property string|null $titulo
  * @property int|null $oficio_id
  * @property string|null $fase
  * @property string|null $plano
@@ -38,7 +39,7 @@ class Ordensdeservico extends \yii\db\ActiveRecord
     {
         return [
             [['oficio_id', 'contrato_id'], 'integer'],
-            [['fase', 'plano'], 'string'],
+            [['fase', 'plano', 'titulo'], 'string'],
             [['contrato_id'], 'required'],
             [['datacadastro'], 'safe'],
             [['contrato_id'], 'exist', 'skipOnError' => true, 'targetClass' => Contrato::class, 'targetAttribute' => ['contrato_id' => 'id']],

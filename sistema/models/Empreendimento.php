@@ -8,6 +8,7 @@ use Yii;
  * This is the model class for table "empreendimento".
  *
  * @property int $id
+ * @property string $titulo
  * @property int|null $prazo
  * @property string $datacadastro
  * @property string|null $dataupdate
@@ -51,6 +52,7 @@ class Empreendimento extends \yii\db\ActiveRecord
             [['status'], 'string', 'max' => 25],
             [['uf'], 'string', 'max' => 3],
             [['segmento'], 'string', 'max' => 100],
+            [['titulo'], 'string', 'max' => 300],
             [['tipo_obra'], 'string', 'max' => 250],
             [['orgao_licenciador'], 'string', 'max' => 200],
             [['oficio_id'], 'exist', 'skipOnError' => true, 'targetClass' => Oficio::class, 'targetAttribute' => ['oficio_id' => 'id']],

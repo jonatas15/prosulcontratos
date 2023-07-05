@@ -5,7 +5,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\models\Empreendimento;
 
-$empreendimentos = ArrayHelper::map(Empreendimento::find()->all(), 'id', 'segmento');
+$empreendimentos = ArrayHelper::map(Empreendimento::find()->all(), 'id', 'titulo');
 
 /** @var yii\web\View $this */
 /** @var app\models\Oficio $model */

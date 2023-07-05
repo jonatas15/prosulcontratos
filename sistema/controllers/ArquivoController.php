@@ -75,9 +75,29 @@ class ArquivoController extends Controller
             if ($model->load($this->request->post())) {
                 $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
                 foreach ($model->imageFiles as $file) {
+
+                    // Define o valor vindo campo vindo da tabela externa
+                    $valor_tabela_externa = "";
+                    $valor_tabela_externa .= $model->contrato_id != '' ? $model->contrato_id : '';
+                    $valor_tabela_externa .= $model->oficio_id != '' ? $model->oficio_id : '';
+                    $valor_tabela_externa .= $model->ordensdeservico_id != '' ? $model->ordensdeservico_id : '';
+                    $valor_tabela_externa .= $model->empreendimento_id != '' ? $model->empreendimento_id : '';
+                    $valor_tabela_externa .= $model->produto_id != '' ? $model->produto_id : '';
+                    $valor_tabela_externa .= $model->licenciamento_id != '' ? $model->licenciamento_id : '';
+
+                    // Define o campo vindo campo vindo da tabela externa
+                    $campo_tabela_externa = "";
+                    $campo_tabela_externa .= $model->contrato_id != '' ? 'contrato_id' : '';
+                    $campo_tabela_externa .= $model->oficio_id != '' ? 'oficio_id' : '';
+                    $campo_tabela_externa .= $model->ordensdeservico_id != '' ? 'ordensdeservico_id' : '';
+                    $campo_tabela_externa .= $model->empreendimento_id != '' ? 'empreendimento_id' : '';
+                    $campo_tabela_externa .= $model->produto_id != '' ? 'produto_id' : '';
+                    $campo_tabela_externa .= $model->licenciamento_id != '' ? 'licenciamento_id' : '';
+                    
+                    
                     $arquivo = $this->clean($file->baseName) . '.' . $this->clean($file->extension);
-                    $campos = "tipo, src, oficio_id, pasta, ref";
-                    $valores = "'$model->tipo', '$arquivo', '$model->oficio_id', '$model->pasta', '$model->ref'";
+                    $campos = "tipo, src, $campo_tabela_externa, pasta, ref";
+                    $valores = "'$model->tipo', '$arquivo', '$valor_tabela_externa', '$model->pasta', '$model->ref'";
                     \Yii::$app->db->createCommand("insert into arquivo ($campos) VALUES ($valores)")->execute(); 
                 }
                 // exit();

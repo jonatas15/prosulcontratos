@@ -53,7 +53,7 @@ Modal::begin([
         'aprov_tempo_total',
         'aprov_versao',
         'diretorio_texto',
-        'diretorio_link:ntext',
+        // 'diretorio_link:ntext',
     ],
     ]) ?>
     </div>

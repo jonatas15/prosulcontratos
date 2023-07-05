@@ -43,7 +43,10 @@ use yii\bootstrap5\Accordion;
                     // echo 'Id Ofício: '.$oficio_id;
                     echo $this->render('create', [
                         'model' => $novosfiles,
-                        'oficio_id' => $oficio_id  // Substituir variavel e definição por id genérico vindo do módulo
+                        $id_tabela_referencia => $id_valor_referencia,
+                        'id_tabela_referencia' => $id_tabela_referencia,
+                        'id_valor_referencia' => $id_valor_referencia,
+                        // 'oficio_id' => $oficio_id  // Substituir variavel e definição por id genérico vindo do módulo
                     ]);
                     Modal::end();
                 endif;
@@ -57,7 +60,7 @@ use yii\bootstrap5\Accordion;
     </div>
     <div class="row">
         <?php
-        $pastas = Arquivo::find()->select('pasta')->where(['oficio_id' => $oficio_id])->groupBy(['pasta'])->all();
+        $pastas = Arquivo::find()->select('pasta')->where([$id_tabela_referencia => $id_valor_referencia])->groupBy(['pasta'])->all();
         // echo '<pre>';
         // print_r($pastas);
         // echo '</pre>';
@@ -66,7 +69,7 @@ use yii\bootstrap5\Accordion;
             // echo $p->pasta;
             $arquivos_na_pasta = Arquivo::find()->where([
                 'pasta' => $p->pasta,
-                'oficio_id' => $oficio_id
+                $id_tabela_referencia => $id_valor_referencia
             ])->all();
             $item_content = '<div class="row">';
             foreach ($arquivos_na_pasta as $arq) {

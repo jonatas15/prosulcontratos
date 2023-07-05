@@ -12,6 +12,8 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
+    <?= $form->field($model, 'titulo')->textInput() ?>
+
     <?= $form->field($model, 'oficio_id')->textInput() ?>
 
     <?= $form->field($model, 'fase')->dropDownList([ 'Manifestação de Interesse em Análise' => 'Manifestação de Interesse em Análise', 'OS Emitida' => 'OS Emitida', 'OS em Andamento' => 'OS em Andamento', 'OS Paralisada' => 'OS Paralisada', 'OS Finalisada' => 'OS Finalisada', ], ['prompt' => '']) ?>
@@ -20,7 +22,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'contrato_id')->textInput() ?>
 
-    <?= $form->field($model, 'datacadastro')->textInput() ?>
+    <?php //= $form->field($model, 'datacadastro')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

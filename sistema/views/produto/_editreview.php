@@ -1,6 +1,7 @@
 <?php 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+$modelRevisao->data = $modelRevisao->data != '' ? date('d/m/Y', strtotime($modelRevisao->data)) : '';
 ?>
 <div class="row">
     <div class="col-1"></div>
@@ -15,13 +16,20 @@ use yii\widgets\ActiveForm;
         <?= $form->field($modelRevisao, 'produto_id')->hiddenInput(['value' => $produto_id])->label(false) ?>
         <div class="row">
             <div class="col-md-12"><?= $form->field($modelRevisao, 'titulo')->textInput(['maxlength' => true]) ?></div>
-            <div class="col-md-6"><?= $form->field($modelRevisao, 'data')->textInput() ?></div>
-            <div class="col-md-6"><?= $form->field($modelRevisao, 'tempo_ultima_etapa')->textInput() ?></div>
+            <div class="col-md-6"><?= $form->field($modelRevisao, 'data')->widget(\yii\widgets\MaskedInput::class, [
+                'mask' => '99/99/9999',
+                'options' => [
+                    'id' => 'campodataedicao-'.$modelRevisao->id
+                ],
+            ]) ?></div>
+            <div class="col-md-6"><?= $form->field($modelRevisao, 'tempo_ultima_etapa')->textInput([
+                'type' => 'number'
+            ]) ?></div>
             <div class="col-md-6"><?= $form->field($modelRevisao, 'responsavel')->textInput(['maxlength' => true]) ?></div>
             <div class="col-md-6"><?= $form->field($modelRevisao, 'status')->textInput(['maxlength' => true]) ?></div>
         </div>
         <div class="form-group">
-            <?= Html::submitButton('Salvar Alterações', ['class' => 'btn btn-success']) ?>
+            <?= Html::submitButton('Salvar Alterações', ['class' => 'btn btn-primary']) ?>
         </div>
         <?php ActiveForm::end(); ?>
     </div>

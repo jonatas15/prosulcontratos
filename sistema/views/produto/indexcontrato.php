@@ -143,6 +143,15 @@ use kartik\date\DatePicker;
 <div class="ordensdeservico-index">
 
     <h3><img src="<?=Yii::$app->homeUrl?>logo/upload-files-icon.png" class="icone-modulo" width="25" /> Contrato: Produtos</h3>
+    <div class="row">
+        <div class="col-md-12">
+            <?php $modelProduto = new Produto(); ?>
+            <?= $this->render('create', [
+                'model' => $modelProduto,
+                'contrato_id' => $contrato_id
+            ]) ?>
+        </div>
+    </div>
     <div class="clearfix">
         <br />
     </div>
@@ -150,9 +159,9 @@ use kartik\date\DatePicker;
         ########################################## TIPO ##########################################
         $search_tipos = Produto::find()->select('empreendimento_id')->groupBy('empreendimento_id')->all();
         $lista_tipos = [];
-        foreach ($search_tipos as $value):
-            $lista_tipos[$value->empreendimento] = $value->empreendimento;
-        endforeach;
+        // foreach ($search_tipos as $campo):
+        //     $lista_tipos[$campo->empreendimento] = $campo->empreendimento;
+        // endforeach;
         ######################################### STATUS #########################################
         // $search_status = Oficio::find()->select('status')->groupBy('status')->all();
         // $lista_status = [];
@@ -388,10 +397,14 @@ use kartik\date\DatePicker;
                     'width' => '3%'
                 ]
             ],
+            'subproduto',
             [
                 'attribute' => 'empreendimento_id',
-                'value' => function() {
-                    return 'a ver';
+                'format' => 'raw',
+                'value' => function($data) {
+                    return $this->render('_empreendimento', [
+                        'id' => $data->empreendimento_id
+                    ]);
                 },
                 'headerOptions' => [
                     'width' => '5%'
@@ -399,8 +412,11 @@ use kartik\date\DatePicker;
             ],
             [
                 'attribute' => 'ordensdeservico_id',
-                'value' => function() {
-                    return 'a ver';
+                'format' => 'raw',
+                'value' => function($data) {
+                    return $this->render('_os', [
+                        'id' => $data->ordensdeservico_id
+                    ]);
                 },
                 'headerOptions' => [
                     'width' => '5%'
@@ -413,7 +429,12 @@ use kartik\date\DatePicker;
                     return date('d/m/Y', strtotime($data->datacadastro));
                 }
             ],
-            'subproduto',
+            [
+                'attribute' => 'aprov_data',
+                'value' => function($data) {
+                    return $data->aprov_data ? date('d/m/Y', strtotime($data->aprov_data)) : '';
+                }
+            ],
             [
                 'attribute' => 'id',
                 'header' => 'Detalhes',
@@ -446,14 +467,36 @@ use kartik\date\DatePicker;
                 }
             ],
             [
-                'header' => 'Oper.',
+                'attribute' => 'id',
+                'header' => 'Docs',
+                'headerOptions' => [
+                    'width' => '5%'
+                ],
+                'format' => 'raw',
+                'value' => function($data) {
+                    return '<center>'.
+                    // $this->render('_docs', [
+                    //     'oficio_id' => $data->id
+                    //     ])
+                    // }
+                    "<a class='btn btn-primary' href='".Yii::$app->homeUrl."produto/update?id=$data->id&abativa=arquivos' target=''>
+                        <i class='bi bi-filetype-doc'></i>
+                    </a>".
+                    '</center>';
+                },
+                'visible' => in_array(Yii::$app->user->identity->nivel, ['administrador', 'gestor']) ? true : false
+            ],
+            [
+                'header' => 'Editar',
+                'format' => 'raw',
                 'headerOptions' => [
                     'width' => '5%'
                 ],
                 'value' => function($data) {
-                    return 'Em @Dev';
-                }
-            ]
+                    return '<a href="'.Yii::$app->homeUrl.'produto/update?id='.$data->id.'" class="btn btn-primary"><i class="bi bi-pencil"></i></a>';
+                },
+                'visible' => in_array(Yii::$app->user->identity->nivel, ['administrador', 'gestor']) ? true : false
+            ],
             // [
             //     'class' => ActionColumn::className(),
             //     'urlCreator' => function ($action, Oficio $model, $key, $index, $column) {

@@ -39,9 +39,13 @@ use yii\widgets\ActiveForm;
                     'action' => Yii::$app->homeUrl.'produto/revisao'
                 ]); ?>
                 <?= $form->field($modelRevisao, 'produto_id')->hiddenInput(['value' => $id])->label(false) ?>
-                <?= $form->field($modelRevisao, 'titulo')->textInput(['maxlength' => true, 'value'=>'Revisão '.($count_revisoes + 1)]) ?>
-                <?= $form->field($modelRevisao, 'data')->textInput() ?>
-                <?= $form->field($modelRevisao, 'tempo_ultima_etapa')->textInput() ?>
+                <?= $form->field($modelRevisao, 'titulo')->textInput(['maxlength' => true, 'value'=>'Revisão 0'.($count_revisoes + 1).' ('.(($count_revisoes + 1)%2 == 0 ? 'Prosul' : 'DNIT').')']) ?>
+                <?= $form->field($modelRevisao, 'data')->widget(\yii\widgets\MaskedInput::class, [
+                    'mask' => '99/99/9999',
+                ]) ?>
+                        <?= $form->field($modelRevisao, 'tempo_ultima_etapa')->textInput([
+                    'type' => 'number'
+                ]) ?>
                 <?= $form->field($modelRevisao, 'responsavel')->textInput(['maxlength' => true]) ?>
                 <?= $form->field($modelRevisao, 'status')->textInput(['maxlength' => true]) ?>
                 <div class="form-group">

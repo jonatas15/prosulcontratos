@@ -70,8 +70,18 @@ class ProdutoController extends Controller
         $model = new Produto();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load($this->request->post())) {
+                $model->data_validade = $model->data_validade != '' ? $this->dataprobanco($model->data_validade): '';
+                $model->data_renovacao = $model->data_renovacao != '' ? $this->dataprobanco($model->data_renovacao): '';
+                $model->data_entrega = $model->data_entrega != '' ? $this->dataprobanco($model->data_entrega): '';
+                $model->aprov_data = $model->aprov_data != '' ? $this->dataprobanco($model->aprov_data): '';
+                if ($model->save()) {
+                    return $this->redirect([
+                        'update', 
+                        'id' => $model->id,
+                        'abativa' => 'reviews'
+                    ]);
+                }
             }
         } else {
             $model->loadDefaultValues();
@@ -86,8 +96,16 @@ class ProdutoController extends Controller
         $model = new \app\models\Revisao();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(\Yii::$app->request->referrer);
+            if ($model->load($this->request->post())) {
+                $model->data = $model->data != '' ? $this->dataprobanco($model->data): '';
+                if ($model->save()) {
+                    // return $this->redirect(\Yii::$app->request->referrer);
+                    return $this->redirect([
+                        'update', 
+                        'id' => $model->produto_id,
+                        'abativa' => 'reviews'
+                    ]);
+                }
             }
         } else {
             return null;
@@ -98,8 +116,15 @@ class ProdutoController extends Controller
     {
         $model = \app\models\Revisao::findOne(['id' => $id]);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(\Yii::$app->request->referrer);
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            $model->data = $model->data != '' ? $this->dataprobanco($model->data): '';
+            if ($model->save()) {
+                return $this->redirect([
+                    'update', 
+                    'id' => $model->produto_id,
+                    'abativa' => 'reviews'
+                ]);
+            }
         }
 
         return null;
@@ -116,8 +141,14 @@ class ProdutoController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            $model->data_validade = $model->data_validade != '' ? $this->dataprobanco($model->data_validade): '';
+            $model->data_renovacao = $model->data_renovacao != '' ? $this->dataprobanco($model->data_renovacao): '';
+            $model->data_entrega = $model->data_entrega != '' ? $this->dataprobanco($model->data_entrega): '';
+            $model->aprov_data = $model->aprov_data != '' ? $this->dataprobanco($model->aprov_data): '';
+            if ($model->save()) {
+                return $this->redirect(['update', 'id' => $model->id]);
+            }
         }
 
         return $this->render('update', [
