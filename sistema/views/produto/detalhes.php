@@ -38,8 +38,8 @@ Modal::begin([
             'attributes' => [
                 'id',
                 // 'produto_id',
-                'empreendimento_id',
-                'ordensdeservico_id',
+                'empreendimento.titulo',
+                'ordensdeservico.titulo',
                 'subproduto',
                 'numero',
                 'datacadastro',

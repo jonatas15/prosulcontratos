@@ -1,6 +1,7 @@
 <?php
 
 use app\models\Produto;
+use app\models\Empreendimento;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -8,7 +9,7 @@ use yii\grid\GridView;
 use yii\widgets\Pjax;
 use yii\widgets\ActiveForm;
 use kartik\date\DatePicker;
-
+use yii\helpers\ArrayHelper;
 use yii\web\JsExpression;
 use miloschuman\highcharts\Highcharts;
 
@@ -189,10 +190,10 @@ use miloschuman\highcharts\Highcharts;
 
 
 
-        $s_tipo = $_REQUEST['ProdutoSearch']['tipo'] ? $_REQUEST['ProdutoSearch']['tipo'] : '';
-        $s_nsei = $_REQUEST['ProdutoSearch']['Num_sei'] ? $_REQUEST['ProdutoSearch']['Num_sei'] : '';
+        $empreendimento_id = $_REQUEST['ProdutoSearch']['empreendimento_id'] ? $_REQUEST['ProdutoSearch']['empreendimento_id'] : '';
+        $ordensdeservico_id = $_REQUEST['ProdutoSearch']['ordensdeservico_id'] ? $_REQUEST['ProdutoSearch']['ordensdeservico_id'] : '';
         $ano_listagem = $_REQUEST['ProdutoSearch']['ano_listagem'] ? $_REQUEST['ProdutoSearch']['ano_listagem'] : '';
-        $status = $_REQUEST['ProdutoSearch']['status'] ? $_REQUEST['ProdutoSearch']['status'] : '';
+        $fase = $_REQUEST['ProdutoSearch']['fase'] ? $_REQUEST['ProdutoSearch']['fase'] : '';
         # Intervalo de data #######################################################################
         $data_ini = $_REQUEST['from_date'];
         $data_fim = $_REQUEST['to_date'];
@@ -215,12 +216,12 @@ use miloschuman\highcharts\Highcharts;
         $campo_status_2 = "";
         $campo_status_3 = "";
         $campo_status_4 = "";
-        if (!empty($status)) :
-            echo $status[4];
-            if($status[1]) { $campo_status_1 = 'checked="checked"'; }
-            if($status[2]) { $campo_status_2 = 'checked="checked"'; }
-            if($status[3]) { $campo_status_3 = 'checked="checked"'; }
-            if($status[4]) { $campo_status_4 = 'checked="checked"'; }
+        if (!empty($fase)) :
+            echo $fase[4];
+            if($fase[1]) { $campo_status_1 = 'checked="checked"'; }
+            if($fase[2]) { $campo_status_2 = 'checked="checked"'; }
+            if($fase[3]) { $campo_status_3 = 'checked="checked"'; }
+            if($fase[4]) { $campo_status_4 = 'checked="checked"'; }
             // $st = 1;
             // for ($i=1; $i < 4; $i++) { 
             //     if($status[$i] !== "") { $campo_status = 'checked="checked"'; }
@@ -255,12 +256,12 @@ use miloschuman\highcharts\Highcharts;
             endif;
         endif;
         $dataProvider = $searchModel->search([
-            'tipo' => $s_tipo,
-            'Num_sei' => $s_nsei,
             'from_date'=> $data_ini,
             'to_date'=> $data_fim,
             'ano_listagem' => $ano_listagem,
-            'status' => $status,
+            'empreendimento_id' => $empreendimento_id,
+            'ordensdeservico_id' => $ordensdeservico_id,
+            'fase' => $fase,
         ]);
     ?>
     <div class="row" style="background-color: ghostwhite; padding: 10px 5px">
@@ -279,7 +280,7 @@ use miloschuman\highcharts\Highcharts;
                 $tempo_medio_dnit = 0;
                 $tempo_medio_prosul = 0;
 
-                $empreendimentos = \app\models\Empreendimento::find()->all();
+                $empreendimentos = Empreendimento::find()->all();
                 $graph_empreendimentos = [];
                 $os = \app\models\OrdensdeServico::find()->all();
                 $graph_os = [];
@@ -315,6 +316,9 @@ use miloschuman\highcharts\Highcharts;
                     // Incrementa =====================================
                     $i++;
                 }
+                if ($i == 0) {
+                    $i = 1;
+                }
                 $media_t_dnit = $dnit_t/$i;
                 $media_t_prosul = $prosul_t/$i;
                 // echo 'Produtos: '.$i;
@@ -324,6 +328,14 @@ use miloschuman\highcharts\Highcharts;
                 // echo '<pre>';
                 // echo "Tempo médio de Revisão(PROSUL): ".$prosul_t/$i." dias";
                 // echo '</pre>';
+                // echo $RV0.'<br>';
+                // echo $RV1.'<br>';
+                // echo $RV2.'<br>';
+                // echo $RV3.'<br>';
+                // echo $RV4.'<br>';
+                // echo $RV5.'<br>';
+                // echo $aprovado.'<br>';
+                // echo $aguardando.'<br>';
                 foreach ($empreendimentos as $emp) {
                     $countaprodutos = 0;
                     foreach($dataProvider->getModels() as $item) {
@@ -453,16 +465,20 @@ use miloschuman\highcharts\Highcharts;
                         ],
                         'options' => [
                             'chart' => [
-                                'type' => 'pie'
+                                'type' => 'column'
                             ],
                             'title' => ['text' => 'Por Empreendimento'],
                             'yAxis' => [
                                 'title' => ['text' => 'Produtos']
                             ],
+                            'xAxis' => [
+                                'type' => 'category'
+                            ],
                             'series' =>  [
                                 [
                                     'name' => 'Produtos',
                                     "cursor" => "pointer",
+                                    'colorByPoint' => true,
                                     "point" => [
                                         "events" => [
                                             "click" => new JsExpression('function(){
@@ -471,7 +487,7 @@ use miloschuman\highcharts\Highcharts;
                                         ],
                                     ],
                                     'data' => $graph_empreendimentos,
-                                    'showInLegend' => true,
+                                    'showInLegend' => false,
                                     'dataLabels' => [
                                         'enabled' => false,
                                     ],
@@ -491,16 +507,24 @@ use miloschuman\highcharts\Highcharts;
                         ],
                         'options' => [
                             'chart' => [
-                                'type' => 'pie','innerSize' => '50%',
+                                'type' => 'column',
+                                'innerSize' => '50%',
                             ],
                             'title' => ['text' => 'Por Ordem de Serviço'],
                             'yAxis' => [
                                 'title' => ['text' => 'Produtos']
                             ],
+                            'xAxis' => [
+                                'type' => 'category'
+                            ],
+                            // 'tooltip' => [
+                            //     'pointFormat' => '{series.name}: <b>{point.percentage:.1f}%</b>'
+                            // ],
                             'series' =>  [
                                 [
                                     'name' => 'Produtos',
                                     "cursor" => "pointer",
+                                    'colorByPoint' => true,
                                     "point" => [
                                         "events" => [
                                             "click" => new JsExpression('function(){
@@ -509,7 +533,7 @@ use miloschuman\highcharts\Highcharts;
                                         ],
                                     ],
                                     'data' => $graph_os,
-                                    'showInLegend' => true,
+                                    'showInLegend' => false,
                                     'dataLabels' => [
                                         'enabled' => false,
                                     ],
@@ -572,13 +596,28 @@ use miloschuman\highcharts\Highcharts;
                 </div>
             </div>
         </div>
+        <div class="clearfix"><br></div>
         <div class="row">
-            <div class="col-md-3">
-                <label class="control-label summary" for="pagina-roa_programa">SEI</label>
-                <?= $form->field($searchModel, 'numero')->textInput(['maxlength' => true])->label(false) ?>
+            <h3><center>Pesquisa</center></h3>
+            <!-- <hr> -->
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label class="control-label summary" for="pagina-roa_programa">Número</label>
+                <?php $lista_emp = ArrayHelper::map($empreendimentos, 'id', 'titulo'); ?>
+                <?= $form->field($searchModel, 'empreendimento_id')->dropDownList($lista_emp, [
+                    'prompt' => 'Selecione'
+                ])->label(false) ?>
             </div>
             <div class="col-md-4">
-                <label class="control-label summary" for="from_date">Por data</label>
+                <label class="control-label summary" for="pagina-roa_programa">Número</label>
+                <?php $lista_os = ArrayHelper::map($os, 'id', 'titulo'); ?>
+                <?= $form->field($searchModel, 'ordensdeservico_id')->dropDownList($lista_os, [
+                    'prompt' => 'Selecione'
+                ])->label(false) ?>
+            </div>
+            <div class="col-md-4">
+                <label class="control-label summary" for="from_date">Por data de Entrada</label>
                 <?php
                     $layout3 = '<span class="input-group-addon">De</span>
                     {input1}
@@ -608,53 +647,48 @@ use miloschuman\highcharts\Highcharts;
                     ]);
                 ?>
             </div>
-            <div class="col-md-5">
-                <label class="control-label summary">Últimos dias</label><br>
-                <label for="check-hoje-<?=$tipodepagina?>" style="padding:1%">
-                    <input type="radio" name="ProdutoSearch[intervalo_data]" value="check-hoje" id="check-hoje-<?=$tipodepagina?>" style="" <?=$radiohoje?>>
-                    Hoje
-                </label>
-                <label for="check-ultimos-dias-<?=$tipodepagina?>" style="padding:1%">
-                    <input type="radio" name="ProdutoSearch[intervalo_data]" value="check-ultimos-dias" id="check-ultimos-dias-<?=$tipodepagina?>" style="" <?=$radiosete?>>
-                    Últimos 7 dias
-                </label>
-                <label for="check-ultimo-mes-<?=$tipodepagina?>" style="padding:1%">
-                    <input type="radio" name="ProdutoSearch[intervalo_data]" value="check-ultimo-mes" id="check-ultimo-mes-<?=$tipodepagina?>" style="" <?=$radiotrinta?>>
-                    Últimos 30 dias
-                </label>
-                <label for="check-todos-<?=$tipodepagina?>" style="padding:1%">
-                    <input type="radio" name="ProdutoSearch[intervalo_data]" value="0" id="check-todos-<?=$tipodepagina?>" style="">
-                    Todos
-                </label>
-            </div>
         </div>
         <div class="row">
             <div class="col-md-2">
                 <?= $form->field($searchModel, 'ano_listagem')->dropDownList([
                     '2023'=>'Ano 2023',
                     '2022'=>'Ano 2022',
-                    '2021'=>'Ano 2021',
-                    '2020'=>'Ano 2020',
                     'all'=>'Todos os registros',
-                ])->label(false) ?>
-            </div>    
-            <div class="col-md-8 form-group">
-                <?php // = $form->field($searchModel, 'status')->dropDownList([ 'Não Resolvido' => 'Não Resolvido', 'Parcialmente Resolvido' => 'Parcialmente Resolvido', 'Em andamento' => 'Em andamento', 'Resolvido' => 'Resolvido', ], ['prompt' => '']);?>
-                <label for="nao-resolvido-<?=$tipodepagina?>" style="padding:1%">
-                    <input type="checkbox" name="ProdutoSearch[status][1]" value="Informativo" id="nao-resolvido-<?=$id?>" style="" <?=$campo_status_1?>>
-                    Informativo
+                ])->label('Ano') ?>
+            </div> 
+            <div class="col-md-4">
+                <label class="control-label summary">Últimos dias</label><br>
+                <label for="check-hoje-produto" style="padding:1%">
+                    <input type="radio" name="ProdutoSearch[intervalo_data]" value="check-hoje" id="check-hoje-produto" style="" <?=$radiohoje?>>
+                    Hoje
                 </label>
-                <label for="parcialmente-resolvido-<?=$tipodepagina?>" style="padding:1%">
-                    <input type="checkbox" name="ProdutoSearch[status][2]" value="Em Andamento" id="parcialmente-resolvido-<?=$id?>" style="" <?=$campo_status_2?>>
+                <label for="check-ultimos-dias-produto" style="padding:1%">
+                    <input type="radio" name="ProdutoSearch[intervalo_data]" value="check-ultimos-dias" id="check-ultimos-dias-produto" style="" <?=$radiosete?>>
+                    Últimos 7 dias
+                </label>
+                <label for="check-ultimo-mes-produto" style="padding:1%">
+                    <input type="radio" name="ProdutoSearch[intervalo_data]" value="check-ultimo-mes" id="check-ultimo-mes-produto" style="" <?=$radiotrinta?>>
+                    Últimos 30 dias
+                </label>
+                <label for="check-todos-produto" style="padding:1%">
+                    <input type="radio" name="ProdutoSearch[intervalo_data]" value="0" id="check-todos-produto" style="">
+                    Todos
+                </label>
+            </div>
+            <div class="col-md-4 form-group">
+            <label class="control-label summary">Situação</label><br>
+                <?php // = $form->field($searchModel, 'status')->dropDownList([ 'Não Resolvido' => 'Não Resolvido', 'Parcialmente Resolvido' => 'Parcialmente Resolvido', 'Em andamento' => 'Em andamento', 'Resolvido' => 'Resolvido', ], ['prompt' => '']);?>
+                <label for="em_andamento_produto" style="padding:1%">
+                    <input type="checkbox" name="ProdutoSearch[fase][1]" value="Em andamento" id="em_andamento_produto" style="" <?=$campo_status_1?>>
                     Em Andamento
                 </label>
-                <label for="em-andamento-<?=$tipodepagina?>" style="padding:1%">
-                    <input type="checkbox" name="ProdutoSearch[status][3]" value="Resolvido" id="em-andamento-<?=$id?>" style="" <?=$campo_status_3?>>
-                    Resolvido
+                <label for="aprovado_produto" style="padding:1%">
+                    <input type="checkbox" name="ProdutoSearch[fase][2]" value="Aprovado" id="aprovado_produto" style="" <?=$campo_status_2?>>
+                    Aprovado
                 </label>
-                <label for="resolvido-<?=$tipodepagina?>" style="padding:1%">
-                    <input type="checkbox" name="ProdutoSearch[status][4]" value="Não Resolvido" id="resolvido-<?=$id?>" style="" <?=$campo_status_4?>>
-                    Não Resolvido
+                <label for="reprovado_produto" style="padding:1%">
+                    <input type="checkbox" name="ProdutoSearch[fase][3]" value="Reprovado" id="reprovado_produto" style="" <?=$campo_status_3?>>
+                    Reprovado
                 </label>
                 <!-- <label for="forcomunicados" style="padding:1%">
                     <input type="checkbox" name="ProdutoSearch[comunicados]" value="1" style="" id="forcomunicados" >
@@ -662,6 +696,7 @@ use miloschuman\highcharts\Highcharts;
                 </label> -->
             </div>
             <div class="col-md-2 form-group">
+                <br>
                 <img id="loading1-produtos" src="<?=Yii::$app->homeUrl?>arquivos/loading_blue.gif" width="40" style="float:right;margin-left: 12px;margin-top: -3px;display:none">
                 <?php             
                     echo Html::submitButton('Pesquisar', [
@@ -728,9 +763,8 @@ use miloschuman\highcharts\Highcharts;
                     'width' => '5%'
                 ]
             ],
-            // 'fase',
             // [
-            //     'attribute' => 'datacadastro',
+                //     'attribute' => 'datacadastro',
             //     'value' => function($data) {
             //         return date('d/m/Y', strtotime($data->datacadastro));
             //     }
@@ -747,6 +781,7 @@ use miloschuman\highcharts\Highcharts;
                     return $data->aprov_data ? date('d/m/Y', strtotime($data->aprov_data)) : '';
                 }
             ],
+            'fase',
             [
                 'attribute' => 'id',
                 'header' => 'Detalhes',

@@ -76,6 +76,7 @@ class ProdutoSearch extends Produto
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'fase' => $this->fase,
             'produto_id' => $this->produto_id,
             'empreendimento_id' => $this->empreendimento_id,
             'ordensdeservico_id' => $this->ordensdeservico_id,
@@ -89,7 +90,7 @@ class ProdutoSearch extends Produto
         ]);
 
         $query->andFilterWhere(['like', 'numero', $this->numero])
-            ->andFilterWhere(['like', 'fase', $this->fase])
+            // ->andFilterWhere(['like', 'fase', $this->fase])
             ->andFilterWhere(['like', 'entrega', $this->entrega])
             ->andFilterWhere(['like', 'servico', $this->servico])
             ->andFilterWhere(['like', 'descricao', $this->descricao])
