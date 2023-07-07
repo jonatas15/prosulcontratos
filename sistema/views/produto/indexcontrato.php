@@ -9,6 +9,9 @@ use yii\widgets\Pjax;
 use yii\widgets\ActiveForm;
 use kartik\date\DatePicker;
 
+use yii\web\JsExpression;
+use miloschuman\highcharts\Highcharts;
+
     /**
     
         use Box\Spout\Reader\Common\Creator\ReaderEntityFactory;
@@ -92,7 +95,7 @@ use kartik\date\DatePicker;
 // use kartik\grid\GridView;
 
 /** @var yii\web\View $this */
-/** @var app\models\OficioSearch $searchModel */
+/** @var app\models\ProdutoSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 // $this->title = $model->titulo.' Oficios';
@@ -177,7 +180,7 @@ use kartik\date\DatePicker;
     
     
     Pjax::begin([
-        'id' => 'admin-crud-id-roa', 
+        'id' => 'admin-crud-id-produtos', 
         'timeout' => false,
         'enablePushState' => false
     ]); ?>
@@ -186,16 +189,16 @@ use kartik\date\DatePicker;
 
 
 
-        $s_tipo = $_REQUEST['OficioSearch']['tipo'] ? $_REQUEST['OficioSearch']['tipo'] : '';
-        $s_nsei = $_REQUEST['OficioSearch']['Num_sei'] ? $_REQUEST['OficioSearch']['Num_sei'] : '';
-        $ano_listagem = $_REQUEST['OficioSearch']['ano_listagem'] ? $_REQUEST['OficioSearch']['ano_listagem'] : '';
-        $status = $_REQUEST['OficioSearch']['status'] ? $_REQUEST['OficioSearch']['status'] : '';
+        $s_tipo = $_REQUEST['ProdutoSearch']['tipo'] ? $_REQUEST['ProdutoSearch']['tipo'] : '';
+        $s_nsei = $_REQUEST['ProdutoSearch']['Num_sei'] ? $_REQUEST['ProdutoSearch']['Num_sei'] : '';
+        $ano_listagem = $_REQUEST['ProdutoSearch']['ano_listagem'] ? $_REQUEST['ProdutoSearch']['ano_listagem'] : '';
+        $status = $_REQUEST['ProdutoSearch']['status'] ? $_REQUEST['ProdutoSearch']['status'] : '';
         # Intervalo de data #######################################################################
         $data_ini = $_REQUEST['from_date'];
         $data_fim = $_REQUEST['to_date'];
         $datainicial = $data_ini;
         $datafinial = $data_fim;
-        $intervalo_data = $_REQUEST['OficioSearch']['intervalo_data'];
+        $intervalo_data = $_REQUEST['ProdutoSearch']['intervalo_data'];
         
         // echo Yii::$app->formatter->asDate($data_ini, 'yyyy-MM-dd');
         if (!empty($data_ini) AND !empty($data_fim)) :
@@ -267,6 +270,309 @@ use kartik\date\DatePicker;
             'autocomplete'=>"off"  
         ]]); ?>
         <div class="row">
+            <?php 
+                $aprovado = 0;
+                $aguardando = 0;
+                $reprovado = 0;
+                $RV0 = $RV1 = $RV2 = $RV3 = $RV4 = $RV5 = 0;
+                $RV0_t = $RV1_t = $RV2_t = $RV3_t = $RV4_t = $RV5_t = 0;
+                $tempo_medio_dnit = 0;
+                $tempo_medio_prosul = 0;
+
+                $empreendimentos = \app\models\Empreendimento::find()->all();
+                $graph_empreendimentos = [];
+                $os = \app\models\OrdensdeServico::find()->all();
+                $graph_os = [];
+                $i = 0;
+                $dnit_t = $prosul_t = $cgmab = 0;
+                foreach($dataProvider->getModels() as $item) {
+                    if($item->aprov_data != '') {
+                        $aprovado += 1;
+                    } else {
+                        $aguardando += 1;
+                    }
+                    switch ($item->aprov_versao) {
+                        case 'RV0': $RV0 += 1; break;
+                        case 'RV1': $RV1 += 1; break;
+                        case 'RV2': $RV2 += 1; break;
+                        case 'RV3': $RV3 += 1; break;
+                        case 'RV4': $RV4 += 1; break;
+                        case 'RV5': $RV5 += 1; break;
+                    }
+                    
+                    // tempo médio em revisões dnit
+                    $data_comparada = $item->data_entrega;
+                    foreach ($item->revisaos as $rv) {
+                       if(in_array($rv->titulo, ["Revisão 01 (DNIT)", "Revisão 03 (DNIT)", "Revisão 05 (DNIT)"])) {
+                            $dnit_t += $this->context->diasentre($data_comparada, $rv->data);
+                       }
+                       if(in_array($rv->titulo, ["Revisão 02 (Prosul)", "Revisão 04 (Prosul)", "Revisão 06 (Prosul)"])) {
+                            $prosul_t += $this->context->diasentre($data_comparada, $rv->data);
+                       }
+                       $data_comparada = $rv->data;
+                    }
+
+                    // Incrementa =====================================
+                    $i++;
+                }
+                $media_t_dnit = $dnit_t/$i;
+                $media_t_prosul = $prosul_t/$i;
+                // echo 'Produtos: '.$i;
+                // echo '<pre>';
+                // echo "Tempo médio de Revisão(DNIT): ".$dnit_t/$i." dias";
+                // echo '</pre>';
+                // echo '<pre>';
+                // echo "Tempo médio de Revisão(PROSUL): ".$prosul_t/$i." dias";
+                // echo '</pre>';
+                foreach ($empreendimentos as $emp) {
+                    $countaprodutos = 0;
+                    foreach($dataProvider->getModels() as $item) {
+                        if ($item->empreendimento_id == $emp->id) {
+                            $countaprodutos += 1;
+                        }
+                    }
+                    array_push($graph_empreendimentos, [
+                        'name' => $emp->titulo, 'y' => $countaprodutos, 'url' => 'RV0'
+                    ]);
+                }
+                foreach ($os as $emp) {
+                    $countaprodutos = 0;
+                    foreach($dataProvider->getModels() as $item) {
+                        if ($item->ordensdeservico_id == $emp->id) {
+                            $countaprodutos += 1;
+                        }
+                    }
+                    array_push($graph_os, [
+                        'name' => $emp->titulo, 'y' => $countaprodutos, 'url' => 'RV0'
+                    ]);
+                }
+                $reviews_aprov = [
+                    [ 'name' => 'RV 0', 'y' => $RV0, 'url' => 'RV0', 'color' => '#006400' ],
+                    [ 'name' => 'RV 1', 'y' => $RV1, 'url' => 'RV1', 'color' => '#2e8b57' ],
+                    [ 'name' => 'RV 2', 'y' => $RV2, 'url' => 'RV2', 'color' => '#6b8e23' ],
+                    [ 'name' => 'RV 3', 'y' => $RV3, 'url' => 'RV3', 'color' => '#007b80' ],
+                    // [ 'name' => 'RV4', 'y' => $RV4, 'url' => 'RV4' ],
+                    // [ 'name' => 'RV5', 'y' => $RV5, 'url' => 'RV5' ],
+                ];
+            ?>
+            <div class="col">
+                <div class="card">
+                <?= Highcharts::widget([
+                        'scripts' => [
+                            'modules/exporting',
+                            'themes/grid-light',
+                        ],
+                        'options' => [
+                            'chart' => [
+                                'type' => 'pie'
+                            ],
+                            'title' => ['text' => 'Situação'],
+                            'yAxis' => [
+                                'title' => ['text' => 'Status']
+                            ],
+                            'series' =>  [
+                                [
+                                    'name' => 'Produtos',
+                                    "cursor" => "pointer",
+                                    "point" => [
+                                        "events" => [
+                                            "click" => new JsExpression('function(){
+                                                console.log(this.options.url)
+                                            }')
+                                        ],
+                                    ],
+                                    'data' => [
+                                        [
+                                            'name' => 'Aprovado',
+                                            'y' => $aprovado,
+                                            'color' => 'green',
+                                            'url' => 'google.com.br'
+                                        ],
+                                        [
+                                            'name' => 'Em análise',
+                                            'y' => $aguardando,
+                                            'color' => 'yellow',
+                                            'url' => 'yahoo.com.br'
+                                        ],
+                                    ],
+                                    'showInLegend' => true,
+                                    'dataLabels' => [
+                                        'enabled' => false,
+                                    ],
+                                ],
+                            ],
+                        ]
+                    ]);
+                ?>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                <?= Highcharts::widget([
+                        'scripts' => [
+                            'modules/exporting',
+                            'themes/grid-light',
+                        ],
+                        'options' => [
+                            'chart' => [
+                                'type' => 'pie'
+                            ],
+                            'title' => ['text' => 'Por versão aprovada'],
+                            'yAxis' => [
+                                'title' => ['text' => 'Versão']
+                            ],
+                            'series' =>  [
+                                [
+                                    'name' => 'Produtos',
+                                    "cursor" => "pointer",
+                                    "point" => [
+                                        "events" => [
+                                            "click" => new JsExpression('function(){
+                                                console.log(this.options.url)
+                                            }')
+                                        ],
+                                    ],
+                                    'data' => $reviews_aprov,
+                                    'showInLegend' => true,
+                                    'dataLabels' => [
+                                        'enabled' => false,
+                                    ],
+                                ],
+                            ],
+                        ]
+                    ]);
+                ?>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                <?= Highcharts::widget([
+                        'scripts' => [
+                            'modules/exporting',
+                            'themes/grid-light',
+                        ],
+                        'options' => [
+                            'chart' => [
+                                'type' => 'pie'
+                            ],
+                            'title' => ['text' => 'Por Empreendimento'],
+                            'yAxis' => [
+                                'title' => ['text' => 'Produtos']
+                            ],
+                            'series' =>  [
+                                [
+                                    'name' => 'Produtos',
+                                    "cursor" => "pointer",
+                                    "point" => [
+                                        "events" => [
+                                            "click" => new JsExpression('function(){
+                                                console.log(this.options.url)
+                                            }')
+                                        ],
+                                    ],
+                                    'data' => $graph_empreendimentos,
+                                    'showInLegend' => true,
+                                    'dataLabels' => [
+                                        'enabled' => false,
+                                    ],
+                                ],
+                            ],
+                        ]
+                    ]);
+                ?>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                <?= Highcharts::widget([
+                        'scripts' => [
+                            'modules/exporting',
+                            'themes/grid-light',
+                        ],
+                        'options' => [
+                            'chart' => [
+                                'type' => 'pie','innerSize' => '50%',
+                            ],
+                            'title' => ['text' => 'Por Ordem de Serviço'],
+                            'yAxis' => [
+                                'title' => ['text' => 'Produtos']
+                            ],
+                            'series' =>  [
+                                [
+                                    'name' => 'Produtos',
+                                    "cursor" => "pointer",
+                                    "point" => [
+                                        "events" => [
+                                            "click" => new JsExpression('function(){
+                                                console.log(this.options.url)
+                                            }')
+                                        ],
+                                    ],
+                                    'data' => $graph_os,
+                                    'showInLegend' => true,
+                                    'dataLabels' => [
+                                        'enabled' => false,
+                                    ],
+                                ],
+                            ],
+                        ]
+                    ]);
+                ?>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                <?= Highcharts::widget([
+                        'scripts' => [
+                            'modules/exporting',
+                            'themes/grid-light',
+                        ],
+                        'options' => [
+                            'chart' => [
+                                'type' => 'pie'
+                            ],
+                            'title' => ['text' => 'Tempo médio para Revisão'],
+                            'yAxis' => [
+                                'title' => ['text' => 'Dias']
+                            ],
+                            'series' =>  [
+                                [
+                                    'name' => 'Dias',
+                                    "cursor" => "pointer",
+                                    "point" => [
+                                        "events" => [
+                                            "click" => new JsExpression('function(){
+                                                console.log(this.options.url)
+                                            }')
+                                        ],
+                                    ],
+                                    'data' => [
+                                        [
+                                            'name' => 'DNIT',
+                                            'y' => $media_t_dnit,
+                                            'color' => 'green',
+                                            'url' => 'google.com.br'
+                                        ],
+                                        [
+                                            'name' => 'Prosul',
+                                            'y' => $media_t_prosul,
+                                            'color' => 'blue',
+                                            'url' => 'yahoo.com.br'
+                                        ],
+                                    ],
+                                    'showInLegend' => true,
+                                    'dataLabels' => [
+                                        'enabled' => false,
+                                    ],
+                                ],
+                            ],
+                        ]
+                    ]);
+                ?>
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md-3">
                 <label class="control-label summary" for="pagina-roa_programa">SEI</label>
                 <?= $form->field($searchModel, 'numero')->textInput(['maxlength' => true])->label(false) ?>
@@ -305,19 +611,19 @@ use kartik\date\DatePicker;
             <div class="col-md-5">
                 <label class="control-label summary">Últimos dias</label><br>
                 <label for="check-hoje-<?=$tipodepagina?>" style="padding:1%">
-                    <input type="radio" name="OficioSearch[intervalo_data]" value="check-hoje" id="check-hoje-<?=$tipodepagina?>" style="" <?=$radiohoje?>>
+                    <input type="radio" name="ProdutoSearch[intervalo_data]" value="check-hoje" id="check-hoje-<?=$tipodepagina?>" style="" <?=$radiohoje?>>
                     Hoje
                 </label>
                 <label for="check-ultimos-dias-<?=$tipodepagina?>" style="padding:1%">
-                    <input type="radio" name="OficioSearch[intervalo_data]" value="check-ultimos-dias" id="check-ultimos-dias-<?=$tipodepagina?>" style="" <?=$radiosete?>>
+                    <input type="radio" name="ProdutoSearch[intervalo_data]" value="check-ultimos-dias" id="check-ultimos-dias-<?=$tipodepagina?>" style="" <?=$radiosete?>>
                     Últimos 7 dias
                 </label>
                 <label for="check-ultimo-mes-<?=$tipodepagina?>" style="padding:1%">
-                    <input type="radio" name="OficioSearch[intervalo_data]" value="check-ultimo-mes" id="check-ultimo-mes-<?=$tipodepagina?>" style="" <?=$radiotrinta?>>
+                    <input type="radio" name="ProdutoSearch[intervalo_data]" value="check-ultimo-mes" id="check-ultimo-mes-<?=$tipodepagina?>" style="" <?=$radiotrinta?>>
                     Últimos 30 dias
                 </label>
                 <label for="check-todos-<?=$tipodepagina?>" style="padding:1%">
-                    <input type="radio" name="OficioSearch[intervalo_data]" value="0" id="check-todos-<?=$tipodepagina?>" style="">
+                    <input type="radio" name="ProdutoSearch[intervalo_data]" value="0" id="check-todos-<?=$tipodepagina?>" style="">
                     Todos
                 </label>
             </div>
@@ -335,44 +641,44 @@ use kartik\date\DatePicker;
             <div class="col-md-8 form-group">
                 <?php // = $form->field($searchModel, 'status')->dropDownList([ 'Não Resolvido' => 'Não Resolvido', 'Parcialmente Resolvido' => 'Parcialmente Resolvido', 'Em andamento' => 'Em andamento', 'Resolvido' => 'Resolvido', ], ['prompt' => '']);?>
                 <label for="nao-resolvido-<?=$tipodepagina?>" style="padding:1%">
-                    <input type="checkbox" name="OficioSearch[status][1]" value="Informativo" id="nao-resolvido-<?=$id?>" style="" <?=$campo_status_1?>>
+                    <input type="checkbox" name="ProdutoSearch[status][1]" value="Informativo" id="nao-resolvido-<?=$id?>" style="" <?=$campo_status_1?>>
                     Informativo
                 </label>
                 <label for="parcialmente-resolvido-<?=$tipodepagina?>" style="padding:1%">
-                    <input type="checkbox" name="OficioSearch[status][2]" value="Em Andamento" id="parcialmente-resolvido-<?=$id?>" style="" <?=$campo_status_2?>>
+                    <input type="checkbox" name="ProdutoSearch[status][2]" value="Em Andamento" id="parcialmente-resolvido-<?=$id?>" style="" <?=$campo_status_2?>>
                     Em Andamento
                 </label>
                 <label for="em-andamento-<?=$tipodepagina?>" style="padding:1%">
-                    <input type="checkbox" name="OficioSearch[status][3]" value="Resolvido" id="em-andamento-<?=$id?>" style="" <?=$campo_status_3?>>
+                    <input type="checkbox" name="ProdutoSearch[status][3]" value="Resolvido" id="em-andamento-<?=$id?>" style="" <?=$campo_status_3?>>
                     Resolvido
                 </label>
                 <label for="resolvido-<?=$tipodepagina?>" style="padding:1%">
-                    <input type="checkbox" name="OficioSearch[status][4]" value="Não Resolvido" id="resolvido-<?=$id?>" style="" <?=$campo_status_4?>>
+                    <input type="checkbox" name="ProdutoSearch[status][4]" value="Não Resolvido" id="resolvido-<?=$id?>" style="" <?=$campo_status_4?>>
                     Não Resolvido
                 </label>
                 <!-- <label for="forcomunicados" style="padding:1%">
-                    <input type="checkbox" name="OficioSearch[comunicados]" value="1" style="" id="forcomunicados" >
+                    <input type="checkbox" name="ProdutoSearch[comunicados]" value="1" style="" id="forcomunicados" >
                     Com CNC
                 </label> -->
             </div>
             <div class="col-md-2 form-group">
-                <img id="loading1" src="<?=Yii::$app->homeUrl?>arquivo/loading_blue.gif" width="40" style="float:right;margin-left: 12px;margin-top: -3px;display:none">
+                <img id="loading1-produtos" src="<?=Yii::$app->homeUrl?>arquivos/loading_blue.gif" width="40" style="float:right;margin-left: 12px;margin-top: -3px;display:none">
                 <?php             
                     echo Html::submitButton('Pesquisar', [
                         'class' => 'btn btn-primary',
                         'style'=>'float:right;margin:1%',
-                        'id'=>'botao-envia-pesquisa-ajax'
-                        // 'onclick'=>'$(this).addClass("disabled");$("#loading1").show();this.form.submit();this.disabled=true;',
-                        // 'onmouseup'=>'$(this).addClass("disabled");$("#loading1").show();this.disabled=true;',
+                        'id'=>'botao-envia-pesquisa-ajax-produto'
+                        // 'onclick'=>'$(this).addClass("disabled");$("#loading1-produtos").show();this.form.submit();this.disabled=true;',
+                        // 'onmouseup'=>'$(this).addClass("disabled");$("#loading1-produtos").show();this.disabled=true;',
                     ]);
                     $this->registerJs(<<<JS
                         $(document).on('pjax:send', function() {
-                            $("#loading1").show();
-                            $("#botao-envia-pesquisa-ajax").addClass("disabled");
+                            $("#loading1-produtos").show();
+                            $("#botao-envia-pesquisa-ajax-produto").addClass("disabled");
                         });
                         $(document).on('pjax:complete', function() {
-                            $('#loading1').hide();
-                            $("#botao-envia-pesquisa-ajax").removeClass("disabled");
+                            $('#loading1-produtos').hide();
+                            $("#botao-envia-pesquisa-ajax-produto").removeClass("disabled");
                         });
                     JS
                     );
@@ -423,10 +729,16 @@ use kartik\date\DatePicker;
                 ]
             ],
             // 'fase',
+            // [
+            //     'attribute' => 'datacadastro',
+            //     'value' => function($data) {
+            //         return date('d/m/Y', strtotime($data->datacadastro));
+            //     }
+            // ],
             [
-                'attribute' => 'datacadastro',
+                'attribute' => 'data_entrega',
                 'value' => function($data) {
-                    return date('d/m/Y', strtotime($data->datacadastro));
+                    return $data->data_entrega ? date('d/m/Y', strtotime($data->data_entrega)) : '';
                 }
             ],
             [

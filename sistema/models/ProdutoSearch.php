@@ -15,11 +15,18 @@ class ProdutoSearch extends Produto
     /**
      * {@inheritdoc}
      */
+    public $param;
+    public $from_date;
+    public $to_date;
+    public $ids;
+    public $contagem_emp;
     public function rules()
     {
         return [
             [['id', 'produto_id', 'empreendimento_id', 'ordensdeservico_id', 'aprov_tempo_ultima_revisao', 'aprov_tempo_total'], 'integer'],
             [['numero', 'datacadastro', 'data_validade', 'data_renovacao', 'data_entrega', 'fase', 'entrega', 'servico', 'descricao', 'aprov_data', 'aprov_versao', 'diretorio_texto', 'diretorio_link'], 'safe'],
+            [['from_date', 'to_date', 'ano_listagem'], 'safe'],
+            [['param'], 'string', 'on' => 'MY_SCENARIO'],
         ];
     }
 
@@ -57,7 +64,8 @@ class ProdutoSearch extends Produto
             ],
         ]);
 
-        $this->load($params);
+        // $this->load($params);
+        (isset($params['ProdutoSearch'])?$this->load($params):$this->load($params,''));
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
@@ -88,6 +96,18 @@ class ProdutoSearch extends Produto
             ->andFilterWhere(['like', 'aprov_versao', $this->aprov_versao])
             ->andFilterWhere(['like', 'diretorio_texto', $this->diretorio_texto])
             ->andFilterWhere(['like', 'diretorio_link', $this->diretorio_link]);
+        
+            $query->andFilterWhere(['between', 'data_entrega', $this->from_date, $this->to_date]);
+            if ($this->ano_listagem != 'all') {
+                $query->andFilterWhere([
+                    'YEAR(data_entrega)' => $this->ano_listagem,
+                ]);
+            }
+            // if ($this->tipo != 'all') {
+            //     $query->andFilterWhere([
+            //         'tipo' => $this->tipo,
+            //     ]);
+            // }
 
         return $dataProvider;
     }

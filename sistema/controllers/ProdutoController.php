@@ -195,4 +195,10 @@ class ProdutoController extends Controller
         $arr = explode('/', $data);
         return $arr[2].'-'.$arr[1].'-'.$arr[0];
     }
+
+    function diasentre($data_inicial, $data_final) {
+        $diferenca = strtotime($data_final) - strtotime($data_inicial);
+        $dias = floor($diferenca / (60 * 60 * 24)); 
+        return $dias;
+    }
 }

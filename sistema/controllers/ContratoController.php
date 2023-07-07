@@ -170,4 +170,10 @@ class ContratoController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+    function diasentre($data_inicial, $data_final) {
+        $diferenca = strtotime($data_final) - strtotime($data_inicial);
+        $dias = floor($diferenca / (60 * 60 * 24)); 
+        return $dias;
+    }
 }
