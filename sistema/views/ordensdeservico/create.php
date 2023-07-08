@@ -1,20 +1,29 @@
 <?php
-
-use yii\helpers\Html;
-
-/** @var yii\web\View $this */
-/** @var app\models\Ordensdeservico $model */
-
-$this->title = 'Create Ordensdeservico';
-$this->params['breadcrumbs'][] = ['label' => 'Ordensdeservicos', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+    use yii\helpers\Html;
+    use yii\bootstrap5\Modal;
+?>
+<?php
+Modal::begin([
+    'title' => "Nova Ordem de serviço",
+    'options' => [
+        'id' => 'cadastrar-novo-os',
+        'tabindex' => false,
+    ],
+    'bodyOptions' => [
+        'class' => 'bg-white',
+    ],
+    'size' => 'modal-xl',
+    'toggleButton' => [
+        'label' => '<i class="bi bi-card-list"></i> Nova Ordem de Serviço',
+        'class' => 'btn btn-primary text-white  float-right'
+    ],
+]);
 ?>
 <div class="ordensdeservico-create">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <?= $this->render('_form', [
         'model' => $model,
+        'action' => 'ordensdeservico/create',
+        'contrato_id' => $contrato_id
     ]) ?>
-
 </div>
+<?php Modal::end(); ?>

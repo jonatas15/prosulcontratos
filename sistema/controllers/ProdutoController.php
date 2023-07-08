@@ -46,6 +46,13 @@ class ProdutoController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+    public function actionIndexcontrato()
+    {
+        return $this->render('indexcontrato', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider
+        ]);
+    }
 
     /**
      * Displays a single Produto model.

@@ -23,7 +23,7 @@ class ProdutoSearch extends Produto
     public function rules()
     {
         return [
-            [['id', 'produto_id', 'empreendimento_id', 'ordensdeservico_id', 'aprov_tempo_ultima_revisao', 'aprov_tempo_total'], 'integer'],
+            [['id', 'produto_id', 'contrato_id', 'empreendimento_id', 'ordensdeservico_id', 'aprov_tempo_ultima_revisao', 'aprov_tempo_total'], 'integer'],
             [['numero', 'datacadastro', 'data_validade', 'data_renovacao', 'data_entrega', 'fase', 'entrega', 'servico', 'descricao', 'aprov_data', 'aprov_versao', 'diretorio_texto', 'diretorio_link'], 'safe'],
             [['from_date', 'to_date', 'ano_listagem'], 'safe'],
             [['param'], 'string', 'on' => 'MY_SCENARIO'],
@@ -78,6 +78,7 @@ class ProdutoSearch extends Produto
             'id' => $this->id,
             'fase' => $this->fase,
             'produto_id' => $this->produto_id,
+            'contrato_id' => $this->contrato_id,
             'empreendimento_id' => $this->empreendimento_id,
             'ordensdeservico_id' => $this->ordensdeservico_id,
             'datacadastro' => $this->datacadastro,

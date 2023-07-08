@@ -1,6 +1,6 @@
 <?php
 
-use app\models\Oficio;
+use app\models\Ordensdeservico as OS;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -8,24 +8,11 @@ use yii\grid\GridView;
 use yii\widgets\Pjax;
 use yii\widgets\ActiveForm;
 use kartik\date\DatePicker;
-// use dosamigos\datepicker\DatePicker;
+use yii\helpers\ArrayHelper;
 
-// use yii\bootstrap5\Modal;
-// Modal::begin([
-//         'title' => '<h2>Hello world</h2>',
-//         'toggleButton' => ['label' => 'click me'],
-//         'options' => [
-//             'tabindex' => "false"
-//         ]
-//     ]);
-    
-//     echo 'Say hello...';
-    
-//     Modal::end();
-// use kartik\grid\GridView;
 
 /** @var yii\web\View $this */
-/** @var app\models\OficioSearch $searchModel */
+/** @var app\models\OrdensdeservicoSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 // $this->title = 'Oficios';
@@ -75,17 +62,26 @@ use kartik\date\DatePicker;
 </style>
 <div class="ordensdeservico-index">
 
-    <h3><img src="/web/logo/upload-files-icon.png" class="icone-modulo" width="25" />  Contrato: Ordens de Serviço</h3>
+    <h3><img src="<?=Yii::$app->homeUrl?>logo/upload-files-icon.png" class="icone-modulo" width="25" />  Contrato: Ordens de Serviço</h3>
+    <div class="row">
+        <div class="col-md-12">
+            <?php $modelOrdensdeservico = new OS(); ?>
+            <?= $this->render('create', [
+                'model' => $modelOrdensdeservico,
+                'contrato_id' => $contrato_id
+            ]) ?>
+        </div>
+    </div>
     <div class="clearfix">
         <br />
     </div>
     <?php
         ########################################## TIPO ##########################################
-        $search_tipos = Oficio::find()->select('tipo')->groupBy('tipo')->all();
-        $lista_tipos = [];
-        foreach ($search_tipos as $value):
-            $lista_tipos[$value->tipo] = $value->tipo;
-        endforeach;
+        // $search_tipos = OS::find()->select('tipo')->groupBy('tipo')->all();
+        // $lista_tipos = [];
+        // foreach ($search_tipos as $value):
+        //     $lista_tipos[$value->tipo] = $value->tipo;
+        // endforeach;
         ######################################### STATUS #########################################
         // $search_status = Oficio::find()->select('status')->groupBy('status')->all();
         // $lista_status = [];
@@ -101,7 +97,7 @@ use kartik\date\DatePicker;
     
     
     Pjax::begin([
-        'id' => 'admin-crud-id-roa', 
+        'id' => 'admin-crud-id-roa-oservicos', 
         'timeout' => false,
         'enablePushState' => false
     ]); ?>
@@ -110,16 +106,16 @@ use kartik\date\DatePicker;
 
 
 
-        $s_tipo = $_REQUEST['OficioSearch']['tipo'] ? $_REQUEST['OficioSearch']['tipo'] : '';
-        $s_nsei = $_REQUEST['OficioSearch']['Num_sei'] ? $_REQUEST['OficioSearch']['Num_sei'] : '';
-        $ano_listagem = $_REQUEST['OficioSearch']['ano_listagem'] ? $_REQUEST['OficioSearch']['ano_listagem'] : '';
-        $status = $_REQUEST['OficioSearch']['status'] ? $_REQUEST['OficioSearch']['status'] : '';
+        $s_tipo = $_REQUEST['OrdensdeservicoSearch']['tipo'] ? $_REQUEST['OrdensdeservicoSearch']['tipo'] : '';
+        $s_nsei = $_REQUEST['OrdensdeservicoSearch']['Num_sei'] ? $_REQUEST['OrdensdeservicoSearch']['Num_sei'] : '';
+        $ano_listagem = $_REQUEST['OrdensdeservicoSearch']['ano_listagem'] ? $_REQUEST['OrdensdeservicoSearch']['ano_listagem'] : '';
+        $status = $_REQUEST['OrdensdeservicoSearch']['status'] ? $_REQUEST['OrdensdeservicoSearch']['status'] : '';
         # Intervalo de data #######################################################################
         $data_ini = $_REQUEST['from_date'];
         $data_fim = $_REQUEST['to_date'];
         $datainicial = $data_ini;
         $datafinial = $data_fim;
-        $intervalo_data = $_REQUEST['OficioSearch']['intervalo_data'];
+        $intervalo_data = $_REQUEST['OrdensdeservicoSearch']['intervalo_data'];
         
         // echo Yii::$app->formatter->asDate($data_ini, 'yyyy-MM-dd');
         if (!empty($data_ini) AND !empty($data_fim)) :
@@ -229,19 +225,19 @@ use kartik\date\DatePicker;
             <div class="col-md-5">
                 <label class="control-label summary">Últimos dias</label><br>
                 <label for="check-hoje-<?=$tipodepagina?>" style="padding:1%">
-                    <input type="radio" name="OficioSearch[intervalo_data]" value="check-hoje" id="check-hoje-<?=$tipodepagina?>" style="" <?=$radiohoje?>>
+                    <input type="radio" name="OrdensdeservicoSearch[intervalo_data]" value="check-hoje" id="check-hoje-<?=$tipodepagina?>" style="" <?=$radiohoje?>>
                     Hoje
                 </label>
                 <label for="check-ultimos-dias-<?=$tipodepagina?>" style="padding:1%">
-                    <input type="radio" name="OficioSearch[intervalo_data]" value="check-ultimos-dias" id="check-ultimos-dias-<?=$tipodepagina?>" style="" <?=$radiosete?>>
+                    <input type="radio" name="OrdensdeservicoSearch[intervalo_data]" value="check-ultimos-dias" id="check-ultimos-dias-<?=$tipodepagina?>" style="" <?=$radiosete?>>
                     Últimos 7 dias
                 </label>
                 <label for="check-ultimo-mes-<?=$tipodepagina?>" style="padding:1%">
-                    <input type="radio" name="OficioSearch[intervalo_data]" value="check-ultimo-mes" id="check-ultimo-mes-<?=$tipodepagina?>" style="" <?=$radiotrinta?>>
+                    <input type="radio" name="OrdensdeservicoSearch[intervalo_data]" value="check-ultimo-mes" id="check-ultimo-mes-<?=$tipodepagina?>" style="" <?=$radiotrinta?>>
                     Últimos 30 dias
                 </label>
                 <label for="check-todos-<?=$tipodepagina?>" style="padding:1%">
-                    <input type="radio" name="OficioSearch[intervalo_data]" value="0" id="check-todos-<?=$tipodepagina?>" style="">
+                    <input type="radio" name="OrdensdeservicoSearch[intervalo_data]" value="0" id="check-todos-<?=$tipodepagina?>" style="">
                     Todos
                 </label>
             </div>
@@ -259,23 +255,23 @@ use kartik\date\DatePicker;
             <div class="col-md-8 form-group">
                 <?php // = $form->field($searchModel, 'status')->dropDownList([ 'Não Resolvido' => 'Não Resolvido', 'Parcialmente Resolvido' => 'Parcialmente Resolvido', 'Em andamento' => 'Em andamento', 'Resolvido' => 'Resolvido', ], ['prompt' => '']);?>
                 <label for="nao-resolvido-<?=$tipodepagina?>" style="padding:1%">
-                    <input type="checkbox" name="OficioSearch[status][1]" value="Informativo" id="nao-resolvido-<?=$id?>" style="" <?=$campo_status_1?>>
+                    <input type="checkbox" name="OrdensdeservicoSearch[status][1]" value="Informativo" id="nao-resolvido-<?=$id?>" style="" <?=$campo_status_1?>>
                     Informativo
                 </label>
                 <label for="parcialmente-resolvido-<?=$tipodepagina?>" style="padding:1%">
-                    <input type="checkbox" name="OficioSearch[status][2]" value="Em Andamento" id="parcialmente-resolvido-<?=$id?>" style="" <?=$campo_status_2?>>
+                    <input type="checkbox" name="OrdensdeservicoSearch[status][2]" value="Em Andamento" id="parcialmente-resolvido-<?=$id?>" style="" <?=$campo_status_2?>>
                     Em Andamento
                 </label>
                 <label for="em-andamento-<?=$tipodepagina?>" style="padding:1%">
-                    <input type="checkbox" name="OficioSearch[status][3]" value="Resolvido" id="em-andamento-<?=$id?>" style="" <?=$campo_status_3?>>
+                    <input type="checkbox" name="OrdensdeservicoSearch[status][3]" value="Resolvido" id="em-andamento-<?=$id?>" style="" <?=$campo_status_3?>>
                     Resolvido
                 </label>
                 <label for="resolvido-<?=$tipodepagina?>" style="padding:1%">
-                    <input type="checkbox" name="OficioSearch[status][4]" value="Não Resolvido" id="resolvido-<?=$id?>" style="" <?=$campo_status_4?>>
+                    <input type="checkbox" name="OrdensdeservicoSearch[status][4]" value="Não Resolvido" id="resolvido-<?=$id?>" style="" <?=$campo_status_4?>>
                     Não Resolvido
                 </label>
                 <!-- <label for="forcomunicados" style="padding:1%">
-                    <input type="checkbox" name="OficioSearch[comunicados]" value="1" style="" id="forcomunicados" >
+                    <input type="checkbox" name="OrdensdeservicoSearch[comunicados]" value="1" style="" id="forcomunicados" >
                     Com CNC
                 </label> -->
             </div>
@@ -317,7 +313,7 @@ use kartik\date\DatePicker;
         'columns' => [
             // ['class' => 'yii\grid\SerialColumn'],
             // 'id',
-            // 'contrato_id',
+            'contrato_id',
             // 'emprrendimento_id',
             // 'tipo',
             [

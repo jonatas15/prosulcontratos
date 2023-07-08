@@ -22,7 +22,7 @@ class LicenciamentoSearch extends Licenciamento
     public function rules()
     {
         return [
-            [['id', 'ordensdeservico_id', 'empreendimento_id'], 'integer'],
+            [['id', 'ordensdeservico_id', 'empreendimento_id', 'contrato_id'], 'integer'],
             [['numero', 'datacadastro', 'dataedicao', 'data_validade', 'data_renovacao', 'descricao'], 'safe'],
             [['from_date', 'to_date', 'ano_listagem'], 'safe'],
             [['param'], 'string', 'on' => 'MY_SCENARIO'],
