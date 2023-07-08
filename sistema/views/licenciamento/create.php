@@ -1,20 +1,29 @@
 <?php
-
-use yii\helpers\Html;
-
-/** @var yii\web\View $this */
-/** @var app\models\Licenciamento $model */
-
-$this->title = 'Create Licenciamento';
-$this->params['breadcrumbs'][] = ['label' => 'Licenciamentos', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+    use yii\helpers\Html;
+    use yii\bootstrap5\Modal;
 ?>
-<div class="licenciamento-create">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
+<?php
+Modal::begin([
+    'title' => "Novo Licenciamento",
+    'options' => [
+        'id' => 'cadastrar-novo-licenciamento',
+        'tabindex' => false,
+    ],
+    'bodyOptions' => [
+        'class' => 'bg-white',
+    ],
+    'size' => 'modal-xl',
+    'toggleButton' => [
+        'label' => '<i class="bi bi-card-list"></i> Novo Licenciamento',
+        'class' => 'btn btn-primary text-white  float-right'
+    ],
+]);
+?>
+<div class="oficio-create">
     <?= $this->render('_form', [
         'model' => $model,
+        'action' => 'licenciamento/create',
+        'contrato_id' => $contrato_id
     ]) ?>
-
 </div>
+<?php Modal::end(); ?>

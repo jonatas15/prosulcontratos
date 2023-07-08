@@ -59,6 +59,7 @@ class Ordensdeservico extends \yii\db\ActiveRecord
             'plano' => 'Plano',
             'contrato_id' => 'Contrato ID',
             'datacadastro' => 'Datacadastro',
+            'titulo' => 'Ordem de Serviço'
         ];
     }
 

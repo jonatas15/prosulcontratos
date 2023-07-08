@@ -24,6 +24,8 @@ class LicenciamentoSearch extends Licenciamento
         return [
             [['id', 'ordensdeservico_id', 'empreendimento_id'], 'integer'],
             [['numero', 'datacadastro', 'dataedicao', 'data_validade', 'data_renovacao', 'descricao'], 'safe'],
+            [['from_date', 'to_date', 'ano_listagem'], 'safe'],
+            [['param'], 'string', 'on' => 'MY_SCENARIO'],
         ];
     }
 
@@ -51,9 +53,17 @@ class LicenciamentoSearch extends Licenciamento
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'=> [
+                'defaultOrder' => [
+                    'id' => SORT_ASC
+                ],
+            ],
+            'pagination' => [
+                'pageSize' => 500,
+            ],
         ]);
 
-        $this->load($params);
+        (isset($params['LicenciamentoSearch'])?$this->load($params):$this->load($params,''));
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
@@ -66,6 +76,7 @@ class LicenciamentoSearch extends Licenciamento
             'id' => $this->id,
             'ordensdeservico_id' => $this->ordensdeservico_id,
             'empreendimento_id' => $this->empreendimento_id,
+            'contrato_id' => $this->contrato_id,
         ]);
 
         $query->andFilterWhere(['like', 'numero', $this->numero])
@@ -74,6 +85,13 @@ class LicenciamentoSearch extends Licenciamento
             ->andFilterWhere(['like', 'data_validade', $this->data_validade])
             ->andFilterWhere(['like', 'data_renovacao', $this->data_renovacao])
             ->andFilterWhere(['like', 'descricao', $this->descricao]);
+
+        $query->andFilterWhere(['between', 'datacadastro', $this->from_date, $this->to_date]);
+        if ($this->ano_listagem != 'all') {
+            $query->andFilterWhere([
+                'YEAR(datacadastro)' => $this->ano_listagem,
+            ]);
+        }
 
         return $dataProvider;
     }

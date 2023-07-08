@@ -144,7 +144,7 @@ use miloschuman\highcharts\Highcharts;
         z-index: 1151 !important;
     }
 </style>
-<div class="ordensdeservico-index">
+<div class="produto-index">
 
     <h3><img src="<?=Yii::$app->homeUrl?>logo/upload-files-icon.png" class="icone-modulo" width="25" /> Contrato: Produtos</h3>
     <div class="row">

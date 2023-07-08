@@ -8,6 +8,8 @@ use Yii;
  * This is the model class for table "licenciamento".
  *
  * @property int $id
+ * @property int|null $contrato_id
+ * @property int|null $empreendimento_id
  * @property int|null $ordensdeservico_id
  * @property string|null $numero
  * @property string $datacadastro
@@ -15,11 +17,11 @@ use Yii;
  * @property string|null $data_validade
  * @property string|null $data_renovacao
  * @property string|null $descricao
- * @property int|null $empreendimento_id
  *
  * @property Arquivo[] $arquivos
  * @property Empreendimento $empreendimento
  * @property Ordensdeservico $ordensdeservico
+ * @property Contrato $contrato
  */
 class Licenciamento extends \yii\db\ActiveRecord
 {
@@ -37,9 +39,10 @@ class Licenciamento extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ordensdeservico_id', 'empreendimento_id'], 'integer'],
+            [['ordensdeservico_id', 'empreendimento_id', 'contrato_id'], 'integer'],
             [['descricao'], 'string'],
             [['numero', 'datacadastro', 'dataedicao', 'data_validade', 'data_renovacao'], 'string', 'max' => 45],
+            [['contrato_id'], 'exist', 'skipOnError' => true, 'targetClass' => Contrato::class, 'targetAttribute' => ['contrato_id' => 'id']],
             [['empreendimento_id'], 'exist', 'skipOnError' => true, 'targetClass' => Empreendimento::class, 'targetAttribute' => ['empreendimento_id' => 'id']],
             [['ordensdeservico_id'], 'exist', 'skipOnError' => true, 'targetClass' => Ordensdeservico::class, 'targetAttribute' => ['ordensdeservico_id' => 'id']],
         ];
@@ -52,14 +55,14 @@ class Licenciamento extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'ordensdeservico_id' => 'Ordensdeservico ID',
-            'numero' => 'Numero',
-            'datacadastro' => 'Datacadastro',
-            'dataedicao' => 'Dataedicao',
-            'data_validade' => 'Data Validade',
-            'data_renovacao' => 'Data Renovacao',
-            'descricao' => 'Descricao',
-            'empreendimento_id' => 'Empreendimento ID',
+            'ordensdeservico_id' => 'O.Serviço',
+            'numero' => 'Número',
+            'datacadastro' => 'Registro',
+            'dataedicao' => 'Edição',
+            'data_validade' => 'Validade',
+            'data_renovacao' => 'Renovação',
+            'descricao' => 'Descrição',
+            'empreendimento_id' => 'Empreendimento',
         ];
     }
 
@@ -92,4 +95,13 @@ class Licenciamento extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Ordensdeservico::class, ['id' => 'ordensdeservico_id']);
     }
+    /** 
+     * Gets query for [[Contrato]]. 
+     * 
+     * @return \yii\db\ActiveQuery 
+     */ 
+   public function getContrato() 
+   { 
+       return $this->hasOne(Contrato::class, ['id' => 'contrato_id']); 
+   }
 }

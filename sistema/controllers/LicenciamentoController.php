@@ -70,8 +70,16 @@ class LicenciamentoController extends Controller
         $model = new Licenciamento();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load($this->request->post())) {
+                $model->data_validade = $model->data_validade != '' ? $this->dataprobanco($model->data_validade): '';
+                $model->data_renovacao = $model->data_renovacao != '' ? $this->dataprobanco($model->data_renovacao): '';
+                if ($model->save()) {
+                    return $this->redirect([
+                        'update', 
+                        'id' => $model->id,
+                        'abativa' => 'arquivos'
+                    ]);
+                }
             }
         } else {
             $model->loadDefaultValues();
@@ -93,8 +101,16 @@ class LicenciamentoController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            $model->data_validade = $model->data_validade != '' ? $this->dataprobanco($model->data_validade): '';
+            $model->data_renovacao = $model->data_renovacao != '' ? $this->dataprobanco($model->data_renovacao): '';
+            if ($model->save()) {
+                return $this->redirect([
+                    'update', 
+                    'id' => $model->id,
+                    'abativa' => 'arquivos'
+                ]);
+            }
         }
 
         return $this->render('update', [
@@ -130,5 +146,16 @@ class LicenciamentoController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function dataprobanco ($data) {
+        $arr = explode('/', $data);
+        return $arr[2].'-'.$arr[1].'-'.$arr[0];
+    }
+
+    function diasentre($data_inicial, $data_final) {
+        $diferenca = strtotime($data_final) - strtotime($data_inicial);
+        $dias = floor($diferenca / (60 * 60 * 24)); 
+        return $dias;
     }
 }

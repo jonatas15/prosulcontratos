@@ -1,6 +1,8 @@
 <?php
 
-use app\models\Oficio;
+use app\models\Licenciamento;
+use app\models\Empreendimento;
+use app\models\Ordensdeservico;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -8,29 +10,11 @@ use yii\grid\GridView;
 use yii\widgets\Pjax;
 use yii\widgets\ActiveForm;
 use kartik\date\DatePicker;
-// use dosamigos\datepicker\DatePicker;
-
-// use yii\bootstrap5\Modal;
-// Modal::begin([
-//         'title' => '<h2>Hello world</h2>',
-//         'toggleButton' => ['label' => 'click me'],
-//         'options' => [
-//             'tabindex' => "false"
-//         ]
-//     ]);
-    
-//     echo 'Say hello...';
-    
-//     Modal::end();
-// use kartik\grid\GridView;
+use yii\helpers\ArrayHelper;
 
 /** @var yii\web\View $this */
-/** @var app\models\OficioSearch $searchModel */
+/** @var app\models\LicenciamentoSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
-
-// $this->title = 'Oficios';
-// $dataProvider->pagination->pageSize=4;
-// $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style>
     [type="checkbox"] {
@@ -75,51 +59,47 @@ use kartik\date\DatePicker;
 </style>
 <div class="ordensdeservico-index">
 
-    <h3><img src="/web/logo/upload-files-icon.png" class="icone-modulo" width="25" />  Contrato: Licenciamentos</h3>
+    <h3><img src="<?=Yii::$app->homeUrl?>logo/upload-files-icon.png" class="icone-modulo" width="25" />  Contrato: Licenciamentos</h3>
+    <div class="row">
+        <div class="col-md-12">
+            <?php $modelLicenciamentos = new Licenciamento(); ?>
+            <?= $this->render('create', [
+                'model' => $modelLicenciamentos,
+                'contrato_id' => $contrato_id
+            ]) ?>
+        </div>
+    </div>
     <div class="clearfix">
         <br />
     </div>
     <?php
-        ########################################## TIPO ##########################################
-        $search_tipos = Oficio::find()->select('tipo')->groupBy('tipo')->all();
-        $lista_tipos = [];
-        foreach ($search_tipos as $value):
-            $lista_tipos[$value->tipo] = $value->tipo;
-        endforeach;
-        ######################################### STATUS #########################################
-        // $search_status = Oficio::find()->select('status')->groupBy('status')->all();
-        // $lista_status = [];
-        // foreach ($search_status as $value):
-        //     $lista_status[$value->status] = $value->status;
-        // endforeach;
-        ########################################## AVAL ##########################################
-        // echo '<pre>';
-        // print_r($lista_status);
-        // echo '</pre>';
+        ########################################## EMPREENDIMENTOS ##########################################
+        $search_empreendimentos = Empreendimento::find()->all();
+        $lista_empreendimentos = ArrayHelper::map($search_empreendimentos, 'id', 'titulo');
+        ######################################### ORDENS DE SERVIÇO #########################################
+        $search_OS = Ordensdeservico::find()->all();
+        $lista_OS = ArrayHelper::map($search_OS, 'id', 'titulo');
     ?>
     <?php 
     
     
     Pjax::begin([
-        'id' => 'admin-crud-id-roa', 
+        'id' => 'admin-crud-id-licenciamentos', 
         'timeout' => false,
         'enablePushState' => false
     ]); ?>
     
     <?php 
-
-
-
-        $s_tipo = $_REQUEST['OficioSearch']['tipo'] ? $_REQUEST['OficioSearch']['tipo'] : '';
-        $s_nsei = $_REQUEST['OficioSearch']['Num_sei'] ? $_REQUEST['OficioSearch']['Num_sei'] : '';
-        $ano_listagem = $_REQUEST['OficioSearch']['ano_listagem'] ? $_REQUEST['OficioSearch']['ano_listagem'] : '';
-        $status = $_REQUEST['OficioSearch']['status'] ? $_REQUEST['OficioSearch']['status'] : '';
+        $empreendimento_id = $_REQUEST['LicenciamentoSearch']['empreendimento_id'] ? $_REQUEST['LicenciamentoSearch']['empreendimento_id'] : '';
+        $ordensdeservico_id = $_REQUEST['LicenciamentoSearch']['ordensdeservico_id'] ? $_REQUEST['LicenciamentoSearch']['ordensdeservico_id'] : '';
+        $numero = $_REQUEST['LicenciamentoSearch']['numero'] ? $_REQUEST['LicenciamentoSearch']['numero'] : '';
+        $ano_listagem = $_REQUEST['LicenciamentoSearch']['ano_listagem'] ? $_REQUEST['LicenciamentoSearch']['ano_listagem'] : '';
         # Intervalo de data #######################################################################
         $data_ini = $_REQUEST['from_date'];
         $data_fim = $_REQUEST['to_date'];
         $datainicial = $data_ini;
         $datafinial = $data_fim;
-        $intervalo_data = $_REQUEST['OficioSearch']['intervalo_data'];
+        $intervalo_data = $_REQUEST['LicenciamentoSearch']['intervalo_data'];
         
         // echo Yii::$app->formatter->asDate($data_ini, 'yyyy-MM-dd');
         if (!empty($data_ini) AND !empty($data_fim)) :
@@ -142,10 +122,6 @@ use kartik\date\DatePicker;
             if($status[2]) { $campo_status_2 = 'checked="checked"'; }
             if($status[3]) { $campo_status_3 = 'checked="checked"'; }
             if($status[4]) { $campo_status_4 = 'checked="checked"'; }
-            // $st = 1;
-            // for ($i=1; $i < 4; $i++) { 
-            //     if($status[$i] !== "") { $campo_status = 'checked="checked"'; }
-            // }
         endif;
         if (empty($data_ini) AND empty($data_fim)) :
             if (!empty($intervalo_data)) :
@@ -176,12 +152,12 @@ use kartik\date\DatePicker;
             endif;
         endif;
         $dataProvider = $searchModel->search([
-            'tipo' => $s_tipo,
-            'Num_sei' => $s_nsei,
+            'numero' => $numero,
             'from_date'=> $data_ini,
             'to_date'=> $data_fim,
             'ano_listagem' => $ano_listagem,
-            'status' => $status,
+            'empreendimento_id' => $empreendimento_id,
+            'ordensdeservico_id' => $ordensdeservico_id,
         ]);
     ?>
     <div class="row" style="background-color: ghostwhite; padding: 10px 5px">
@@ -191,9 +167,23 @@ use kartik\date\DatePicker;
             'autocomplete'=>"off"  
         ]]); ?>
         <div class="row">
-            <div class="col-md-3">
-                <label class="control-label summary" for="pagina-roa_programa">SEI</label>
+            <div class="col-12">
+                <h4>
+                    <center>Pesquisa</center>
+                </h4>
+            </div>
+            <div class="col-md-2">
+                <label class="control-label summary" for="pagina-roa_programa">Número</label>
                 <?= $form->field($searchModel, 'numero')->textInput(['maxlength' => true])->label(false) ?>
+            </div>
+            <div class="col-md-2">
+                <?= $form->field($searchModel, 'ano_listagem')->dropDownList([
+                    '2023'=>'Ano 2023',
+                    '2022'=>'Ano 2022',
+                    '2021'=>'Ano 2021',
+                    '2020'=>'Ano 2020',
+                    'all'=>'Todos os registros',
+                ])->label('Ano'); ?>
             </div>
             <div class="col-md-4">
                 <label class="control-label summary" for="from_date">Por data</label>
@@ -226,77 +216,55 @@ use kartik\date\DatePicker;
                     ]);
                 ?>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-4">
                 <label class="control-label summary">Últimos dias</label><br>
                 <label for="check-hoje-<?=$tipodepagina?>" style="padding:1%">
-                    <input type="radio" name="OficioSearch[intervalo_data]" value="check-hoje" id="check-hoje-<?=$tipodepagina?>" style="" <?=$radiohoje?>>
+                    <input type="radio" name="LicenciamentoSearch[intervalo_data]" value="check-hoje" id="check-hoje-<?=$tipodepagina?>" style="" <?=$radiohoje?>>
                     Hoje
                 </label>
                 <label for="check-ultimos-dias-<?=$tipodepagina?>" style="padding:1%">
-                    <input type="radio" name="OficioSearch[intervalo_data]" value="check-ultimos-dias" id="check-ultimos-dias-<?=$tipodepagina?>" style="" <?=$radiosete?>>
+                    <input type="radio" name="LicenciamentoSearch[intervalo_data]" value="check-ultimos-dias" id="check-ultimos-dias-<?=$tipodepagina?>" style="" <?=$radiosete?>>
                     Últimos 7 dias
                 </label>
                 <label for="check-ultimo-mes-<?=$tipodepagina?>" style="padding:1%">
-                    <input type="radio" name="OficioSearch[intervalo_data]" value="check-ultimo-mes" id="check-ultimo-mes-<?=$tipodepagina?>" style="" <?=$radiotrinta?>>
+                    <input type="radio" name="LicenciamentoSearch[intervalo_data]" value="check-ultimo-mes" id="check-ultimo-mes-<?=$tipodepagina?>" style="" <?=$radiotrinta?>>
                     Últimos 30 dias
                 </label>
                 <label for="check-todos-<?=$tipodepagina?>" style="padding:1%">
-                    <input type="radio" name="OficioSearch[intervalo_data]" value="0" id="check-todos-<?=$tipodepagina?>" style="">
+                    <input type="radio" name="LicenciamentoSearch[intervalo_data]" value="0" id="check-todos-<?=$tipodepagina?>" style="">
                     Todos
                 </label>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-2">
-                <?= $form->field($searchModel, 'ano_listagem')->dropDownList([
-                    '2023'=>'Ano 2023',
-                    '2022'=>'Ano 2022',
-                    '2021'=>'Ano 2021',
-                    '2020'=>'Ano 2020',
-                    'all'=>'Todos os registros',
+            <div class="col-md-5">
+                <?= $form->field($searchModel, 'empreendimento_id')->dropDownList($lista_empreendimentos, [
+                        'prompt' => 'Empreendimentos'
                 ])->label(false) ?>
-            </div>    
-            <div class="col-md-8 form-group">
-                <?php // = $form->field($searchModel, 'status')->dropDownList([ 'Não Resolvido' => 'Não Resolvido', 'Parcialmente Resolvido' => 'Parcialmente Resolvido', 'Em andamento' => 'Em andamento', 'Resolvido' => 'Resolvido', ], ['prompt' => '']);?>
-                <label for="nao-resolvido-<?=$tipodepagina?>" style="padding:1%">
-                    <input type="checkbox" name="OficioSearch[status][1]" value="Informativo" id="nao-resolvido-<?=$id?>" style="" <?=$campo_status_1?>>
-                    Informativo
-                </label>
-                <label for="parcialmente-resolvido-<?=$tipodepagina?>" style="padding:1%">
-                    <input type="checkbox" name="OficioSearch[status][2]" value="Em Andamento" id="parcialmente-resolvido-<?=$id?>" style="" <?=$campo_status_2?>>
-                    Em Andamento
-                </label>
-                <label for="em-andamento-<?=$tipodepagina?>" style="padding:1%">
-                    <input type="checkbox" name="OficioSearch[status][3]" value="Resolvido" id="em-andamento-<?=$id?>" style="" <?=$campo_status_3?>>
-                    Resolvido
-                </label>
-                <label for="resolvido-<?=$tipodepagina?>" style="padding:1%">
-                    <input type="checkbox" name="OficioSearch[status][4]" value="Não Resolvido" id="resolvido-<?=$id?>" style="" <?=$campo_status_4?>>
-                    Não Resolvido
-                </label>
-                <!-- <label for="forcomunicados" style="padding:1%">
-                    <input type="checkbox" name="OficioSearch[comunicados]" value="1" style="" id="forcomunicados" >
-                    Com CNC
-                </label> -->
+            </div>
+            <div class="col-md-5">
+                <?= $form->field($searchModel, 'ordensdeservico_id')->dropDownList($lista_OS, [
+                        'prompt' => 'Ordens de Serviço'
+                ])->label(false) ?>
             </div>
             <div class="col-md-2 form-group">
-                <img id="loading1" src="<?=Yii::$app->homeUrl?>arquivo/loading_blue.gif" width="40" style="float:right;margin-left: 12px;margin-top: -3px;display:none">
+                <img id="loading1-licenciamentos" src="<?=Yii::$app->homeUrl?>arquivos/loading_blue.gif" width="40" style="float:right;margin-left: 12px;margin-top: -3px;display:none">
                 <?php             
                     echo Html::submitButton('Pesquisar', [
                         'class' => 'btn btn-primary',
                         'style'=>'float:right;margin:1%',
-                        'id'=>'botao-envia-pesquisa-ajax'
-                        // 'onclick'=>'$(this).addClass("disabled");$("#loading1").show();this.form.submit();this.disabled=true;',
-                        // 'onmouseup'=>'$(this).addClass("disabled");$("#loading1").show();this.disabled=true;',
+                        'id'=>'botao-envia-pesquisa-ajax-licenciamentos'
+                        // 'onclick'=>'$(this).addClass("disabled");$("#loading1-licenciamentos").show();this.form.submit();this.disabled=true;',
+                        // 'onmouseup'=>'$(this).addClass("disabled");$("#loading1-licenciamentos").show();this.disabled=true;',
                     ]);
                     $this->registerJs(<<<JS
                         $(document).on('pjax:send', function() {
-                            $("#loading1").show();
-                            $("#botao-envia-pesquisa-ajax").addClass("disabled");
+                            $("#loading1-licenciamentos").show();
+                            $("#botao-envia-pesquisa-ajax-licenciamentos").addClass("disabled");
                         });
                         $(document).on('pjax:complete', function() {
-                            $('#loading1').hide();
-                            $("#botao-envia-pesquisa-ajax").removeClass("disabled");
+                            $('#loading1-licenciamentos').hide();
+                            $("#botao-envia-pesquisa-ajax-licenciamentos").removeClass("disabled");
                         });
                     JS
                     );
@@ -315,39 +283,58 @@ use kartik\date\DatePicker;
             'class' => 'yii\bootstrap5\LinkPager'
         ],
         'columns' => [
-            // ['class' => 'yii\grid\SerialColumn'],
-            // 'id',
-            // 'contrato_id',
-            // 'emprrendimento_id',
-            // 'tipo',
             [
                 'attribute' => 'id',
                 'headerOptions' => [
                     'width' => '3%'
                 ]
             ],
-            // 'tipo',
-            // 'emissor',
-            // 'emprrendimento_desc',
-            //'datacadastro',
-            // 'data',
-            // 'Num_sei',
-            'oficio_id',
-            'fase',
-            'plano',
+            'numero',
             [
                 'attribute' => 'datacadastro',
                 'value' => function($data) {
                     return date('d/m/Y', strtotime($data->datacadastro));
                 }
             ],
-            // 'fluxo',
-            //'receptor',
-            //'num_processo',
-            //'num_protocolo',
-            //'assunto:ntext',
-            //'diretorio',
-            // 'status',
+            [
+                'attribute' => 'data_validade',
+                'value' => function($data) {
+                    return date('d/m/Y', strtotime($data->data_validade));
+                }
+            ],
+            [
+                'attribute' => 'data_renovacao',
+                'value' => function($data) {
+                    return date('d/m/Y', strtotime($data->data_renovacao));
+                }
+            ],
+            [
+                'attribute' => 'empreendimento_id',
+                'format' => 'raw',
+                'value' => function($data) {
+                    return $this->render('_empreendimento', [
+                        'id' => $data->empreendimento_id
+                    ]);
+                },
+                'headerOptions' => [
+                    'width' => '5%'
+                ]
+            ],
+            [
+                'attribute' => 'ordensdeservico_id',
+                'format' => 'raw',
+                'value' => function($data) {
+                    return $this->render('_os', [
+                        'id' => $data->ordensdeservico_id
+                    ]);
+                },
+                'headerOptions' => [
+                    'width' => '5%'
+                ]
+            ],
+            // ordensdeservico_id
+            
+            // empreendimento_id
             [
                 'attribute' => 'id',
                 'header' => 'Detalhes',
@@ -370,27 +357,24 @@ use kartik\date\DatePicker;
                 'format' => 'raw',
                 'value' => function($data) {
                     return '<center>'.
-                    $this->render('_docs', [
-                        'id' => $data->id
-                    ])
-                    .'</center>';
-                }
+                    "<a class='btn btn-primary' href='".Yii::$app->homeUrl."licenciamento/update?id=$data->id&abativa=arquivos' target=''>
+                        <i class='bi bi-filetype-doc'></i>
+                    </a>".
+                    '</center>';
+                },
+                'visible' => in_array(Yii::$app->user->identity->nivel, ['administrador', 'gestor']) ? true : false
             ],
             [
-                'header' => 'Oper.',
+                'header' => 'Editar',
+                'format' => 'raw',
                 'headerOptions' => [
                     'width' => '5%'
                 ],
                 'value' => function($data) {
-                    return 'Em @Dev';
-                }
-            ]
-            // [
-            //     'class' => ActionColumn::className(),
-            //     'urlCreator' => function ($action, Oficio $model, $key, $index, $column) {
-            //         return Url::toRoute([$action, 'id' => $model->id]);
-            //      }
-            // ],
+                    return '<a href="'.Yii::$app->homeUrl.'produto/update?id='.$data->id.'" class="btn btn-primary"><i class="bi bi-pencil"></i></a>';
+                },
+                'visible' => in_array(Yii::$app->user->identity->nivel, ['administrador', 'gestor']) ? true : false
+            ],
         ],
     ]); ?>
     <?php Pjax::end(); ?>
