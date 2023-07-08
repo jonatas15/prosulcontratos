@@ -287,10 +287,10 @@ use miloschuman\highcharts\Highcharts;
                 $i = 0;
                 $dnit_t = $prosul_t = $cgmab = 0;
                 foreach($dataProvider->getModels() as $item) {
-                    if($item->aprov_data != '') {
-                        $aprovado += 1;
-                    } else {
-                        $aguardando += 1;
+                    switch ($item->fase) {
+                        case 'Em andamento': $aguardando += 1; break;
+                        case 'Aprovado': $aprovado += 1; break;
+                        case 'Reprovado': $reprovado += 1; break;
                     }
                     switch ($item->aprov_versao) {
                         case 'RV0': $RV0 += 1; break;
@@ -321,6 +321,8 @@ use miloschuman\highcharts\Highcharts;
                 }
                 $media_t_dnit = $dnit_t/$i;
                 $media_t_prosul = $prosul_t/$i;
+                $media_t_dnit = (int)number_format($media_t_dnit, 0);
+                $media_t_prosul = (int)number_format($media_t_prosul, 0);
                 // echo 'Produtos: '.$i;
                 // echo '<pre>';
                 // echo "Tempo médio de Revisão(DNIT): ".$dnit_t/$i." dias";
@@ -403,7 +405,13 @@ use miloschuman\highcharts\Highcharts;
                                         [
                                             'name' => 'Em análise',
                                             'y' => $aguardando,
-                                            'color' => 'yellow',
+                                            'color' => 'orange',
+                                            'url' => 'yahoo.com.br'
+                                        ],
+                                        [
+                                            'name' => 'Reprovado',
+                                            'y' => $reprovado,
+                                            'color' => 'red',
                                             'url' => 'yahoo.com.br'
                                         ],
                                     ],
@@ -781,7 +789,19 @@ use miloschuman\highcharts\Highcharts;
                     return $data->aprov_data ? date('d/m/Y', strtotime($data->aprov_data)) : '';
                 }
             ],
-            'fase',
+            // 'fase',
+            [
+                'attribute' => 'fase',
+                'format' => 'raw',
+                'value' => function($data) {
+                    switch ($data->fase) {
+                        case 'Em andamento': $faseada = "<b class='text-warning'>$data->fase</b>"; break;
+                        case 'Aprovado': $faseada = "<b class='text-success'>$data->fase</b>"; break;
+                        case 'Reprovado': $faseada = "<b class='text-danger'>$data->fase</b>"; break;
+                    }        
+                    return "<center>$faseada</center>";
+                }
+            ],
             [
                 'attribute' => 'id',
                 'header' => 'Detalhes',

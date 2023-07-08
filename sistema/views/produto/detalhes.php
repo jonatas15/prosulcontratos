@@ -42,15 +42,41 @@ Modal::begin([
                 'ordensdeservico.titulo',
                 'subproduto',
                 'numero',
-                'datacadastro',
-                'data_validade',
-                'data_renovacao',
-                'data_entrega',
+                // 'datacadastro',
+                [
+                    'attribute'=> 'datacadastro',
+                    'value' => function($data) {
+                        return date('d/m/Y H:i:s', strtotime($data->datacadastro));
+                    }
+                ],
+                [
+                    'attribute'=> 'data_validade',
+                    'value' => function($data) {
+                        return $data->data_validade ? date('d/m/Y', strtotime($data->data_validade)) : "";
+                    }
+                ],
+                [
+                    'attribute'=> 'data_renovacao',
+                    'value' => function($data) {
+                        return $data->data_renovacao ? date('d/m/Y', strtotime($data->data_renovacao)) : "";
+                    }
+                ],
+                [
+                    'attribute'=> 'data_entrega',
+                    'value' => function($data) {
+                        return $data->data_entrega ? date('d/m/Y', strtotime($data->data_entrega)) : "";
+                    }
+                ],
                 'fase',
                 'entrega:ntext',
                 'servico:ntext',
                 'descricao:ntext',
-                'aprov_data',
+                [
+                    'attribute'=> 'aprov_data',
+                    'value' => function($data) {
+                        return $data->aprov_data ? date('d/m/Y', strtotime($data->aprov_data)) : "";
+                    }
+                ],
                 'aprov_tempo_ultima_revisao',
                 'aprov_tempo_total',
                 'aprov_versao',

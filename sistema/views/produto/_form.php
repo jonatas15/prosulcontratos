@@ -46,7 +46,11 @@ $model->aprov_data = $model->aprov_data != '' ? date('d/m/Y', strtotime($model->
         <div class="col-md-3"><?= $form->field($model, 'data_entrega')->widget(\yii\widgets\MaskedInput::class, [
             'mask' => '99/99/9999',
         ]) ?></div>
-        <div class="col-md-3"><?= $form->field($model, 'fase')->textInput(['maxlength' => true]) ?></div>
+        <div class="col-md-3"><?= $form->field($model, 'fase')->dropDownList([
+            'Em andamento' => 'Em andamento',
+            'Aprovado' => 'Aprovado',
+            'Reprovado' => 'Reprovado',
+        ]) ?></div>
         <div class="col-md-12"><?= $form->field($model, 'entrega')->textInput() ?></div>
         <div class="col-md-12"><?= $form->field($model, 'servico')->textInput() ?></div>
         <div class="col-md-12"><?= $form->field($model, 'descricao')->textInput() ?></div>

@@ -47,7 +47,11 @@ use yii\widgets\ActiveForm;
                     'type' => 'number'
                 ]) ?>
                 <?= $form->field($modelRevisao, 'responsavel')->textInput(['maxlength' => true]) ?>
-                <?= $form->field($modelRevisao, 'status')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($modelRevisao, 'status')->dropDownList([
+                    'Em andamento' => 'Em andamento',
+                    'Aprovado' => 'Aprovado',
+                    'Reprovado' => 'Reprovado',
+                ]) ?>
                 <div class="form-group">
                     <?= Html::submitButton('Salvar nova Revisão', ['class' => 'btn btn-success']) ?>
                 </div>
@@ -69,7 +73,18 @@ use yii\widgets\ActiveForm;
                         foreach ($reviews as $r):
                             echo '
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link '.($i == 1 ? 'active':'').'" id="home-tab" data-bs-toggle="tab" data-bs-target="#item-r-'.$r->id.'" type="button" role="tab" aria-controls="home" aria-selected="true">'.$r->titulo.'</button>
+                                    <button 
+                                        class="nav-link '.($i == 1 ? 'active':'').'" 
+                                        id="home-tab" 
+                                        data-bs-toggle="tab" 
+                                        data-bs-target="#item-r-'.$r->id.'" 
+                                        type="button" 
+                                        role="tab" 
+                                        aria-controls="home" 
+                                        aria-selected="true"
+                                    >'.
+                                        $r->titulo." ".($r->status == 'Reprovado' ? '🔴' : '🟢')."".
+                                    '</button>
                                 </li>';
                             $modelRevisao = Revisao::findOne([
                                 'id' => $r->id
