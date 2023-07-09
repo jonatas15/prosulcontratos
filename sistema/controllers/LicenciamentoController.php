@@ -47,6 +47,15 @@ class LicenciamentoController extends Controller
         ]);
     }
 
+    public function actionIndexcontrato()
+    {
+        
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
     /**
      * Displays a single Licenciamento model.
      * @param int $id ID

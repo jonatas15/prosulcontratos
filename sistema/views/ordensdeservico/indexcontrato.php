@@ -106,11 +106,11 @@ use yii\helpers\ArrayHelper;
 
 
 
-        $s_tipo = $_REQUEST['OrdensdeservicoSearch']['tipo'] ? $_REQUEST['OrdensdeservicoSearch']['tipo'] : '';
-        $s_nsei = $_REQUEST['OrdensdeservicoSearch']['Num_sei'] ? $_REQUEST['OrdensdeservicoSearch']['Num_sei'] : '';
-        $ano_listagem = $_REQUEST['OrdensdeservicoSearch']['ano_listagem'] ? $_REQUEST['OrdensdeservicoSearch']['ano_listagem'] : '';
-        $status = $_REQUEST['OrdensdeservicoSearch']['status'] ? $_REQUEST['OrdensdeservicoSearch']['status'] : '';
+        $titulo = $_REQUEST['OrdensdeservicoSearch']['titulo'] ? $_REQUEST['OrdensdeservicoSearch']['titulo'] : '';
+        $fase = $_REQUEST['OrdensdeservicoSearch']['fase'] ? $_REQUEST['OrdensdeservicoSearch']['fase'] : '';
+        $plano = $_REQUEST['OrdensdeservicoSearch']['plano'] ? $_REQUEST['OrdensdeservicoSearch']['plano'] : '';
         # Intervalo de data #######################################################################
+        $ano_listagem = $_REQUEST['OrdensdeservicoSearch']['ano_listagem'] ? $_REQUEST['OrdensdeservicoSearch']['ano_listagem'] : '';
         $data_ini = $_REQUEST['from_date'];
         $data_fim = $_REQUEST['to_date'];
         $datainicial = $data_ini;
@@ -163,7 +163,8 @@ use yii\helpers\ArrayHelper;
                         $radiotrinta = 'checked="checked"';
                         break;
                         case 'check-hoje':
-                        $data_ini = date('Y-m-d');
+                        $date = new DateTime('1 days ago');
+                        $data_ini = $date->format('Y-m-d');
                         $data_fim = date('Y-m-d');
                         
                         $radiohoje = 'checked="checked"';
@@ -172,8 +173,9 @@ use yii\helpers\ArrayHelper;
             endif;
         endif;
         $dataProvider = $searchModel->search([
-            'tipo' => $s_tipo,
-            'Num_sei' => $s_nsei,
+            'titulo' => $titulo,
+            'fase' => $fase,
+            'plano' => $plano,
             'from_date'=> $data_ini,
             'to_date'=> $data_fim,
             'ano_listagem' => $ano_listagem,
@@ -188,8 +190,7 @@ use yii\helpers\ArrayHelper;
         ]]); ?>
         <div class="row">
             <div class="col-md-3">
-                <label class="control-label summary" for="pagina-roa_programa">SEI</label>
-                <?= $form->field($searchModel, 'plano')->textInput(['maxlength' => true])->label(false) ?>
+                <?= $form->field($searchModel, 'titulo')->textInput(['maxlength' => true]) ?>
             </div>
             <div class="col-md-4">
                 <label class="control-label summary" for="from_date">Por data</label>
@@ -250,9 +251,12 @@ use yii\helpers\ArrayHelper;
                     '2021'=>'Ano 2021',
                     '2020'=>'Ano 2020',
                     'all'=>'Todos os registros',
-                ])->label(false) ?>
-            </div>    
-            <div class="col-md-8 form-group">
+                ])->label('Ano de vigência') ?>
+            </div>
+            <div class="col-md-4"><?= $form->field($searchModel, 'fase')->dropDownList([ 'Manifestação de Interesse em Análise' => 'Manifestação de Interesse em Análise', 'OS Emitida' => 'OS Emitida', 'OS em Andamento' => 'OS em Andamento', 'OS Paralisada' => 'OS Paralisada', 'OS Finalisada' => 'OS Finalisada', ], ['prompt' => '']) ?></div>
+            <div class="col-md-4"><?= $form->field($searchModel, 'plano')->dropDownList([ 'Plano de Trabalho Solicitado' => 'Plano de Trabalho Solicitado', 'Plano de Trabalho em Andamento' => 'Plano de Trabalho em Andamento', 'Plano de Trabalho  Entregue DNIT' => 'Plano de Trabalho  Entregue DNIT', 'Plano de Trabalho em Análise DNIT' => 'Plano de Trabalho em Análise DNIT', 'Plano de Trabalho em Revisão' => 'Plano de Trabalho em Revisão', 'Plano de Trabalho Aprovado DNIT' => 'Plano de Trabalho Aprovado DNIT', ], ['prompt' => '']) ?></div>
+            <?php /*
+            <div class="col-md-6 form-group">
                 <?php // = $form->field($searchModel, 'status')->dropDownList([ 'Não Resolvido' => 'Não Resolvido', 'Parcialmente Resolvido' => 'Parcialmente Resolvido', 'Em andamento' => 'Em andamento', 'Resolvido' => 'Resolvido', ], ['prompt' => '']);?>
                 <label for="nao-resolvido-<?=$tipodepagina?>" style="padding:1%">
                     <input type="checkbox" name="OrdensdeservicoSearch[status][1]" value="Informativo" id="nao-resolvido-<?=$id?>" style="" <?=$campo_status_1?>>
@@ -270,29 +274,27 @@ use yii\helpers\ArrayHelper;
                     <input type="checkbox" name="OrdensdeservicoSearch[status][4]" value="Não Resolvido" id="resolvido-<?=$id?>" style="" <?=$campo_status_4?>>
                     Não Resolvido
                 </label>
-                <!-- <label for="forcomunicados" style="padding:1%">
-                    <input type="checkbox" name="OrdensdeservicoSearch[comunicados]" value="1" style="" id="forcomunicados" >
-                    Com CNC
-                </label> -->
             </div>
+            */ ?>
             <div class="col-md-2 form-group">
-                <img id="loading1" src="<?=Yii::$app->homeUrl?>arquivo/loading_blue.gif" width="40" style="float:right;margin-left: 12px;margin-top: -3px;display:none">
+                <br />
+                <img id="loading1-os" src="<?=Yii::$app->homeUrl?>arquivos/loading_blue.gif" width="40" style="float:right;margin-left: 12px;margin-top: -3px;display:none">
                 <?php             
                     echo Html::submitButton('Pesquisar', [
                         'class' => 'btn btn-primary',
                         'style'=>'float:right;margin:1%',
-                        'id'=>'botao-envia-pesquisa-ajax'
-                        // 'onclick'=>'$(this).addClass("disabled");$("#loading1").show();this.form.submit();this.disabled=true;',
-                        // 'onmouseup'=>'$(this).addClass("disabled");$("#loading1").show();this.disabled=true;',
+                        'id'=>'botao-envia-pesquisa-ajax-os'
+                        // 'onclick'=>'$(this).addClass("disabled");$("#loading1-os").show();this.form.submit();this.disabled=true;',
+                        // 'onmouseup'=>'$(this).addClass("disabled");$("#loading1-os").show();this.disabled=true;',
                     ]);
                     $this->registerJs(<<<JS
                         $(document).on('pjax:send', function() {
-                            $("#loading1").show();
-                            $("#botao-envia-pesquisa-ajax").addClass("disabled");
+                            $("#loading1-os").show();
+                            $("#botao-envia-pesquisa-ajax-os").addClass("disabled");
                         });
                         $(document).on('pjax:complete', function() {
-                            $('#loading1').hide();
-                            $("#botao-envia-pesquisa-ajax").removeClass("disabled");
+                            $('#loading1-os').hide();
+                            $("#botao-envia-pesquisa-ajax-os").removeClass("disabled");
                         });
                     JS
                     );
@@ -313,7 +315,7 @@ use yii\helpers\ArrayHelper;
         'columns' => [
             // ['class' => 'yii\grid\SerialColumn'],
             // 'id',
-            'contrato_id',
+            // 'contrato_id',
             // 'emprrendimento_id',
             // 'tipo',
             [
@@ -322,13 +324,14 @@ use yii\helpers\ArrayHelper;
                     'width' => '3%'
                 ]
             ],
+            'titulo',
             // 'tipo',
             // 'emissor',
             // 'emprrendimento_desc',
             //'datacadastro',
             // 'data',
             // 'Num_sei',
-            'oficio_id',
+            // 'oficio.tipo',
             'fase',
             'plano',
             [
@@ -366,21 +369,24 @@ use yii\helpers\ArrayHelper;
                 'format' => 'raw',
                 'value' => function($data) {
                     return '<center>'.
-                    $this->render('_docs', [
-                        'id' => $data->id
-                    ])
-                    .'</center>';
-                }
+                    "<a class='btn btn-primary' href='".Yii::$app->homeUrl."ordensdeservico/update?id=$data->id&abativa=arquivos' target=''>
+                        <i class='bi bi-filetype-doc'></i>
+                    </a>".
+                    '</center>';
+                },
+                'visible' => in_array(Yii::$app->user->identity->nivel, ['administrador', 'gestor']) ? true : false
             ],
             [
-                'header' => 'Oper.',
+                'header' => 'Editar',
+                'format' => 'raw',
                 'headerOptions' => [
                     'width' => '5%'
                 ],
                 'value' => function($data) {
-                    return 'Em @Dev';
-                }
-            ]
+                    return '<a href="'.Yii::$app->homeUrl.'ordensdeservico/update?id='.$data->id.'" class="btn btn-primary"><i class="bi bi-pencil"></i></a>';
+                },
+                'visible' => in_array(Yii::$app->user->identity->nivel, ['administrador', 'gestor']) ? true : false
+            ],
             // [
             //     'class' => ActionColumn::className(),
             //     'urlCreator' => function ($action, Oficio $model, $key, $index, $column) {

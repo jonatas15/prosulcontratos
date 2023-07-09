@@ -3,15 +3,15 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\bootstrap5\Modal;
-use app\models\Oficio;
+use app\models\Ordensdeservico;
 
-$model = Oficio::find()->where(['id' => $id])->one();
+$model = Ordensdeservico::find()->where(['id' => $id])->one();
 
 /** @var yii\web\View $this */
-/** @var app\models\Oficio $model */
+/** @var app\models\Ordensdeservico $model */
 // \yii\web\YiiAsset::register($this);
 
-// $model = \app\models\Oficio::find()->where(['id' => $id])->one();
+// $model = \app\models\Ordensdeservico::find()->where(['id' => $id])->one();
 
 ?>
 <style>
@@ -78,9 +78,9 @@ $model = Oficio::find()->where(['id' => $id])->one();
 </style>
 <?php
 Modal::begin([
-    'title' => $model->tipo .': '.$model->id,
+    'title' => $model->id .': '.$model->titulo,
     'options' => [
-        'id' => 'mais-detalhes-'.$model->id,
+        'id' => 'mais-detalhes-os-'.$model->id,
         'tabindex' => false,
     ],
     'size' => 'modal-lg',
@@ -88,97 +88,24 @@ Modal::begin([
         'label' => '<i class="bi bi-card-list"></i>',
         'class' => 'btn btn-info text-white'
     ],
+    'bodyOptions' => [
+        'class' => 'bg-white'
+    ]
 ]);
 ?>
 <?= DetailView::widget([
     'model' => $model,
     'attributes' => [
         'id',
-        // 'contrato_id',
-        // 'emprrendimento_id',
-        'tipo',
-        'emprrendimento_desc',
-        'datacadastro',
-        'data',
-        'fluxo',
-        'emissor',
-        'receptor',
-        'num_processo',
-        'num_protocolo',
-        'Num_sei',
-        'assunto:ntext',
-        'diretorio',
-        'status',
+        'titulo',
+        'fase',
+        'plano',
+        [
+            'attribute'=> 'datacadastro',
+            'value' => function($data) {
+                return date('d/m/Y H:i:s', strtotime($data->datacadastro));
+            }
+        ],
     ],
 ]) ?>
-<div class="row"><hr></div>
-<div class="row">
-    <div class="progress">
-        <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 10%">
-            10%
-        </div>
-    </div>
-    <br>
-    <br>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <div class="row" style="padding: 10px;">
-            <div class="col-md-4" style="position: relative">
-                <span style="z-index: 100000 !important;" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success fs-7">
-                    o
-                </span>
-                <img class="avataruser" src="/usuarios/userpng.png" alt="Avatar">
-            </div>
-            <div class="col-md-8">
-                <label class="nomegestor" for="">
-                    Administrador<br>
-                </label>
-            </div>
-        </div>
-        <div class="row" style="padding: 10px;">
-            <div class="col-md-4" style="position: relative">
-                <span style="z-index: 100000 !important;" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger fs-7">
-                    o
-                </span>
-                <img class="avataruser" src="/usuarios/bandmember.jpg" alt="Avatar">
-            </div>
-            <div class="col-md-8">
-                <label class="nomegestor" for="">Gestor</label>
-            </div>
-        </div>
-        <div class="row" style="padding: 10px;">
-            <div class="col-md-4">
-                <img class="avataruser" src="/usuarios/userpng.png" alt="Avatar">
-            </div>
-            <div class="col-md-8">
-                <label class="nomegestor" for="">Fiscal</label>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-8">
-        <div class="container-chat">
-        <img src="/usuarios/bandmember.jpg" alt="Avatar">
-        <p>Hello. How are you today?</p>
-        <span class="time-right">11:00</span>
-        </div>
-
-        <div class="container-chat darker">
-        <img src="/usuarios/userpng.png" alt="Avatar" class="right">
-        <p>Hey! I'm fine. Thanks for asking!</p>
-        <span class="time-left">11:01</span>
-        </div>
-
-        <div class="container-chat">
-        <img src="/usuarios/bandmember.jpg" alt="Avatar">
-        <p>Sweet! So, what do you wanna do today?</p>
-        <span class="time-right">11:02</span>
-        </div>
-
-        <div class="container-chat darker">
-            <textarea name="" id="" cols="30" rows="5" style="width:100%"></textarea>
-            <button class="btn btn-primary text-white" style="float: right">Enviar</button>
-        </div>
-    </div>
-</div>
 <?php Modal::end(); ?>

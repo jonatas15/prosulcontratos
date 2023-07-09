@@ -23,7 +23,9 @@ class OrdensdeservicoSearch extends Ordensdeservico
     {
         return [
             [['id', 'oficio_id', 'contrato_id'], 'integer'],
-            [['fase', 'plano', 'datacadastro'], 'safe'],
+            [['fase', 'plano', 'datacadastro', 'titulo'], 'safe'],
+            [['from_date', 'to_date', 'ano_listagem'], 'safe'],
+            [['param'], 'string', 'on' => 'MY_SCENARIO'],
         ];
     }
 
@@ -51,9 +53,17 @@ class OrdensdeservicoSearch extends Ordensdeservico
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'=> [
+                'defaultOrder' => [
+                    'id' => SORT_DESC
+                ],
+            ],
+            'pagination' => [
+                'pageSize' => 500,
+            ],
         ]);
 
-        (isset($params['ProdutoSearch'])?$this->load($params):$this->load($params,''));
+        (isset($params['OrdensdeservicoSearch'])?$this->load($params):$this->load($params,''));
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
@@ -69,8 +79,16 @@ class OrdensdeservicoSearch extends Ordensdeservico
             'datacadastro' => $this->datacadastro,
         ]);
 
-        $query->andFilterWhere(['like', 'fase', $this->fase])
+        $query->andFilterWhere(['like', 'titulo', $this->titulo])
+            ->andFilterWhere(['like', 'fase', $this->fase])
             ->andFilterWhere(['like', 'plano', $this->plano]);
+        
+        $query->andFilterWhere(['between', 'datacadastro', $this->from_date, $this->to_date]);
+        if ($this->ano_listagem != 'all') {
+            $query->andFilterWhere([
+                'YEAR(datacadastro)' => $this->ano_listagem,
+            ]);
+        }
 
         return $dataProvider;
     }

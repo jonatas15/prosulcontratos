@@ -12,7 +12,7 @@ Modal::begin([
     'bodyOptions' => [
         'class' => 'bg-white',
     ],
-    'size' => 'modal-xl',
+    'size' => 'modal-md',
     'toggleButton' => [
         'label' => '<i class="bi bi-card-list"></i> Nova Ordem de Serviço',
         'class' => 'btn btn-primary text-white  float-right'

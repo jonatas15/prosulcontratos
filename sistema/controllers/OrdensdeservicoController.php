@@ -71,7 +71,11 @@ class OrdensdeservicoController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['index']);
+                return $this->redirect([
+                    'update', 
+                    'id' => $model->id,
+                    'abativa' => 'arquivos'
+                ]);
             }
         } else {
             $model->loadDefaultValues();
@@ -94,7 +98,11 @@ class OrdensdeservicoController extends Controller
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect([
+                'update', 
+                'id' => $model->id,
+                'abativa' => 'arquivos'
+            ]);
         }
 
         return $this->render('update', [
