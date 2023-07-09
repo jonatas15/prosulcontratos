@@ -16,8 +16,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $templategeral_grid = '';
 switch (Yii::$app->user->identity->nivel) {
-    case 'administrador': $templategeral_grid = '{view}{update}{delete}'; break;
-    case 'gestor': $templategeral_grid = '{view}{update}'; break;
+    case 'administrador': $templategeral_grid = '<div style="white-space: nowrap;">{view} {update} {delete}</div>'; break;
+    case 'gestor': $templategeral_grid = '{view} {update}'; break;
     case 'fiscal': $templategeral_grid = '{view}'; break;
 }
 
@@ -25,19 +25,19 @@ switch (Yii::$app->user->identity->nivel) {
 <div class="empreendimento-index">
 
     <div class="row">
-
         <div class="col-md-12">
             <h3><img src="/logo/contract-icon.png" class="icone-modulo" width="70" /> <?= Html::encode($this->title) ?></h3>
         </div>
 
-        <div class="col-md-12">
-            <br>
+        <div class="col-md-6 pt-2">
+            <?= Html::a('Voltar <<', ['/'], ['class' => 'btn btn-warning text-white']) ?>
         </div>
-        <div class="col-md-6">
-            <?= Html::a('Voltar <<', ['/contrato/view?id=1'], ['class' => 'btn btn-warning text-white']) ?>
-        </div>
-        <div class="col-md-6">
-            <?= Html::a('Novo Empreendimento', ['create'], ['class' => 'btn btn-success', 'style'=>"float: right !important"]) ?>
+        <div class="col-md-6 pt-2">
+            <?php //= //Html::a('Novo Empreendimento', ['create'], ['class' => 'btn btn-success', 'style'=>"float: right !important"]) ?>
+            <?php $nEmpModel = new Empreendimento(); ?>
+            <?= $this->render('create', [
+                'model' => $nEmpModel
+            ]) ?>
         </div>
         <div class="col-md-12">
             <br>
@@ -55,7 +55,7 @@ switch (Yii::$app->user->identity->nivel) {
 
                 // 'id',
                 'titulo',
-                'prazo',
+                // 'prazo',
                 // 'datacadastro',
                 [
                     'attribute' => 'datacadastro',
@@ -70,10 +70,10 @@ switch (Yii::$app->user->identity->nivel) {
                     }
                 ],
                 // 'dataupdate',
-                // 'status',
                 // 'uf',
-                // 'segmento',
-                // 'extensao_km',
+                'segmento',
+                'status',
+                'extensao_km',
                 //'tipo_obra',
                 //'municipios_interceptados:ntext',
                 //'orgao_licenciador',
@@ -87,10 +87,31 @@ switch (Yii::$app->user->identity->nivel) {
                 // ],
                 [
                     'class' => ActionColumn::className(),
+                    'header' => '<center><strong><i class="bi bi-filter"></i></strong></center>',
                     'urlCreator' => function ($action, Empreendimento $model, $key, $index, $column) {
                         return Url::toRoute([$action, 'id' => $model->id]);
                     },
-                    'template' => $templategeral_grid
+                    'template' => $templategeral_grid,
+                    'buttons' => [
+                        'view' => function ($url, $model, $key) {
+                            return $this->render('view', [
+                                'id' => $model->id,
+                                'model' => $model
+                            ]);
+                        },
+                        'update' => function ($url, $model, $key) {
+                            return  Html::a('<i class="bi bi-gear"></i>', $url, ['class' => 'btn btn-primary text-white p-1 px-2']);
+                        },
+                        'delete' => function ($url, $model, $key) {
+                            return  Html::a('<i class="bi bi-trash"></i>', ['delete', 'id' => $model->id], [
+                                'class' => 'btn btn-danger p-1 px-2',
+                                'data' => [
+                                    'confirm' => 'Certeza que deseja excluir este registro "'.$model->titulo.'"?',
+                                    'method' => 'post',
+                                ],
+                            ]);
+                        }
+                    ],
                 ],
             ],
         ]); ?>

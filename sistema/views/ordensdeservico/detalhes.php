@@ -83,7 +83,7 @@ Modal::begin([
         'id' => 'mais-detalhes-os-'.$model->id,
         'tabindex' => false,
     ],
-    'size' => 'modal-lg',
+    'size' => 'modal-xl',
     'toggleButton' => [
         'label' => '<i class="bi bi-card-list"></i>',
         'class' => 'btn btn-info text-white'
@@ -93,19 +93,49 @@ Modal::begin([
     ]
 ]);
 ?>
-<?= DetailView::widget([
-    'model' => $model,
-    'attributes' => [
-        'id',
-        'titulo',
-        'fase',
-        'plano',
-        [
-            'attribute'=> 'datacadastro',
-            'value' => function($data) {
-                return date('d/m/Y H:i:s', strtotime($data->datacadastro));
-            }
+<div class="row">
+  <div class="col-7">
+    <?= DetailView::widget([
+        'model' => $model,
+        'attributes' => [
+            'id',
+            'titulo',
+            'fase',
+            'plano',
+            [
+                'attribute'=> 'datacadastro',
+                'value' => function($data) {
+                    return date('d/m/Y H:i:s', strtotime($data->datacadastro));
+                }
+            ],
         ],
-    ],
-]) ?>
+    ]) ?>
+  </div>
+  <div class="col-5" style="text-align: left !important">
+        <div class="card mb-2" style="width: 100%;">
+            <div class="card-header bg-info text-white">
+                <strong>Produtos</strong>
+            </div>
+            <ul class="list-group list-group-flush">
+                <?php foreach($model->produtos as $produto):?>
+                    <?php 
+                    $bg_class = "";
+                    switch ($produto->fase) {
+                        case 'Aprovado': $bg_class = "success"; break;
+                        case 'Em andamento': $bg_class = "warning"; break;
+                        case 'Reprovado': $bg_class = "danger"; break;
+                    } 
+                    ?>
+                    <li class="list-group-item">
+                        <exp class="badge bg-info float-right"><?=$produto->data_entrega != '' ? date('d/m/Y', strtotime($produto->data_entrega)) : '' ?></exp>
+                        <!-- <a href="<?=Yii::$app->homeUrl."produto/view?id=$produto->id"?>" target="_blank"> -->
+                        <p style="white-space: break-spaces;"><?=$produto->subproduto?></p>
+                        <!-- </a> -->
+                        <div class="badge bg-<?=$bg_class?>"><?=$produto->fase?></div>
+                    </li>
+                <?php endforeach;?>
+            </ul>
+        </div>
+    </div>
+</div>
 <?php Modal::end(); ?>

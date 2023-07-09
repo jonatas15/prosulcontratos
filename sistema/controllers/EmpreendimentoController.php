@@ -47,7 +47,7 @@ class EmpreendimentoController extends Controller
            ],
            'access' => [
                'class' => AccessControl::className(),
-               'only' => ['index', 'view', 'update', 'create',  'delete'],
+               'only' => ['index', 'view', 'update', 'create',  'delete', 'novafase', 'editfase'],
                'rules' => [
                    [
                        'allow' => false,
@@ -56,7 +56,7 @@ class EmpreendimentoController extends Controller
                    ],
                    [
                        'allow' => true,
-                       'actions' => ['index', 'view', 'update', 'create',  'delete'],
+                       'actions' => ['index', 'view', 'update', 'create',  'delete', 'novafase', 'editfase'],
                        'roles' => ['@'],
                    ],
                ],
@@ -115,7 +115,11 @@ class EmpreendimentoController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['index']);
+                return $this->redirect([
+                    'update', 
+                    'id' => $model->id,
+                    'abativa' => 'fases'
+                ]);
             }
         } else {
             $model->loadDefaultValues();
@@ -138,12 +142,53 @@ class EmpreendimentoController extends Controller
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect([
+                'update', 
+                'id' => $model->id,
+                'abativa' => 'fases'
+            ]);
         }
 
         return $this->render('update', [
             'model' => $model,
         ]);
+    }
+
+    public function actionNovafase()
+    {
+        $model = new \app\models\Fase();
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                $model->data = $model->data != '' ? $this->dataprobanco($model->data): '';
+                if ($model->save()) {
+                    return $this->redirect([
+                        'update', 
+                        'id' => $model->empreendimento_id,
+                        'abativa' => 'fases'
+                    ]);
+                }
+            }
+        } else {
+            return 'algo errado, retorne';
+        }
+    }
+    public function actionEditfase($id)
+    {
+        $model = \app\models\Fase::findOne(['id' => $id]);
+
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            $model->data = $model->data != '' ? $this->dataprobanco($model->data): '';
+            if ($model->save()) {
+                return $this->redirect([
+                    'update', 
+                    'id' => $model->empreendimento_id,
+                    'abativa' => 'fases'
+                ]);
+            }
+        }
+
+        return 'algo errado, retorne';
     }
 
     /**
@@ -157,6 +202,11 @@ class EmpreendimentoController extends Controller
     {
         $this->findModel($id)->delete();
         return $this->redirect(['index']);
+    }
+    public function actionDeletereview($id)
+    {
+        \app\models\Fase::findOne(['id' => $id])->delete();
+        return $this->redirect(\Yii::$app->request->referrer);
     }
 
     /**
@@ -173,5 +223,16 @@ class EmpreendimentoController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function dataprobanco ($data) {
+        $arr = explode('/', $data);
+        return $arr[2].'-'.$arr[1].'-'.$arr[0];
+    }
+
+    function diasentre($data_inicial, $data_final) {
+        $diferenca = strtotime($data_final) - strtotime($data_inicial);
+        $dias = floor($diferenca / (60 * 60 * 24)); 
+        return $dias;
     }
 }

@@ -371,7 +371,7 @@ use yii\helpers\ArrayHelper;
                     'width' => '5%'
                 ],
                 'value' => function($data) {
-                    return '<a href="'.Yii::$app->homeUrl.'produto/update?id='.$data->id.'" class="btn btn-primary"><i class="bi bi-pencil"></i></a>';
+                    return '<a href="'.Yii::$app->homeUrl.'licenciamento/update?id='.$data->id.'" class="btn btn-primary"><i class="bi bi-pencil"></i></a>';
                 },
                 'visible' => in_array(Yii::$app->user->identity->nivel, ['administrador', 'gestor']) ? true : false
             ],

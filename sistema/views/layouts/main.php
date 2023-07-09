@@ -182,7 +182,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         </div>
     </div>
 </footer>
-
+<script type="module" src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <?php $this->endBody() ?>
 </body>
 </html>

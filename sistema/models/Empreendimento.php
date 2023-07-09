@@ -102,6 +102,16 @@ class Empreendimento extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Licenciamento::class, ['empreendimento_id' => 'id']);
     }
+    
+    /**
+     * Gets query for [[Licenciamentos]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFases()
+    {
+        return $this->hasMany(Fase::class, ['empreendimento_id' => 'id']);
+    }
 
     /**
      * Gets query for [[Oficio]].

@@ -1,25 +1,29 @@
 <?php
-
-use yii\helpers\Html;
-
-/** @var yii\web\View $this */
-/** @var app\models\Empreendimento $model */
-
-$this->title = 'Novo Empreendimento';
-$this->params['breadcrumbs'][] = ['label' => 'Contrato 1', 'url' => ['contrato/view?id=1']];
-$this->params['breadcrumbs'][] = ['label' => 'Ofício: 154', 'url' => ['contrato/view?id=1&abativa=aba_oficios']];
-$this->params['breadcrumbs'][] = ['label' => 'Empreendimentos', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+    use yii\helpers\Html;
+    use yii\bootstrap5\Modal;
 ?>
-<div class="empreendimento-create">
-
-    <h3><?= Html::encode($this->title) ?></h3>
-    <div class="row">
-        <div class="col-md-8">
-            <?= $this->render('_form', [
-                'model' => $model,
-            ]) ?>
-        </div>
-    </div>
-
+<?php
+Modal::begin([
+    'title' => "Novo Empreendimento",
+    'options' => [
+        'id' => 'cadastrar-novo-empreendimento',
+        'tabindex' => false,
+    ],
+    'bodyOptions' => [
+        'class' => 'bg-white',
+    ],
+    'size' => 'modal-xl',
+    'toggleButton' => [
+        'label' => '<i class="bi bi-card-list"></i> Novo Empreendimento',
+        'class' => 'btn btn-success text-white  float-right'
+    ],
+]);
+?>
+<div class="oficio-create">
+    <?= $this->render('_form', [
+        'model' => $model,
+        'action' => 'empreendimento/create',
+        'contrato_id' => $contrato_id
+    ]) ?>
 </div>
+<?php Modal::end(); ?>
