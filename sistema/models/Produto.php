@@ -85,7 +85,7 @@ class Produto extends \yii\db\ActiveRecord
             'entrega' => 'Entrega',
             'servico' => 'Serviço',
             'descricao' => 'Descrição',
-            'aprov_data' => 'Data de provação',
+            'aprov_data' => 'Data de aprovação',
             'aprov_tempo_ultima_revisao' => 'Tempo da última aprovação',
             'aprov_tempo_total' => 'Tempo total',
             'aprov_versao' => 'Versão de Aprovação',

@@ -4,6 +4,10 @@
 // use yii\bootstrap2\Collapse;
 use yii\bootstrap5\Accordion;
 use app\models\Contrato;
+use app\models\Oficio;
+use app\models\Ordensdeservico as OS;
+use app\models\Licenciamento;
+use app\models\Produto;
 
 $this->title = 'PROSUL-DNIT';
 ?>
@@ -119,11 +123,9 @@ $this->title = 'PROSUL-DNIT';
                                         <img src="'.Yii::$app->homeUrl.'logo/contract-icon.png" class="icone-modulo" />
                                     </h5>
                                     <p class="card-text">
-                                        5 módulos
-                                        <br>
-                                        158 Registros
-                                        <br>
-                                        <br>
+                                        5 módulos<br>
+                                        100 atualizações<br>
+                                        9 mensagens<br>
                                     </p>
                                     <a href="'.Yii::$app->homeUrl.'contrato/view?id='.$contrato->id.'&abativa=aba_dados" class="btn btn-info text-white">Visualizar</a>
                                 </div>
@@ -144,9 +146,15 @@ $this->title = 'PROSUL-DNIT';
                                     <img src="'.Yii::$app->homeUrl.'logo/upload-files-icon.png" class="icone-modulo" />
                                     </h5>
                                     <p class="card-text">
-                                        155 registros feitos <br>
-                                        11 em andamento <br>
-                                        8 concluídos
+                                        '.(count($contrato->oficios)).' registros feitos <br>
+                                        '.(Oficio::find()->where([
+                                            'contrato_id' => $contrato->id,
+                                            'status' => 'Em Andamento'
+                                        ])->count()).' em andamento <br>
+                                        '.(Oficio::find()->where([
+                                            'contrato_id' => $contrato->id,
+                                            'status' => 'Resolvido'
+                                        ])->count()).' concluídos
                                     </p>
                                     <a href="'.Yii::$app->homeUrl.'contrato/view?id='.$contrato->id.'&abativa=aba_oficios" class="btn btn-info text-white">Visualizar</a>
                                 </div>
@@ -167,9 +175,11 @@ $this->title = 'PROSUL-DNIT';
                                     <img src="'.Yii::$app->homeUrl.'logo/surveys-icon.png" class="icone-modulo" />
                                     </h5>
                                     <p class="card-text">
-                                        0 registros feitos <br>
-                                        0 em andamento <br>
-                                        0 concluído
+                                        '.(OS::find()->where([
+                                            'contrato_id' => $contrato->id
+                                        ])->count()).' registros feitos <br>
+                                        <br>
+                                        <br>
                                     </p>
                                     <a href="'.Yii::$app->homeUrl.'contrato/view?id='.$contrato->id.'&abativa=aba_ordens" class="btn btn-info text-white">Visualizar</a>
                                 </div>
@@ -190,9 +200,11 @@ $this->title = 'PROSUL-DNIT';
                                     <img src="'.Yii::$app->homeUrl.'logo/notary-icon.png" class="icone-modulo" />
                                     </h5>
                                     <p class="card-text">
-                                        0 registros feitos <br>
-                                        0 em andamento <br>
-                                        0 concluído
+                                        '.(Licenciamento::find()->where([
+                                            'contrato_id' => $contrato->id
+                                        ])->count()).' Registros feitos<br>
+                                        <br>
+                                        <br>
                                     </p>
                                     <a href="'.Yii::$app->homeUrl.'contrato/view?id='.$contrato->id.'&abativa=aba_licensas" class="btn btn-info text-white">Visualizar</a>
                                 </div>
@@ -213,9 +225,17 @@ $this->title = 'PROSUL-DNIT';
                                     <img src="'.Yii::$app->homeUrl.'logo/slideshow-icon.png" class="icone-modulo" />
                                     </h5>
                                     <p class="card-text">
-                                        0 registros feitos <br>
-                                        0 em andamento <br>
-                                        0 concluído
+                                        '.(Produto::find()->where([
+                                            'contrato_id' => $contrato->id
+                                        ])->count()).' registros feitos <br>
+                                        '.(Produto::find()->where([
+                                            'contrato_id' => $contrato->id,
+                                            'fase' => 'Em Andamento'
+                                        ])->count()).' em andamento <br>
+                                        '.(Produto::find()->where([
+                                            'contrato_id' => $contrato->id,
+                                            'fase' => 'Aprovado'
+                                        ])->count()).' aprovados
                                     </p>
                                     <a href="'.Yii::$app->homeUrl.'contrato/view?id='.$contrato->id.'&abativa=aba_produtos" class="btn btn-info text-white">Visualizar</a>
                                 </div>

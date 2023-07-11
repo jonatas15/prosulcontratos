@@ -611,14 +611,14 @@ use miloschuman\highcharts\Highcharts;
         </div>
         <div class="row">
             <div class="col-md-4">
-                <label class="control-label summary" for="pagina-roa_programa">Número</label>
+                <label class="control-label summary" for="pagina-roa_programa">Empreendimento</label>
                 <?php $lista_emp = ArrayHelper::map($empreendimentos, 'id', 'titulo'); ?>
                 <?= $form->field($searchModel, 'empreendimento_id')->dropDownList($lista_emp, [
                     'prompt' => 'Selecione'
                 ])->label(false) ?>
             </div>
             <div class="col-md-4">
-                <label class="control-label summary" for="pagina-roa_programa">Número</label>
+                <label class="control-label summary" for="pagina-roa_programa">Ordem de Serviço</label>
                 <?php $lista_os = ArrayHelper::map($os, 'id', 'titulo'); ?>
                 <?= $form->field($searchModel, 'ordensdeservico_id')->dropDownList($lista_os, [
                     'prompt' => 'Selecione'

@@ -87,6 +87,14 @@ $this->params['breadcrumbs'][] = 'Atualizar '.$model->id . '- ' . $model->titulo
 ?>
 <div class="oficio-update">
     <h3><?= Html::encode($this->title) ?></h3>
+    <?php if (count($model->fases) > 0): ?>
+    <div class="row align-center pb-5">
+        <?= $this->render('timeline', [
+            'id' => $model->id,
+            'model' => $model
+        ]); ?>
+    </div>
+    <?php endif; ?>
     <?php 
     echo Tabs::widget([
         'items' => [
