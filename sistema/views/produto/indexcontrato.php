@@ -622,7 +622,7 @@ use miloschuman\highcharts\Highcharts;
         </div>
         <div class="clearfix"><br></div>
         <div class="row">
-            <h3><center>Pesquisa <a onclick="location.reload();" class="btn btn-primary text-white fs-5" tolltip="" title="Limpar/Reiniciar">
+            <h3><center>Pesquisa <a href="<?=Yii::$app->homeUrl."contrato/view?id=$contrato_id&abativa=aba_produtos"?>" class="btn btn-primary text-white fs-5" tolltip="" title="Limpar/Reiniciar">
             <i class="bi bi-arrow-counterclockwise"></i>
             </a></center></h3>
             <!-- <hr> -->

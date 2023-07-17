@@ -113,10 +113,6 @@ $this->title = 'PROSUL-DNIT';
                             <div class="card text-center">
                                 <div class="card-header bg-primary text-white">
                                     Dados Contratuais
-                                    <span style="z-index: 100000 !important;" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger fs-7">
-                                        <i class="bi bi-bell"></i> 9+
-                                        <span class="visually-hidden">unread messages</span>
-                                    </span>
                                 </div>
                                 <div class="card-body">
                                     <h5 class="card-title">
@@ -136,10 +132,18 @@ $this->title = 'PROSUL-DNIT';
                         ';
                         $content .= $divcollX;
                         $content .= $divcollA;
+                        $conta_mensagens = 0;
+                        foreach ($contrato->oficios as $ofc):
+                            $conta_mensagens += count($ofc->mensagens);
+                        endforeach;
                         $content .= '
                             <div class="card text-center">
                                 <div class="card-header bg-primary text-white">
                                     Gestão de Ofícios
+                                    <span style="z-index: 100000 !important;" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger fs-7">
+                                        <i class="bi bi-bell"></i> '.$conta_mensagens.'+
+                                        <span class="visually-hidden">unread messages</span>
+                                    </span>
                                 </div>
                                 <div class="card-body">
                                     <h5 class="card-title">

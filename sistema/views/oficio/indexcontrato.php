@@ -423,38 +423,94 @@ use yii\bootstrap5\Accordion;
                             'title' => ['text' => 'Status']
                         ],
                         'series' => [
-                            ['name' => 'Não Resolvido', 'data' => [
-                                retornaserie('status', 'Não Resolvido', '2023', '01'),
-                                retornaserie('status', 'Não Resolvido', '2023', '02'),
-                                retornaserie('status', 'Não Resolvido', '2023', '03'),
-                                retornaserie('status', 'Não Resolvido', '2023', '04'),
-                                retornaserie('status', 'Não Resolvido', '2023', '05'),
-                                retornaserie('status', 'Não Resolvido', '2023', '06'),
-                            ], 'color' => 'red'],
-                            ['name' => 'Resolvido', 'data' => [
-                                retornaserie('status', 'Resolvido', '2023', '01'),
-                                retornaserie('status', 'Resolvido', '2023', '02'),
-                                retornaserie('status', 'Resolvido', '2023', '03'),
-                                retornaserie('status', 'Resolvido', '2023', '04'),
-                                retornaserie('status', 'Resolvido', '2023', '05'),
-                                retornaserie('status', 'Resolvido', '2023', '06'),
-                            ], 'color' => 'lightgreen'],
-                            ['name' => 'Informativo', 'data' =>[
-                                retornaserie('status', 'Informativo', '2023', '01'),
-                                retornaserie('status', 'Informativo', '2023', '02'),
-                                retornaserie('status', 'Informativo', '2023', '03'),
-                                retornaserie('status', 'Informativo', '2023', '04'),
-                                retornaserie('status', 'Informativo', '2023', '05'),
-                                retornaserie('status', 'Informativo', '2023', '06'),
-                            ], 'color' => 'lightgray'],
-                            ['name' => 'Em Andamento', 'data' => [
-                                retornaserie('status', 'Em Andamento', '2023', '01'),
-                                retornaserie('status', 'Em Andamento', '2023', '02'),
-                                retornaserie('status', 'Em Andamento', '2023', '03'),
-                                retornaserie('status', 'Em Andamento', '2023', '04'),
-                                retornaserie('status', 'Em Andamento', '2023', '05'),
-                                retornaserie('status', 'Em Andamento', '2023', '06'),
-                            ], 'color' => '#f3f0c6'],
+                            [
+                                'name' => 'Não Resolvido',
+                                'cursor' => 'pointer',
+                                "point" => [
+                                    "events" => [
+                                        "click" => new JsExpression('function(){
+                                            // console.log(this);
+                                            $(":checkbox[value=\'Não Resolvido\']").prop("checked","true");
+                                            $("#form-pesquisa-oficios").submit();
+                                        }')
+                                    ],
+                                ],
+                                'data' => [
+                                    retornaserie('status', 'Não Resolvido', '2023', '01'),
+                                    retornaserie('status', 'Não Resolvido', '2023', '02'),
+                                    retornaserie('status', 'Não Resolvido', '2023', '03'),
+                                    retornaserie('status', 'Não Resolvido', '2023', '04'),
+                                    retornaserie('status', 'Não Resolvido', '2023', '05'),
+                                    retornaserie('status', 'Não Resolvido', '2023', '06'),
+                                ], 
+                                'color' => 'red'
+                            ],
+                            [
+                                'name' => 'Resolvido',
+                                'cursor' => 'pointer',
+                                "point" => [
+                                    "events" => [
+                                        "click" => new JsExpression('function(){
+                                            // console.log(this);
+                                            $(":checkbox[value=\'Resolvido\']").prop("checked","true");
+                                            $("#form-pesquisa-oficios").submit();
+                                        }')
+                                    ],
+                                ],
+                                'data' => [
+                                    retornaserie('status', 'Resolvido', '2023', '01'),
+                                    retornaserie('status', 'Resolvido', '2023', '02'),
+                                    retornaserie('status', 'Resolvido', '2023', '03'),
+                                    retornaserie('status', 'Resolvido', '2023', '04'),
+                                    retornaserie('status', 'Resolvido', '2023', '05'),
+                                    retornaserie('status', 'Resolvido', '2023', '06'),
+                                ], 
+                                'color' => 'lightgreen'
+                            ],
+                            [
+                                'name' => 'Informativo', 
+                                'cursor' => 'pointer',
+                                "point" => [
+                                    "events" => [
+                                        "click" => new JsExpression('function(){
+                                            // console.log(this);
+                                            $(":checkbox[value=\'Informativo\']").prop("checked","true");
+                                            $("#form-pesquisa-oficios").submit();
+                                        }')
+                                    ],
+                                ],
+                                'data' => [
+                                    retornaserie('status', 'Informativo', '2023', '01'),
+                                    retornaserie('status', 'Informativo', '2023', '02'),
+                                    retornaserie('status', 'Informativo', '2023', '03'),
+                                    retornaserie('status', 'Informativo', '2023', '04'),
+                                    retornaserie('status', 'Informativo', '2023', '05'),
+                                    retornaserie('status', 'Informativo', '2023', '06'),
+                                ], 
+                                'color' => 'lightgray'
+                            ],
+                            [
+                                'name' => 'Em Andamento',
+                                'cursor' => 'pointer',
+                                "point" => [
+                                    "events" => [
+                                        "click" => new JsExpression('function(){
+                                            // console.log(this);
+                                            $(":checkbox[value=\'Em Andamento\']").prop("checked","true");
+                                            $("#form-pesquisa-oficios").submit();
+                                        }')
+                                    ],
+                                ],
+                                'data' => [
+                                    retornaserie('status', 'Em Andamento', '2023', '01'),
+                                    retornaserie('status', 'Em Andamento', '2023', '02'),
+                                    retornaserie('status', 'Em Andamento', '2023', '03'),
+                                    retornaserie('status', 'Em Andamento', '2023', '04'),
+                                    retornaserie('status', 'Em Andamento', '2023', '05'),
+                                    retornaserie('status', 'Em Andamento', '2023', '06'),
+                                ], 
+                                'color' => '#f3f0c6'
+                            ],
                             [
                                 'type' => 'spline',
                                 'name' => 'Emissor: CGMAB',
@@ -499,8 +555,7 @@ use yii\bootstrap5\Accordion;
                                 'marker' => [
                                     'lineWidth' => 2
                                 ],
-                            ],
-                            
+                            ],      
                         ]
                     ]
                 ]);
@@ -549,6 +604,15 @@ use yii\bootstrap5\Accordion;
                         'series' =>  [
                             [
                                 'name' => 'Status',
+                                "cursor" => "pointer",
+                                "point" => [
+                                    "events" => [
+                                        "click" => new JsExpression('function(){
+                                            $(":checkbox[value=\'" + this.options.name + "\']").prop("checked","true");
+                                            $("#form-pesquisa-oficios").submit();
+                                        }')
+                                    ],
+                                ],
                                 'data' => [
                                     [
                                         'name' => 'Informativo',
@@ -556,7 +620,7 @@ use yii\bootstrap5\Accordion;
                                         'color' => 'lightgray'
                                     ],
                                     [
-                                        'name' => 'Em andamento',
+                                        'name' => 'Em Andamento',
                                         'y' => $em_andamento,
                                         'color' => '#f3f0c6',
                                     ],
@@ -566,7 +630,7 @@ use yii\bootstrap5\Accordion;
                                         'color' => 'lightgreen',
                                     ],
                                     [
-                                        'name' => 'Não resolvido',
+                                        'name' => 'Não Resolvido',
                                         'y' => $nao_resolvidos,
                                         'color' => 'red',
                                     ],
@@ -613,7 +677,9 @@ use yii\bootstrap5\Accordion;
                                     "point" => [
                                         "events" => [
                                             "click" => new JsExpression('function(){
-                                                console.log(this.options.url)
+                                                // console.log(this.options.url)
+                                                $(":checkbox[value=\'" + this.options.name + "\']").prop("checked","true");
+                                                $("#form-pesquisa-oficios").submit();
                                             }')
                                         ],
                                     ],
@@ -625,7 +691,7 @@ use yii\bootstrap5\Accordion;
                                             'url' => 'google.com.br'
                                         ],
                                         [
-                                            'name' => 'Em andamento',
+                                            'name' => 'Em Andamento',
                                             'y' => retornatipo ('status', 'Em Andamento', $tipo, $dataProvider),
                                             'color' => '#f3f0c6',
                                             'url' => 'yahoo.com.br'
@@ -636,7 +702,7 @@ use yii\bootstrap5\Accordion;
                                             'color' => 'lightgreen',
                                         ],
                                         [
-                                            'name' => 'Não resolvido',
+                                            'name' => 'Não Resolvido',
                                             'y' => retornatipo ('status', 'Não Resolvido', $tipo, $dataProvider),
                                             'color' => 'red',
                                         ],
@@ -677,7 +743,7 @@ use yii\bootstrap5\Accordion;
         <br />
     </div>
     <div class="row" style="border-top: 1px solid lightgray;background-color: ghostwhite;padding-top: 10px !important;position:relative">
-        <h4 style="text-align:center;padding: 5px">Pesquisa  <a onclick="location.reload();" class="btn btn-primary text-white fs-5" tolltip="" title="Limpar/Reiniciar">
+        <h4 style="text-align:center;padding: 5px">Pesquisa  <a href="<?=Yii::$app->homeUrl."contrato/view?id=$contrato_id&abativa=aba_oficios"?>" class="btn btn-primary text-white fs-5" tolltip="" title="Limpar/Reiniciar">
             <i class="bi bi-arrow-counterclockwise"></i>
         </a></h4>
     </div>
@@ -685,7 +751,8 @@ use yii\bootstrap5\Accordion;
         <!-- <h4 style="padding:5px">Pesquisa:</h4> -->
         <?php $form = ActiveForm::begin(['options' => [
             'data-pjax' => true,
-            'autocomplete'=>"off"  
+            'autocomplete'=>"off",
+            'id' => 'form-pesquisa-oficios'
         ]]); ?>
         <div class="row">
             <div class="col-md-2">

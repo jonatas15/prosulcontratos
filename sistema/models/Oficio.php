@@ -26,6 +26,7 @@ use Yii;
  * @property string|null $status
  *
  * @property Arquivo[] $arquivos
+ * @property Mensagens[] $mensagens
  * @property Contrato $contrato
  * @property Empreendimento[] $empreendimentos
  * @property Empreendimento $emprrendimento
@@ -98,6 +99,16 @@ class Oficio extends \yii\db\ActiveRecord
     public function getArquivos()
     {
         return $this->hasMany(Arquivo::class, ['oficio_id' => 'id']);
+    }
+    
+    /**
+     * Gets query for [[Mensagens]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMensagens()
+    {
+        return $this->hasMany(Mensagem::class, ['oficio_id' => 'id']);
     }
 
     /**
