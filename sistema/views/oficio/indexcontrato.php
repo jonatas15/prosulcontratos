@@ -384,11 +384,18 @@ use yii\bootstrap5\Accordion;
                     ])->count();
                     return $contagem;
                 }
-                function retornatipo ($campo, $status, $tipo) {
-                    $contagem = Oficio::find()->where([
-                        $campo => $status,
-                        'tipo' => $tipo
-                    ])->count();
+                function retornatipo ($campo, $status, $tipo, $dataProvider) {
+                    // $contagem = Oficio::find()->where([
+                    //     $campo => $status,
+                    //     'tipo' => $tipo
+                    // ])->count();
+                    // Talvez pelo Provider Aqui
+                    $contagem = 0;
+                    foreach($dataProvider->getModels() as $item) {
+                        if ( $item->$campo == $status && $item->tipo == $tipo) {
+                            $contagem++;
+                        }
+                    }
                     return $contagem;
                 }
 
@@ -613,24 +620,24 @@ use yii\bootstrap5\Accordion;
                                     'data' => [
                                         [
                                             'name' => 'Informativo',
-                                            'y' => retornatipo ('status', 'Informativo', $tipo),
+                                            'y' => retornatipo ('status', 'Informativo', $tipo, $dataProvider),
                                             'color' => 'lightgray',
                                             'url' => 'google.com.br'
                                         ],
                                         [
                                             'name' => 'Em andamento',
-                                            'y' => retornatipo ('status', 'Em Andamento', $tipo),
+                                            'y' => retornatipo ('status', 'Em Andamento', $tipo, $dataProvider),
                                             'color' => '#f3f0c6',
                                             'url' => 'yahoo.com.br'
                                         ],
                                         [
                                             'name' => 'Resolvido',
-                                            'y' => retornatipo ('status', 'Resolvido', $tipo),
+                                            'y' => retornatipo ('status', 'Resolvido', $tipo, $dataProvider),
                                             'color' => 'lightgreen',
                                         ],
                                         [
                                             'name' => 'Não resolvido',
-                                            'y' => retornatipo ('status', 'Não Resolvido', $tipo),
+                                            'y' => retornatipo ('status', 'Não Resolvido', $tipo, $dataProvider),
                                             'color' => 'red',
                                         ],
                                     ],
@@ -670,7 +677,9 @@ use yii\bootstrap5\Accordion;
         <br />
     </div>
     <div class="row" style="border-top: 1px solid lightgray;background-color: ghostwhite;padding-top: 10px !important;position:relative">
-        <h4 style="text-align:center;padding: 5px">Pesquisa</h4>
+        <h4 style="text-align:center;padding: 5px">Pesquisa  <a onclick="location.reload();" class="btn btn-primary text-white fs-5" tolltip="" title="Limpar/Reiniciar">
+            <i class="bi bi-arrow-counterclockwise"></i>
+        </a></h4>
     </div>
     <div class="row" style="background-color: ghostwhite; padding: 10px 5px">
         <!-- <h4 style="padding:5px">Pesquisa:</h4> -->
@@ -752,9 +761,9 @@ use yii\bootstrap5\Accordion;
         <div class="row">
             <div class="col-md-2">
                 <?= $form->field($searchModel, 'ano_listagem')->dropDownList([
+                    'all'=>'Todos os registros',
                     '2023'=>'Ano 2023',
                     '2022'=>'Ano 2022',
-                    'all'=>'Todos os registros',
                 ])->label(false) ?>
             </div>    
             <div class="col-md-2">

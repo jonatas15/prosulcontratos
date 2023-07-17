@@ -268,7 +268,8 @@ use miloschuman\highcharts\Highcharts;
         <!-- <h4 style="padding:5px">Pesquisa:</h4> -->
         <?php $form = ActiveForm::begin(['options' => [
             'data-pjax' => true,
-            'autocomplete'=>"off"  
+            'autocomplete'=>"off",
+            'id' => 'form-pesquisa-produto'
         ]]); ?>
         <div class="row">
             <?php 
@@ -346,7 +347,7 @@ use miloschuman\highcharts\Highcharts;
                         }
                     }
                     array_push($graph_empreendimentos, [
-                        'name' => $emp->titulo, 'y' => $countaprodutos, 'url' => 'RV0'
+                        'name' => $emp->titulo, 'y' => $countaprodutos, 'url' => $emp->id
                     ]);
                 }
                 foreach ($os as $emp) {
@@ -357,7 +358,7 @@ use miloschuman\highcharts\Highcharts;
                         }
                     }
                     array_push($graph_os, [
-                        'name' => $emp->titulo, 'y' => $countaprodutos, 'url' => 'RV0'
+                        'name' => $emp->titulo, 'y' => $countaprodutos, 'url' => $emp->id
                     ]);
                 }
                 $reviews_aprov = [
@@ -391,7 +392,8 @@ use miloschuman\highcharts\Highcharts;
                                     "point" => [
                                         "events" => [
                                             "click" => new JsExpression('function(){
-                                                console.log(this.options.url)
+                                                $(":checkbox[value=\'" + this.options.url + "\']").prop("checked","true");
+                                                $("#form-pesquisa-produto").submit();
                                             }')
                                         ],
                                     ],
@@ -400,19 +402,19 @@ use miloschuman\highcharts\Highcharts;
                                             'name' => 'Aprovado',
                                             'y' => $aprovado,
                                             'color' => 'green',
-                                            'url' => 'google.com.br'
+                                            'url' => 'Aprovado'
                                         ],
                                         [
                                             'name' => 'Em análise',
                                             'y' => $aguardando,
                                             'color' => 'orange',
-                                            'url' => 'yahoo.com.br'
+                                            'url' => 'Em andamento'
                                         ],
                                         [
                                             'name' => 'Reprovado',
                                             'y' => $reprovado,
                                             'color' => 'red',
-                                            'url' => 'yahoo.com.br'
+                                            'url' => 'Reprovado'
                                         ],
                                     ],
                                     'showInLegend' => true,
@@ -448,7 +450,8 @@ use miloschuman\highcharts\Highcharts;
                                     "point" => [
                                         "events" => [
                                             "click" => new JsExpression('function(){
-                                                console.log(this.options.url)
+                                                $("#por_rv").val(this.options.url);
+                                                $("#form-pesquisa-produto").submit();
                                             }')
                                         ],
                                     ],
@@ -490,7 +493,8 @@ use miloschuman\highcharts\Highcharts;
                                     "point" => [
                                         "events" => [
                                             "click" => new JsExpression('function(){
-                                                console.log(this.options.url)
+                                                $("#produtosearch-empreendimento_id").val(this.options.url);
+                                                $("#form-pesquisa-produto").submit();
                                             }')
                                         ],
                                     ],
@@ -536,7 +540,8 @@ use miloschuman\highcharts\Highcharts;
                                     "point" => [
                                         "events" => [
                                             "click" => new JsExpression('function(){
-                                                console.log(this.options.url)
+                                                $("#produtosearch-ordensdeservico_id").val(this.options.url);
+                                                $("#form-pesquisa-produto").submit();
                                             }')
                                         ],
                                     ],
@@ -561,11 +566,14 @@ use miloschuman\highcharts\Highcharts;
                         ],
                         'options' => [
                             'chart' => [
-                                'type' => 'pie'
+                                'type' => 'column'
                             ],
                             'title' => ['text' => 'Tempo médio para Revisão'],
                             'yAxis' => [
                                 'title' => ['text' => 'Dias']
+                            ],
+                            'xAxis' => [
+                                'type' => 'category'
                             ],
                             'series' =>  [
                                 [
@@ -592,11 +600,19 @@ use miloschuman\highcharts\Highcharts;
                                             'url' => 'yahoo.com.br'
                                         ],
                                     ],
-                                    'showInLegend' => true,
+                                    'showInLegend' => false,
                                     'dataLabels' => [
                                         'enabled' => false,
                                     ],
                                 ],
+                                [
+                                    'type' => 'spline',
+                                    'name' => 'Tempo padrão (30 dias)',
+                                    'color' => 'red',
+                                    'data' => [
+                                        30, 30
+                                    ]
+                                ]
                             ],
                         ]
                     ]);
@@ -606,7 +622,9 @@ use miloschuman\highcharts\Highcharts;
         </div>
         <div class="clearfix"><br></div>
         <div class="row">
-            <h3><center>Pesquisa</center></h3>
+            <h3><center>Pesquisa <a onclick="location.reload();" class="btn btn-primary text-white fs-5" tolltip="" title="Limpar/Reiniciar">
+            <i class="bi bi-arrow-counterclockwise"></i>
+            </a></center></h3>
             <!-- <hr> -->
         </div>
         <div class="row">
@@ -616,6 +634,8 @@ use miloschuman\highcharts\Highcharts;
                 <?= $form->field($searchModel, 'empreendimento_id')->dropDownList($lista_emp, [
                     'prompt' => 'Selecione'
                 ])->label(false) ?>
+                <!-- Campos de pesquisa ocultos pros gráficos -->
+                <input type="hidden" name="por_rv" id="por_rv" value="<?=$_REQUEST['por_rv']?>">
             </div>
             <div class="col-md-4">
                 <label class="control-label summary" for="pagina-roa_programa">Ordem de Serviço</label>
@@ -659,9 +679,9 @@ use miloschuman\highcharts\Highcharts;
         <div class="row">
             <div class="col-md-2">
                 <?= $form->field($searchModel, 'ano_listagem')->dropDownList([
+                    'all'=>'Todos os registros',
                     '2023'=>'Ano 2023',
                     '2022'=>'Ano 2022',
-                    'all'=>'Todos os registros',
                 ])->label('Ano') ?>
             </div> 
             <div class="col-md-4">
@@ -790,6 +810,7 @@ use miloschuman\highcharts\Highcharts;
                 }
             ],
             // 'fase',
+            // 'aprov_versao',
             [
                 'attribute' => 'fase',
                 'format' => 'raw',
@@ -799,7 +820,8 @@ use miloschuman\highcharts\Highcharts;
                         case 'Aprovado': $faseada = "<b class='text-success'>$data->fase</b>"; break;
                         case 'Reprovado': $faseada = "<b class='text-danger'>$data->fase</b>"; break;
                     }        
-                    return "<center>$faseada</center>";
+                    return "<center>$faseada</center><br>".
+                        "<center>[ $data->aprov_versao ]</center>";
                 }
             ],
             [

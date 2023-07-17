@@ -105,6 +105,11 @@ class ProdutoSearch extends Produto
                     'YEAR(data_entrega)' => $this->ano_listagem,
                 ]);
             }
+            if ($_REQUEST['por_rv']) {
+                $query->andFilterWhere([
+                    'aprov_versao' => $_REQUEST['por_rv'],
+                ]);
+            }
             // if ($this->tipo != 'all') {
             //     $query->andFilterWhere([
             //         'tipo' => $this->tipo,
