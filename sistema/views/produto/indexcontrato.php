@@ -271,7 +271,7 @@ use miloschuman\highcharts\Highcharts;
             'autocomplete'=>"off",
             'id' => 'form-pesquisa-produto'
         ]]); ?>
-        <div class="row">
+        <div class="row mb-2">
             <?php 
                 $aprovado = 0;
                 $aguardando = 0;
@@ -362,16 +362,16 @@ use miloschuman\highcharts\Highcharts;
                     ]);
                 }
                 $reviews_aprov = [
-                    [ 'name' => 'RV 0', 'y' => $RV0, 'url' => 'RV0', 'color' => '#006400' ],
-                    [ 'name' => 'RV 1', 'y' => $RV1, 'url' => 'RV1', 'color' => '#2e8b57' ],
-                    [ 'name' => 'RV 2', 'y' => $RV2, 'url' => 'RV2', 'color' => '#6b8e23' ],
-                    [ 'name' => 'RV 3', 'y' => $RV3, 'url' => 'RV3', 'color' => '#007b80' ],
+                    [ 'name' => 'RV 0', 'y' => $RV0, 'url' => 'RV0', 'color' => '#87CEEB' ],
+                    [ 'name' => 'RV 1', 'y' => $RV1, 'url' => 'RV1', 'color' => '#00BFFF' ],
+                    [ 'name' => 'RV 2', 'y' => $RV2, 'url' => 'RV2', 'color' => '#6495ED' ],
+                    [ 'name' => 'RV 3', 'y' => $RV3, 'url' => 'RV3', 'color' => '#4169E1' ],
                     // [ 'name' => 'RV4', 'y' => $RV4, 'url' => 'RV4' ],
                     // [ 'name' => 'RV5', 'y' => $RV5, 'url' => 'RV5' ],
                 ];
             ?>
-            <div class="col">
-                <div class="card">
+            <div class="col-md-2">
+                <div class="card mb-2">
                 <?= Highcharts::widget([
                         'scripts' => [
                             'modules/exporting',
@@ -401,19 +401,19 @@ use miloschuman\highcharts\Highcharts;
                                         [
                                             'name' => 'Aprovado',
                                             'y' => $aprovado,
-                                            'color' => 'green',
+                                            'color' => 'lightgreen',
                                             'url' => 'Aprovado'
                                         ],
                                         [
                                             'name' => 'Em análise',
                                             'y' => $aguardando,
-                                            'color' => 'orange',
+                                            'color' => '#f3f0c6',
                                             'url' => 'Em andamento'
                                         ],
                                         [
                                             'name' => 'Reprovado',
                                             'y' => $reprovado,
-                                            'color' => 'red',
+                                            'color' => '#F08080',
                                             'url' => 'Reprovado'
                                         ],
                                     ],
@@ -427,8 +427,6 @@ use miloschuman\highcharts\Highcharts;
                     ]);
                 ?>
                 </div>
-            </div>
-            <div class="col">
                 <div class="card">
                 <?= Highcharts::widget([
                         'scripts' => [
@@ -467,8 +465,8 @@ use miloschuman\highcharts\Highcharts;
                 ?>
                 </div>
             </div>
-            <div class="col">
-                <div class="card">
+            <div class="col-md-8">
+                <div class="card mb-2">
                 <?= Highcharts::widget([
                         'scripts' => [
                             'modules/exporting',
@@ -489,7 +487,7 @@ use miloschuman\highcharts\Highcharts;
                                 [
                                     'name' => 'Produtos',
                                     "cursor" => "pointer",
-                                    'colorByPoint' => true,
+                                    'colorByPoint' => false,
                                     "point" => [
                                         "events" => [
                                             "click" => new JsExpression('function(){
@@ -509,8 +507,8 @@ use miloschuman\highcharts\Highcharts;
                     ]);
                 ?>
                 </div>
-            </div>
-            <div class="col">
+            <!-- </div>
+            <div class="col-md-4"> -->
                 <div class="card">
                 <?= Highcharts::widget([
                         'scripts' => [
@@ -536,7 +534,7 @@ use miloschuman\highcharts\Highcharts;
                                 [
                                     'name' => 'Produtos',
                                     "cursor" => "pointer",
-                                    'colorByPoint' => true,
+                                    'colorByPoint' => false,
                                     "point" => [
                                         "events" => [
                                             "click" => new JsExpression('function(){
@@ -557,7 +555,7 @@ use miloschuman\highcharts\Highcharts;
                 ?>
                 </div>
             </div>
-            <div class="col">
+            <div class="col-md-2">
                 <div class="card">
                 <?= Highcharts::widget([
                         'scripts' => [
@@ -621,7 +619,7 @@ use miloschuman\highcharts\Highcharts;
             </div>
         </div>
         <div class="clearfix"><br></div>
-        <div class="row">
+        <div class="row mt-2 mb-2 pb-2 pt-2" style="background-color: white;">
             <h3><center>Pesquisa <a href="<?=Yii::$app->homeUrl."contrato/view?id=$contrato_id&abativa=aba_produtos"?>" class="btn btn-primary text-white fs-5" tolltip="" title="Limpar/Reiniciar">
             <i class="bi bi-arrow-counterclockwise"></i>
             </a></center></h3>
