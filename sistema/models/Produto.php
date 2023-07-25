@@ -36,6 +36,7 @@ use Yii;
  * @property Produto $produto
  * @property Produto[] $produtos
  * @property Revisao[] $revisaos
+ * @property Impacto[] $revisaos
  */
 class Produto extends \yii\db\ActiveRecord
 {
@@ -162,5 +163,15 @@ class Produto extends \yii\db\ActiveRecord
     public function getRevisaos()
     {
         return $this->hasMany(Revisao::class, ['produto_id' => 'id']);
+    }
+    
+    /**
+     * Gets query for [[Impacto]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getImpacto()
+    {
+        return $this->hasOne(Impacto::class, ['produto_id' => 'id']);
     }
 }

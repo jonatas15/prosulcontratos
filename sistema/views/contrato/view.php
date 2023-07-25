@@ -281,6 +281,19 @@ $this->params['breadcrumbs'][] = $this->title;
             ]);
             $gestaoprodutos .= '</div>';
             $gestaoprodutos .= '</div>';
+            ################################ IMPACTOS ###################################
+            $searchModelImpacto = new \app\models\ImpactoSearch();
+            $dataProviderImpacto = $searchModelImpacto->search(['contrato_id'=>$model->id]);
+            $gestaoimpactos = '<div class="row">';
+            $gestaoimpactos .= '<div class="col-md-12">';
+            $gestaoimpactos .= '<br>';
+            $gestaoimpactos .= $this->render('impactoscontratuais', [
+                'searchModel' => $searchModelImpacto,
+                'dataProvider' => $dataProviderImpacto,
+                'contrato_id' => $model->id
+            ]);
+            $gestaoimpactos .= '</div>';
+            $gestaoimpactos .= '</div>';
             #############################################################################
             $ativo = $_REQUEST['abativa'];
             switch ($ativo) {
@@ -290,6 +303,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     $aba_ordens = false;
                     $aba_licensas = false;
                     $aba_produtos = false;
+                    $aba_imactos = false;
                     break;
                 case 'aba_oficios':
                     $aba_dados = false;
@@ -297,6 +311,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     $aba_ordens = false;
                     $aba_licensas = false;
                     $aba_produtos = false;
+                    $aba_imactos = false;
                     break;
                 case 'aba_ordens':
                     $aba_dados = false;
@@ -304,6 +319,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     $aba_ordens = true;
                     $aba_licensas = false;
                     $aba_produtos = false;
+                    $aba_imactos = false;
                     break;
                 case 'aba_licensas':
                     $aba_dados = false;
@@ -311,6 +327,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     $aba_ordens = false;
                     $aba_licensas = true;
                     $aba_produtos = false;
+                    $aba_imactos = false;
                     break;
                 case 'aba_produtos':
                     $aba_dados = false;
@@ -318,6 +335,15 @@ $this->params['breadcrumbs'][] = $this->title;
                     $aba_ordens = false;
                     $aba_licensas = false;
                     $aba_produtos = true;
+                    $aba_imactos = false;
+                    break;
+                case 'aba_impactos':
+                    $aba_dados = false;
+                    $aba_oficios = false;
+                    $aba_ordens = false;
+                    $aba_licensas = false;
+                    $aba_produtos = false;
+                    $aba_imactos = true;
                     break;
                 
                 default:
@@ -333,6 +359,13 @@ $this->params['breadcrumbs'][] = $this->title;
                         ]).'</div>',
                         'options' => ['id' => 'aba_dados'],
                         'active' => $aba_dados
+                    ],
+                    [
+                        'label' => '📋 Impactos Contratuais',
+                        'content' => $gestaoimpactos,
+                        'headerOptions' => ['...'],
+                        'options' => ['id' => 'aba_oficios'],
+                        'active' => $aba_impactos
                     ],
                     [
                         'label' => '📋 Gestão de Ofícios',

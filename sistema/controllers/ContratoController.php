@@ -31,7 +31,7 @@ class ContratoController extends Controller
            ],
            'access' => [
                'class' => AccessControl::className(),
-               'only' => ['index', 'view', 'update', 'create',  'delete'],
+               'only' => ['index', 'view', 'update', 'create',  'delete', 'impactoscontratuais', 'alteraimpacto', 'alteraimpactocampo'],
                'rules' => [
                    [
                        'allow' => true,
@@ -40,7 +40,7 @@ class ContratoController extends Controller
                    ],
                    [
                        'allow' => true,
-                       'actions' => ['index', 'view', 'update', 'create',  'delete'],
+                       'actions' => ['index', 'view', 'update', 'create',  'delete', 'impactoscontratuais', 'alteraimpacto', 'alteraimpactocampo'],
                        'roles' => ['@'],
                    ],
                ],
@@ -84,6 +84,12 @@ class ContratoController extends Controller
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
+        ]);
+    }
+    public function actionImpactoscontratuais() {
+        return $this->render('impactoscontratuais', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -175,5 +181,42 @@ class ContratoController extends Controller
         $diferenca = strtotime($data_final) - strtotime($data_inicial);
         $dias = floor($diferenca / (60 * 60 * 24)); 
         return $dias;
+    }
+
+    public function actionAlteraimpacto() {
+        $impacto_id = $_REQUEST['impacto_id'];
+        $empreendimento_id = $_REQUEST['empreendimento_id'];
+        $impactos = $_REQUEST['alteraimpacto_'.$impacto_id.'_'.$empreendimento_id];
+        $modelar = \app\models\ImpactoEmpreendimento::findOne([
+            'impacto_id' => $impacto_id,
+            'empreendimento_id' => $empreendimento_id,
+        ]);
+        $modelar->impactos = $impactos;
+        if ($modelar->save()) {
+            return 1;
+        } else {
+            return false;
+        }
+    }
+
+    public function actionAlteraimpactocampo() {
+        $id = $_REQUEST['id'];
+        $campo = $_REQUEST['campo'];
+        $impactos = $_REQUEST['altera_campo_'.$id];
+        $modelar = \app\models\Impacto::find()->where([ 'id'=>$id ])->one();
+        $modelar->$campo = $impactos;
+        
+        // echo "id: ".$id.'<br>';
+        // echo "campo: ".$campo.'<br>';
+        // echo "impactos: ".$impactos.'<br>';
+        // echo "<pre>";
+        // print_r($modelar);
+        // echo "</pre>";
+        
+        if ($modelar->save()) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 }

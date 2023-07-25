@@ -30,6 +30,7 @@ use Yii;
  *
  * @property Arquivo[] $arquivos
  * @property Oficio[] $oficios
+ * @property Oficio[] $produtos
  * @property Ordensdeservico[] $ordensdeservicos
  * @property Placemark[] $placemarks
  */
@@ -106,6 +107,26 @@ class Contrato extends \yii\db\ActiveRecord
     public function getOficios()
     {
         return $this->hasMany(Oficio::class, ['contrato_id' => 'id']);
+    }
+    
+    /**
+     * Gets query for [[Produtos]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProdutos()
+    {
+        return $this->hasMany(Produto::class, ['contrato_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Produtos]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getImpacto()
+    {
+        return $this->hasMany(Impacto::class, ['contrato_id' => 'id']);
     }
 
     /**
