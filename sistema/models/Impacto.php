@@ -37,6 +37,7 @@ class Impacto extends \yii\db\ActiveRecord
      * Superglobais e contadores
      */
     public $contaservicos = 0;
+    public $x = 0;
     /**
      * {@inheritdoc}
      */

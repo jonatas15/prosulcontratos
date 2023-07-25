@@ -18,7 +18,9 @@
     #Globais ou quase
     $contrato = Contrato::findOne(['id' => 1]);
     $empreendimentos = Empreendimento::find()->all();
-    $groups = Impc::find()->select('produto, count(id) as contaservicos')->groupBy('produto')->all();
+    $groups = Impc::find()->select('produto, count(id) as contaservicos')->groupBy('produto')->orderBy([
+        'produto' => SORT_ASC
+      ])->all();
 ?>
 <style>
     .celula-ativa {
@@ -264,22 +266,95 @@
                 // echo '<div class="col-12">';
                 // echo $gr->produto;
                 // echo '</div>';
+                $graph_quantidades_grupo = [];
+                $graph_empreendimentos_grupo = [];
                 $contentItem = '<div class="row">';
                 foreach ($dataProvider->getModels() as $impacto):
                     if($impacto->produto == $gr->produto):
                         $contentItem .= '<div class="col-md-4">';
                         $contentItem .= '<div class="card my-1">';
+                        $contentItem .= "<h6 class='text-center pt-2 pb-2 bg-primary text-white'>$impacto->numeroitem</h6>";
                         $contentItem .= $this->render('/impacto/view', [
                             'id' => $impacto->id,
                             'model' => $impacto
                         ]);
                         $contentItem .= '</div>';
                         $contentItem .= '</div>';
+                        // $impactos_emp = 0;
+                        // foreach($impacto->impactoEmpreendimentos as $kkk => $item) {
+                        //     $impactos_emp += $item->impactos;
+                        //     array_push($graph_empreendimentos_grupo, [
+                        //         'name' => $item->empreendimento->titulo, 'y' => $item->impactos, 'url' => ''
+                        //     ]);
+                        // }
+                        $somas_array_empreendimento = [];
+                        // foreach ($impacto->impactoEmpreendimentos as $kk => $vv) {
+                        //     foreach ($empreendimentos as $kkk => $vvv) {
+                        //         if ($vvv)
+                        //     }
+                        //     array_push($somas_array_empreendimento [
+
+                        //     ]);
+                        // }
                     endif;
+
                 endforeach;
+                foreach ($empreendimentos as $emp) {
+                    $impactosdogrupo = Impc::find()->where([
+                        'produto' => $gr->produto
+                    ])->all();
+                    $impactos_emp = 0;
+                    foreach ($impactosdogrupo as $impcatodogrupo) {
+                        foreach ($impcatodogrupo->impactoEmpreendimentos as $ie) {
+                            if ($ie->empreendimento_id == $emp->id) {
+                                $impactos_emp += $ie->impactos;
+                            }
+                        }
+                    }
+                    array_push($graph_empreendimentos_grupo, [
+                        'name' => $emp->titulo, 'y' => $impactos_emp, 'url' => ''
+                    ]);
+                }
+                $contentItem .= '<div class="col-md-12">';
+                $contentItem .= '<div class="card my-1">';
+                $contentItem .= Highcharts::widget([
+                    'scripts' => [
+                        'modules/exporting',
+                        'themes/grid-light',
+                    ],
+                    'options' => [
+                        'chart' => [
+                            'type' => 'column'
+                        ],
+                        'title' => ['text' => $gr->produto.' por <br>Empreendimentos'],
+                        'yAxis' => [
+                            'title' => ['text' => 'Impactos']
+                        ],
+                        'xAxis' => [
+                            'type' => 'category'
+                        ],
+                        'series' =>  [
+                            [
+                                'name' => 'Impactos',
+                                "cursor" => "zoom",
+                                'colorByPoint' => false,
+                                'data' => $graph_empreendimentos_grupo,
+                                'showInLegend' => false,
+                                'dataLabels' => [
+                                    'enabled' => false,
+                                ],
+                            ],
+                        ],
+                    ]
+                ]);
+                $contentItem .= '</div>';
+                $contentItem .= '</div>';
+                // echo '<pre>';
+                // print_r($graph_empreendimentos_grupo);
+                // echo '</pre>';
                 $contentItem .= "</div>";
                 array_push($itemsAcordion, [
-                    'label' => "🌐 $gr->produto",
+                    'label' => "♻️ $gr->produto",
                     'content' => $contentItem,
                     'clientOptions' => [
                         'active' => 0
