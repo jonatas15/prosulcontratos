@@ -364,7 +364,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'label' => '📋 Impactos Contratuais',
                         'content' => $gestaoimpactos,
                         'headerOptions' => ['...'],
-                        'options' => ['id' => 'aba_oficios'],
+                        'options' => ['id' => 'aba_impactos'],
                         'active' => $aba_impactos
                     ],
                     [

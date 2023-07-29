@@ -31,7 +31,7 @@ class ContratoController extends Controller
            ],
            'access' => [
                'class' => AccessControl::className(),
-               'only' => ['index', 'view', 'update', 'create',  'delete', 'impactoscontratuais', 'alteraimpacto', 'alteraimpactocampo'],
+               'only' => ['index', 'view', 'update', 'create',  'delete', 'impactoscontratuais', 'alteraimpacto', 'alteraimpactocampo', 'porempreendimento'],
                'rules' => [
                    [
                        'allow' => true,
@@ -40,7 +40,7 @@ class ContratoController extends Controller
                    ],
                    [
                        'allow' => true,
-                       'actions' => ['index', 'view', 'update', 'create',  'delete', 'impactoscontratuais', 'alteraimpacto', 'alteraimpactocampo'],
+                       'actions' => ['index', 'view', 'update', 'create',  'delete', 'impactoscontratuais', 'alteraimpacto', 'alteraimpactocampo', 'porempreendimento'],
                        'roles' => ['@'],
                    ],
                ],
@@ -72,6 +72,45 @@ class ContratoController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+    }
+    
+    public function actionPorempreendimento()
+    {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $empreendimento_id = $_REQUEST['empreendimento'];
+        $graph_grupos = [];
+        // $quantidades = [
+        //     'quantidade_a' => 0,
+        //     'quantidade_utilizada' => 0,
+        //     'qt_restante_real' => 0,
+        //     'qt_restante' => 0,
+        // ];
+        $grupos = \app\models\Impacto::find()->select('produto, count(id) as contaservicos')->groupBy('produto')->orderBy([
+            'produto' => SORT_ASC
+        ])->all();
+        $impactosporempreendimento = \app\models\ImpactoEmpreendimento::find()->where([
+            'empreendimento_id' => $empreendimento_id
+        ])->all();
+        foreach ($grupos as $K => $grupo) {
+            $valor = 0;
+            // $label = "Valor";
+            $label = $grupo->produto;
+            foreach($impactosporempreendimento as $item) {
+                if ($item->impactos > 0 && $item->impacto->produto == $grupo->produto) {
+                    $impacto = $item->impacto;
+                    $valor += $item->impactos;
+                }
+            }
+            if ($label != "Valor") {
+                array_push($graph_grupos, [
+                    'name' => $label, 'y' => $valor, 'url' => $K
+                ]);
+            }
+        }
+        // echo '<pre>';
+        // print_r($graph_grupos);
+        // echo '</pre>';
+        return $graph_grupos;
     }
 
     /**

@@ -14,13 +14,14 @@
     use yii\web\JsExpression;
     use miloschuman\highcharts\Highcharts;
     use yii\bootstrap5\Accordion;
+    use yii\widgets\Pjax;
 
     #Globais ou quase
     $contrato = Contrato::findOne(['id' => 1]);
     $empreendimentos = Empreendimento::find()->all();
     $groups = Impc::find()->select('produto, count(id) as contaservicos')->groupBy('produto')->orderBy([
         'produto' => SORT_ASC
-      ])->all();
+    ])->all();
 ?>
 <style>
     .celula-ativa {
@@ -84,8 +85,9 @@
                 $countregistros += 1;
             }
         }
+        // ." <br>[$countregistros registros]"
         array_push($graph_empreendimentos, [
-        'name' => $emp->titulo." <br>[$countregistros registros]", 'y' => $countaprodutos, 'url' => $emp->id
+        'name' => $emp->titulo, 'y' => $countaprodutos, 'url' => $emp->id
         ]);
     }
     # Por Quantidades
@@ -111,8 +113,17 @@
     $graph_grupos = [];
     foreach ($groups as $k => $grp) {
         // $label = mb_strimwidth($grp->produto,0,20,'...');
+        $servicos_do_grupo = Impc::findAll([
+            'produto' => $grp->produto
+        ]);
+        $impactos_em_todos_empreendimentos = 0;
+        foreach ($servicos_do_grupo as $servico) {
+            foreach($servico->impactoEmpreendimentos as $empimp) {
+                $impactos_em_todos_empreendimentos += $empimp->impactos;
+            }
+        }
         array_push($graph_grupos, [
-            'name' => $grp->produto, 'y' => $grp->contaservicos, 'url' => $k
+            'name' => $grp->produto, 'y' => $impactos_em_todos_empreendimentos, 'url' => $k
         ]);
     }
 
@@ -120,7 +131,23 @@
     // print_r($graph_quantidades);
     // echo '</pre>';
 ?>
+<?php Pjax::begin([
+    'id' => 'admin-crud-id-impactos', 
+    'timeout' => false,
+    'enablePushState' => true
+]); ?>
+<script>
+    var contratos = [];
+</script>
+
+<?php 
+// echo '<pre>';
+// var_dump($_POST);
+// echo '</pre>';
+//  echo $_REQUEST;
+?>
 <div class="row">
+    <?php /**
     <div class="col-md-7">
         <?= Highcharts::widget([
             'scripts' => [
@@ -145,9 +172,16 @@
                         'colorByPoint' => false,
                         "point" => [
                             "events" => [
-                                "click" => new JsExpression('function(){
-                                    $("#produtosearch-empreendimento_id").val(this.options.url);
-                                    $("#form-pesquisa-produto").submit();
+                                "click" => new JsExpression('function() {
+                                    $.ajax({
+                                    method: "POST",
+                                        url: "porempreendimento",
+                                        data: { 
+                                            empreendimento: this.options.url,
+                                        }
+                                    }).done(function( msg ) {
+                                        console.log( msg );
+                                    });
                                 }')
                             ],
                         ],
@@ -184,14 +218,20 @@
                         'name' => 'Impactos',
                         "cursor" => "pointer",
                         'colorByPoint' => false,
-                        "point" => [
-                            "events" => [
-                                "click" => new JsExpression('function(){
-                                    $("#produtosearch-empreendimento_id").val(this.options.url);
-                                    $("#form-pesquisa-produto").submit();
-                                }')
-                            ],
-                        ],
+                        // "point" => [
+                        //     "events" => [
+                        //         "click" => new JsExpression('function(){
+                                    
+                        //         }'),
+                        //         'load' => new JsExpression("function () {
+                        //             var series = this.series[0];
+                        //             setInterval(function () {
+                        //                 $.getJSON('http://url-to-json-file/index.php', function (jsondata) {
+                        //                     series.data = JSON.parse(jsondata.cpu);
+                        //                 });
+                        //             }, 5000);")
+                        //     ],
+                        // ],
                         'data' => $graph_quantidades,
                         'showInLegend' => false,
                         'dataLabels' => [
@@ -203,23 +243,75 @@
         ]);
         ?>
     </div>
-    <div class="col-md-4">
+     */ ?>
+    <div class="col-md-5">
         <?= Highcharts::widget([
+            'scripts' => [
+                'modules/exporting',
+                'themes/grid-light',
+            ],
+            'options' => [
+                'chart' => [
+                    'type' => 'column',
+                    'height' => 300
+                ],
+                'title' => ['text' => 'Quantitativos nos Serviços, Empreendimento'],
+                'yAxis' => [
+                    'title' => ['text' => 'Quantitativos']
+                ],
+                'xAxis' => [
+                    'type' => 'category'
+                ],
+                'series' =>  [
+                    [
+                        'name' => 'Quantitativos',
+                        "cursor" => "pointer",
+                        'colorByPoint' => false,
+                        "states" => [
+                            "select" => [
+                                "color" => "blue"
+                            ]
+                        ],
+                        'allowPointSelect' => true,
+                        "point" => [
+                            "events" => [
+                                "click" => new JsExpression('function() {
+                                    $.ajax({
+                                    method: "POST",
+                                        url: "porempreendimento",
+                                        data: { 
+                                            empreendimento: this.options.url,
+                                        }
+                                    }).done(function( msg ) {
+                                        // console.log( msg );
+                                        chartxxxx.series[0].setData(msg);
+                                    });
+                                    chartxxxx.setTitle({text: this.options.name + "<br>" + this.options.y + " quantitativos"});
+                                    this.options.color = "red";
+                                }')
+                            ],
+                        ],
+                        'data' => $graph_empreendimentos,
+                        'showInLegend' => false,
+                        'dataLabels' => [
+                            'enabled' => false,
+                        ],
+                    ],
+                ],
+            ]
+        ]);
+        ?>
+    <div id="visitas">
+        <?php /*= Highcharts::widget([
                 'scripts' => [
                     'modules/exporting',
                     'themes/grid-light',
                 ],
+                'id' => 'visitas',
                 'options' => [
                     'chart' => [
                         'type' => 'pie',
-                        'height' => 600,
-                        'options' => [
-
-                            'startAngle' => '-90',
-                            'endAngle' => '90',
-                            'center' => ['50%', '75%'],
-                            'size' => '110%'
-                        ]
+                        'height' => 500
                     ],
                     'title' => ['text' => 'Grupos por Qtd. de Serviços'],
                     'yAxis' => [
@@ -244,21 +336,25 @@
 
                                         $("#item_"+this.options.url).children(".collapse").toggleClass("show");
                                         $("#item_"+this.options.url).children(".accordion-header").children("h5").children(".accordion-button").toggleClass("collapsed");
+                                    
                                     }')
                                 ],
                             ],
                             'data' => $graph_grupos,
-                            'showInLegend' => true,
+                            'showInLegend' => false,
                             'dataLabels' => [
-                                'enabled' => false,
+                                'enabled' => true,
+                                'alignTo' => 'left'
                             ],
                         ],
                     ],
                 ]
             ]);
-        ?>
+        */ ?>
+        
     </div>
-    <div class="col-md-8">
+    </div>
+    <div class="col-md-7">
         <div class="row px-2 py-2">
         <?php
             $itemsAcordion = [];
@@ -372,3 +468,34 @@
         </div>
     </div>
 </div>
+<?php
+$script = <<< JS
+    const chartxxxx = Highcharts.chart('visitas', {
+        chart: {
+            type: 'pie'
+        },
+        series: [{
+            point: {
+                events: {
+                    click: function(){
+                        // $("#por_rv").val(this.options.url);
+                        // $("#form-pesquisa-produto").submit();
+                        console.log("foi");
+                        
+                        $(".accordion-item").children(".collapse").removeClass("show");
+                        $(".accordion-item").children(".accordion-header").children("h5").children(".accordion-button").addClass("collapsed");
+
+                        $("#item_"+this.options.url).children(".collapse").toggleClass("show");
+                        $("#item_"+this.options.url).children(".accordion-header").children("h5").children(".accordion-button").toggleClass("collapsed");
+                    
+                    }
+                }
+                
+            },
+            data: [{"name":"03. ESTUDOS DE LEVANTAMENTO DE FAUNA","y":3,"url":""},{"name":"05. ESTUDOS DOS BENS CULTURAIS ACAUTELADOS","y":42,"url":""},{"name":"09. ESTUDO DE IMPACTO AMBIENTAL (EIA)","y":6,"url":""},{"name":"12. PLANO B\u00c1SICO AMBIENTAL (PBA)","y":1,"url":""},{"name":"13. OBTEN\u00c7\u00c3O DA ASV","y":1,"url":""},{"name":"14. VIAGENS","y":168,"url":""}]
+        }]
+    });
+JS;
+$this->registerJs($script);
+?>
+<?php Pjax::end(); ?>
