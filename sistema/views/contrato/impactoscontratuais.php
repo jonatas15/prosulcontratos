@@ -18,7 +18,9 @@
 
     #Globais ou quase
     $contrato = Contrato::findOne(['id' => 1]);
-    $empreendimentos = Empreendimento::find()->all();
+    $empreendimentos = Empreendimento::find()->where([
+        '<>', 'id', 3
+    ])->all();
     $groups = Impc::find()->select('produto, count(id) as contaservicos')->groupBy('produto')->orderBy([
         'produto' => SORT_ASC
     ])->all();
@@ -87,7 +89,9 @@
         }
         // ." <br>[$countregistros registros]"
         array_push($graph_empreendimentos, [
-        'name' => $emp->titulo, 'y' => $countaprodutos, 'url' => $emp->id
+            'name' => $emp->titulo,
+            'y' => $countaprodutos,
+            'url' => $emp->id
         ]);
     }
     # Por Quantidades
@@ -127,6 +131,23 @@
         ]);
     }
 
+
+    // TODOS OS SERVICOS
+    $graph_servicos = [];
+    foreach ($contrato->impacto as $servico) {
+        // $label = mb_strimwidth($grp->produto,0,20,'...');
+        // $servicos_do_grupo = Impc::findAll([
+        //     'produto' => $grp->produto
+        // ]);
+        $impactos_em_todos_empreendimentos = 0;
+        foreach($servico->impactoEmpreendimentos as $empimp) {
+            $impactos_em_todos_empreendimentos += $empimp->impactos;
+        }
+        array_push($graph_servicos, [
+            'name' => $servico->servico, 'y' => $impactos_em_todos_empreendimentos, 'url' => $servico->id
+        ]);
+    }
+
     // echo '<pre>';
     // print_r($graph_quantidades);
     // echo '</pre>';
@@ -145,6 +166,7 @@
 // var_dump($_POST);
 // echo '</pre>';
 //  echo $_REQUEST;
+// echo json_encode($graph_grupos);
 ?>
 <div class="row">
     <?php /**
@@ -244,7 +266,7 @@
         ?>
     </div>
      */ ?>
-    <div class="col-md-5">
+    <div class="col-md-4">
         <?= Highcharts::widget([
             'scripts' => [
                 'modules/exporting',
@@ -252,8 +274,8 @@
             ],
             'options' => [
                 'chart' => [
-                    'type' => 'column',
-                    'height' => 300
+                    'type' => 'bar',
+                    'height' => 550
                 ],
                 'title' => ['text' => 'Quantitativos nos Serviços, Empreendimento'],
                 'yAxis' => [
@@ -285,9 +307,11 @@
                                     }).done(function( msg ) {
                                         // console.log( msg );
                                         chartxxxx.series[0].setData(msg);
+                                        chartservicos.series[0].setData([]);
                                     });
                                     chartxxxx.setTitle({text: this.options.name + "<br>" + this.options.y + " quantitativos"});
-                                    this.options.color = "red";
+                                    $(".linha-empreendimento").removeClass("bg-warning text-dark");
+                                    $(".linha-empreendimento-" + this.options.url).addClass("bg-warning text-dark");
                                 }')
                             ],
                         ],
@@ -301,7 +325,8 @@
             ]
         ]);
         ?>
-    <div id="visitas">
+    </div>
+    <div class="col-md-4" id="visitas">
         <?php /*= Highcharts::widget([
                 'scripts' => [
                     'modules/exporting',
@@ -353,147 +378,162 @@
         */ ?>
         
     </div>
+    <div class="col-md-4">
+        <div class="row px-2 py-2" id="servicos_grupo">
+        </div>
     </div>
-    <div class="col-md-7">
-        <div class="row px-2 py-2">
-        <?php
-            $itemsAcordion = [];
-            foreach ($groups as $k => $gr):
-                // echo '<div class="col-12">';
-                // echo $gr->produto;
-                // echo '</div>';
-                $graph_quantidades_grupo = [];
-                $graph_empreendimentos_grupo = [];
-                $contentItem = '<div class="row">';
-                foreach ($dataProvider->getModels() as $impacto):
-                    if($impacto->produto == $gr->produto):
-                        $contentItem .= '<div class="col-md-4">';
-                        $contentItem .= '<div class="card my-1">';
-                        $contentItem .= "<h6 class='text-center pt-2 pb-2 bg-primary text-white'>$impacto->numeroitem</h6>";
-                        $contentItem .= $this->render('/impacto/view', [
-                            'id' => $impacto->id,
-                            'model' => $impacto
-                        ]);
-                        $contentItem .= '</div>';
-                        $contentItem .= '</div>';
-                        // $impactos_emp = 0;
-                        // foreach($impacto->impactoEmpreendimentos as $kkk => $item) {
-                        //     $impactos_emp += $item->impactos;
-                        //     array_push($graph_empreendimentos_grupo, [
-                        //         'name' => $item->empreendimento->titulo, 'y' => $item->impactos, 'url' => ''
-                        //     ]);
-                        // }
-                        $somas_array_empreendimento = [];
-                        // foreach ($impacto->impactoEmpreendimentos as $kk => $vv) {
-                        //     foreach ($empreendimentos as $kkk => $vvv) {
-                        //         if ($vvv)
-                        //     }
-                        //     array_push($somas_array_empreendimento [
-
-                        //     ]);
-                        // }
-                    endif;
-
-                endforeach;
-                foreach ($empreendimentos as $emp) {
-                    $impactosdogrupo = Impc::find()->where([
-                        'produto' => $gr->produto
-                    ])->all();
-                    $impactos_emp = 0;
-                    foreach ($impactosdogrupo as $impcatodogrupo) {
-                        foreach ($impcatodogrupo->impactoEmpreendimentos as $ie) {
-                            if ($ie->empreendimento_id == $emp->id) {
-                                $impactos_emp += $ie->impactos;
+    <div class="col-md-12">
+        <div class="row">
+            <?php
+                foreach ($groups as $k => $gr):
+                    $contentItem = '<div class="row todos-os-grupos" def="'.$gr->produto.'">';
+                    $contentItem .= "<h5 class='col-md-12'>$gr->produto</h5>";
+                    foreach ($dataProvider->getModels() as $impacto):
+                        if($impacto->produto == $gr->produto):
+                            $contentItem .= '<div id="supercard-servico-'.$impacto->id.'" class="col-md-3">';
+                            $contentItem .= '<div class="card my-1">';
+                            $contentItem .= "<h6 class='text-center pt-2 pb-2 bg-primary text-white'>$impacto->numeroitem</h6>";
+                            $contentItem .= $this->render('/impacto/view', [
+                                'id' => $impacto->id,
+                                'model' => $impacto
+                            ]);
+                            $contentItem .= '<table class="table table-striped table-bordered detail-view">';
+                            $contentItem .= '<tr>';
+                                $contentItem .= "<td>Unidade</td>";
+                                $contentItem .= "<td>$impacto->unidade</td>";
+                                $contentItem .= '</tr>';
+                            foreach ($impacto->impactoEmpreendimentos as $ie) {
+                                if ($ie->impactos > 0) {
+                                    $contentItem .= '<tr">';
+                                    $contentItem .= "<td class='linha-empreendimento linha-empreendimento-".$ie->empreendimento_id."'>{$ie->empreendimento->titulo}</td>";
+                                    $contentItem .= "<td class='linha-empreendimento linha-empreendimento-".$ie->empreendimento_id."'>{$ie->impactos}</td>";
+                                    $contentItem .= '</tr>';
+                                }
                             }
-                        }
-                    }
-                    array_push($graph_empreendimentos_grupo, [
-                        'name' => $emp->titulo, 'y' => $impactos_emp, 'url' => ''
-                    ]);
-                }
-                $contentItem .= '<div class="col-md-12">';
-                $contentItem .= '<div class="card my-1">';
-                $contentItem .= Highcharts::widget([
-                    'scripts' => [
-                        'modules/exporting',
-                        'themes/grid-light',
-                    ],
-                    'options' => [
-                        'chart' => [
-                            'type' => 'column'
-                        ],
-                        'title' => ['text' => $gr->produto.' por <br>Empreendimentos'],
-                        'yAxis' => [
-                            'title' => ['text' => 'Impactos']
-                        ],
-                        'xAxis' => [
-                            'type' => 'category'
-                        ],
-                        'series' =>  [
-                            [
-                                'name' => 'Impactos',
-                                "cursor" => "zoom",
-                                'colorByPoint' => false,
-                                'data' => $graph_empreendimentos_grupo,
-                                'showInLegend' => false,
-                                'dataLabels' => [
-                                    'enabled' => false,
-                                ],
-                            ],
-                        ],
-                    ]
-                ]);
-                $contentItem .= '</div>';
-                $contentItem .= '</div>';
-                // echo '<pre>';
-                // print_r($graph_empreendimentos_grupo);
-                // echo '</pre>';
-                $contentItem .= "</div>";
-                array_push($itemsAcordion, [
-                    'label' => "♻️ $gr->produto",
-                    'content' => $contentItem,
-                    'clientOptions' => [
-                        'active' => 0
-                    ],
-                    'options' => [
-                        'id' => 'item_'.$k
-                    ]
-                ]);
-
-            endforeach;
-            echo Accordion::widget([
-                'items' => $itemsAcordion
-            ]);
-        ?>
+                            $quantidades = [
+                                'quantidade_a' => 0,
+                                'quantidade_utilizada' => 0,
+                                'qt_restante_real' => 0,
+                                'qt_restante' => 0,
+                            ];
+                            foreach ($quantidades as $key => $value) {
+                                $valor = 0;
+                                $label = "Valor";
+                                foreach($impacto as $chave => $item) {
+                                    $label = $impacto::instance()->getAttributeLabel($key);
+                                    $valor = $impacto->$key;
+                                    if ($key == 'qt_restante') {
+                                        $valor = $impacto->quantidade_a - $impacto->quantidade_utilizada;
+                                    }
+                                }
+                                $vetor = "text-primary";
+                                if ($valor < 0) {
+                                    $vetor = "text-danger";
+                                }
+                                $contentItem .= '<tr>';
+                                $contentItem .= "<td><strong class='$vetor'>{$label}</strong></td>";
+                                $contentItem .= "<td><strong class='$vetor'>{$valor}</strong></td>";
+                                $contentItem .= '</tr>';
+                            }
+                            $contentItem .= '</table>';
+                            $contentItem .= '</div>';
+                            $contentItem .= '</div>';
+                        endif;
+                    endforeach;
+                    $contentItem .= '</div>';
+                    echo $contentItem;
+                endforeach;
+            ?>
         </div>
     </div>
 </div>
 <?php
+$this->registerJs("var inicio_grafico = ".json_encode($graph_grupos)); 
+$this->registerJs("var inicio_grafico_servicos = ".json_encode($graph_servicos)); 
+$this->registerJs("$('.todos-os-grupos').addClass('d-none');"); 
 $script = <<< JS
     const chartxxxx = Highcharts.chart('visitas', {
         chart: {
-            type: 'pie'
+            type: 'pie',
+            height: 550
+        },
+        title: {
+            text: "Produtos"
         },
         series: [{
+            cursor: 'pointer',
             point: {
                 events: {
                     click: function(){
                         // $("#por_rv").val(this.options.url);
                         // $("#form-pesquisa-produto").submit();
-                        console.log("foi");
+                        // console.log("foi");
+                        $.ajax({
+                            method: "POST",
+                            url: "porproduto",
+                            data: { 
+                                produto: this.options.name,
+                                empreendimento: this.options.empreendimento
+                            }
+                        }).done(function( servicos ) {
+                            // console.log( servicos );
+                            chartservicos.series[0].setData(servicos);
+                        });
+                        chartservicos.setTitle({text: this.options.name + "<br>" + this.options.y + " quantitativos no Emp. " + this.options.empreendimento_titulo });
+                        $('.todos-os-grupos').addClass("d-none");
+                        $("[def='"+this.options.name+"']").removeClass("d-none");
+                        // this.options.color = "red";
+                        // $(".accordion-item").children(".collapse").removeClass("show");
+                        // $(".accordion-item").children(".accordion-header").children("h5").children(".accordion-button").addClass("collapsed");
+                        // $("#item_"+this.options.url).children(".collapse").toggleClass("show");
+                        // $("#item_"+this.options.url).children(".accordion-header").children("h5").children(".accordion-button").toggleClass("collapsed");
+                    }
+                }
+                
+            },
+            data: inicio_grafico
+        }]
+    });
+    const chartservicos = Highcharts.chart('servicos_grupo', {
+        chart: {
+            type: 'column',
+            height: 550
+        },
+        title: {
+            text: "Serviços em..."
+        },
+        xAxis: {
+            type: 'category'
+        },
+        yAxis: {
+            title: {
+                text: 'Quantitativos'
+            }
+        },
+        series: [{
+            name: 'Quantitativos',
+            cursor: 'pointer',
+            point: {
+                events: {
+                    click: function(){
+                        // $("#por_rv").val(this.options.url);
+                        // $("#form-pesquisa-produto").submit();
+                        // console.log("foi");
+                        $('#ver-os-detalhes-impacto-' + this.options.url).modal('show');
                         
-                        $(".accordion-item").children(".collapse").removeClass("show");
-                        $(".accordion-item").children(".accordion-header").children("h5").children(".accordion-button").addClass("collapsed");
-
-                        $("#item_"+this.options.url).children(".collapse").toggleClass("show");
-                        $("#item_"+this.options.url).children(".accordion-header").children("h5").children(".accordion-button").toggleClass("collapsed");
                     
                     }
                 }
                 
             },
-            data: [{"name":"03. ESTUDOS DE LEVANTAMENTO DE FAUNA","y":3,"url":""},{"name":"05. ESTUDOS DOS BENS CULTURAIS ACAUTELADOS","y":42,"url":""},{"name":"09. ESTUDO DE IMPACTO AMBIENTAL (EIA)","y":6,"url":""},{"name":"12. PLANO B\u00c1SICO AMBIENTAL (PBA)","y":1,"url":""},{"name":"13. OBTEN\u00c7\u00c3O DA ASV","y":1,"url":""},{"name":"14. VIAGENS","y":168,"url":""}]
-        }]
+            data: [],
+            showInLegend: false,
+            dataLabels: {
+                enabled: true,
+                alignTo: 'left'
+            },
+
+        }],
     });
 JS;
 $this->registerJs($script);

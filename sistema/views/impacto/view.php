@@ -5,7 +5,7 @@ use yii\widgets\DetailView;
 use app\models\Empreendimento;
 use app\models\ImpactoEmpreendimento as ImpcEmp;
 use yii\web\JsExpression;
-use miloschuman\highcharts\Highcharts;
+// use miloschuman\highcharts\Highcharts;
 use yii\bootstrap5\Modal;
 
 /** @var yii\web\View $this */
@@ -43,18 +43,40 @@ use yii\bootstrap5\Modal;
                 'model' => $model,
                 'attributes' => [
                     'id',
-                'numeroitem',
-                'contrato.titulo',
-                'produto:ntext',
-                'servico:ntext',
-                'unidade',
-                'quantidade_a',
-                'quantidade_utilizada',
-                'qt_restante_real',
-                'qt_restante'
-            ],
-            ]) ?>
+                    'numeroitem',
+                    'contrato.titulo',
+                    'produto:ntext',
+                    'servico:ntext',
+                    'unidade',
+                    'quantidade_a',
+                    'quantidade_utilizada',
+                    'qt_restante_real',
+                    'qt_restante'
+                ]
+            ]); ?>
         </div>
+        <div class="col-md-6">
+        <div class="row">
+            <div class="col">
+                <h6 class="text-left">Empreendimentos</h6>
+            </div>
+        </div>
+            <?php
+                $contentItem .= '<table class="table table-striped table-bordered detail-view">';
+                foreach ($model->impactoEmpreendimentos as $ie) {
+                    // if ($ie->impactos > 0) {
+                        $contentItem .= '<tr>';
+                        $contentItem .= "<td>{$ie->empreendimento->titulo}</td>";
+                        $contentItem .= "<td>{$ie->impactos}</td>";
+                        $contentItem .= '</tr>';
+                    // }
+                }
+                $contentItem .= '</table>';
+                echo $contentItem;
+            ?>
+        </div>
+        <?php /*
+        
         <div class="col-md-6">
             <?php 
                 $empreendimentos = Empreendimento::find()->all();
@@ -169,6 +191,7 @@ use yii\bootstrap5\Modal;
                 ?>
             </div>
         </div>
+        */ ?>
     </div>
 
 </div>

@@ -31,7 +31,7 @@ class ContratoController extends Controller
            ],
            'access' => [
                'class' => AccessControl::className(),
-               'only' => ['index', 'view', 'update', 'create',  'delete', 'impactoscontratuais', 'alteraimpacto', 'alteraimpactocampo', 'porempreendimento'],
+               'only' => ['index', 'view', 'update', 'create',  'delete', 'impactoscontratuais', 'alteraimpacto', 'alteraimpactocampo', 'porempreendimento', 'porproduto'],
                'rules' => [
                    [
                        'allow' => true,
@@ -40,7 +40,7 @@ class ContratoController extends Controller
                    ],
                    [
                        'allow' => true,
-                       'actions' => ['index', 'view', 'update', 'create',  'delete', 'impactoscontratuais', 'alteraimpacto', 'alteraimpactocampo', 'porempreendimento'],
+                       'actions' => ['index', 'view', 'update', 'create',  'delete', 'impactoscontratuais', 'alteraimpacto', 'alteraimpactocampo', 'porempreendimento', 'porproduto'],
                        'roles' => ['@'],
                    ],
                ],
@@ -95,15 +95,21 @@ class ContratoController extends Controller
             $valor = 0;
             // $label = "Valor";
             $label = $grupo->produto;
+            $emp_titulo = "Empreendimento Base";
             foreach($impactosporempreendimento as $item) {
                 if ($item->impactos > 0 && $item->impacto->produto == $grupo->produto) {
                     $impacto = $item->impacto;
                     $valor += $item->impactos;
+                    $emp_titulo = $item->empreendimento->titulo;
                 }
             }
             if ($label != "Valor") {
                 array_push($graph_grupos, [
-                    'name' => $label, 'y' => $valor, 'url' => $K
+                    'name' => $label, 
+                    'y' => $valor, 
+                    'url' => $K, 
+                    'empreendimento' => $empreendimento_id,
+                    'empreendimento_titulo' => $emp_titulo,
                 ]);
             }
         }
@@ -111,6 +117,43 @@ class ContratoController extends Controller
         // print_r($graph_grupos);
         // echo '</pre>';
         return $graph_grupos;
+    }
+    public function actionPorproduto()
+    {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $produto = $_REQUEST['produto'];
+        $empreendimento = $_REQUEST['empreendimento'];
+        $graph_grupos = [];
+        
+        $servicos = \app\models\Impacto::find()->where([
+            'produto' => $produto
+        ])->all();
+        
+        // TODOS OS SERVICOS Do PRODUTO
+        $graph_servicos = [];
+        foreach ($servicos as $servico) {
+            // $label = mb_strimwidth($grp->produto,0,20,'...');
+            // $servicos_do_grupo = Impc::findAll([
+            //     'produto' => $grp->produto
+            // ]);
+            $impactos_em_todos_empreendimentos = 0;
+            foreach($servico->impactoEmpreendimentos as $empimp) {
+                if ($empimp->empreendimento_id == $empreendimento) {
+                    $impactos_em_todos_empreendimentos += $empimp->impactos;
+                }
+            }
+            if ($impactos_em_todos_empreendimentos > 0) {
+
+                array_push($graph_servicos, [
+                    'name' => $servico->servico, 'y' => $impactos_em_todos_empreendimentos, 'url' => $servico->id
+                ]);
+            }
+        }
+        
+        // echo '<pre>';
+        // print_r($graph_grupos);
+        // echo '</pre>';
+        return $graph_servicos;
     }
 
     /**
