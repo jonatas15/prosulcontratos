@@ -43,7 +43,7 @@
     <div class="col-4">
         <?php
         Modal::begin([
-            'title' => "Novo Impacto",
+            'title' => "Novo Registro",
             'options' => [
                 'id' => 'cadastrar-novo-impacto',
                 'tabindex' => false,
@@ -51,9 +51,9 @@
             'bodyOptions' => [
                 'class' => 'bg-white',
             ],
-            'size' => 'modal-md',
+            'size' => 'modal-lg',
             'toggleButton' => [
-                'label' => '<i class="bi bi-card-list"></i> Novo Impacto',
+                'label' => '<i class="bi bi-card-list"></i> Novo Registro',
                 'class' => 'btn btn-primary text-white float-right width-200'
             ],
         ]);
@@ -64,7 +64,53 @@
                 'action' => 'novoimpacto'
             ]); ?>
             <div class="row">
-                <div class="col-md-12"><?= $form->field($novoimpacto, 'numeroitem')->textInput(['maxlength' => true]) ?></div>
+                <div class="col-md-12"><?= $form->field($novoimpacto, 'contrato_id')->hiddenInput([
+                    'value' => $contrato->id,
+                    'maxlength' => true,
+                ])->label(false) ?></div>
+                <div class="col-md-12"><?= $form->field($novoimpacto, 'produto')->textInput(['maxlength' => true]) ?></div>
+                <div class="col-md-12"><?= $form->field($novoimpacto, 'servico')->textInput(['maxlength' => true]) ?></div>
+                <div class="col-md-5"><?= $form->field($novoimpacto, 'unidade')->textInput(['maxlength' => true]) ?></div>
+                <div class="col-md-4"><?= $form->field($novoimpacto, 'numeroitem')->textInput(['maxlength' => true]) ?></div>
+                <div class="col-md-3"><?= $form->field($novoimpacto, 'quantidade_a')->textInput([
+                    'maxlength' => true,
+                    'type' => 'number',
+                    'value' => 0
+                ]) ?></div>
+                <!-- Empreendimentos -->
+                <div class="col-md-12 py-2">
+                    <div class="card px-2 py-2 bg-registral">
+                        <h5 class="text-center">Empreendimentos</h5>
+                        <div class="row">
+                            <?php foreach ($empreendimentos as $empr): ?>
+                                <?php $arr_titulo = explode(" ", $empr->titulo) ?>
+                                <div class="col-md-3 text-center my-2">
+                                    <?="<label class='control-label'><b>$arr_titulo[0] $arr_titulo[1] $arr_titulo[2]</b></label>";?>
+                                    <?="<input class='form-control' type='number' name='Empreendimento[$empr->id]' value='0' />";?>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+                <!-- Empreendimentos -->
+                <div class="col-md-4"><?= $form->field($novoimpacto, 'quantidade_utilizada')->textInput([
+                    'maxlength' => true,
+                    'type' => 'number',
+                    'value' => 0,
+                ]) ?></div>
+                <div class="col-md-4"><?= $form->field($novoimpacto, 'qt_restante_real')->textInput([
+                    'maxlength' => true,
+                    'type' => 'number',
+                    'value' => 0,
+                ]) ?></div>
+                <div class="col-md-4"><?= $form->field($novoimpacto, 'qt_restante')->textInput([
+                    'maxlength' => true,
+                    'type' => 'number',
+                    'value' => 0,
+                ]) ?></div>
+                <div class="col-md-12">
+                    <button class="btn btn-success float-right" type="submit">Salvar</button>
+                </div>
             </div>
             <?php ActiveForm::end(); ?>
         </div>
@@ -115,21 +161,22 @@
     }
 
     $graph_grupos = [];
-    foreach ($groups as $k => $grp) {
-        // $label = mb_strimwidth($grp->produto,0,20,'...');
-        $servicos_do_grupo = Impc::findAll([
-            'produto' => $grp->produto
-        ]);
-        $impactos_em_todos_empreendimentos = 0;
-        foreach ($servicos_do_grupo as $servico) {
-            foreach($servico->impactoEmpreendimentos as $empimp) {
-                $impactos_em_todos_empreendimentos += $empimp->impactos;
-            }
-        }
-        array_push($graph_grupos, [
-            'name' => $grp->produto, 'y' => $impactos_em_todos_empreendimentos, 'url' => $k
-        ]);
-    }
+    // foreach ($groups as $k => $grp) {
+    //     // $label = mb_strimwidth($grp->produto,0,20,'...');
+    //     $servicos_do_grupo = Impc::findAll([
+    //         'produto' => $grp->produto
+    //     ]);
+    //     $impactos_em_todos_empreendimentos = 0;
+    //     foreach ($servicos_do_grupo as $servico) {
+    //         foreach($servico->impactoEmpreendimentos as $empimp) {
+    //             $impactos_em_todos_empreendimentos += $empimp->impactos;
+    //             $empreendimento_id = $empimp->empreendimento_id;
+    //         }
+    //     }
+    //     array_push($graph_grupos, [
+    //         'name' => $grp->produto, 'y' => $impactos_em_todos_empreendimentos, 'url' => $k
+    //     ]);
+    // }
 
 
     // TODOS OS SERVICOS
@@ -266,7 +313,8 @@
         ?>
     </div>
      */ ?>
-    <div class="col-md-4">
+    <div class="col-md-5 card" style="border-radius: 0 !important">
+        <h3 class="text-center">Empreendimentos</h3><hr>
         <?= Highcharts::widget([
             'scripts' => [
                 'modules/exporting',
@@ -275,9 +323,9 @@
             'options' => [
                 'chart' => [
                     'type' => 'bar',
-                    'height' => 550
+                    'height' => 450
                 ],
-                'title' => ['text' => 'Quantitativos nos Serviços, Empreendimento'],
+                'title' => ['text' => 'Quantitativos nos Serviços por Empreendimento'],
                 'yAxis' => [
                     'title' => ['text' => 'Quantitativos']
                 ],
@@ -309,9 +357,10 @@
                                         chartxxxx.series[0].setData(msg);
                                         chartservicos.series[0].setData([]);
                                     });
-                                    chartxxxx.setTitle({text: this.options.name + "<br>" + this.options.y + " quantitativos"});
+                                    chartxxxx.setTitle({text: "Empreendimento: " + this.options.name + "<br>" + this.options.y + " quantitativos"});
                                     $(".linha-empreendimento").removeClass("bg-warning text-dark");
                                     $(".linha-empreendimento-" + this.options.url).addClass("bg-warning text-dark");
+                                    $(".todos-os-grupos").addClass("d-none");
                                 }')
                             ],
                         ],
@@ -326,7 +375,9 @@
         ]);
         ?>
     </div>
-    <div class="col-md-4" id="visitas">
+    <div class="col-md-7 card" style="border-radius: 0 !important">
+        <h3 class="text-center">Produtos por Empreendimento</h3><hr>
+        <div id="visitas"></div>
         <?php /*= Highcharts::widget([
                 'scripts' => [
                     'modules/exporting',
@@ -378,11 +429,13 @@
         */ ?>
         
     </div>
-    <div class="col-md-4">
+    <div class="col-md-4 card" style="border-radius: 0 !important">
+        <h3 class="text-center">Quantitativos dos Serviços por Produto no Empreendimento</h3><hr>
         <div class="row px-2 py-2" id="servicos_grupo">
         </div>
     </div>
-    <div class="col-md-12">
+    <div class="col-md-8 card" style="border-radius: 0 !important">
+        <h3 class="text-center">Detalhes dos Serviços</h3><hr>
         <div class="row">
             <?php
                 foreach ($groups as $k => $gr):
@@ -390,7 +443,7 @@
                     $contentItem .= "<h5 class='col-md-12'>$gr->produto</h5>";
                     foreach ($dataProvider->getModels() as $impacto):
                         if($impacto->produto == $gr->produto):
-                            $contentItem .= '<div id="supercard-servico-'.$impacto->id.'" class="col-md-3">';
+                            $contentItem .= '<div id="supercard-servico-'.$impacto->id.'" class="col-md-4">';
                             $contentItem .= '<div class="card my-1">';
                             $contentItem .= "<h6 class='text-center pt-2 pb-2 bg-primary text-white'>$impacto->numeroitem</h6>";
                             $contentItem .= $this->render('/impacto/view', [
@@ -455,7 +508,7 @@ $script = <<< JS
     const chartxxxx = Highcharts.chart('visitas', {
         chart: {
             type: 'pie',
-            height: 550
+            height: 450
         },
         title: {
             text: "Produtos"

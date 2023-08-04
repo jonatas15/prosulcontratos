@@ -123,7 +123,8 @@ $this->title = 'PROSUL-DNIT';
                                         100 atualizações<br>
                                         9 mensagens<br>
                                     </p>
-                                    <a href="'.Yii::$app->homeUrl.'contrato/view?id='.$contrato->id.'&abativa=aba_dados" class="btn btn-info text-white">Visualizar</a>
+                                    <a href="'.Yii::$app->homeUrl.'contrato/view?id='.$contrato->id.'&abativa=aba_dados" class="btn btn-info text-white"><i class="far fa-eye"></i><br>Ver +</a>
+                                    <a href="'.Yii::$app->homeUrl.'contrato/view?id='.$contrato->id.'&abativa=aba_impactos" class="btn btn-info text-white">Impactos<br>Contratuais</a>
                                 </div>
                                 <div class="card-footer text-muted">
                                     1 dia atrás

@@ -3,6 +3,8 @@
 namespace app\controllers;
 
 use app\models\Contrato;
+use app\models\Impacto;
+use app\models\ImpactoEmpreendimento as IEmp;
 use app\models\ContratoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -31,7 +33,11 @@ class ContratoController extends Controller
            ],
            'access' => [
                'class' => AccessControl::className(),
-               'only' => ['index', 'view', 'update', 'create',  'delete', 'impactoscontratuais', 'alteraimpacto', 'alteraimpactocampo', 'porempreendimento', 'porproduto'],
+               'only' => ['index', 'view', 'update', 'create',  'delete', 
+                    'impactoscontratuais', 'alteraimpacto', 'alteraimpactocampo', 
+                    'porempreendimento', 'porproduto',
+                    'novoimpacto'
+                ],
                'rules' => [
                    [
                        'allow' => true,
@@ -40,7 +46,11 @@ class ContratoController extends Controller
                    ],
                    [
                        'allow' => true,
-                       'actions' => ['index', 'view', 'update', 'create',  'delete', 'impactoscontratuais', 'alteraimpacto', 'alteraimpactocampo', 'porempreendimento', 'porproduto'],
+                       'actions' => ['index', 'view', 'update', 'create',  'delete', 
+                            'impactoscontratuais', 'alteraimpacto', 'alteraimpactocampo', 
+                            'porempreendimento', 'porproduto',
+                            'novoimpacto'
+                        ],
                        'roles' => ['@'],
                    ],
                ],
@@ -154,6 +164,26 @@ class ContratoController extends Controller
         // print_r($graph_grupos);
         // echo '</pre>';
         return $graph_servicos;
+    }
+
+    public function actionNovoimpacto() {
+        // echo '<pre>';
+        // print_r($_REQUEST);
+        // echo '</pre>';
+        $modelI = new Impacto();
+        if ($this->request->isPost && $modelI->load($this->request->post())) {
+            if ($modelI->save()) {
+                $empreendimentais = $_REQUEST['Empreendimento'];
+                foreach ($empreendimentais as $k => $v) {
+                    $ie = new IEmp();
+                    $ie->impacto_id = $modelI->id;
+                    $ie->empreendimento_id = $k;
+                    $ie->impactos = $v;
+                    echo "$k => $v <br>";
+                    $ie->save();
+                }
+            }
+        }
     }
 
     /**
