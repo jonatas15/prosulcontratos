@@ -179,9 +179,14 @@ class ContratoController extends Controller
                     $ie->impacto_id = $modelI->id;
                     $ie->empreendimento_id = $k;
                     $ie->impactos = $v;
-                    echo "$k => $v <br>";
+                    // echo "$k => $v <br>";
                     $ie->save();
                 }
+                return $this->redirect([
+                    'view',
+                    'id' => $modelI->contrato_id,
+                    'abativa' => 'aba_impactos'
+                ]);
             }
         }
     }

@@ -17,7 +17,7 @@
     use yii\widgets\Pjax;
 
     #Globais ou quase
-    $contrato = Contrato::findOne(['id' => 1]);
+    $contrato = Contrato::findOne(['id' => $contrato_id]);
     $empreendimentos = Empreendimento::find()->where([
         '<>', 'id', 3
     ])->all();
