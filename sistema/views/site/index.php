@@ -1,13 +1,14 @@
 <?php
 
 /** @var yii\web\View $this */
-// use yii\bootstrap2\Collapse;
 use yii\bootstrap5\Accordion;
 use app\models\Contrato;
 use app\models\Oficio;
 use app\models\Ordensdeservico as OS;
 use app\models\Licenciamento;
 use app\models\Produto;
+
+use yii\bootstrap5\Modal;
 
 $this->title = 'PROSUL-DNIT';
 ?>
@@ -53,9 +54,35 @@ $this->title = 'PROSUL-DNIT';
         </div>
 
         <p align="right">
-            <a class="btn btn-lg btn-success align-right" href="https://www.yiiframework.com">
+        <?php
+            Modal::begin([
+                'title' => "Novo Contrato",
+                'options' => [
+                    'id' => 'cadastrar-novo-contrato',
+                    'tabindex' => false,
+                ],
+                'bodyOptions' => [
+                    'class' => 'bg-white',
+                ],
+                'size' => 'modal-xl',
+                'toggleButton' => [
+                    'label' => '<i class="bi bi-card-list"></i> Novo Contrato',
+                    'class' => 'btn btn-lg btn-success align-right'
+                ],
+            ]);
+        ?>
+        <?php
+            $newcontrato = new Contrato();
+        ?>
+        <?= $this->render(
+            '/contrato/create',
+        [
+            'model' => $newcontrato
+        ]) ?>
+        <?php Modal::end(); ?>
+            <!-- <a class="btn btn-lg btn-success align-right" href="https://www.yiiframework.com">
                 Novo Contrato
-            </a>
+            </a> -->
         </p>
     </div>
 
@@ -141,7 +168,7 @@ $this->title = 'PROSUL-DNIT';
                             <div class="card text-center">
                                 <div class="card-header bg-primary text-white">
                                     Gestão de Ofícios
-                                    <span style="z-index: 100000 !important;" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger fs-7">
+                                    <span style="" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger fs-7">
                                         <i class="bi bi-bell"></i> '.$conta_mensagens.'+
                                         <span class="visually-hidden">unread messages</span>
                                     </span>

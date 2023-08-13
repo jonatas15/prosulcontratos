@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+// use kartik\detail\DetailView;
+use kartik\editable\Editable;
 use app\models\Empreendimento;
 use app\models\ImpactoEmpreendimento as ImpcEmp;
 use yii\web\JsExpression;
@@ -44,6 +46,23 @@ use yii\bootstrap5\Modal;
                 'attributes' => [
                     'id',
                     'numeroitem',
+                    [
+                        'attribute' => 'numeroitem',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return Editable::widget([
+                                'model' => $model,
+                                'options' => ['id' => 'some-unique-id-goes-here-'.$model->id],
+                                'attribute' => 'numeroitem',
+                                'asPopover' => false,
+                                'inputType' => Editable::INPUT_TEXT, // Pode ser Editable::INPUT_DROPDOWN, Editable::INPUT_DATE, etc.
+                                'editableValueOptions' => ['class' => 'text-success'],
+                                'displayValue' => $model->numeroitem,
+                                'submitButton' => ['class' => 'btn btn-primary btn-sm'],
+                                'formOptions' => ['action' => ['/controller/editable-action']], // Ação para salvar a edição
+                            ]);
+                        },
+                    ],
                     'contrato.titulo',
                     'produto:ntext',
                     'servico:ntext',
