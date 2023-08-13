@@ -209,6 +209,18 @@
 </script>
 
 <?php 
+$lista_btn_empreendimentos = "<div class='row my-2'>";
+foreach ($empreendimentos as $emp) {    
+    $lista_btn_empreendimentos .= "<div class='col'>";
+    $lista_btn_empreendimentos .= Html::button($emp->titulo, [ 
+        'class' => 'btn btn-info w-100 text-white btn-seleciona-empreendimento', 
+        'emp_titulo' => $emp->titulo,
+        'emp_id' => $emp->id,
+        // 'onclick' => "js:{ performAjaxRequest($emp->id , '$emp->titulo') }"
+    ]);
+    $lista_btn_empreendimentos .= "</div>";
+}
+$lista_btn_empreendimentos .="</div>";
 // echo '<pre>';
 // var_dump($_POST);
 // echo '</pre>';
@@ -216,6 +228,9 @@
 // echo json_encode($graph_grupos);
 ?>
 <div class="row">
+    <div class="col-md-12">
+        <?= $lista_btn_empreendimentos ?>
+    </div>
     <?php /**
     <div class="col-md-7">
         <?= Highcharts::widget([
@@ -450,6 +465,12 @@
                                 'id' => $impacto->id,
                                 'model' => $impacto
                             ]);
+                            // botão pra editar
+                            $contentItem .= Html::a('<i class="bi bi-pencil-square"></i>', [
+                                'vieweditable',
+                                'id' => $impacto->id,
+                            ], ['class' => 'btn btn-primary w-25 my-2 mx-2', 'target' => '_blank', 'data-pjax'=>"0"]);
+
                             $contentItem .= '<table class="table table-striped table-bordered detail-view">';
                             $contentItem .= '<tr>';
                                 $contentItem .= "<td>Unidade</td>";
@@ -592,3 +613,33 @@ JS;
 $this->registerJs($script);
 ?>
 <?php Pjax::end(); ?>
+
+<?php
+// Registro do código JavaScript
+$js_dos_botoes = <<< JS
+    // Função que será chamada ao clicar no botão
+    function performAjaxRequest(empreendimento_id, empreendimento_titulo) {
+        $.ajax({
+            method: 'POST',
+            url: "porempreendimento",
+            data: { 
+                empreendimento: empreendimento_id,
+            }
+        }).done(function( msg ) {
+            // console.log( msg );
+            chartxxxx.series[0].setData(msg);
+            chartservicos.series[0].setData([]);
+        });
+        chartxxxx.setTitle({text: "Empreendimento: " + empreendimento_titulo + "<br>"});
+        $(".linha-empreendimento").removeClass("bg-warning text-dark");
+        $(".linha-empreendimento-" + empreendimento_id).addClass("bg-warning text-dark");
+        $(".todos-os-grupos").addClass("d-none");
+    }
+    $('.btn-seleciona-empreendimento').on('click', function(){
+        performAjaxRequest($(this).attr('emp_id'), $(this).attr('emp_titulo'));
+    })
+JS;
+
+$this->registerJs($js_dos_botoes);
+
+?>

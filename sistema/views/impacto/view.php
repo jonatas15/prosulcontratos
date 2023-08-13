@@ -34,8 +34,15 @@ use yii\bootstrap5\Modal;
 ?>
 <div class="impacto-view">
     <div class="row">
-        <div class="col">
+        <div class="col-10">
             <h6 class="text-left">Contrato: <?= $model->contrato->titulo ?>, <br><?= $model->produto ?></h6>
+        </div>
+        <div class="col-2">
+            <?= Html::a('<i class="bi bi-pencil-square"></i> Editar', [
+                    'vieweditable',
+                    'id' => $model->id,
+                ], ['class' => 'btn btn-primary w-100 my-2 mx-2', 'target' => '_blank', 'data-pjax'=>"0"]);
+            ?>
         </div>
     </div>
     
@@ -46,23 +53,6 @@ use yii\bootstrap5\Modal;
                 'attributes' => [
                     'id',
                     'numeroitem',
-                    [
-                        'attribute' => 'numeroitem',
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return Editable::widget([
-                                'model' => $model,
-                                'options' => ['id' => 'some-unique-id-goes-here-'.$model->id],
-                                'attribute' => 'numeroitem',
-                                'asPopover' => false,
-                                'inputType' => Editable::INPUT_TEXT, // Pode ser Editable::INPUT_DROPDOWN, Editable::INPUT_DATE, etc.
-                                'editableValueOptions' => ['class' => 'text-success'],
-                                'displayValue' => $model->numeroitem,
-                                'submitButton' => ['class' => 'btn btn-primary btn-sm'],
-                                'formOptions' => ['action' => ['/controller/editable-action']], // Ação para salvar a edição
-                            ]);
-                        },
-                    ],
                     'contrato.titulo',
                     'produto:ntext',
                     'servico:ntext',

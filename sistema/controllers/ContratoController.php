@@ -13,6 +13,8 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\ForbiddenHttpException;
 
+use kartik\editable\Editable;
+
 use Yii;
 
 /**
@@ -335,5 +337,38 @@ class ContratoController extends Controller
         } else {
             return 0;
         }
+    }
+    public function imprimecampoeditavelmente($id, $campo, $valor, $editavel = null) {
+        switch ($editavel) {
+            case 'area': $tipoeditavel = Editable::INPUT_TEXTAREA; break;
+            default: $tipoeditavel = Editable::INPUT_TEXT; break;
+        }
+        return Editable::widget([
+            'id' => "altera_campo_{$campo}_{$id}", 
+            'name' => "altera_campo_$id", 
+            'value' => $valor,
+            'attribute' => $campo,
+            'asPopover' => true,
+            'inputType' => $tipoeditavel, // Pode ser Editable::INPUT_DROPDOWN, Editable::INPUT_DATE, etc.
+            // 'editableValueOptions' => ['class' => 'text-success'],
+            'displayValue' => $valor,
+            // 'submitButton' => ['class' => 'btn btn-primary btn-sm'],
+            'formOptions' => [
+                'action' => [
+                    'alteraimpactocampo',
+                    'campo' => $campo,
+                    'id' => $id
+                ]
+            ]
+        ]);
+    }
+    public function actionVieweditable($id)
+    {
+        $modelimpacto = \app\models\Impacto::findOne([
+            'id' => $id
+        ]);
+        return $this->render('vieweditable', [
+            'model' => $modelimpacto,
+        ]);
     }
 }
