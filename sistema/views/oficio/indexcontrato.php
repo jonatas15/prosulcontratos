@@ -35,6 +35,11 @@ use yii\bootstrap5\Accordion;
 // $this->title = 'Oficios';
 // $dataProvider->pagination->pageSize=4;
 // $this->params['breadcrumbs'][] = $this->title;
+
+// GLOBAIS !!! 
+Yii::$app->params['contratoidGlobal'] = $contrato_id;
+
+
 ?>
 <style>
     [type="checkbox"] {
@@ -377,10 +382,12 @@ use yii\bootstrap5\Accordion;
         <div class="col">
             <?php
                 function retornaserie ($campo, $status, $ano, $mes) {
+                    global $contratoidGlobal;
                     $contagem = Oficio::find()->where([
                         $campo => $status,
                         'YEAR(data)' => $ano,
                         'MONTH(data)' => $mes,
+                        'contrato_id' => Yii::$app->params['contratoidGlobal']
                     ])->count();
                     return $contagem;
                 }
@@ -573,16 +580,20 @@ use yii\bootstrap5\Accordion;
                 $graf_tipos_status .= '<div class="row"><div class="col">';
 
                 $resolvidos = Oficio::find()->where([
-                    'status' => 'Resolvido'
+                    'status' => 'Resolvido',
+                    'contrato_id' => Yii::$app->params['contratoidGlobal']
                 ])->count();
                 $nao_resolvidos = Oficio::find()->where([
-                    'status' => 'Não resolvido'
+                    'status' => 'Não resolvido',
+                    'contrato_id' => Yii::$app->params['contratoidGlobal']
                 ])->count();
                 $informativos = Oficio::find()->where([
-                    'status' => 'Informativo'
+                    'status' => 'Informativo',
+                    'contrato_id' => Yii::$app->params['contratoidGlobal']
                 ])->count();
                 $em_andamento = Oficio::find()->where([
-                    'status' => 'Em Andamento'
+                    'status' => 'Em Andamento',
+                    'contrato_id' => Yii::$app->params['contratoidGlobal']
                 ])->count();
                 $graf_tipos_status .= Highcharts::widget([
                     'scripts' => [

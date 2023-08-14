@@ -21,7 +21,9 @@
     $empreendimentos = Empreendimento::find()->where([
         '<>', 'id', 3
     ])->all();
-    $groups = Impc::find()->select('produto, count(id) as contaservicos')->groupBy('produto')->orderBy([
+    $groups = Impc::find()->select('produto, count(id) as contaservicos')->where([
+        'contrato_id' => $contrato_id
+    ])->groupBy('produto')->orderBy([
         'produto' => SORT_ASC
     ])->all();
 ?>
@@ -211,16 +213,15 @@
 <?php 
 $lista_btn_empreendimentos = "<div class='row my-2'>";
 foreach ($empreendimentos as $emp) {    
-    $lista_btn_empreendimentos .= "<div class='col'>";
+    $lista_btn_empreendimentos .= "<div class='col-md-3 my-1'>";
     $lista_btn_empreendimentos .= Html::button($emp->titulo, [ 
         'class' => 'btn btn-info w-100 text-white btn-seleciona-empreendimento', 
-        'emp_titulo' => $emp->titulo,
         'emp_id' => $emp->id,
-        // 'onclick' => "js:{ performAjaxRequest($emp->id , '$emp->titulo') }"
+        'emp_titulo' => $emp->titulo
     ]);
     $lista_btn_empreendimentos .= "</div>";
 }
-$lista_btn_empreendimentos .="</div>";
+$lista_btn_empreendimentos .= "</div>";
 // echo '<pre>';
 // var_dump($_POST);
 // echo '</pre>';
@@ -366,6 +367,7 @@ $lista_btn_empreendimentos .="</div>";
                                         url: "porempreendimento",
                                         data: { 
                                             empreendimento: this.options.url,
+                                            contrato_id: '.$contrato_id.',
                                         }
                                     }).done(function( msg ) {
                                         // console.log( msg );
@@ -522,6 +524,7 @@ $lista_btn_empreendimentos .="</div>";
     </div>
 </div>
 <?php
+$this->registerJs("var contrato_id = ".$contrato_id); 
 $this->registerJs("var inicio_grafico = ".json_encode($graph_grupos)); 
 $this->registerJs("var inicio_grafico_servicos = ".json_encode($graph_servicos)); 
 $this->registerJs("$('.todos-os-grupos').addClass('d-none');"); 
@@ -624,6 +627,7 @@ $js_dos_botoes = <<< JS
             url: "porempreendimento",
             data: { 
                 empreendimento: empreendimento_id,
+                contrato_id: contrato_id,
             }
         }).done(function( msg ) {
             // console.log( msg );

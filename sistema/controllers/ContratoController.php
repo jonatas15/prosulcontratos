@@ -90,6 +90,7 @@ class ContratoController extends Controller
     {
         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         $empreendimento_id = $_REQUEST['empreendimento'];
+        $contrato_id = $_REQUEST['contrato_id'];
         $graph_grupos = [];
         // $quantidades = [
         //     'quantidade_a' => 0,
@@ -97,7 +98,9 @@ class ContratoController extends Controller
         //     'qt_restante_real' => 0,
         //     'qt_restante' => 0,
         // ];
-        $grupos = \app\models\Impacto::find()->select('produto, count(id) as contaservicos')->groupBy('produto')->orderBy([
+        $grupos = \app\models\Impacto::find()->select('produto, count(id) as contaservicos')->where([
+            'contrato_id' => $contrato_id
+        ])->groupBy('produto')->orderBy([
             'produto' => SORT_ASC
         ])->all();
         $impactosporempreendimento = \app\models\ImpactoEmpreendimento::find()->where([

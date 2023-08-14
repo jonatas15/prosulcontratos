@@ -15,9 +15,6 @@ $model->data_base = $model->data_base ? date('d/m/Y', strtotime($model->data_bas
 $model->vigencia = $model->vigencia ? date('d/m/Y', strtotime($model->vigencia)) : '';
 
 ?>
-<div class="col-md-12" style="padding: 10px; text-align:center;">
-    <button class="btn btn-primary" id="editar-contrato">Editar dados do Contrato</button>
-</div>
 <div class="contrato-form row"  style="padding: 10px;">
     <?php $form = ActiveForm::begin([
         'options' => [],
@@ -98,12 +95,12 @@ $model->vigencia = $model->vigencia ? date('d/m/Y', strtotime($model->vigencia))
         <?php //= $form->field($model, 'dataupdate')->textInput() ?>
         <?php //= $form->field($model, 'icone')->textarea(['rows' => 6]) ?>
         
-        <div class="col-md-12">
-            <?= $form->field($model, 'obs')->textarea(['rows' => 6]) ?>
+        <div class="col-md-6">
+            <?= $form->field($model, 'obs')->textarea(['rows' => 5]) ?>
         </div>
         
-        <div class="col-md-12">
-            <?= $form->field($model, 'lote')->textarea(['rows' => 6]) ?>
+        <div class="col-md-6">
+            <?= $form->field($model, 'lote')->textarea(['rows' => 5]) ?>
         </div>
         <div class="col-md-12">
             <div class="form-group">
