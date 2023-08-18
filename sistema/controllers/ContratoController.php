@@ -214,6 +214,19 @@ class ContratoController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+    public function actionImpactoscontratuaisiframe() {
+        /**
+         * Montar aqui as search e provider
+         */
+        echo '<style>#my-menu, #yii-debug-toolbar {display: none !important} #main, .col-md-5, .col-md-4, .col-md-7, .col-md-8, .row{background-color: rgba(240, 243, 245) !important}</style>';
+        $searchModelImpacto = new \app\models\ImpactoSearch();
+        $dataProviderImpacto = $searchModelImpacto->search(['contrato_id' => 1]);
+        return $this->render('impactoscontratuais', [
+            'searchModel' => $searchModelImpacto,
+            'dataProvider' => $dataProviderImpacto,
+            'contrato_id' => 1
+        ]);
+    }
 
     /**
      * Creates a new Contrato model.
@@ -249,7 +262,7 @@ class ContratoController extends Controller
         $arr = explode('/', $data);
         return $arr[2].'-'.$arr[1].'-'.$arr[0];
     }
-    public function actionUpdate($id)
+    public function actionUpdate ($id)
     {
         $model = $this->findModel($id);
 

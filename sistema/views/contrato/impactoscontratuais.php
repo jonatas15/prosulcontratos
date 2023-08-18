@@ -460,6 +460,7 @@ $lista_btn_empreendimentos .= "</div>";
                     $contentItem .= "<h5 class='col-md-12'>$gr->produto</h5>";
                     foreach ($dataProvider->getModels() as $impacto):
                         if($impacto->produto == $gr->produto):
+                            // style="min-height: 300px !important;"
                             $contentItem .= '<div id="supercard-servico-'.$impacto->id.'" class="col-md-4">';
                             $contentItem .= '<div class="card my-1">';
                             $contentItem .= "<h6 class='text-center pt-2 pb-2 bg-primary text-white'>$impacto->numeroitem</h6>";
@@ -473,17 +474,17 @@ $lista_btn_empreendimentos .= "</div>";
                                 'id' => $impacto->id,
                             ], ['class' => 'btn btn-primary w-25 my-2 mx-2', 'target' => '_blank', 'data-pjax'=>"0"]);
 
-                            $contentItem .= '<table class="table table-striped table-bordered detail-view">';
-                            $contentItem .= '<tr>';
-                                $contentItem .= "<td>Unidade</td>";
-                                $contentItem .= "<td>$impacto->unidade</td>";
-                                $contentItem .= '</tr>';
+                            $contentItemTB  = '<table class="table table-striped table-bordered detail-view">';
+                            $contentItemTB .= '<tr>';
+                                $contentItemTB .= "<td>Unidade</td>";
+                                $contentItemTB .= "<td>$impacto->unidade</td>";
+                                $contentItemTB .= '</tr>';
                             foreach ($impacto->impactoEmpreendimentos as $ie) {
                                 if ($ie->impactos > 0) {
-                                    $contentItem .= '<tr">';
-                                    $contentItem .= "<td class='linha-empreendimento linha-empreendimento-".$ie->empreendimento_id."'>{$ie->empreendimento->titulo}</td>";
-                                    $contentItem .= "<td class='linha-empreendimento linha-empreendimento-".$ie->empreendimento_id."'>{$ie->impactos}</td>";
-                                    $contentItem .= '</tr>';
+                                    $contentItemTB .= '<tr">';
+                                    $contentItemTB .= "<td class='linha-empreendimento linha-empreendimento-".$ie->empreendimento_id."'>{$ie->empreendimento->titulo}</td>";
+                                    $contentItemTB .= "<td class='linha-empreendimento linha-empreendimento-".$ie->empreendimento_id."'>{$ie->impactos}</td>";
+                                    $contentItemTB .= '</tr>';
                                 }
                             }
                             $quantidades = [
@@ -506,12 +507,22 @@ $lista_btn_empreendimentos .= "</div>";
                                 if ($valor < 0) {
                                     $vetor = "text-danger";
                                 }
-                                $contentItem .= '<tr>';
-                                $contentItem .= "<td><strong class='$vetor'>{$label}</strong></td>";
-                                $contentItem .= "<td><strong class='$vetor'>{$valor}</strong></td>";
-                                $contentItem .= '</tr>';
+                                $contentItemTB .= '<tr>';
+                                $contentItemTB .= "<td><strong class='$vetor'>{$label}</strong></td>";
+                                $contentItemTB .= "<td><strong class='$vetor'>{$valor}</strong></td>";
+                                $contentItemTB .= '</tr>';
                             }
-                            $contentItem .= '</table>';
+                            $contentItemTB .= '</table>';
+
+                            $contentItem .= Accordion::widget([
+                                'items' => [
+                                    [
+                                        'label' => 'Ver mais',
+                                        'content' => $contentItemTB
+                                    ]
+                                ]
+                            ]);
+
                             $contentItem .= '</div>';
                             $contentItem .= '</div>';
                         endif;
@@ -642,6 +653,7 @@ $js_dos_botoes = <<< JS
     $('.btn-seleciona-empreendimento').on('click', function(){
         performAjaxRequest($(this).attr('emp_id'), $(this).attr('emp_titulo'));
     })
+    $('.collapse').collapse("hide");
 JS;
 
 $this->registerJs($js_dos_botoes);

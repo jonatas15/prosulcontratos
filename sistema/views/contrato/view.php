@@ -417,6 +417,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php 
 $this->registerJs(<<<JS
     $('#w1-collapse0').collapse("hide");
+    $('.accordion').collapse("hide");
 JS);
 ?>
 

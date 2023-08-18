@@ -19,7 +19,7 @@ use yii\bootstrap5\Modal;
     Modal::begin([
         'title' => $model->servico,
         'toggleButton' => [
-            'label' => $model->servico,
+            'label' => mb_strimwidth($model->servico, 0, 100, "..."),
             'class' => 'btn btn-link'
         ],
         'size' => 'modal-xl',
