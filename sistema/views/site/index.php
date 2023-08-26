@@ -22,6 +22,13 @@ $this->title = 'PROSUL-DNIT';
         height: 120px;
         opacity: .3;
     }
+    .btn-primary {
+        background-color: #0C326F !important;
+    }
+    .card-header {
+        background-color: #0167A8 !important;
+        color: white !important;
+    }
 </style>
 <div class="site-index">
     
@@ -44,12 +51,13 @@ $this->title = 'PROSUL-DNIT';
         <!-- <h3 class="display-4">Bem vindo!</h3> -->
 
         <div class="row">
-            <div class="col-md-3">
-                <img style="width:100%" src="<?=Yii::$app->homeUrl.'logo/';?>logoprosul.jpg" alt="">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <img style="width:40%" src="<?=Yii::$app->homeUrl.'logo/';?>logoprosul.jpg" alt="">
             </div>
-            <div class="col-md-5">
-                <img style="width:100%" src="<?=Yii::$app->homeUrl.'logo/';?>dnit.jpg" alt="">
-            </div>
+            <!-- <div class="col-md-5">
+                <img style="width:100%" src="<?php //=Yii::$app->homeUrl.'logo/';?>dnit.jpg" alt="">
+            </div> -->
             <div class="col-md-4"></div>
         </div>
 
@@ -67,7 +75,7 @@ $this->title = 'PROSUL-DNIT';
                 'size' => 'modal-xl',
                 'toggleButton' => [
                     'label' => '<i class="bi bi-card-list"></i> Novo Contrato',
-                    'class' => 'btn btn-lg btn-success align-right'
+                    'class' => 'btn btn-lg btn-primary align-right'
                 ],
             ]);
         ?>
@@ -122,6 +130,9 @@ $this->title = 'PROSUL-DNIT';
                 <p><a class="btn btn-outline-secondary" href="https://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
             </div>
             */?>
+            <?php /**
+            * ANTIGO MODO DE ACORDION COM DETALHES DOS MÓDULOS DO CONTRATO
+            
             <div class="col-12 col-lg-12 col-md-12">
                 <?php 
                     $contratos = Contrato::find()->all();
@@ -288,6 +299,42 @@ $this->title = 'PROSUL-DNIT';
                         'items' => $lista
                     ]);
                 ?>
+            </div>
+
+            */ ?>
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-header bg-primary">Contrato Lote A</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <label class="label form-label">Processo administrativo</label>
+                                <br>
+                                <label class="caption form-label">50600.000865/2021-18</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <label class="label form-label">Nº Edital</label>
+                                <br>
+                                <label class="caption form-label">Nº 257/2021-00</label>
+                            </div>
+                            <div class="col-6">
+                                <label class="label form-label">Número do Contrato</label>
+                                <br>
+                                <label class="caption form-label">093/2022</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <center>
+                                <button type="button" class="w-50 px-4 button-adicionar btn btn-primary">
+                                    <!-- Acessar <i class="fa fa-search fa-flip-horizontal"></i> -->
+                                    Acessar <i class="fa fa-search"></i>
+                                </button>
+                            </center>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 

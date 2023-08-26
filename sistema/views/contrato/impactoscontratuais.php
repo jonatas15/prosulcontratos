@@ -540,6 +540,9 @@ $this->registerJs("var inicio_grafico = ".json_encode($graph_grupos));
 $this->registerJs("var inicio_grafico_servicos = ".json_encode($graph_servicos)); 
 $this->registerJs("$('.todos-os-grupos').addClass('d-none');"); 
 $script = <<< JS
+    Highcharts.setOptions({
+        colors: ['#87CEEB', '#87CEFA', '#00BFFF', '#1E90FF', '#4169E1', '#0000FF', '#0000CD', '#00008B', '#483D8B']
+    });
     const chartxxxx = Highcharts.chart('visitas', {
         chart: {
             type: 'pie',
@@ -577,7 +580,6 @@ $script = <<< JS
                         // $("#item_"+this.options.url).children(".accordion-header").children("h5").children(".accordion-button").toggleClass("collapsed");
                     }
                 }
-                
             },
             data: inicio_grafico
         }]

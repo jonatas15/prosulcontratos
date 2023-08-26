@@ -98,11 +98,15 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 <header id="header">
     <?php
     NavBar::begin([
-        'brandLabel' => 'Prosul - DNIT',
+        'brandLabel' => '<img src="'.Yii::$app->homeUrl.'logo/download.png'.'" width="200"/>',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'nnavbar navbar-expand-lg navbar-dark bg-dark fixed-top navbar-collapse fixed-top',
             'id' => 'my-menu',
+            'style' => [
+                'background-color' => '#0167A8 !important',
+                'font-size' => '20px'
+            ]
         ]
     ]);
     echo Nav::widget([
@@ -112,11 +116,11 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         ],
         'items' => [
             // ['label' => 'Início', 'url' => ['/site/index']],
-            [
-                'label' => 'Empreendimentos', 
-                'url' => ['/empreendimento'],
-                'visible' => !Yii::$app->user->isGuest
-            ],
+            // [
+            //     'label' => 'Empreendimentos', 
+            //     'url' => ['/empreendimento'],
+            //     'visible' => !Yii::$app->user->isGuest
+            // ],
             // ['label' => 'Contact', 'url' => ['/site/contact']],
             // Yii::$app->user->isGuest
             //     ? ['label' => 'Login', 'url' => ['/site/login']]
