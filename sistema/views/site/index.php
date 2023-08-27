@@ -302,40 +302,43 @@ $this->title = 'PROSUL-DNIT';
             </div>
 
             */ ?>
-            <div class="col-6">
+            <?php $contratos = Contrato::find()->all(); ?>
+            <?php foreach ($contratos as $k => $contrato): ?>
+            <div class="col-6 my-3">
                 <div class="card">
-                    <div class="card-header bg-primary">Contrato Lote A</div>
+                    <div class="card-header bg-primary"><?=$contrato->titulo?></div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12">
-                                <label class="label form-label">Processo administrativo</label>
+                                <label class="label form-label fw-bolder">Processo administrativo</label>
                                 <br>
-                                <label class="caption form-label">50600.000865/2021-18</label>
+                                <label class="caption form-label"><?=$contrato->lote?></label>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row my-3">
                             <div class="col-6">
-                                <label class="label form-label">Nº Edital</label>
+                                <label class="label form-label fw-bolder">Nº Edital</label>
                                 <br>
-                                <label class="caption form-label">Nº 257/2021-00</label>
+                                <label class="caption form-label"><?=$contrato->num_edital?></label>
                             </div>
                             <div class="col-6">
-                                <label class="label form-label">Número do Contrato</label>
+                                <label class="label form-label fw-bolder">Número do Contrato</label>
                                 <br>
-                                <label class="caption form-label">093/2022</label>
+                                <label class="caption form-label"><?=$contrato->titulo?></label>
                             </div>
                         </div>
                         <div class="row">
                             <center>
-                                <button type="button" class="w-50 px-4 button-adicionar btn btn-primary">
+                                <a href="<?=Yii::$app->homeUrl.'contrato/view?id='.$contrato->id?>" type="button" class="w-50 px-4 button-adicionar btn btn-primary">
                                     <!-- Acessar <i class="fa fa-search fa-flip-horizontal"></i> -->
                                     Acessar <i class="fa fa-search"></i>
-                                </button>
+                                </a>
                             </center>
                         </div>
                     </div>
                 </div>
             </div>
+            <?php endforeach; ?>
         </div>
 
     </div>

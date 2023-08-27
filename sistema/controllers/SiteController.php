@@ -63,6 +63,10 @@ class SiteController extends Controller
     {
         return $this->render('index');
     }
+    public function actionCalendar()
+    {
+        return $this->render('calendar');
+    }
 
     /**
      * Login action.
