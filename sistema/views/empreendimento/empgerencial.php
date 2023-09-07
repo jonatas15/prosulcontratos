@@ -36,6 +36,33 @@ $gestaoarquivos .= $this->render('/arquivo/index', [
 $gestaoarquivos .= '</div>';
 $gestaoarquivos .= '</div>';
 
+############################### GESTÃO DE GUIAS ################################
+$aba_dados = false;
+$aba_arquivos = false;
+$aba_fases = false;
+$ativo = $_REQUEST['abativa'];
+switch ($ativo) {
+    case 'aba_dados':
+        $aba_dados = true;
+        $aba_arquivos = false;
+        $aba_fases = false;
+        break;
+    case 'fases':
+        $aba_dados = false;
+        $aba_arquivos = false;
+        $aba_fases = true;
+        break;
+    case 'arquivos':
+        $aba_dados = false;
+        $aba_arquivos = true;
+        $aba_fases = false;
+        break;
+    default:
+        $aba_dados = true;
+        $aba_arquivos = false;
+        $aba_fases = false;
+        break;
+}
 
 /** @var yii\web\View $this */
 /** @var app\models\Oficio $model */
@@ -47,25 +74,32 @@ $this->params['breadcrumbs'][] = 'Atualizar '.$model->id . '- ' . $model->titulo
 ?>
 <div class="empreendimento-update">
     <h3 class="my-4 text-left text-uppercase"><?= Html::encode($this->title) ?></h3>
+    <?php if (count($model->licenciamentos) > 0): ?>
+    <div class="row align-center pb-5">
+        <?= $this->render('instancias', [
+            'id' => $model->id,
+            'model' => $model
+        ]); ?>
+    </div>
+    <?php endif; ?>
     <?php 
+    $items = [];
+    foreach ($model->licenciamentos as $item) {
+        $gestaofase = $this->render('/empreendimento/timeline', [
+            'licenciamento_id' => $item->id,
+            'model' => $item,
+            'empreendimento_id' => $model->id,
+            'funcionalidades' => true
+        ]);
+        array_push($items, [
+            'label' => '⌛ '.$item->numero,
+            'content' => $gestaofase,
+            'options' => ['id' => 'aba_fases_'.$item->id],
+            'active' => $aba_fases
+        ]);
+    }
     echo Tabs::widget([
-        'items' => [
-            [
-                'label' => '📋 Editar Empreendimento',
-                'content' => '<div class="row pt-3">'.$this->render('_form', [
-                    'model' => $model,
-                    'action' => 'empreendimento/update?id='.$model->id //A Yii->homeUrl fica na _form
-                ]).'</div>',
-                'options' => ['id' => 'aba_dados'],
-                'active' => $aba_dados
-            ],
-            [
-                'label' => '🗄️ Arquivos',
-                'content' => $gestaoarquivos,
-                'options' => ['id' => 'aba_arquivos'],
-                'active' => $aba_arquivos
-            ],
-        ],
+        'items' => $items
     ]);
     ?>
 </div>

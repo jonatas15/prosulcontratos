@@ -153,6 +153,13 @@ class EmpreendimentoController extends Controller
             'model' => $model,
         ]);
     }
+    public function actionEmpgerencial($id)
+    {
+        $model = $this->findModel($id);
+        return $this->render('empgerencial', [
+            'model' => $model,
+        ]);
+    }
 
     public function actionNovafase()
     {

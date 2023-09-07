@@ -1,3 +1,8 @@
+<?php 
+
+    use app\models\Fase;
+
+?>
 <style>
     .timeline-steps {
         display: flex;
@@ -60,11 +65,18 @@
         opacity: .2
     }
 </style>
-<div class="container">                      
+<div class="container">
+    <!-- Área Gerencial -->
+    <?php $novafase = new Fase(); ?>
+    <?= $this->render(Yii::$app->homeUrl.'fase/create', [
+        'model' => $novafase,
+        'licenciamento_id' => $licenciamento_id
+    ]) ?>
+    <!-- Área Gerencial -->
     <div class="row text-center justify-content-center mb-5 mt-5">
-        <div class="col-12">
+        <!-- <div class="col-12">
             <h4 class="font-weight-bold">Evolução do Empreendimento</h4>
-        </div>
+        </div> -->
     </div>
 
     <div class="row">
@@ -101,7 +113,7 @@
                         <div class="inner-circle"></div>
                         <p class="h6 mt-3 mb-1">Conclusão</p>
                     </div>
-                    <p><center><?=$model->titulo?></center></p>
+                    <p><center><?=$model->numero?></center></p>
                 </div>
             </div>
         </div>

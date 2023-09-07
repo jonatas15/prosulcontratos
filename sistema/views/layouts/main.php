@@ -145,6 +145,12 @@ $g_drive = '<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 51
             ],
             [
                 'class' => 'bg-primary',
+                'label' => '<i class="fa fa-globe"></i> Empreendimentos', 
+                'url' => ['/empreendimento'],
+                'visible' => !Yii::$app->user->isGuest
+            ],
+            [
+                'class' => 'bg-primary',
                 'label' => '<i class="fa fa-link"></i> Links - DRIVE',
                 // 'url' => ['/empreendimento'],
                 'visible' => !Yii::$app->user->isGuest,

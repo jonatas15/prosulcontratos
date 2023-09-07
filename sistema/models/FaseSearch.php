@@ -17,7 +17,7 @@ class FaseSearch extends Fase
     public function rules()
     {
         return [
-            [['id', 'empreendimento_id'], 'integer'],
+            [['id', 'empreendimento_id', 'licenciamento_id'], 'integer'],
             [['fase', 'datacadastro', 'data', 'exigencias', 'ambito', 'status'], 'safe'],
         ];
     }
@@ -60,6 +60,7 @@ class FaseSearch extends Fase
         $query->andFilterWhere([
             'id' => $this->id,
             'empreendimento_id' => $this->empreendimento_id,
+            'licenciamento_id' => $this->licenciamento_id,
             'datacadastro' => $this->datacadastro,
             'data' => $this->data,
         ]);

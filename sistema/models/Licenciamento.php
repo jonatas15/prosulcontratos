@@ -56,7 +56,7 @@ class Licenciamento extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'ordensdeservico_id' => 'O.Serviço',
-            'numero' => 'Número',
+            'numero' => 'Licenciamento',
             'datacadastro' => 'Registro',
             'dataedicao' => 'Edição',
             'data_validade' => 'Validade',
@@ -104,4 +104,13 @@ class Licenciamento extends \yii\db\ActiveRecord
    { 
        return $this->hasOne(Contrato::class, ['id' => 'contrato_id']); 
    }
+   /**
+     * Gets query for [[Licenciamentos]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFases()
+    {
+        return $this->hasMany(Fase::class, ['licenciamento_id' => 'id']);
+    }
 }

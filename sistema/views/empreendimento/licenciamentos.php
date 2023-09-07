@@ -32,7 +32,7 @@ use yii\widgets\ActiveForm;
 
 <div class="row revisao-form text-left">
     <div class="col">
-        <h4>Nova Revisão</h4>
+        <h4>Novo Licenciamento</h4>
         <div class="card">
             <div class="card-body">
                 <?php $form = ActiveForm::begin([
