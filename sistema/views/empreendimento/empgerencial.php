@@ -1,7 +1,9 @@
 <?php
 
 use yii\helpers\Html;
-use yii\bootstrap5\Tabs;
+// use yii\bootstrap5\Tabs;
+use kartik\tabs\TabsX as Tabs;
+
 ?>
 <style>
     .nav-link.active {
@@ -12,6 +14,15 @@ use yii\bootstrap5\Tabs;
         background-color: lightgray;
         border-color: gray;
         padding: 0 50px !important;
+    }
+    .nav-tabs > li {
+        float:none;
+        display:inline-block;
+        zoom:1;
+    }
+
+    .nav-tabs {
+        text-align:center !important;
     }
 </style>
 <?php
@@ -36,34 +47,6 @@ $gestaoarquivos .= $this->render('/arquivo/index', [
 $gestaoarquivos .= '</div>';
 $gestaoarquivos .= '</div>';
 
-############################### GESTÃO DE GUIAS ################################
-$aba_dados = false;
-$aba_arquivos = false;
-$aba_fases = false;
-$ativo = $_REQUEST['abativa'];
-switch ($ativo) {
-    case 'aba_dados':
-        $aba_dados = true;
-        $aba_arquivos = false;
-        $aba_fases = false;
-        break;
-    case 'fases':
-        $aba_dados = false;
-        $aba_arquivos = false;
-        $aba_fases = true;
-        break;
-    case 'arquivos':
-        $aba_dados = false;
-        $aba_arquivos = true;
-        $aba_fases = false;
-        break;
-    default:
-        $aba_dados = true;
-        $aba_arquivos = false;
-        $aba_fases = false;
-        break;
-}
-
 /** @var yii\web\View $this */
 /** @var app\models\Oficio $model */
 
@@ -85,21 +68,31 @@ $this->params['breadcrumbs'][] = 'Atualizar '.$model->id . '- ' . $model->titulo
     <?php 
     $items = [];
     foreach ($model->licenciamentos as $item) {
+        $searchModelFases = new \app\models\FaseSearch();
+        $dataProviderFases = $searchModelFases->search(['licenciamento_id' => $item->id]);
+        
         $gestaofase = $this->render('/empreendimento/timeline', [
             'licenciamento_id' => $item->id,
             'model' => $item,
             'empreendimento_id' => $model->id,
-            'funcionalidades' => true
+            'funcionalidades' => true,
+            'searchModelFases' => $searchModelFases,
+            'dataProviderFases' => $dataProviderFases,
         ]);
+        
         array_push($items, [
             'label' => '⌛ '.$item->numero,
             'content' => $gestaofase,
             'options' => ['id' => 'aba_fases_'.$item->id],
-            'active' => $aba_fases
+            'active' => $item->numero == 'IPHAN' ? true : false,
         ]);
     }
     echo Tabs::widget([
-        'items' => $items
+        'items' => $items,
+        'position'=>Tabs::POS_ABOVE,
+        'align'=>Tabs::ALIGN_CENTER,
+        'bordered'=>true,
+        'encodeLabels'=>false
     ]);
     ?>
 </div>

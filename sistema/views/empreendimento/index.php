@@ -16,9 +16,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $templategeral_grid = '';
 switch (Yii::$app->user->identity->nivel) {
-    case 'administrador': $templategeral_grid = '<div style="white-space: nowrap;">{view} {update} {delete}</div>'; break;
-    case 'gestor': $templategeral_grid = '{view} {update}'; break;
-    case 'fiscal': $templategeral_grid = '{view}'; break;
+    case 'administrador': $templategeral_grid = '<div style="white-space: nowrap;">{view} {subitens} {update} {delete}</div>'; break;
+    case 'gestor': $templategeral_grid = '{view} {subitens} {update}'; break;
+    case 'fiscal': $templategeral_grid = '{view}{subitens}'; break;
 }
 
 ?>
@@ -85,6 +85,16 @@ switch (Yii::$app->user->identity->nivel) {
                 //         return $data->oficio->Num_sei;
                 //     }
                 // ],
+                // [
+                //     'attribute' => 'id',
+                //     'header' => 'Licenciamentos',
+                //     'format' => 'raw',
+                //     'value' => function($data) {
+                //         return "<a class='btn btn-primary' href='".Yii::$app->homeUrl."empreendimento/empgerencial?id=$data->id'>
+                //             <i class=\"bi bi-eye\"></i>
+                //         </a>";
+                //     }
+                // ],
                 [
                     'class' => ActionColumn::className(),
                     'header' => '<center><strong><i class="bi bi-filter"></i></strong></center>',
@@ -98,6 +108,10 @@ switch (Yii::$app->user->identity->nivel) {
                                 'id' => $model->id,
                                 'model' => $model
                             ]);
+                        },
+                        'subitens' => function ($url, $model, $key) {
+                            $url = Yii::$app->homeUrl."empreendimento/empgerencial?id=$model->id";
+                            return  Html::a('<i class="bi bi-eye"></i>', $url, ['class' => 'btn btn-primary text-white p-1 px-2']);
                         },
                         'update' => function ($url, $model, $key) {
                             return  Html::a('<i class="bi bi-gear"></i>', $url, ['class' => 'btn btn-primary text-white p-1 px-2']);

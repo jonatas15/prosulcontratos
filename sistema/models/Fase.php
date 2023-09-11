@@ -16,6 +16,7 @@ use Yii;
  * @property string|null $exigencias
  * @property string|null $ambito
  * @property string|null $status
+ * @property int|null $ordem
  *
  * @property Empreendimento $empreendimento
  * @property Licenciamento $licenciamento
@@ -36,7 +37,7 @@ class Fase extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['empreendimento_id', 'licenciamento_id'], 'integer'],
+            [['empreendimento_id', 'licenciamento_id', 'ordem'], 'integer'],
             [['licenciamento_id', 'fase'], 'required'],
             [['datacadastro', 'data'], 'safe'],
             [['fase', 'exigencias', 'ambito', 'status'], 'string', 'max' => 200],

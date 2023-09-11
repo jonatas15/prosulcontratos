@@ -1,7 +1,12 @@
 <?php 
-
     use app\models\Fase;
+    use yii\helpers\Html;
+    use yii\helpers\Url;
+    use yii\grid\ActionColumn;
+    use yii\grid\GridView;
+    use kartik\editable\Editable;
 
+    
 ?>
 <style>
     .timeline-steps {
@@ -64,13 +69,23 @@
         border-radius: 6.25rem;
         opacity: .2
     }
+    .nav-tabs > li {
+    float:none;
+    display:inline-block;
+    zoom:1;
+    }
+
+    .nav-tabs {
+        text-align:center;
+    }
 </style>
 <div class="container">
     <!-- Área Gerencial -->
     <?php $novafase = new Fase(); ?>
     <?= $this->render(Yii::$app->homeUrl.'fase/create', [
         'model' => $novafase,
-        'licenciamento_id' => $licenciamento_id
+        'licenciamento_id' => $licenciamento_id,
+        'licenciamento' => $model->numero
     ]) ?>
     <!-- Área Gerencial -->
     <div class="row text-center justify-content-center mb-5 mt-5">
@@ -82,41 +97,113 @@
     <div class="row">
         <div class="col">
             <div class="timeline-steps aos-init aos-animate" data-aos="fade-up">
+                <?php $i = 1; ?>
                 <?php foreach ($model->fases as $fase): ?>
                     <?php 
                     $innerBg = "";
                         switch ($fase->status) {
-                            case 'Aprovado': $innerBg = "bg-success"; break;
-                            case 'Em andamento': $innerBg = "bg-warning"; break;
-                            case 'Reprovado': $innerBg = "bg-danger"; break;
+                            case 'Concluído': $innerBg = "bg-success"; break;
+                            case 'Em andamento': $innerBg = "bg-info"; break;
+                            case 'Pendente': $innerBg = "bg-default"; break;
                         }    
                     ?>
-                    <div class="timeline-step">
+                    <div class="timeline-step" style="cursor: pointer">
+                        <span style="position: absolute; top: -5px" class="badge rounded-pill text-<?=$innerBg?> text-white fs-6"><?=$i?></span>
                         <div 
                             class="timeline-content" 
                             data-toggle="tooltip"
                             data-placement="top"
                             data-trigger="hover"
-                            title="<?php
-                            echo $fase->exigencias;
-                            ?>"
+                            title="<?= $fase->exigencias;?>"
                             data-original-title="2003"
                         >
-                            <div class="inner-circle <?=$innerBg?>"></div>
+                            
+                            <div class="inner-circle <?=$innerBg?>">
+                            </div>
                             <p class="h6 mt-3 mb-1"><?=date('d/m/Y', strtotime($fase->data))?></p>
                             <p class="h6 text-muted mb-0 mb-lg-0"><?=$fase->fase?></p>
                         </div>
                     </div>
+                    <?php $i++; ?>
                 <?php endforeach; ?>
                 <div class="timeline-step mb-0">
                     <div class="timeline-content" data-toggle="tooltip" data-trigger="hover" data-placement="top" title="Sistema Fechado" data-original-title="2020">
-                        <div class="inner-circle"></div>
+                        <div class="inner-circle bg-black"></div>
                         <p class="h6 mt-3 mb-1">Conclusão</p>
+                        <p><center><?=$model->numero?></center></p>
                     </div>
-                    <p><center><?=$model->numero?></center></p>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="row">
+        Licenciamento: <?= $licenciamento_id; ?>
+        <?= GridView::widget([
+            'dataProvider' => $dataProviderFases,
+            'filterModel' => $searchModelFases,
+            'columns' => [
+                [
+                    'class' => 'yii\grid\SerialColumn'
+                ],
+                // 'empreendimento_id',
+                // 'licenciamento_id',
+                'fase',
+                'datacadastro',
+                'data',
+                'exigencias',
+                'ambito',
+                [
+                    'attribute' => 'status',
+                    'format'=>'raw',
+                    'value' => function($data) {
+                        return Editable::widget([
+                            'name'=>'status', 
+                            'asPopover' => true,
+                            'value' => $data->status,
+                            'header' => 'Status',
+                            'size'=>'md',
+                            'inputType' => Editable::INPUT_DROPDOWN_LIST,
+                            'data' => [
+                                '0' => 'Pendente',
+                                '1' => 'Em Andamento',
+                                '2' => 'Concluído',
+                            ],
+                            'formOptions' => [
+                                'action' => [
+                                    'editcampo',
+                                    'id' => $data->id,
+                                    'campo' => 'status'
+                                ]
+                            ],
+                        ]);
+                    } 
+                ],
+                [
+                    'attribute' => 'ordem',
+                    'headerOptions' => [
+                        'width' => '10%'
+                    ],
+                    'format' => 'raw',
+                    'value' => function ($data) {
+                        return "<div class='row'>
+                            <div class='col'>
+                                <center>
+                                    <a class='btn btn-success rounded-start-4 rounded-end-0 fw-bolder mx-0'><i class='bi bi-arrow-bar-up'></i></a>
+                                    <a class='btn btn-success rounded-start-0 rounded-end-4 fw-bolder mx-0'><i class='bi bi-arrow-bar-down'></i></a>
+                                </center>
+                            </div>
+                        </div>";
+                    }
+                ],
+                [
+                    'class' => ActionColumn::className(),
+                    'urlCreator' => function ($action, Fase $model, $key, $index, $column) {
+                        return Url::toRoute([$action, 'id' => $model->id]);
+                    },
+                    'template' => "{delete}"
+                ],
+            ],
+        ]); ?>
     </div>
 </div>
 <?php
