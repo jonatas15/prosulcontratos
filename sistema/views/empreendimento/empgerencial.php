@@ -15,15 +15,6 @@ use kartik\tabs\TabsX as Tabs;
         border-color: gray;
         padding: 0 50px !important;
     }
-    .nav-tabs > li {
-        float:none;
-        display:inline-block;
-        zoom:1;
-    }
-
-    .nav-tabs {
-        text-align:center !important;
-    }
 </style>
 <?php
 ############################### GESTÃO DE ARQUIVOS #############################
@@ -32,20 +23,20 @@ use kartik\tabs\TabsX as Tabs;
     que cria multiplos registros
 */
 ############################### GESTÃO DE ARQUIVOS #############################
-$searchModelArquivo = new \app\models\ArquivoSearch();
-$dataProviderArquivo = $searchModelArquivo->search(['empreendimento_id'=>$model->id]);
-$gestaoarquivos  = '<div class="row">';
-$gestaoarquivos .= '<div class="col-md-12">';
-$gestaoarquivos .= '<br>';
-$gestaoarquivos .= $this->render('/arquivo/index', [
-    'searchModel' => $searchModelArquivo,
-    'dataProvider' => $dataProviderArquivo,
-    'funcionalidades' => true,
-    'id_tabela_referencia' => 'empreendimento_id',
-    'id_valor_referencia' => $model->id,
-]);
-$gestaoarquivos .= '</div>';
-$gestaoarquivos .= '</div>';
+// $searchModelArquivo = new \app\models\ArquivoSearch();
+// $dataProviderArquivo = $searchModelArquivo->search(['empreendimento_id'=>$model->id]);
+// $gestaoarquivos  = '<div class="row">';
+// $gestaoarquivos .= '<div class="col-md-12">';
+// $gestaoarquivos .= '<br>';
+// $gestaoarquivos .= $this->render('/arquivo/index', [
+//     'searchModel' => $searchModelArquivo,
+//     'dataProvider' => $dataProviderArquivo,
+//     'funcionalidades' => true,
+//     'id_tabela_referencia' => 'empreendimento_id',
+//     'id_valor_referencia' => $model->id,
+// ]);
+// $gestaoarquivos .= '</div>';
+// $gestaoarquivos .= '</div>';
 
 /** @var yii\web\View $this */
 /** @var app\models\Oficio $model */

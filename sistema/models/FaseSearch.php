@@ -46,6 +46,11 @@ class FaseSearch extends Fase
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'=> [
+                'defaultOrder' => [
+                    'ordem' => SORT_DESC
+                ],
+            ],
         ]);
 
         (isset($params['EtapaSearch'])?$this->load($params):$this->load($params,''));

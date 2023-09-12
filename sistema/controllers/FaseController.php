@@ -131,4 +131,47 @@ class FaseController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+    public function actionOrdenaup () {
+        $id = $_REQUEST['id'];
+        $or = (int)$_REQUEST['ordem'];
+        $model = $this->findModel($id);
+        $model->ordem = (int)$or + 1;
+        $outros = \app\models\Fase::find()->where([
+            'licenciamento_id' => $model->licenciamento_id
+        ])->all();
+        foreach ($outros as $dmais) {
+            if ($dmais->ordem == ($or + 1)) {
+                $dmais->ordem = $or;
+            }
+            $dmais->save();
+        }
+        $model->save();
+        return $this->redirect(\Yii::$app->request->referrer);
+    }
+    public function actionOrdenadown () {
+        $id = $_REQUEST['id'];
+        $or = (int)$_REQUEST['ordem'];
+        $model = $this->findModel($id);
+        $model->ordem = (int)$or - 1;
+        $outros = \app\models\Fase::find()->where([
+            'licenciamento_id' => $model->licenciamento_id
+        ])->all();
+        foreach ($outros as $dmais) {
+            if ($dmais->ordem == ($or - 1)) {
+                $dmais->ordem = $or;
+            }
+            $dmais->save();
+        }
+        $model->save();
+        return $this->redirect(\Yii::$app->request->referrer);
+    }
+    public function actionEditcampo($id) {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $campo = $_REQUEST['campo'];
+        $valor = $_REQUEST[$campo];
+        $model = $this->findModel($id);
+        $model->$campo = $valor != "" ? $valor : $model->$campo;
+        $model->save();
+        return ['output' => $valor, 'message'=>''];
+    }
 }

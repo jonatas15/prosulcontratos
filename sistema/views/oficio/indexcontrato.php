@@ -905,7 +905,6 @@ Yii::$app->params['contratoidGlobal'] = $contrato_id;
             </div>
         </div>
         <?php ActiveForm::end(); ?>
-        
     </div>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

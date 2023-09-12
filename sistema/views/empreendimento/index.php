@@ -118,7 +118,7 @@ switch (Yii::$app->user->identity->nivel) {
                         },
                         'delete' => function ($url, $model, $key) {
                             return  Html::a('<i class="bi bi-trash"></i>', ['delete', 'id' => $model->id], [
-                                'class' => 'btn btn-danger p-1 px-2',
+                                'class' => 'btn btn-da nger p-1 px-2',
                                 'data' => [
                                     'confirm' => 'Certeza que deseja excluir este registro "'.$model->titulo.'"?',
                                     'method' => 'post',

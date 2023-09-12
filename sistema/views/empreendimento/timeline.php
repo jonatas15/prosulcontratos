@@ -140,7 +140,7 @@
         Licenciamento: <?= $licenciamento_id; ?>
         <?= GridView::widget([
             'dataProvider' => $dataProviderFases,
-            'filterModel' => $searchModelFases,
+            // 'filterModel' => $searchModelFases,
             'columns' => [
                 [
                     'class' => 'yii\grid\SerialColumn'
@@ -164,13 +164,13 @@
                             'size'=>'md',
                             'inputType' => Editable::INPUT_DROPDOWN_LIST,
                             'data' => [
-                                '0' => 'Pendente',
-                                '1' => 'Em Andamento',
-                                '2' => 'Concluído',
+                                'Pendente' => 'Pendente',
+                                'Em andamento' => 'Em andamento',
+                                'Concluído' => 'Concluído',
                             ],
                             'formOptions' => [
                                 'action' => [
-                                    'editcampo',
+                                    Yii::$app->homeUrl.'fase/editcampo',
                                     'id' => $data->id,
                                     'campo' => 'status'
                                 ]
@@ -185,11 +185,18 @@
                     ],
                     'format' => 'raw',
                     'value' => function ($data) {
+                        $innerBg = "";
+                        switch ($data->status) {
+                            case 'Concluído': $innerBg = "bg-success"; break;
+                            case 'Em andamento': $innerBg = "bg-info"; break;
+                            case 'Pendente': $innerBg = "bg-default"; break;
+                        }
                         return "<div class='row'>
                             <div class='col'>
+                                <exp style='position: absolute;' class=\"badge rounded-pill text-$innerBg text-white fs-7\">$data->ordem</exp>
                                 <center>
-                                    <a class='btn btn-success rounded-start-4 rounded-end-0 fw-bolder mx-0'><i class='bi bi-arrow-bar-up'></i></a>
-                                    <a class='btn btn-success rounded-start-0 rounded-end-4 fw-bolder mx-0'><i class='bi bi-arrow-bar-down'></i></a>
+                                    <a href='".Yii::$app->homeUrl."fase/ordenaup?id=$data->id&ordem=$data->ordem"."' class='btn btn-warning rounded-start-4 rounded-end-0 fw-bolder mx-0'><i class='bi bi-arrow-bar-up'></i></a>
+                                    <a href='".Yii::$app->homeUrl."fase/ordenadown?id=$data->id&ordem=$data->ordem"."' class='btn btn-warning rounded-start-0 rounded-end-4 fw-bolder mx-0'><i class='bi bi-arrow-bar-down'></i></a>
                                 </center>
                             </div>
                         </div>";
@@ -206,16 +213,3 @@
         ]); ?>
     </div>
 </div>
-<?php
-    $js = <<<SCRIPT
-    /* To initialize BS3 tooltips set this below */
-    $(function () { 
-        $("[data-toggle='tooltip']").tooltip(); 
-    });;
-    /* To initialize BS3 popovers set this below */
-    $(function () { 
-        $("[data-toggle='popover']").popover(); 
-    });
-    SCRIPT;
-    // Register tooltip/popover initialization javascript
-    $this->registerJs($js);
