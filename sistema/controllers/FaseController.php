@@ -70,8 +70,18 @@ class FaseController extends Controller
         $model = new Fase();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            
+            $maiorOrdem = \app\models\Fase::find()->max('ordem');
+            $novaOrdem = $maiorOrdem + 1;
+
+            if ($model->load($this->request->post())) {
+                $model->data = $this->dataprobanco($model->data);
+                $model->ordem = $novaOrdem;
+                
+                if ($model->save()) {
+                    return $this->redirect(\Yii::$app->request->referrer);
+                }
+                // return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
             $model->loadDefaultValues();
@@ -173,5 +183,13 @@ class FaseController extends Controller
         $model->$campo = $valor != "" ? $valor : $model->$campo;
         $model->save();
         return ['output' => $valor, 'message'=>''];
+    }
+    public function dataprobanco ($data) {
+        $arr = explode('/', $data);
+        return $arr[2].'-'.$arr[1].'-'.$arr[0];
+    }
+    public function dataproview ($data) {
+        $arr = explode('-', $data);
+        return $arr[2].'-'.$arr[1].'-'.$arr[0];
     }
 }

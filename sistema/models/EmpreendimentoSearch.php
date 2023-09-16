@@ -18,7 +18,7 @@ class EmpreendimentoSearch extends Empreendimento
     {
         return [
             [['id', 'prazo', 'ordensdeservico_id', 'oficio_id'], 'integer'],
-            [['datacadastro', 'dataupdate', 'status', 'uf', 'segmento', 'tipo_obra', 'municipios_interceptados', 'orgao_licenciador'], 'safe'],
+            [['titulo', 'datacadastro', 'dataupdate', 'status', 'uf', 'segmento', 'tipo_obra', 'municipios_interceptados', 'orgao_licenciador'], 'safe'],
             [['extensao_km'], 'number'],
         ];
     }
@@ -70,6 +70,7 @@ class EmpreendimentoSearch extends Empreendimento
 
         $query->andFilterWhere(['like', 'status', $this->status])
             ->andFilterWhere(['like', 'uf', $this->uf])
+            ->andFilterWhere(['like', 'titulo', $this->titulo])
             ->andFilterWhere(['like', 'segmento', $this->segmento])
             ->andFilterWhere(['like', 'tipo_obra', $this->tipo_obra])
             ->andFilterWhere(['like', 'municipios_interceptados', $this->municipios_interceptados])

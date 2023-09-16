@@ -56,11 +56,12 @@ class Fase extends \yii\db\ActiveRecord
             'empreendimento_id' => 'Empreendimento ID',
             'licenciamento_id' => 'Licenciamento ID',
             'fase' => 'Fase',
-            'datacadastro' => 'Datacadastro',
+            'datacadastro' => 'Registro',
             'data' => 'Data',
-            'exigencias' => 'Exigencias',
-            'ambito' => 'Ambito',
+            'exigencias' => 'Exigências',
+            'ambito' => 'Âmbito',
             'status' => 'Status',
+            'ordem' => 'Ordenamento'
         ];
     }
 

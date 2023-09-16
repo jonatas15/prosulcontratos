@@ -232,6 +232,7 @@ $g_drive = '<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 51
 </header>
 
 <main id="main" class="flex-shrink-0" role="main">
+    <!-- <div class="container"  style="max-width: 80%;"> -->
     <div class="container">
         <?php if (!empty($this->params['breadcrumbs'])): ?>
             <?= Breadcrumbs::widget([
