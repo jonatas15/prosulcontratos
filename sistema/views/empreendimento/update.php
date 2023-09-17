@@ -51,6 +51,14 @@ $this->params['breadcrumbs'][] = 'Atualizar '.$model->id . '- ' . $model->titulo
     echo Tabs::widget([
         'items' => [
             [
+                'label' => '📋 Empreendimento',
+                'content' => '<div class="row pt-3">'.$this->render('view', [
+                    'model' => $model,
+                ]).'</div>',
+                'options' => ['id' => 'aba_dados'],
+                'active' => $aba_view
+            ],
+            [
                 'label' => '📋 Editar Empreendimento',
                 'content' => '<div class="row pt-3">'.$this->render('_form', [
                     'model' => $model,

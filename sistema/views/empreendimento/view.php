@@ -20,21 +20,21 @@ use app\models\Produto;
     }
 </style>
 <?php
-Modal::begin([
-    'title' => $model->titulo,
-    'options' => [
-        'id' => 'empreendimento-mais-detalhes-'.$model->id,
-        'tabindex' => false,
-    ],
-    'size' => 'modal-xl',
-    'toggleButton' => [
-        'label' => '<i class="bi bi-card-list"></i>',
-        'class' => 'btn btn-info text-white p-1 px-2'
-    ],
-    'bodyOptions' => [
-        'class' => 'bg-white'
-    ]
-]);
+// Modal::begin([
+//     'title' => $model->titulo,
+//     'options' => [
+//         'id' => 'empreendimento-mais-detalhes-'.$model->id,
+//         'tabindex' => false,
+//     ],
+//     'size' => 'modal-xl',
+//     'toggleButton' => [
+//         'label' => '<i class="bi bi-card-list"></i>',
+//         'class' => 'btn btn-info text-white p-1 px-2'
+//     ],
+//     'bodyOptions' => [
+//         'class' => 'bg-white'
+//     ]
+// ]);
 ?>
 <?php if (count($model->fases) > 0): ?>
 <div class="row align-center pb-5">
@@ -100,4 +100,4 @@ Modal::begin([
         </div>
     </div>
 </div>
-<?php Modal::end(); ?>
+<?php //Modal::end(); ?>

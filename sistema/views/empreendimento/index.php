@@ -103,7 +103,7 @@ switch (Yii::$app->user->identity->nivel) {
                             <div class='card-body'>
                             <h5 class='card-title'>$row->titulo</h5>
                             <p class='card-text'>Segmento: $row->segmento</p>".
-                            Html::a('<i class="bi bi-search"></i> Licenciamentos', $url.'delete?id='.$row->id, ['class' => 'btn btn-primary text-white p-1 px-2 mx-1']).
+                            Html::a('<i class="bi bi-search"></i> Licenciamentos', $url.'empgerencial?id='.$row->id, ['class' => 'btn btn-primary text-white p-1 px-2 mx-1']).
                             "</div>
                             <div class='card-footer'>".date('m/d/Y', strtotime($row->datacadastro))."</div>
                         </div>";
