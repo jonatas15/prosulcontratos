@@ -50,7 +50,7 @@ class Arquivo extends \yii\db\ActiveRecord
         return [
             [['tipo', 'src'], 'required'],
             [['imageFiles'], 'file', 'skipOnEmpty' => false, 
-                'extensions' => 'png, jpg, jpeg, tif, doc, pdf, odt, docx, xls, xlsx',
+                'extensions' => 'png, jpg, jpeg, tif, doc, pdf, odt, docx, xls, xlsx, kml, KML, kmz, KMZ',
                 'maxFiles' => 5
             ],
             [['tipo', 'src'], 'string'],
@@ -153,14 +153,14 @@ class Arquivo extends \yii\db\ActiveRecord
     public function upload()
     {
         // $model = Arquivo::findOne(['id' => $id]);
-        if ($this->validate()) { 
+        // if ($this->validate()) { 
             foreach ($this->imageFiles as $file) {
                 $file->saveAs('arquivos/' . $this->clean($file->baseName) . '.' . $this->clean($file->extension));
             }
             return true;
-        } else {
-            return false;
-        }
+        // } else {
+        //     return false;
+        // }
     }
     protected function clean($string) {
         $string = str_replace(' ', '_', $string); // Replaces all spaces with hyphens.

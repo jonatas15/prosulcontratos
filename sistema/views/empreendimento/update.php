@@ -55,7 +55,7 @@ $this->params['breadcrumbs'][] = 'Atualizar '.$model->id . '- ' . $model->titulo
                 'content' => '<div class="row pt-3">'.$this->render('view', [
                     'model' => $model,
                 ]).'</div>',
-                'options' => ['id' => 'aba_dados'],
+                'options' => ['id' => 'aba_view'],
                 'active' => $aba_view
             ],
             [
