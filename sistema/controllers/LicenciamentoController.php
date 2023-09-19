@@ -83,11 +83,12 @@ class LicenciamentoController extends Controller
                 $model->data_validade = $model->data_validade != '' ? $this->dataprobanco($model->data_validade): '';
                 $model->data_renovacao = $model->data_renovacao != '' ? $this->dataprobanco($model->data_renovacao): '';
                 if ($model->save()) {
-                    return $this->redirect([
-                        'update', 
-                        'id' => $model->id,
-                        'abativa' => 'arquivos'
-                    ]);
+                    // return $this->redirect([
+                    //     'update', 
+                    //     'id' => $model->id,
+                    //     'abativa' => 'arquivos'
+                    // ]);
+                    return $this->redirect(\Yii::$app->request->referrer);
                 }
             }
         } else {

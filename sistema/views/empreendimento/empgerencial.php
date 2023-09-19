@@ -48,6 +48,15 @@ $this->params['breadcrumbs'][] = 'Atualizar '.$model->id . '- ' . $model->titulo
 ?>
 <div class="empreendimento-update">
     <h3 class="my-4 text-left text-uppercase"><?= Html::encode($this->title) ?></h3>
+    <div class="row">
+        <div class="col-md-12">
+            <?php $modelLicenciamentos = new \app\models\Licenciamento(); ?>
+            <?= $this->render('/licenciamento/create', [
+                'model' => $modelLicenciamentos,
+                'empreendimento_id' => $model->id
+            ]) ?>
+        </div>
+    </div>
     <?php if (count($model->licenciamentos) > 0): ?>
     <div class="row align-center pb-5">
         <?= $this->render('instancias', [

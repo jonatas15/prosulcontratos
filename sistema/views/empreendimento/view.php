@@ -30,35 +30,16 @@ use dosamigos\google\maps\layers\KmlLayerOptions;
 // $model = \app\models\Oficio::find()->where(['id' => $id])->one();
 
 ?>
-<?php
-// Registro do código JavaScript
-/*
-$js_dos_mapas = <<< JS
-    // Crie o mapa
-    var map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: -34.397, lng: 150.644 }, // Defina o centro do mapa
-        zoom: 8 // Defina o nível de zoom
-    });
-
-    // Carregue o arquivo KML
-    var kmlLayer = new google.maps.KmlLayer({
-        url: 'http://localhost:8080/arquivos/camada.kml',
-        map: map
-    });
-JS;
-$this->registerJs($js_dos_mapas);
-*/
-?>
 <style>
     .list-group-item:hover {
         background-color: rgba(0, 0, 0, 0.075);
     }
     #gmap0-map-canvas {
         width: 100% !important;
-        min-height: 400px !important;
+        height: 300px !important;
     }
 </style>
-
+<!-- <div id="mapax" style="width: 100%; height: 600px;"></div> -->
 <?php
 // Modal::begin([
 //     'title' => $model->titulo,
@@ -151,37 +132,37 @@ $this->registerJs($js_dos_mapas);
             $map->addOverlay($marker);
 
             // Now lets write a polygon
-            $coords = [
-                new LatLng(['lng' => -61.6436715,   'lat' => -2.9214318]),
-                new LatLng(['lng' => -61.943049,    'lat' => -3.0476032]),
-                new LatLng(['lng' => -61.9375558,   'lat' => -3.5603586]),
-                new LatLng(['lng' => -61.8661447,   'lat' => -3.8454065]),
-                new LatLng(['lng' => -61.4788766,   'lat' => -4.2755365]),
-                new LatLng(['lng' => -60.536799,    'lat' => -3.5822886]),
-                new LatLng(['lng' => -60.3582711,   'lat' => -3.4123177]),
-                new LatLng(['lng' => -59.9627633,   'lat' => -3.8618488]),
-                new LatLng(['lng' => -59.6359201,   'lat' => -3.3382887]),
-                new LatLng(['lng' => -60.1550241,   'lat' => -2.9049736]),
-                new LatLng(['lng' => -60.72082,     'lat' => -2.5757612]),
-                new LatLng(['lng' => -61.6436715,   'lat' => -2.9214318])
-            ];
-            $polygon = new Polygon([
-                'paths' => $coords
-            ]);
+            // $coords = [
+            //     new LatLng(['lng' => -61.6436715, 'lat' => -2.9214318]),
+            //     new LatLng(['lng' => -61.943049,  'lat' => -3.0476032]),
+            //     new LatLng(['lng' => -61.9375558, 'lat' => -3.5603586]),
+            //     new LatLng(['lng' => -61.8661447, 'lat' => -3.8454065]),
+            //     new LatLng(['lng' => -61.4788766, 'lat' => -4.2755365]),
+            //     new LatLng(['lng' => -60.536799,  'lat' => -3.5822886]),
+            //     new LatLng(['lng' => -60.3582711, 'lat' => -3.4123177]),
+            //     new LatLng(['lng' => -59.9627633, 'lat' => -3.8618488]),
+            //     new LatLng(['lng' => -59.6359201, 'lat' => -3.3382887]),
+            //     new LatLng(['lng' => -60.1550241, 'lat' => -2.9049736]),
+            //     new LatLng(['lng' => -60.72082,   'lat' => -2.5757612]),
+            //     new LatLng(['lng' => -61.6436715, 'lat' => -2.9214318])
+            // ];
+            // $polygon = new Polygon([
+            //     'paths' => $coords
+            // ]);
 
             // Add a shared info window
-            $polygon->attachInfoWindow(new InfoWindow([
-                    'content' => '<p>This is my super cool Polygon</p>'
-                ]));
+            // $polygon->attachInfoWindow(new InfoWindow([
+            //         'content' => '<p>This is my super cool Polygon</p>'
+            //     ]));
 
             // Add it now to the map
-            $map->addOverlay($polygon);
+            // $map->addOverlay($polygon);
 
             // Lets show the BicyclingLayer :)
             // $bikeLayer = new BicyclingLayer(['map' => $map->getName()]);
             // $kmlLayer = new KmlLayer([
             //     'map' => $map->getName(),
-            //     'url' => 'http://localhost:8080/arquivos/camada.kml'
+            //     'url' => Yii::$app->homeUrl.'arquivos/testecomconrdenadas.kml'
             // ]);
 
             // Append its resulting script
@@ -231,7 +212,7 @@ $this->registerJs($js_dos_mapas);
             <ul class="list-group list-group-flush">
                 <?php foreach($model->produtos as $produto):?>
                     <?php 
-                    $bg_class = "";
+                    $bg_class = ""; 
                     switch ($produto->fase) {
                         case 'Aprovado': $bg_class = "success"; break;
                         case 'Em andamento': $bg_class = "warning"; break;
@@ -251,4 +232,21 @@ $this->registerJs($js_dos_mapas);
     </div>
 </div>
 <?php //Modal::end(); ?>
+<?php
+// Registro do código JavaScript
+// $js_dos_mapas = <<< JS
+//     // Crie o mapa
+//     var map = new google.maps.Map(document.getElementById('mapax'), {
+//         center: { lat: -2, lng: -61 }, // Defina o centro do mapa
+//         zoom: 8 // Defina o nível de zoom
+//     });
+
+//     // Carregue o arquivo KML
+//     var kmlLayer = new google.maps.KmlLayer({
+//         url: 'http://localhost:8080/arquivos/testecomconrdenadas.kml',
+//         map: map
+//     });
+// JS;
+// $this->registerJs($js_dos_mapas);
+?>
 

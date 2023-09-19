@@ -82,7 +82,7 @@
 <div class="container">
     <!-- Área Gerencial -->
     <?php $novafase = new Fase(); ?>
-    <?= $this->render(Yii::$app->homeUrl.'fase/create', [
+    <?= $this->render('/fase/create', [
         'model' => $novafase,
         'licenciamento_id' => $licenciamento_id,
         'licenciamento' => $model->numero
@@ -201,14 +201,7 @@
                             </div>
                         </div>";
                     }
-                ],
-                [
-                    'class' => ActionColumn::className(),
-                    'urlCreator' => function ($action, Fase $model, $key, $index, $column) {
-                        return Url::toRoute([$action, 'id' => $model->id]);
-                    },
-                    'template' => "{delete}"
-                ],
+                ]
             ],
         ]); ?>
     </div>
