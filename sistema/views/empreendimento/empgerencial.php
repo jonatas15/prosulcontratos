@@ -4,16 +4,24 @@ use yii\helpers\Html;
 // use yii\bootstrap5\Tabs;
 use kartik\tabs\TabsX as Tabs;
 
+$bgphp = 'rgba(0, 0, 0, 0.05)';
+
 ?>
 <style>
     .nav-link.active {
-        background-color: gray !important;
-        color: white !important;
+        background-color: <?=$bgphp?> !important;
+        border: none !important;
+        color: black !important;
+        border-bottom: none !important;
     }
     .bg-gray {
-        background-color: lightgray;
+        background-color: <?=$bgphp?>;
         border-color: gray;
         padding: 0 50px !important;
+    }
+    .tab-content {
+        background-color: <?=$bgphp?> !important;
+        border-color: <?=$bgphp?> !important;
     }
 </style>
 <?php
@@ -59,10 +67,10 @@ $this->params['breadcrumbs'][] = 'Atualizar '.$model->id . '- ' . $model->titulo
     </div>
     <?php if (count($model->licenciamentos) > 0): ?>
     <div class="row align-center pb-5">
-        <?= $this->render('instancias', [
+        <?php /*= $this->render('instancias', [
             'id' => $model->id,
             'model' => $model
-        ]); ?>
+        ]); */ ?>
     </div>
     <?php endif; ?>
     <?php 
@@ -81,7 +89,7 @@ $this->params['breadcrumbs'][] = 'Atualizar '.$model->id . '- ' . $model->titulo
         ]);
         
         array_push($items, [
-            'label' => '⌛ '.$item->numero,
+            'label' => '<div class="py-4 px-4"><h3 class=""><strong>⌛ '.$item->numero.'</strong></h3><br>'.$item->descricao.'</div>',
             'content' => $gestaofase,
             'options' => ['id' => 'aba_fases_'.$item->id],
             'active' => $item->numero == 'IPHAN' ? true : false,

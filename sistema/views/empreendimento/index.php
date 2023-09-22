@@ -88,10 +88,10 @@ switch (Yii::$app->user->identity->nivel) {
                         echo "<div class='card'>
                             <div class='card-header bg-default text-grey'>
                             <strong>Empreendimento</strong>".
-                            Html::a('<i class="bi bi-trash"></i>', ['delete', 'id' => $model->id], [
+                            Html::a('<i class="bi bi-trash"></i>', ['delete', 'id' => $row->id], [
                                 'class' => 'btn btn-danger p-1 px-2 mx-1 float-right',
                                 'data' => [
-                                    'confirm' => 'Certeza que deseja excluir este registro "'.$model->titulo.'"?',
+                                    'confirm' => 'Certeza que deseja excluir este registro "'.$row->titulo.'"?',
                                     'method' => 'post',
                                 ],
                                 'options' => [

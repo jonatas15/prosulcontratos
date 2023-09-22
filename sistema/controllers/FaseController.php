@@ -71,11 +71,13 @@ class FaseController extends Controller
 
         if ($this->request->isPost) {
             
-            $maiorOrdem = \app\models\Fase::find()->max('ordem');
-            $novaOrdem = $maiorOrdem + 1;
-
+            
             if ($model->load($this->request->post())) {
                 $model->data = $this->dataprobanco($model->data);
+                
+                $maiorOrdem = \app\models\Fase::find()->where(['licenciamento_id' => $model->licenciamento_id])->max('ordem');
+                $novaOrdem = $maiorOrdem + 1;
+                
                 $model->ordem = $novaOrdem;
                 
                 if ($model->save()) {

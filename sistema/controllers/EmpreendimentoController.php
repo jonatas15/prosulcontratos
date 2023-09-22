@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Empreendimento;
+use app\models\Licenciamento;
 use app\models\EmpreendimentoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -115,10 +116,24 @@ class EmpreendimentoController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
+                $licenciamentos = [
+                    'IPHAN' => 'Anuência para LP Emitida',
+                    'LAP' => 'Estudo Aprovado DNIT',
+                    'LAI' => 'Estudo em Andamento',
+                ];
+                foreach ($licenciamentos as $key => $value) {
+                    $novolicenciamento = new Licenciamento;
+                    $novolicenciamento->numero = $key;
+                    $novolicenciamento->descricao = $value;
+                    $novolicenciamento->empreendimento_id = $model->id;
+                    // echo "$key -> $value <br>";
+                    $novolicenciamento->save();
+
+                }
                 return $this->redirect([
                     'update', 
                     'id' => $model->id,
-                    'abativa' => 'fases'
+                    'abativa' => 'arquivos'
                 ]);
             }
         } else {

@@ -111,6 +111,8 @@ class Licenciamento extends \yii\db\ActiveRecord
      */
     public function getFases()
     {
-        return $this->hasMany(Fase::class, ['licenciamento_id' => 'id']);
+        return $this->hasMany(Fase::class, ['licenciamento_id' => 'id'])->orderBy([
+            'ordem' => SORT_ASC
+        ]);
     }
 }

@@ -104,7 +104,7 @@
                         switch ($fase->status) {
                             case 'Concluído': $innerBg = "bg-success"; break;
                             case 'Em andamento': $innerBg = "bg-info"; break;
-                            case 'Pendente': $innerBg = "bg-default"; break;
+                            case 'Pendente': $innerBg = "bg-danger"; break;
                         }    
                     ?>
                     <div class="timeline-step" style="cursor: pointer">
@@ -189,7 +189,7 @@
                         switch ($data->status) {
                             case 'Concluído': $innerBg = "bg-success"; break;
                             case 'Em andamento': $innerBg = "bg-info"; break;
-                            case 'Pendente': $innerBg = "bg-default"; break;
+                            case 'Pendente': $innerBg = "bg-danger"; break;
                         }
                         return "<div class='row'>
                             <div class='col'>

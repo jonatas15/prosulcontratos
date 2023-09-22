@@ -10,7 +10,6 @@
                 <h5 class='card-title'>$row->numero</h5>
                 <h6 class='card-subtitle mb-2 text-body-secondary'><br></h6>
                 <p class='card-text'>$row->descricao</p>
-                <a href='#' class='btn btn-primary'>Another link</a>
                 </div>
             </div></center>
         ";
