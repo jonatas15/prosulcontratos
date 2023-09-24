@@ -23,6 +23,7 @@ use dosamigos\google\maps\overlays\Marker;
 use dosamigos\google\maps\Map;
 use dosamigos\google\maps\services\DirectionsRequest;
 use dosamigos\google\maps\overlays\Polygon;
+use dosamigos\google\maps\overlays\Polyline;
 use dosamigos\google\maps\layers\BicyclingLayer;
 
 // MAPA fim
@@ -37,6 +38,17 @@ switch (Yii::$app->user->identity->nivel) {
     case 'gestor': $templategeral_grid = '{view} {subitens} {update}'; break;
     case 'fiscal': $templategeral_grid = '{view}{subitens}'; break;
 }
+
+
+$json = file_get_contents(Yii::$app->basePath.'/web/arquivos/Trecho_SNV.geojson');
+  
+// Decode the JSON file
+$json_data = json_decode($json,true);
+  
+// Display data
+// echo '<pre>';
+// print_r($json_data['features'][0]['geometry']['coordinates']);
+// echo '</pre>';
 
 ?>
 <style>
@@ -117,10 +129,12 @@ switch (Yii::$app->user->identity->nivel) {
                 <?php 
                     // Opções do Mapa
 
-                    $coord = new LatLng(['lat' => -27.5969, 'lng' => -48.5495]);
+                    // $coord = new LatLng(['lat' => -27.5969, 'lng' => -48.5495]);
+                    // Manaus
+                    $coord = new LatLng(['lat' => -3.119027, 'lng' => -60.021731]);
                     $map = new Map([
                         'center' => $coord,
-                        'zoom' => 14,
+                        'zoom' => 7,
                     ]);
 
                     // lets use the directions renderer
@@ -178,6 +192,7 @@ switch (Yii::$app->user->identity->nivel) {
                     $map->addOverlay($marker);
 
                     // Now lets write a polygon
+                    $coords = [];
                     $coords = [
                         new LatLng(['lng' => -61.6436715,   'lat' => -2.9214318]),
                         new LatLng(['lng' => -61.943049,    'lat' => -3.0476032]),
@@ -192,17 +207,35 @@ switch (Yii::$app->user->identity->nivel) {
                         new LatLng(['lng' => -60.72082,     'lat' => -2.5757612]),
                         new LatLng(['lng' => -61.6436715,   'lat' => -2.9214318])
                     ];
+                    
+                    $linha = [];
+
+                    $vet_coord = $json_data['features'][0]['geometry']['coordinates'][0];
+
+                    foreach($vet_coord as $coor) {
+                        // echo $coor[0].' - '.$coor[1].'<br>';
+                        array_push($linha, new LatLng(['lat' => $coor[1],   'lng' => $coor[0]]));
+                    }
+
                     $polygon = new Polygon([
                         'paths' => $coords
                     ]);
 
+                    $polyline = new Polyline([
+                        'path' => $linha,
+                        'strokeColor' => '#FF0000', // Cor da linha (vermelho)
+                        'strokeOpacity' => 1,
+                        'strokeWeight' => 2,
+                    ]);
+
                     // Add a shared info window
                     $polygon->attachInfoWindow(new InfoWindow([
-                            'content' => '<p>This is my super cool Polygon</p>'
-                        ]));
+                        'content' => '<p>This is my super cool Polygon</p>'
+                    ]));
 
                     // Add it now to the map
                     $map->addOverlay($polygon);
+                    $map->addOverlay($polyline);
 
 
                     // Lets show the BicyclingLayer :)

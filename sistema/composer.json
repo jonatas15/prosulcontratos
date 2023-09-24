@@ -20,7 +20,7 @@
         "yiisoft/yii2-bootstrap": "@dev",
         "yiisoft/yii2-symfonymailer": "~2.0.3",
         "miloschuman/yii2-highcharts-widget": "*",
-        "2amigos/yii2-google-maps-library": "*",
+        "2amigos/yii2-google-maps-library": "^1.0",
         "box/spout": "^3.3",
         "kartik-v/yii2-widgets": "dev-master",
         "kartik-v/yii2-grid": "dev-master",
