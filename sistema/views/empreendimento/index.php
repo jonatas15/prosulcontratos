@@ -208,24 +208,34 @@ $json_data = json_decode($json,true);
                         new LatLng(['lng' => -61.6436715,   'lat' => -2.9214318])
                     ];
                     
-                    $linha = [];
+                    
+                    $vet_coord_grupo = $json_data['features'];
+                    // echo '<pre>';
+                    // print_r($vet_coord_grupo);
+                    // echo '</pre>';
+                    
+                    foreach($vet_coord_grupo as $coor_grupo) {
+                        $linha = [];
+                        // echo '<pre>';
+                        // print_r($coor_grupo);
+                        // echo '</pre>';
+                        // echo '<br><<<< - separador - >>>><br><hr><br>';
+                        $vet_coord = $coor_grupo['geometry']['coordinates'][0];
+                        foreach($vet_coord as $coor) {
+                            array_push($linha, new LatLng(['lat' => $coor[1],   'lng' => $coor[0]]));
+                        }
+                        $polyline = new Polyline([
+                            'path' => $linha,
+                            'strokeColor' => 'rgb(' . rand(0, 255) . ',' . rand(0, 255) . ',' . rand(0, 255) . ')',
+                            'strokeOpacity' => 1,
+                            'strokeWeight' => 3,
+                        ]);
+                        $map->addOverlay($polyline);
 
-                    $vet_coord = $json_data['features'][0]['geometry']['coordinates'][0];
-
-                    foreach($vet_coord as $coor) {
-                        // echo $coor[0].' - '.$coor[1].'<br>';
-                        array_push($linha, new LatLng(['lat' => $coor[1],   'lng' => $coor[0]]));
                     }
 
                     $polygon = new Polygon([
                         'paths' => $coords
-                    ]);
-
-                    $polyline = new Polyline([
-                        'path' => $linha,
-                        'strokeColor' => '#FF0000', // Cor da linha (vermelho)
-                        'strokeOpacity' => 1,
-                        'strokeWeight' => 2,
                     ]);
 
                     // Add a shared info window
@@ -235,7 +245,7 @@ $json_data = json_decode($json,true);
 
                     // Add it now to the map
                     $map->addOverlay($polygon);
-                    $map->addOverlay($polyline);
+                    // $map->addOverlay($polyline);
 
 
                     // Lets show the BicyclingLayer :)
