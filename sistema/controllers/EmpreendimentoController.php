@@ -104,6 +104,12 @@ class EmpreendimentoController extends Controller
             'model' => $this->findModel($id),
         ]);
     }
+    public function actionPreview($id)
+    {
+        return $this->render('preview', [
+            'model' => $this->findModel($id),
+        ]);
+    }
 
     /**
      * Creates a new Empreendimento model.

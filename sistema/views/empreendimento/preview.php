@@ -83,56 +83,44 @@ $json_data = json_decode($json,true);
             <br>
             <br>
         </div>
-        <div class="my-3">
-        <?= Accordion::widget([
-                'items' => [
-                [
-                    'label' => '🔍 Pesquisar',
-                    'content' => $this->render('_search', ['model' => $searchModel]),
-                ]
-            ]
-        ]); ?>
-        </div>
         <?php Pjax::begin(); ?>
         <div class="row">
             <div class="col-md-6">
-                <div class="row">
-                <?php
-                    foreach ($dataProvider->models as $row) {
-                        # code...
-                        $url = Yii::$app->homeUrl.'empreendimento/';
-                        echo '<div class="col-6 my-3">';
-                        echo "<div class='card'>
-                            <div class='card-header bg-prinfo text-grey'>
-                            <strong>$row->titulo</strong>".
-                            "</div>
-                            <div class='card-body'>
-                                <p class='card-text'>Segmento: $row->segmento</p>".
-                                "</div>
-                                <div class='card-footer'>".date('m/d/Y', strtotime($row->datacadastro)).
-                                Html::a('<i class="bi bi-trash"></i>', ['delete', 'id' => $row->id], [
-                                    'class' => 'btn btn-link p-1 px-0 mx-1 float-right',
-                                    'data' => [
-                                        'confirm' => 'Certeza que deseja excluir este registro "'.$row->titulo.'"?',
-                                        'method' => 'post',
-                                    ],
-                                    'options' => [
-                                        'disabled' => 'disabled'
-                                    ],
-                                ]).
-                                Html::a('<i class="bi bi-pencil"></i>', $url.'update?id='.$row->id, ['class' => 'btn btn-link p-1 px-0 mx-1 float-right']).
-                            "</div>
-                            </div>";
-                        echo '</div>';
-                        
-                        // <h5 class='card-title'>$row->titulo</h5>
-                        // Html::a('<i class="bi bi-search"></i> Lic   enciamentos', $url.'empgerencial?id='.$row->id, ['class' => 'btn btn-primary text-white p-1 px-2 mx-1']).
-                    }
-                ?>
-                </div>
+                <!-- <div class="row"> -->
+                    <div class="card">
+                        <h4 class="card-header bg-prinfo text-grey">
+                            <strong><?=$model->titulo?></strong>
+                        </h4>
+                        <div class="card-body">
+                            <p class="card-text">Segmento: <?=$model->segmento?></p>
+                            <p class="card-text"><?php
+                                foreach ($model->licenciamentos as $lic) {
+                                    echo $lic->numero.'<br>';
+                                }
+                            ?></p>
+                        </div>
+                        <div class='card-footer'>
+                            <?= date('m/d/Y', strtotime($model->datacadastro)) ?>
+                            <?= Html::a('<i class="bi bi-trash"></i>', ['delete', 'id' => $model->id], [
+                                'class' => 'btn btn-link p-1 px-0 mx-1 float-right',
+                                'data' => [
+                                    'confirm' => 'Certeza que deseja excluir este registro "'.$model->titulo.'"?',
+                                    'method' => 'post',
+                                ],
+                                'options' => [
+                                    'disabled' => 'disabled'
+                                ],
+                            ]); ?>
+                            <?= Html::a('<i class="bi bi-pencil"></i>', $url.'update?id='.$model->id, [
+                                'class' => 'btn btn-link p-1 px-0 mx-1 float-right'
+                            ]); ?>
+                        </div>
+                    </div>
+                <!-- </div> -->
             </div>
             <div class="col-md-6">
-                <h3>🌐 Mapa e marcadores</h3>
+                <div class="card">
+                <h4 class="card-header bg-gray">🌐 Mapa e marcadores</h4>
                 <?php 
                     // Opções do Mapa
 
@@ -265,6 +253,7 @@ $json_data = json_decode($json,true);
                     echo $map->display();
                 
                 ?>
+                </div>
             </div>
         </div>
         <hr>
