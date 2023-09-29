@@ -1,6 +1,8 @@
 <?php
 
 use app\models\Empreendimento;
+use app\models\Licenciamento;
+use app\models\Fase;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -85,40 +87,73 @@ $json_data = json_decode($json,true);
         </div>
         <?php Pjax::begin(); ?>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <!-- <div class="row"> -->
-                    <div class="card">
-                        <h4 class="card-header bg-prinfo text-grey">
-                            <strong><?=$model->titulo?></strong>
-                        </h4>
-                        <div class="card-body">
-                            <p class="card-text">Segmento: <?=$model->segmento?></p>
-                            <p class="card-text"><?php
-                                foreach ($model->licenciamentos as $lic) {
-                                    echo $lic->numero.'<br>';
-                                }
-                            ?></p>
-                        </div>
-                        <div class='card-footer'>
-                            <?= date('m/d/Y', strtotime($model->datacadastro)) ?>
-                            <?= Html::a('<i class="bi bi-trash"></i>', ['delete', 'id' => $model->id], [
-                                'class' => 'btn btn-link p-1 px-0 mx-1 float-right',
-                                'data' => [
-                                    'confirm' => 'Certeza que deseja excluir este registro "'.$model->titulo.'"?',
-                                    'method' => 'post',
-                                ],
-                                'options' => [
-                                    'disabled' => 'disabled'
-                                ],
-                            ]); ?>
-                            <?= Html::a('<i class="bi bi-pencil"></i>', $url.'update?id='.$model->id, [
-                                'class' => 'btn btn-link p-1 px-0 mx-1 float-right'
-                            ]); ?>
-                        </div>
+                <div class="card mb-3">
+                    <h3 class="my-3 mx-3"><i class="fa fa-road"></i> <strong><?=$model->titulo?></strong></h3>
+                    <div class='card-footer'>
+                        <?= '<b>Registro: </b>'. date('m/d/Y', strtotime($model->datacadastro)) ?>
+                        <?= Html::a('<i class="bi bi-trash"></i>', ['delete', 'id' => $model->id], [
+                            'class' => 'btn btn-link p-1 px-0 mx-1 float-right text-danger',
+                            'data' => [
+                                'confirm' => 'Certeza que deseja excluir este registro "'.$model->titulo.'"?',
+                                'method' => 'post',
+                            ],
+                            'options' => [
+                                'disabled' => 'disabled'
+                            ],
+                        ]); ?>
+                        <?= Html::a('<i class="bi bi-pencil"></i> Editar', $url.'update?id='.$model->id, [
+                            'class' => 'btn btn-link p-1 px-0 mx-1 float-right'
+                        ]); ?>
+
                     </div>
+                </div>
+                <div class="card my-3 py-3">
+                    <div class="card-body">
+                        <h3>Estágio do licenciamento</h3>
+                        <?php $url = Yii::$app->homeUrl ?>
+                        <?= Html::a('Acessar', $url.'empgerencial?id='.$row->id, [
+                            'class' => 'btn btn-primary text-white p-1 px-2 mx-1'
+                        ]) ?>
+                        <p class="card-text"><?php foreach ($model->licenciamentos as $lic): ?>
+                            <div class="my-5">
+                            <h3><strong><?= $lic->numero ?></strong></h3>
+                            <p><descricao><?= $lic->descricao ?></descricao></p>
+                            <?php 
+                                $total_etapas = Fase::find()->where([
+                                    'licenciamento_id' => $lic->id
+                                ])->count();
+                                // echo 'Etapas: '.$total_etapas;
+                                $total_etapas_concluidas = Fase::find()->where([
+                                    'licenciamento_id' => $lic->id,
+                                    'status' => 'Concluído'
+                                ])->count();
+                                // echo '<br>Etapas_concluidas: '.$total_etapas_concluidas;
+                                $porcent_etapas_concluidas = 0;
+                                $progressbaranimated = 'progress-bar-striped progress-bar-animated';
+                                if ($total_etapas > 0) {
+                                    $porcent_etapas_concluidas = ($total_etapas_concluidas * 100)/$total_etapas;
+                                    if ($porcent_etapas_concluidas == 100) {
+                                        $progressbaranimated = '';
+                                    }
+                                }
+                            ?>
+                            <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="<?=$porcent_etapas_concluidas?>" aria-valuemin="0" aria-valuemax="100" style="height: 25px">
+                                <div class="progress-bar <?=$progressbaranimated?> bg-primary" style="width: <?=$porcent_etapas_concluidas?>%; font-size: 17px; font-weight: bolder">
+                                    <?= $porcent_etapas_concluidas ==  100 ? 'Concluído' : $porcent_etapas_concluidas .'%'; ?>
+                                </div>
+                            </div>
+                            </div>
+                        <?php endforeach; ?></p>
+                    </div>
+                </div>
+                <div class="card mb-3 py-3 px-3">
+                    <p class="card-text">Segmento: <?=$model->segmento?></p>
+                </div>
                 <!-- </div> -->
             </div>
-            <div class="col-md-6">
+            <div class="col-md-8">
                 <div class="card">
                 <h4 class="card-header bg-gray">🌐 Mapa e marcadores</h4>
                 <?php 

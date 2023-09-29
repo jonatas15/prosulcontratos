@@ -102,28 +102,28 @@ $json_data = json_decode($json,true);
                         # code...
                         $url = Yii::$app->homeUrl.'empreendimento/';
                         echo '<div class="col-6 my-3">';
-                        echo "<div class='card'>
+                        echo "<a class='card' href='".Yii::$app->homeUrl."empreendimento/preview?id=$row->id' style='text-decoration: none !important'>
                             <div class='card-header bg-prinfo text-grey'>
-                            <strong>$row->titulo</strong>".
+                            <strong><i class='fa fa-road'></i> $row->titulo</strong>".
                             "</div>
                             <div class='card-body'>
                                 <p class='card-text'>Segmento: $row->segmento</p>".
                                 "</div>
-                                <div class='card-footer'>".date('m/d/Y', strtotime($row->datacadastro)).
-                                Html::a('<i class="bi bi-trash"></i>', ['delete', 'id' => $row->id], [
-                                    'class' => 'btn btn-link p-1 px-0 mx-1 float-right',
-                                    'data' => [
-                                        'confirm' => 'Certeza que deseja excluir este registro "'.$row->titulo.'"?',
-                                        'method' => 'post',
-                                    ],
-                                    'options' => [
-                                        'disabled' => 'disabled'
-                                    ],
-                                ]).
-                                Html::a('<i class="bi bi-pencil"></i>', $url.'update?id='.$row->id, ['class' => 'btn btn-link p-1 px-0 mx-1 float-right']).
+                                <div class='card-footer'>Registro: ".date('m/d/Y', strtotime($row->datacadastro)).
+                                // Html::a('<i class="bi bi-trash"></i>', ['delete', 'id' => $row->id], [
+                                //     'class' => 'btn btn-link p-1 px-0 mx-1 float-right',
+                                //     'data' => [
+                                //         'confirm' => 'Certeza que deseja excluir este registro "'.$row->titulo.'"?',
+                                //         'method' => 'post',
+                                //     ],
+                                //     'options' => [
+                                //         'disabled' => 'disabled'
+                                //     ],
+                                // ]).
+                                // Html::a('<i class="bi bi-pencil"></i>', $url.'update?id='.$row->id, ['class' => 'btn btn-link p-1 px-0 mx-1 float-right']).
                             "</div>
                             </div>";
-                        echo '</div>';
+                        echo '</a>';
                         
                         // <h5 class='card-title'>$row->titulo</h5>
                         // Html::a('<i class="bi bi-search"></i> Lic   enciamentos', $url.'empgerencial?id='.$row->id, ['class' => 'btn btn-primary text-white p-1 px-2 mx-1']).
