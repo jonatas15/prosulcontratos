@@ -82,11 +82,16 @@
 <div class="container">
     <!-- Área Gerencial -->
     <?php $novafase = new Fase(); ?>
-    <?= $this->render('/fase/create', [
-        'model' => $novafase,
-        'licenciamento_id' => $licenciamento_id,
-        'licenciamento' => $model->numero
-    ]) ?>
+    <div class="row my-1">
+        <div class="col-md-9"></div>
+        <div class="col-md-3">
+            <?= $this->render('/fase/create', [
+                'model' => $novafase,
+                'licenciamento_id' => $licenciamento_id,
+                'licenciamento' => $model->numero
+            ]) ?>
+        </div>
+    </div>
     <!-- Área Gerencial -->
     <div class="row text-center justify-content-center mb-5 mt-5">
         <!-- <div class="col-12">
@@ -148,10 +153,44 @@
                 // 'empreendimento_id',
                 // 'licenciamento_id',
                 'fase',
-                'datacadastro',
-                'data',
+                [
+                    'attribute' => 'datacadastro',
+                    'format' => 'raw',
+                    'headerOptions' => [
+                        'width' => '10%'
+                    ],
+                    'value' => function($data) {
+                        return date('d/m/Y H:i:s', strtotime($data->datacadastro));
+                    }
+                ],
+                [
+                    'attribute' => 'data',
+                    'format' => 'raw',
+                    'headerOptions' => [
+                        'width' => '10%'
+                    ],
+                    'value' => function($data) {
+                        return date('d/m/Y', strtotime($data->data));
+                    }
+                ],
                 'exigencias',
                 'ambito',
+                [
+                    'attribute' => 'produto_id',
+                    'format'=>'raw',
+                    'headerOptions' => [
+                        'width' => '20%'
+                    ],
+                    'value' => function($data) {
+                        return Html::a($data->produto->subproduto, [
+                            'produto/view', 'id' => $data->produto_id], 
+                            [
+                                'class' => 'profile-link',
+                                'target' => '_blank',
+                            ]
+                        );
+                    }
+                ],
                 [
                     'attribute' => 'status',
                     'format'=>'raw',
@@ -178,6 +217,7 @@
                         ]);
                     } 
                 ],
+                /*
                 [
                     'attribute' => 'ordem',
                     'headerOptions' => [
@@ -200,6 +240,17 @@
                                 </center>
                             </div>
                         </div>";
+                    }
+                ],
+                */
+                [
+                    'attribute' => 'id',
+                    'header' => 'Edite',
+                    'format' => 'raw',
+                    'value' => function ($data) {
+                        return $this->render('/fase/update', [
+                            'model' => Fase::findOne(['id' => $data->id])
+                        ]);
                     }
                 ]
             ],

@@ -37,12 +37,13 @@ class Fase extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['empreendimento_id', 'licenciamento_id', 'ordem'], 'integer'],
+            [['empreendimento_id', 'licenciamento_id', 'ordem', 'produto_id'], 'integer'],
             [['licenciamento_id', 'fase'], 'required'],
             [['datacadastro', 'data'], 'safe'],
             [['fase', 'exigencias', 'ambito', 'status'], 'string', 'max' => 200],
             [['empreendimento_id'], 'exist', 'skipOnError' => true, 'targetClass' => Empreendimento::class, 'targetAttribute' => ['empreendimento_id' => 'id']],
             [['licenciamento_id'], 'exist', 'skipOnError' => true, 'targetClass' => Licenciamento::class, 'targetAttribute' => ['licenciamento_id' => 'id']],
+            [['produto_id'], 'exist', 'skipOnError' => true, 'targetClass' => Licenciamento::class, 'targetAttribute' => ['produto_id' => 'id']],
         ];
     }
 
@@ -61,7 +62,8 @@ class Fase extends \yii\db\ActiveRecord
             'exigencias' => 'Exigências',
             'ambito' => 'Âmbito',
             'status' => 'Status',
-            'ordem' => 'Ordenamento'
+            'ordem' => 'Ordenamento',
+            'produto_id' => 'Produto',
         ];
     }
 
@@ -83,5 +85,14 @@ class Fase extends \yii\db\ActiveRecord
     public function getLicenciamento()
     {
         return $this->hasOne(Licenciamento::class, ['id' => 'licenciamento_id']);
+    }
+    /**
+     * Gets query for [[Produto]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProduto()
+    {
+        return $this->hasOne(Produto::class, ['id' => 'produto_id']);
     }
 }

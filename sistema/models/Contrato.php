@@ -12,7 +12,6 @@ use Yii;
  * @property string $datacadastro
  * @property string|null $dataupdate
  * @property string|null $icone
- * @property string|null $obs
  * @property string|null $lote
  * @property string|null $objeto
  * @property string|null $num_edital
@@ -27,6 +26,7 @@ use Yii;
  * @property float|null $saldo_empenho
  * @property string|null $data_base
  * @property string|null $vigencia
+ * @property string|null $obs
  *
  * @property Arquivo[] $arquivos
  * @property Oficio[] $oficios
@@ -67,25 +67,25 @@ class Contrato extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'titulo' => 'Titulo',
-            'datacadastro' => 'Datacadastro',
-            'dataupdate' => 'Dataupdate',
+            'titulo' => 'Título',
+            'datacadastro' => 'Registro',
+            'dataupdate' => 'Última atualização',
             'icone' => 'Icone',
-            'obs' => 'Obs',
             'lote' => 'Lote',
             'objeto' => 'Objeto',
-            'num_edital' => 'Num Edital',
+            'num_edital' => 'Nº Edital',
             'empresa_executora' => 'Empresa Executora',
-            'data_assinatura' => 'Data Assinatura',
+            'data_assinatura' => 'Data de Assinatura',
             'data_final' => 'Data Final',
             'saldo_prazo' => 'Saldo Prazo',
             'valor_total' => 'Valor Total',
             'valor_faturado' => 'Valor Faturado',
-            'saldo_contrato' => 'Saldo Contrato',
+            'saldo_contrato' => 'Saldo de Contrato',
             'valor_empenhado' => 'Valor Empenhado',
-            'saldo_empenho' => 'Saldo Empenho',
-            'data_base' => 'Data Base',
-            'vigencia' => 'Vigencia',
+            'saldo_empenho' => 'Saldo de Empenho',
+            'data_base' => 'Data de Base',
+            'vigencia' => 'Vigência',
+            'obs' => 'Observações',
         ];
     }
 
@@ -147,5 +147,9 @@ class Contrato extends \yii\db\ActiveRecord
     public function getPlacemarks()
     {
         return $this->hasMany(Placemark::class, ['contrato_id' => 'id']);
+    }
+    public function getEmpreendimentos()
+    {
+        return $this->hasMany(Empreendimento::class, ['contrato_id' => 'id']);
     }
 }

@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
 use app\models\Oficio;
+use app\models\Contrato;
 use app\models\Ordensdeservico;
 
 /** @var yii\web\View $this */
@@ -11,6 +12,7 @@ use app\models\Ordensdeservico;
 /** @var yii\widgets\ActiveForm $form */
 
 $oficios = ArrayHelper::map(Oficio::find()->all(), 'id', 'diretorio');
+$contratos = ArrayHelper::map(Contrato::find()->all(), 'id', 'titulo');
 $ordensdeservico = ArrayHelper::map(Ordensdeservico::find()->all(), 'id', 'titulo');
 
 ?>
@@ -21,8 +23,11 @@ $ordensdeservico = ArrayHelper::map(Ordensdeservico::find()->all(), 'id', 'titul
         'action' => Yii::$app->homeUrl.$action
     ]); ?>
     <div class="row">
-        <div class="col-md-12"><?= $form->field($model, 'titulo')->textInput() ?></div>
+        <div class="col-md-8"><?= $form->field($model, 'titulo')->textInput() ?></div>
         <div class="col-md-4"> <?= $form->field($model, 'oficio_id')->dropDownList($oficios, [
+            'prompt' => 'Selecione'
+        ]) ?></div>
+        <div class="col-md-4"> <?= $form->field($model, 'contrato_id')->dropDownList($contratos, [
             'prompt' => 'Selecione'
         ]) ?></div>
         <div class="col-md-4"> <?= $form->field($model, 'ordensdeservico_id')->dropDownList($ordensdeservico, [

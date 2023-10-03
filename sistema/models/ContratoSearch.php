@@ -18,7 +18,7 @@ class ContratoSearch extends Contrato
     {
         return [
             [['id'], 'integer'],
-            [['titulo', 'datacadastro', 'dataupdate', 'icone', 'obs', 'lote', 'objeto', 'num_edital', 'empresa_executora', 'data_assinatura', 'data_final', 'data_base', 'vigencia'], 'safe'],
+            [['titulo', 'datacadastro', 'dataupdate', 'icone', 'lote', 'objeto', 'num_edital', 'empresa_executora', 'data_assinatura', 'data_final', 'data_base', 'vigencia', 'obs'], 'safe'],
             [['saldo_prazo', 'valor_total', 'valor_faturado', 'saldo_contrato', 'valor_empenhado', 'saldo_empenho'], 'number'],
         ];
     }

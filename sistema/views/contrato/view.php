@@ -17,6 +17,29 @@ $this->title = $model->titulo;
 // $this->params['breadcrumbs'][] = ['label' => 'Contratos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
+
+function formatar_campo($campo, $valor) {
+    $retorno = $valor;
+    if($valor != "") {
+        switch ($campo) {
+            case 'datacadastro': $retorno = date('d/m/Y', strtotime($valor)); break;
+            case 'dataupdate': $retorno = date('d/m/Y', strtotime($valor)); break;
+            case 'data_assinatura': $retorno = date('d/m/Y', strtotime($valor)); break;
+            case 'data_final': $retorno = date('d/m/Y', strtotime($valor)); break;
+            case 'data_base': $retorno = date('d/m/Y', strtotime($valor)); break;
+            case 'vigencia': $retorno = date('d/m/Y', strtotime($valor)); break;
+            case 'saldo_prazo': $retorno = $valor.'%'; break;
+            case 'saldo_contrato': $retorno = $valor.'%'; break;
+            case 'valor_total': $retorno = 'R$ '.number_format($valor, 2, ',', '.'); break;
+            case 'valor_faturado': $retorno = 'R$ '.number_format($valor, 2, ',', '.'); break;
+            case 'valor_contrato': $retorno = 'R$ '.number_format($valor, 2, ',', '.'); break;
+            case 'valor_empenhado': $retorno = 'R$ '.number_format($valor, 2, ',', '.'); break;
+            case 'saldo_empenho': $retorno = 'R$ '.number_format($valor, 2, ',', '.'); break;
+            default: $retorno = $valor; break;
+        }
+    }
+    return $retorno;
+}
 ?>
 <style>
     #gmap0-map-canvas {
@@ -72,29 +95,31 @@ $this->params['breadcrumbs'][] = $this->title;
     ?>
     <br>
     <div class="row">
-        <div class="col-6">
+        <div class="col-5">
             <?php $i = 0; ?>
             <ul class="list-group list-group-horizontal row">
                 <?php foreach ($model->attributes as $k => $row): ?>
-                <li class="list-group-item col">
-                    <div class="ms-2 me-auto">
-                        <div class="fw-bold"><?=$k?></div>
-                        <?=$row?>
-                    </div>
-                    <!-- <span class="badge bg-primary rounded-pill">14</span> -->
-                </li>
-                <?php $i++; ?>
-                <?php if ($i%2 == 0) {
-                    echo '</ul><ul class="list-group list-group-horizontal row">';
-                } ?>
+                    <?php if(!in_array($k, ['id', 'icone', 'obs', 'titulo'])): ?>
+                    <li class="list-group-item col" style="border: none !important;">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold"><?=$model->attributeLabels()[$k]?></div>
+                            <?=formatar_campo($k, $row)?>
+                        </div>
+                        <!-- <span class="badge bg-primary rounded-pill">14</span> -->
+                    </li>
+                    <?php $i++; ?>
+                    <?php if ($i%2 == 0) {
+                        echo '</ul><ul class="list-group list-group-horizontal row">';
+                    } ?>
+                    <?php endif; ?>
                 <?php endforeach; ?>
             </ul>
         </div>
-        <div class="col-6">
+        <div class="col-7">
             <div class="row">
-                <div class="col-4 my-2">
+                <div class="col my-2">
                     <div class="card text-center">
-                        <div class="card-header bg-primary text-white text-uppercase fw-bolder">
+                        <div class="card-header bg-primary text-white">
                             Empreendimentos
                             <span style="" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger fs-7">
                                 <i class="bi bi-bell"></i> <?=$conta_mensagens?>+
@@ -123,7 +148,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         </div>
                     </div>
                 </div>
-                <div class="col-4 my-2">
+                <div class="col my-2">
                     <div class="card text-center">
                         <div class="card-header bg-primary text-white">
                             Gestão de Ofícios
@@ -154,10 +179,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         </div>
                     </div>
                 </div>
-                <div class="col-4 my-2">
+                <div class="col my-2">
                     <div class="card text-center">
-                        <div class="card-header bg-primary text-white">
-                            Ordens de Serviço
+                        <div class="card-header bg-default">
+                            Ord. Serviço
                             <span style="" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger fs-7">
                                 <i class="bi bi-bell"></i> <?=$conta_mensagens?>+
                                 <span class="visually-hidden">mensagens não lidas</span>
@@ -185,38 +210,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         </div>
                     </div>
                 </div>
-                <div class="col-4 my-2">
-                    <div class="card text-center">
-                        <div class="card-header bg-primary text-white">
-                            Licenciamentos
-                            <span style="" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger fs-7">
-                                <i class="bi bi-bell"></i> <?=$conta_mensagens?>+
-                                <span class="visually-hidden">mensagens não lidas</span>
-                            </span>
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">
-                            <img src="<?=Yii::$app->homeUrl.'logo/upload-files-icon.png'?>" width="50" class="icone-modulo" />
-                            </h5>
-                            <p class="card-text">
-                                <?= (count($model->oficios)).' registros feitos' ?><br>
-                                <?= (Oficio::find()->where([
-                                    'contrato_id' => $model->id,
-                                    'status' => 'Em Andamento'
-                                ])->count()).' em andamento'?> <br>
-                                <?= (Oficio::find()->where([
-                                    'contrato_id' => $model->id,
-                                    'status' => 'Resolvido'
-                                ])->count()).' concluídos'; ?>
-                            </p>
-                            <a href="<?=Yii::$app->homeUrl.'contrato/view?id='.$model->id.'&abativa=aba_oficios'?>" class="btn btn-info text-white">Visualizar</a>
-                        </div>
-                        <div class="card-footer text-muted">
-                            0 dias atrás
-                        </div>
-                    </div>
-                </div>
-                <div class="col-4 my-2">
+                <div class="col my-2">
                     <div class="card text-center">
                         <div class="card-header bg-primary text-white">
                             Produtos
@@ -280,18 +274,18 @@ $this->params['breadcrumbs'][] = $this->title;
             $gestaoordens .= '</div>';
             $gestaoordens .= '</div>';
             ############################# LICENCIAMENTOS ################################
-            $searchModelLicenciamento = new \app\models\LicenciamentoSearch();
-            $dataProviderLicenciamento = $searchModelLicenciamento->search(['contrato_id'=>$model->id]);
-            $gestaolicenciamento = '<div class="row">';
-            $gestaolicenciamento .= '<div class="col-md-12">';
-            $gestaolicenciamento .= '<br>';
-            $gestaolicenciamento .= $this->render('/licenciamento/indexcontrato', [
-                'searchModel' => $searchModelLicenciamento,
-                'dataProvider' => $dataProviderLicenciamento,
-                'contrato_id' => $model->id
-            ]);
-            $gestaolicenciamento .= '</div>';
-            $gestaolicenciamento .= '</div>';
+            // $searchModelLicenciamento = new \app\models\LicenciamentoSearch();
+            // $dataProviderLicenciamento = $searchModelLicenciamento->search(['contrato_id'=>$model->id]);
+            // $gestaolicenciamento = '<div class="row">';
+            // $gestaolicenciamento .= '<div class="col-md-12">';
+            // $gestaolicenciamento .= '<br>';
+            // $gestaolicenciamento .= $this->render('/licenciamento/indexcontrato', [
+            //     'searchModel' => $searchModelLicenciamento,
+            //     'dataProvider' => $dataProviderLicenciamento,
+            //     'contrato_id' => $model->id
+            // ]);
+            // $gestaolicenciamento .= '</div>';
+            // $gestaolicenciamento .= '</div>';
             ################################ PRODUTOS ###################################
             $searchModelProduto = new \app\models\ProdutoSearch();
             $dataProviderProduto = $searchModelProduto->search(['contrato_id'=>$model->id]);
@@ -405,13 +399,15 @@ $this->params['breadcrumbs'][] = $this->title;
                         'options' => ['id' => 'aba_ordens'],
                         'active' => $aba_ordens
                     ],
-                    [
-                        'label' => '📋 Licenciamentos',
-                        'content' => $gestaolicenciamento,
-                        'headerOptions' => ['...'],
-                        'options' => ['id' => 'aba_licensas'],
-                        'active' => $aba_licensas
-                    ],
+                    /**
+                        [
+                            'label' => '📋 Licenciamentos',
+                            'content' => $gestaolicenciamento,
+                            'headerOptions' => ['...'],
+                            'options' => ['id' => 'aba_licensas'],
+                            'active' => $aba_licensas
+                        ],
+                    **/
                     [
                         'label' => '📋 Produtos',
                         'content' => $gestaoprodutos,

@@ -23,7 +23,8 @@ Modal::begin([
     <?= $this->render('_form', [
         'model' => $model,
         'action' => 'licenciamento/create',
-        'contrato_id' => $contrato_id
+        'contrato_id' => $contrato_id,
+        'empreendimento_id' => $empreendimento_id
     ]) ?>
 </div>
 <?php Modal::end(); ?>

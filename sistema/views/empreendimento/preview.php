@@ -30,8 +30,9 @@ use dosamigos\google\maps\layers\BicyclingLayer;
 
 // MAPA fim
 
-$this->title = 'Empreendimentos';
-$this->params['breadcrumbs'][] = ['label' => 'Contrato 1', 'url' => ['contrato/view?id=1']];
+$this->title = $model->titulo;
+$this->params['breadcrumbs'][] = ['label' => $model->contrato->titulo, 'url' => ['contrato/view?id=1']];
+$this->params['breadcrumbs'][] = ['label' => 'Empreendimentos', 'url' => ['/empreendimento']];
 $this->params['breadcrumbs'][] = $this->title;
 
 $templategeral_grid = '';
@@ -67,29 +68,17 @@ $json_data = json_decode($json,true);
 <div class="empreendimento-index">
 
     <div class="row">
-        <div class="col-md-12">
-            <h3><img src="/logo/contract-icon.png" class="icone-modulo" width="70" /> <?= Html::encode($this->title) ?></h3>
+        <div class="row">
+            <div class="col-md-12 pt-2 py-2">
+                <?= Html::a('Voltar aos Empreendimentos <<', ['/empreendimento'], ['class' => 'btn btn-info text-white float-right']) ?>
+            </div>
         </div>
-
-        <div class="col-md-6 pt-2">
-            <?= Html::a('Voltar <<', ['/'], ['class' => 'btn btn-warning text-white']) ?>
-        </div>
-        <div class="col-md-6 pt-2">
-            <?php //= //Html::a('Novo Empreendimento', ['create'], ['class' => 'btn btn-success', 'style'=>"float: right !important"]) ?>
-            <?php $nEmpModel = new Empreendimento(); ?>
-            <?= $this->render('create', [
-                'model' => $nEmpModel
-            ]) ?>
-        </div>
-        <div class="col-md-12">
-            <br>
-            <br>
-        </div>
-        <?php Pjax::begin(); ?>
+        <?php //Pjax::begin(); ?>
         <div class="row">
             <div class="col-md-4">
                 <!-- <div class="row"> -->
                 <div class="card mb-3">
+                    <div class="card-header" style='color: gray'>Contrato <strong><?=$model->contrato->titulo?></strong></div>
                     <h3 class="my-3 mx-3"><i class="fa fa-road"></i> <strong><?=$model->titulo?></strong></h3>
                     <div class='card-footer'>
                         <?= '<b>Registro: </b>'. date('m/d/Y', strtotime($model->datacadastro)) ?>
@@ -113,8 +102,8 @@ $json_data = json_decode($json,true);
                     <div class="card-body">
                         <h3>Estágio do licenciamento</h3>
                         <?php $url = Yii::$app->homeUrl ?>
-                        <?= Html::a('Acessar', $url.'empgerencial?id='.$row->id, [
-                            'class' => 'btn btn-primary text-white p-1 px-2 mx-1'
+                        <?= Html::a('Acessar', $url.'empreendimento/empgerencial?id='.$model->id, [
+                            'class' => 'btn btn-info text-white p-1 px-5 mx-1'
                         ]) ?>
                         <p class="card-text"><?php foreach ($model->licenciamentos as $lic): ?>
                             <div class="my-5">
@@ -165,6 +154,7 @@ $json_data = json_decode($json,true);
                     $map = new Map([
                         'center' => $coord,
                         'zoom' => 7,
+                        'mapTypeId' => 'hybrid',
                     ]);
 
                     // lets use the directions renderer
@@ -292,7 +282,7 @@ $json_data = json_decode($json,true);
             </div>
         </div>
         <hr>
-        <?php Pjax::end(); ?>
+        <?php //Pjax::end(); ?>
     </div>
 </div>
 <?php

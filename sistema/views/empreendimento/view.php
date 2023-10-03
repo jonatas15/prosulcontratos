@@ -75,6 +75,7 @@ use dosamigos\google\maps\layers\KmlLayerOptions;
             $map = new Map([
                 'center' => $coord,
                 'zoom' => 8,
+                'mapTypeId' => 'hybrid',
             ]);
 
             // lets use the directions renderer

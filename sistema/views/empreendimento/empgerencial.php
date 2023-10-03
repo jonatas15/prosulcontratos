@@ -49,13 +49,15 @@ $bgphp = 'rgba(0, 0, 0, 0.05)';
 /** @var yii\web\View $this */
 /** @var app\models\Oficio $model */
 
-$this->title = 'Empreendimento ' .$model->id . ' - ' . $model->titulo;
+$this->title = $model->titulo;
 # Breadcrumbs
+$this->params['breadcrumbs'][] = ['label' => $model->contrato->titulo, 'url' => ['/contrato/view?id='.$model->contrato->id]];
 $this->params['breadcrumbs'][] = ['label' => 'Empreendimentos', 'url' => ['/empreendimento']];
-$this->params['breadcrumbs'][] = 'Atualizar '.$model->id . '- ' . $model->titulo;
+$this->params['breadcrumbs'][] = ['label' => $model->titulo, 'url' => ['/empreendimento/preview?id='.$model->id]];
+$this->params['breadcrumbs'][] = 'Licenciamentos';
 ?>
 <div class="empreendimento-update">
-    <h3 class="my-4 text-left text-uppercase"><?= Html::encode($this->title) ?></h3>
+    <h3 class="my-4 text-left text-uppercase"><span style='color: gray'><?=$model->contrato->titulo?></span>: <?= Html::encode($this->title) ?></h3>
     <div class="row">
         <div class="col-md-12">
             <?php $modelLicenciamentos = new \app\models\Licenciamento(); ?>

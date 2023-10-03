@@ -28,8 +28,18 @@ use dosamigos\google\maps\layers\BicyclingLayer;
 
 // MAPA fim
 
-$this->title = 'Empreendimentos';
-$this->params['breadcrumbs'][] = ['label' => 'Contrato 1', 'url' => ['contrato/view?id=1']];
+$r_contrato = 1;
+$contrato = 1;
+$contratonome = 'Lote C';
+if ($_REQUEST['contrato_id']) {
+    $r_contrato = $_REQUEST['contrato_id'];
+    $modelcontrato = \app\models\Contrato::findOne(['id' => $r_contrato]);
+    $contrato = $modelcontrato->id;
+    $contratonome = $modelcontrato->titulo;
+} 
+
+$this->title = $contratonome.': Empreendimentos';
+$this->params['breadcrumbs'][] = ['label' => $contratonome, 'url' => ['contrato/view?id='.$contrato]];
 $this->params['breadcrumbs'][] = $this->title;
 
 $templategeral_grid = '';
@@ -66,7 +76,7 @@ $json_data = json_decode($json,true);
 
     <div class="row">
         <div class="col-md-12">
-            <h3><img src="/logo/contract-icon.png" class="icone-modulo" width="70" /> <?= Html::encode($this->title) ?></h3>
+            <h3><img src="/logo/contract-icon.png" class="icone-modulo" width="30" /> <?= Html::encode($this->title) ?></h3>
         </div>
 
         <div class="col-md-6 pt-2">
@@ -142,6 +152,11 @@ $json_data = json_decode($json,true);
                     $map = new Map([
                         'center' => $coord,
                         'zoom' => 7,
+                        'mapTypeId' => 'hybrid',
+                        'mapTypeControl' => true,
+                        'streetViewControl' => true,
+                        'zoomControl' => true,
+                        'scaleControl' => true,
                     ]);
 
                     // lets use the directions renderer

@@ -10,6 +10,9 @@ use yii\bootstrap5\Html;
 use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
 
+use kartik\widgets\SideNav;
+use yii\helpers\Url;
+
 AppAsset::register($this);
 
 $this->registerCsrfMetaTags();
@@ -95,6 +98,10 @@ $g_drive = '<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 51
     .cr-informativo-tx {
         color: gray !important;
     }
+    .contratos-e-empreendimentos {
+        position: fixed !important;
+        z-index: 1 !important;
+    }
 </style>
 <body class="d-flex flex-column h-100">
 <?php $this->beginBody() ?>
@@ -105,7 +112,7 @@ $g_drive = '<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 51
         'brandLabel' => '<img src="'.Yii::$app->homeUrl.'logo/download.png'.'" width="200"/>',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'nnavbar navbar-expand-lg navbar-dark bg-dark fixed-top navbar-collapse fixed-top',
+            'class' => 'navbar navbar-expand-lg navbar-dark bg-dark fixed-top navbar-collapse fixed-top',
             'id' => 'my-menu',
             'style' => [
                 'background-color' => '#0167A8 !important',
@@ -115,12 +122,47 @@ $g_drive = '<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 51
     ]);
     $contratos = \app\models\Contrato::find()->all();
     $contratoslistados = [];
+    $empreendimentos_all = [];
+    $contratoseempreendimentos = [];
     foreach ($contratos as $k => $contrato):
         array_push($contratoslistados, [
             'label' => $contrato->titulo, 
             'url' => ['contrato/view?id='.$contrato->id],
         ]);
+        $empreendimentos = [];
+        foreach ($contrato->empreendimentos as $emps) {
+            array_push($empreendimentos, [
+                'label' => $emps->titulo,
+                'icon' => 'road',
+                'url' => ['empreendimento/preview?id='.$emps->id],
+            ]);
+            $preview = 'preview';
+            if (strpos(Url::current(), 'empgerencial')) {
+                $preview = 'empgerencial';
+            }
+            if (strpos(Url::current(), 'update')) {
+                $preview = 'update';
+            }
+            array_push($empreendimentos_all, [
+                'label' => substr($emps->titulo, 0, 20),
+                'icon' => 'road',
+                'url' => ['empreendimento/'.$preview.'?id='.$emps->id],
+                'active' => $_REQUEST['id'] == $emps->id ? true : false
+            ]);
+        }
+        array_push($contratoseempreendimentos, [
+            'label' => $contrato->titulo, 
+            'icon' => 'book',
+            'items' => $empreendimentos,
+        ]);
     endforeach;
+    // foreach ($contrato->empreendimentos as $emps) {
+    //     array_push($empreendimentos, [
+    //         'label' => $emps->titulo,
+    //         'icon' => 'road',
+    //         'url' => ['empreendimento/preview?id='.$emps->id],
+    //     ]);
+    // }
     echo Nav::widget([
         'options' => [
             'class' => 'navbar-nav me-auto mb-2 mb-lg-0 nav-pills',
@@ -142,12 +184,6 @@ $g_drive = '<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 51
                 // 'url' => ['/empreendimento'],
                 'visible' => !Yii::$app->user->isGuest,
                 'items' => $contratoslistados
-            ],
-            [
-                'class' => 'bg-primary',
-                'label' => '<i class="fa fa-globe"></i> Empreendimentos', 
-                'url' => ['/empreendimento'],
-                'visible' => !Yii::$app->user->isGuest
             ],
             [
                 'class' => 'bg-primary',
@@ -232,16 +268,76 @@ $g_drive = '<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 51
 </header>
 
 <main id="main" class="flex-shrink-0" role="main">
-    <!-- <div class="container"  style="max-width: 80%;"> -->
-    <div class="container">
-        <?php if (!empty($this->params['breadcrumbs'])): ?>
-            <?= Breadcrumbs::widget([
-                'itemTemplate' => "<li class='bradscrumbs'><b>{link} <i class='bi bi-chevron-double-right'></i> </b></li>", // template for all links
-                'links' => $this->params['breadcrumbs']
-            ]) ?>
-        <?php endif ?>
-        <?= Alert::widget() ?>
-        <?= $content ?>
+    <!-- <div class="container"> -->
+    <div class="container" style="max-width: 90%;">
+        <div class="row">
+            <div class="col-md-2 my-5">
+                <div class="contratos-e-empreendimentos">
+                    <?php if (strpos(Url::current(), 'empreendimento')): ?>
+                        <?= SideNav::widget([
+                            'type' => SideNav::TYPE_DEFAULT,
+                            'encodeLabels' => false,
+                            'heading' => '<strong><i class="fas fa-globe"></i> Contrato:</strong><br>Empreendimentos',
+                            'items' => $empreendimentos_all
+                        ]);?>
+                    <?php elseif(strpos(Url::current(), 'contrato')): ?>
+                        <?php $contratoativo = \app\models\Contrato::findOne(['id' => $_REQUEST['id']]); ?>
+                        <?= SideNav::widget([
+                            'type' => SideNav::TYPE_DEFAULT,
+                            'encodeLabels' => false,
+                            'heading' => '<strong><i class="fas fa-globe"></i> Contratos:</strong><br>Componentes',
+                            'items' => [
+                                [
+                                    'label' => 'Empreendimentos',
+                                    'icon' => 'road',
+                                    'url' => ['/empreendimento'],
+                                ],
+                                [
+                                    'label' => 'Dados Contratuais',
+                                    'icon' => 'book',
+                                    'url' => ['contrato/view?id='.$contratoativo->id.'&abativa=aba_dados'],
+                                    'active' => $_REQUEST['abativa'] == 'aba_dados' ? true : false
+                                ],
+                                [
+                                    'label' => 'Impactos Contratuais',
+                                    'icon' => 'book',
+                                    'url' => ['contrato/view?id='.$contratoativo->id.'&abativa=aba_impactos'],
+                                    'active' => $_REQUEST['abativa'] == 'aba_impactos' ? true : false
+                                ],
+                                [
+                                    'label' => 'Gestão de Ofícios',
+                                    'icon' => 'book',
+                                    'url' => ['contrato/view?id='.$contratoativo->id.'&abativa=aba_oficios'],
+                                    'active' => $_REQUEST['abativa'] == 'aba_oficios' ? true : false
+                                ],
+                                [
+                                    'label' => 'Ordens de Serviço',
+                                    'icon' => 'book',
+                                    'url' => ['contrato/view?id='.$contratoativo->id.'&abativa=aba_ordens'],
+                                    'active' => $_REQUEST['abativa'] == 'aba_ordens' ? true : false
+                                ],
+                                [
+                                    'label' => 'Produtos',
+                                    'icon' => 'book',
+                                    'url' => ['contrato/view?id='.$contratoativo->id.'&abativa=aba_produtos'],
+                                    'active' => $_REQUEST['abativa'] == 'aba_produtos' ? true : false
+                                ],
+                            ]
+                        ]);?>
+                    <?php endif; ?>
+                </div>
+            </div>
+            <div class="col-md-10">
+                <?php if (!empty($this->params['breadcrumbs'])): ?>
+                    <?= Breadcrumbs::widget([
+                        'itemTemplate' => "<li class='bradscrumbs'><b>{link} <i class='bi bi-chevron-double-right'></i> </b></li>", // template for all links
+                        'links' => $this->params['breadcrumbs']
+                    ]) ?>
+                <?php endif ?>
+                <?= Alert::widget() ?>
+                <?= $content ?>
+            </div>
+        </div>
     </div>
 </main>
 

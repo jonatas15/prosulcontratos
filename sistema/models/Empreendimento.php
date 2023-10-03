@@ -45,7 +45,7 @@ class Empreendimento extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['prazo', 'ordensdeservico_id', 'oficio_id'], 'integer'],
+            [['prazo', 'ordensdeservico_id', 'oficio_id', 'contrato_id'], 'integer'],
             [['datacadastro', 'dataupdate'], 'safe'],
             [['extensao_km'], 'number'],
             [['municipios_interceptados'], 'string'],
@@ -55,6 +55,7 @@ class Empreendimento extends \yii\db\ActiveRecord
             [['titulo'], 'string', 'max' => 300],
             [['tipo_obra'], 'string', 'max' => 250],
             [['orgao_licenciador'], 'string', 'max' => 200],
+            [['contrato_id'], 'exist', 'skipOnError' => true, 'targetClass' => Contrato::class, 'targetAttribute' => ['contrato_id' => 'id']],
             [['oficio_id'], 'exist', 'skipOnError' => true, 'targetClass' => Oficio::class, 'targetAttribute' => ['oficio_id' => 'id']],
             [['ordensdeservico_id'], 'exist', 'skipOnError' => true, 'targetClass' => Ordensdeservico::class, 'targetAttribute' => ['ordensdeservico_id' => 'id']],
         ];
@@ -121,6 +122,16 @@ class Empreendimento extends \yii\db\ActiveRecord
     public function getOficio()
     {
         return $this->hasOne(Oficio::class, ['id' => 'oficio_id']);
+    }
+    
+    /**
+     * Gets query for [[Contrato]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getContrato()
+    {
+        return $this->hasOne(Contrato::class, ['id' => 'contrato_id']);
     }
 
     /**

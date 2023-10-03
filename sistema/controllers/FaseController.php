@@ -105,8 +105,10 @@ class FaseController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            if ($model->save()) {
+                return $this->redirect(\Yii::$app->request->referrer);
+            }
         }
 
         return $this->render('update', [

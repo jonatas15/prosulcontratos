@@ -27,20 +27,27 @@ $model->data_renovacao = $model->data_renovacao != '' ? date('d/m/Y', strtotime(
         'value' => $contrato_id
     ])->label(false) ?>
     <div class="row">
-        <div class="col-md-4"><?= $form->field($model, 'numero')->textInput(['maxlength' => true]) ?></div>
-        <div class="col-md-4"><?= $form->field($model, 'empreendimento_id')->dropDownList($empreendimentos, [
-            'prompt' => 'Selecione'
-        ])->label('Empreendimentos Cadastrados') ?></div>
-        <div class="col-md-4"><?= $form->field($model, 'ordensdeservico_id')->dropDownList($ordensdeservico, [
+        <div class="col-md-7"><?= $form->field($model, 'numero')->textInput(['maxlength' => true]) ?></div>
+        <div class="col-md-5" style="display: none">
+            <?php $model->empreendimento_id = $empreendimento_id; ?>
+            <?= $form->field($model, 'empreendimento_id')->dropDownList($empreendimentos, [
+                'prompt' => 'Selecione'
+            ])->label('Empreendimentos Cadastrados') ?>
+        </div>
+        <div class="col-md-5"><?= $form->field($model, 'ordensdeservico_id')->dropDownList($ordensdeservico, [
             'prompt' => 'Selecione'
         ])->label('Ordens de Serviço Cadastradas') ?></div>
-        <div class="col-md-2"><?= $form->field($model, 'data_validade')->widget(\yii\widgets\MaskedInput::class, [
-            'mask' => '99/99/9999',
-        ]) ?>
-        <?= $form->field($model, 'data_renovacao')->widget(\yii\widgets\MaskedInput::class, [
-            'mask' => '99/99/9999',
-        ]) ?></div>
-        <div class="col-md-10">
+        <div class="col-md-3">
+            <div class="">
+                <?= $form->field($model, 'data_validade')->widget(\yii\widgets\MaskedInput::class, [
+                    'mask' => '99/99/9999',
+                ]) ?>
+                <?= $form->field($model, 'data_renovacao')->widget(\yii\widgets\MaskedInput::class, [
+                    'mask' => '99/99/9999',
+                ]) ?>
+            </div>
+        </div>
+        <div class="col-md-9">
             <?= $form->field($model, 'descricao')->textarea(['rows' => 5]) ?>
         </div>
         <div class="col-md-12">

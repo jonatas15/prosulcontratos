@@ -40,13 +40,15 @@ $gestaoarquivos .= '</div>';
 /** @var yii\web\View $this */
 /** @var app\models\Oficio $model */
 
-$this->title = 'Empreendimento ' .$model->id . ' - ' . $model->titulo;
+$this->title = $model->titulo;
 # Breadcrumbs
+$this->params['breadcrumbs'][] = ['label' => $model->contrato->titulo, 'url' => ['/contrato/view?id='.$model->contrato->id]];
 $this->params['breadcrumbs'][] = ['label' => 'Empreendimentos', 'url' => ['/empreendimento']];
-$this->params['breadcrumbs'][] = 'Atualizar '.$model->id . '- ' . $model->titulo;
+$this->params['breadcrumbs'][] = ['label' => $model->titulo, 'url' => ['/empreendimento/preview?id='.$model->id]];
+$this->params['breadcrumbs'][] = 'Detalhes do Empreendimento';
 ?>
 <div class="empreendimento-update">
-    <h3 class="my-4 text-left text-uppercase"><?= Html::encode($this->title) ?></h3>
+    <h3 class="my-4 text-left text-uppercase"><span style='color: gray'><?=$model->contrato->titulo?></span>: <?= Html::encode($this->title) ?></h3>
     <?php 
     echo Tabs::widget([
         'items' => [
