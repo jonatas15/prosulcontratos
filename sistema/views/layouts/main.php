@@ -98,9 +98,33 @@ $g_drive = '<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 51
     .cr-informativo-tx {
         color: gray !important;
     }
-    .contratos-e-empreendimentos {
+    #contratos-e-empreendimentos {
         position: fixed !important;
         z-index: 1 !important;
+    }
+    .bg-primary, .btn-primary {
+        background-color: #0167A8 !important;
+    }
+    .text-primary, .link-primary, .nav-link {
+        color: #0167A8 !important;
+    }
+    #my-menu .nav-link {
+        color: #fff !important;
+    }
+    #contratos-e-empreendimentos .nav-item .active {
+        background-color: #0167A8 !important;
+        color: #fff !important;
+    } 
+    #contratos-e-empreendimentos .nav-item :hover {
+        background-color: gray !important;
+        color: #fff !important;
+    } 
+    #contratos-e-empreendimentos .nav-item {
+        background-color: white !important;
+        color: #0167A8 !important;
+    } 
+    #header .container {
+        max-width: 90% !important;
     }
 </style>
 <body class="d-flex flex-column h-100">
@@ -112,11 +136,12 @@ $g_drive = '<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 51
         'brandLabel' => '<img src="'.Yii::$app->homeUrl.'logo/download.png'.'" width="200"/>',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar navbar-expand-lg navbar-dark bg-dark fixed-top navbar-collapse fixed-top',
+            'class' => 'navbar navbar-expand-lg navbar-dark bg-dark fixed-top navbar-collapse fixed-top w-100',
             'id' => 'my-menu',
             'style' => [
                 'background-color' => '#0167A8 !important',
-                'font-size' => '20px'
+                'font-size' => '20px',
+                'width' => '100%'
             ]
         ]
     ]);
@@ -132,7 +157,7 @@ $g_drive = '<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 51
         $empreendimentos = [];
         foreach ($contrato->empreendimentos as $emps) {
             array_push($empreendimentos, [
-                'label' => $emps->titulo,
+                'label' => substr($emps->titulo, 0, 20),
                 'icon' => 'road',
                 'url' => ['empreendimento/preview?id='.$emps->id],
             ]);
@@ -272,7 +297,7 @@ $g_drive = '<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 51
     <div class="container" style="max-width: 90%;">
         <div class="row">
             <div class="col-md-2 my-5">
-                <div class="contratos-e-empreendimentos">
+                <div id="contratos-e-empreendimentos">
                     <?php if (strpos(Url::current(), 'empreendimento')): ?>
                         <?= SideNav::widget([
                             'type' => SideNav::TYPE_DEFAULT,
@@ -323,6 +348,13 @@ $g_drive = '<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 51
                                     'active' => $_REQUEST['abativa'] == 'aba_produtos' ? true : false
                                 ],
                             ]
+                        ]);?>
+                    <?php else: ?>
+                        <?= SideNav::widget([
+                            'type' => SideNav::TYPE_DEFAULT,
+                            'encodeLabels' => false,
+                            'heading' => '<strong><i class="fas fa-globe"></i> Contratos:</strong><br>Empreendimentos',
+                            'items' => $contratoseempreendimentos
                         ]);?>
                     <?php endif; ?>
                 </div>

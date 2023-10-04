@@ -106,6 +106,7 @@ class FaseController extends Controller
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post())) {
+            $model->data = $this->dataprobanco($model->data);
             if ($model->save()) {
                 return $this->redirect(\Yii::$app->request->referrer);
             }

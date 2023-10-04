@@ -127,21 +127,15 @@ function formatar_campo($campo, $valor) {
                             </span>
                         </div>
                         <div class="card-body">
-                            <h5 class="card-title">
-                            <img src="<?=Yii::$app->homeUrl.'logo/upload-files-icon.png'?>" width="50" class="icone-modulo" />
-                            </h5>
+                            <h1 class="card-title" style="font-size: 50px">
+                                <i class="fas fa-road"></i>
+                            </h1>
                             <p class="card-text">
-                                <?= (count($model->oficios)).' registros feitos' ?><br>
-                                <?= (Oficio::find()->where([
-                                    'contrato_id' => $model->id,
-                                    'status' => 'Em Andamento'
-                                ])->count()).' em andamento'?> <br>
-                                <?= (Oficio::find()->where([
-                                    'contrato_id' => $model->id,
-                                    'status' => 'Resolvido'
-                                ])->count()).' concluídos'; ?>
+                                <?= (count($model->empreendimentos)).' registros feitos' ?><br>
+                                <?= (count(\app\models\Licenciamento::find()->all())).' licenciamentos' ?><br>
+                                <?= (count(\app\models\Fase::find()->all())).' etapas' ?>
                             </p>
-                            <a href="<?=Yii::$app->homeUrl.'contrato/view?id='.$model->id.'&abativa=aba_oficios'?>" class="btn btn-info text-white">Visualizar</a>
+                            <a href="<?=Yii::$app->homeUrl.'empreendimento'?>" class="btn btn-info text-white">Visualizar</a>
                         </div>
                         <div class="card-footer text-muted">
                             0 dias atrás
@@ -181,7 +175,7 @@ function formatar_campo($campo, $valor) {
                 </div>
                 <div class="col my-2">
                     <div class="card text-center">
-                        <div class="card-header bg-default">
+                        <div class="card-header bg-primary text-white">
                             Ord. Serviço
                             <span style="" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger fs-7">
                                 <i class="bi bi-bell"></i> <?=$conta_mensagens?>+

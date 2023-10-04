@@ -35,8 +35,10 @@ use yii\helpers\ArrayHelper;
         'Concluído' => 'Concluído',
     ], ['prompt' => 'Selecione']) ?>
 
-    <?php $produtos = ArrayHelper::map(\app\models\Produto::find()->all(), 'id', 'subproduto'); ?>
-    <?= $form->field($model, 'produto_id')->dropDownList($produtos, ['prompt' => 'Selecione']) ?>
+    <?php $produtos = ArrayHelper::map(\app\models\Produto::find()->where([
+        'empreendimento_id' => $model->licenciamento->empreendimento_id
+    ])->all(), 'id', 'subproduto'); ?>
+    <?= $form->field($model, 'produto_id')->dropDownList($produtos, ['prompt' => 'Selecione (Produtos desse Empreendimento)']) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Salvar', ['class' => 'btn btn-success']) ?>
