@@ -9,6 +9,8 @@ use yii\bootstrap5\Accordion;
 
 use yii\bootstrap5\Tabs;
 use app\models\Oficio;
+use app\models\Ordensdeservico as Ordens;
+use app\models\Produto;
 
 /** @var yii\web\View $this */
 /** @var app\models\Contrato $model */
@@ -133,7 +135,7 @@ function formatar_campo($campo, $valor) {
                             <p class="card-text">
                                 <?= (count($model->empreendimentos)).' registros feitos' ?><br>
                                 <?= (count(\app\models\Licenciamento::find()->all())).' licenciamentos' ?><br>
-                                <?= (count(\app\models\Fase::find()->all())).' etapas' ?>
+                                <?= (count(\app\models\Fase::find()->all())).' processos' ?>
                             </p>
                             <a href="<?=Yii::$app->homeUrl.'empreendimento'?>" class="btn btn-info text-white">Visualizar</a>
                         </div>
@@ -187,15 +189,15 @@ function formatar_campo($campo, $valor) {
                             <img src="<?=Yii::$app->homeUrl.'logo/upload-files-icon.png'?>" width="50" class="icone-modulo" />
                             </h5>
                             <p class="card-text">
-                                <?= (count($model->oficios)).' registros feitos' ?><br>
-                                <?= (Oficio::find()->where([
+                                <?= (count($model->ordensdeservicos)).' registros feitos' ?><br>
+                                <?= (Ordens::find()->where([
                                     'contrato_id' => $model->id,
-                                    'status' => 'Em Andamento'
+                                    'fase' => 'OS em Andamento'
                                 ])->count()).' em andamento'?> <br>
-                                <?= (Oficio::find()->where([
+                                <?= (Ordens::find()->where([
                                     'contrato_id' => $model->id,
-                                    'status' => 'Resolvido'
-                                ])->count()).' concluídos'; ?>
+                                    'fase' => 'OS Emitida'
+                                ])->count()).' OS Emitidas'; ?>
                             </p>
                             <a href="<?=Yii::$app->homeUrl.'contrato/view?id='.$model->id.'&abativa=aba_oficios'?>" class="btn btn-info text-white">Visualizar</a>
                         </div>
@@ -218,15 +220,15 @@ function formatar_campo($campo, $valor) {
                             <img src="<?=Yii::$app->homeUrl.'logo/upload-files-icon.png'?>" width="50" class="icone-modulo" />
                             </h5>
                             <p class="card-text">
-                                <?= (count($model->oficios)).' registros feitos' ?><br>
-                                <?= (Oficio::find()->where([
+                                <?= (count($model->produtos)).' registros feitos' ?><br>
+                                <?= (Produto::find()->where([
                                     'contrato_id' => $model->id,
-                                    'status' => 'Em Andamento'
+                                    'fase' => 'Em Andamento'
                                 ])->count()).' em andamento'?> <br>
-                                <?= (Oficio::find()->where([
+                                <?= (Produto::find()->where([
                                     'contrato_id' => $model->id,
-                                    'status' => 'Resolvido'
-                                ])->count()).' concluídos'; ?>
+                                    'fase' => 'Aprovado'
+                                ])->count()).' Aprovados'; ?>
                             </p>
                             <a href="<?=Yii::$app->homeUrl.'contrato/view?id='.$model->id.'&abativa=aba_oficios'?>" class="btn btn-info text-white">Visualizar</a>
                         </div>

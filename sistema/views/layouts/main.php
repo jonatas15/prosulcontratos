@@ -305,6 +305,8 @@ $g_drive = '<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 51
                             'heading' => '<strong><i class="fas fa-globe"></i> Contrato:</strong><br>Empreendimentos',
                             'items' => $empreendimentos_all
                         ]);?>
+                    <?php elseif (strpos(Url::current(), 'login')): ?>
+                        
                     <?php elseif(strpos(Url::current(), 'contrato')): ?>
                         <?php $contratoativo = \app\models\Contrato::findOne(['id' => $_REQUEST['id']]); ?>
                         <?= SideNav::widget([
