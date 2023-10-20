@@ -101,7 +101,8 @@ function formatar_campo($campo, $valor) {
             <?php $i = 0; ?>
             <ul class="list-group list-group-horizontal row">
                 <?php foreach ($model->attributes as $k => $row): ?>
-                    <?php if(!in_array($k, ['id', 'icone', 'obs', 'titulo'])): ?>
+                    <?php //if(!in_array($k, ['id', 'icone', 'obs', 'titulo'])): ?>
+                    <?php if(in_array($k, ['datacadastro', 'dataupdate', 'lote', 'objeto'])): ?>
                     <li class="list-group-item col" style="border: none !important;">
                         <div class="ms-2 me-auto">
                             <div class="fw-bold"><?=$model->attributeLabels()[$k]?></div>

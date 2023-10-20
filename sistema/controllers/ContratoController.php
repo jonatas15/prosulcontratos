@@ -42,7 +42,7 @@ class ContratoController extends Controller
                 ],
                'rules' => [
                    [
-                       'allow' => true,
+                       'allow' => false,
                        'actions' => [],
                        'roles' => ['?'],
                    ],

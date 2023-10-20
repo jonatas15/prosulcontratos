@@ -10,33 +10,47 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 
+
 class SiteController extends Controller
 {
     /**
      * {@inheritdoc}
      */
     public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::class,
-                'only' => ['logout'],
-                'rules' => [
-                    [
-                        'actions' => ['logout'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::class,
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
-        ];
-    }
+   {
+       return [
+           'verbs' => [
+               'class' => VerbFilter::className(),
+               'actions' => [
+                   'delete' => ['POST'],
+               ],
+           ],
+           'access' => [
+               'class' => AccessControl::className(),
+               'only' => ['index', 'view', 'update', 'create',  'delete', 'novafase', 'editfase'],
+               'rules' => [
+                   [
+                       'allow' => false,
+                       'actions' => [],
+                       'roles' => ['?'],
+                   ],
+                   [
+                       'allow' => true,
+                       'actions' => ['index', 'view', 'update', 'create',  'delete', 'novafase', 'editfase'],
+                       'roles' => ['@'],
+                   ],
+               ],
+               'denyCallback' => function($rule, $action) {
+                   if (Yii::$app->user->isGuest) {
+                       Yii::$app->user->loginRequired();
+                   }
+                   else {
+                       throw new ForbiddenHttpException('Somente administradores podem entrar nessa página.');
+                   }                   
+               }
+           ],
+       ];
+   }
 
     /**
      * {@inheritdoc}

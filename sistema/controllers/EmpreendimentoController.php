@@ -37,8 +37,7 @@ class EmpreendimentoController extends Controller
     //         ]
     //     );
     // }
-    public function behaviors()
-   {
+    public function behaviors() {
        return [
            'verbs' => [
                'class' => VerbFilter::className(),
@@ -48,17 +47,17 @@ class EmpreendimentoController extends Controller
            ],
            'access' => [
                'class' => AccessControl::className(),
-               'only' => ['index', 'view', 'update', 'create',  'delete', 'novafase', 'editfase'],
+               'only' => ['index', 'view', 'update', 'create',  'delete', 'novafase', 'editfase', 'empgerencial', 'preview'],
                'rules' => [
                    [
                        'allow' => false,
                        'actions' => [],
-                       'roles' => ['?'],
+                       'roles' => ['?']
                    ],
                    [
                        'allow' => true,
-                       'actions' => ['index', 'view', 'update', 'create',  'delete', 'novafase', 'editfase'],
-                       'roles' => ['@'],
+                       'actions' => ['index', 'view', 'update', 'create',  'delete', 'novafase', 'editfase', 'empgerencial', 'preview'],
+                       'roles' => ['@']
                    ],
                ],
                'denyCallback' => function($rule, $action) {
