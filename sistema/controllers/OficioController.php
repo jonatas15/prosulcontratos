@@ -138,6 +138,10 @@ class OficioController extends Controller
         $arr = explode('-', $data);
         return $arr[2].'-'.$arr[1].'-'.$arr[0];
     }
+    public function dataproview2 ($data) {
+        $arr = explode('-', $data);
+        return $arr[2].'/'.$arr[1].'/'.$arr[0];
+    }
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);

@@ -16,7 +16,7 @@ Modal::begin([
     ],
 ]);
 ?>
-<div class="oficio-create">
+<div class="oficio-create text-white fw-bolder">
     <?= $this->render('_form', [
         'model' => $model,
         'action' => '/oficio/create',
