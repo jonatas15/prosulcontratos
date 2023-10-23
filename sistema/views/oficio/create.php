@@ -20,7 +20,8 @@ Modal::begin([
     <?= $this->render('_form', [
         'model' => $model,
         'action' => '/oficio/create',
-        'contrato_id' => $contrato_id
+        'contrato_id' => $contrato_id,
+        'id_externo' => true
     ]) ?>
 </div>
 <?php Modal::end(); ?>

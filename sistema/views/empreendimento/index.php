@@ -31,8 +31,8 @@ use dosamigos\google\maps\layers\BicyclingLayer;
 $r_contrato = 1;
 $contrato = 1;
 $contratonome = 'Lote C';
-if ($_REQUEST['contrato_id']) {
-    $r_contrato = $_REQUEST['contrato_id'];
+if ($_REQUEST['contrato']) {
+    $r_contrato = $_REQUEST['contrato'];
     $modelcontrato = \app\models\Contrato::findOne(['id' => $r_contrato]);
     $contrato = $modelcontrato->id;
     $contratonome = $modelcontrato->titulo;
@@ -94,14 +94,14 @@ $json_data = json_decode($json,true);
             <br>
         </div>
         <div class="my-3">
-        <?= Accordion::widget([
+        <?php /*= Accordion::widget([
                 'items' => [
                 [
                     'label' => '🔍 Pesquisar',
                     'content' => $this->render('_search', ['model' => $searchModel]),
                 ]
             ]
-        ]); ?>
+        ]); */ ?>
         </div>
         <?php Pjax::begin(); ?>
         <div class="row">

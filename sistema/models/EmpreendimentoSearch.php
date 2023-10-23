@@ -17,7 +17,7 @@ class EmpreendimentoSearch extends Empreendimento
     public function rules()
     {
         return [
-            [['id', 'prazo', 'ordensdeservico_id', 'oficio_id'], 'integer'],
+            [['id', 'prazo', 'ordensdeservico_id', 'oficio_id', 'contrato_id'], 'integer'],
             [['titulo', 'datacadastro', 'dataupdate', 'status', 'uf', 'segmento', 'tipo_obra', 'municipios_interceptados', 'orgao_licenciador'], 'safe'],
             [['extensao_km'], 'number'],
         ];
@@ -49,7 +49,8 @@ class EmpreendimentoSearch extends Empreendimento
             'query' => $query,
         ]);
 
-        $this->load($params);
+        // $this->load($params);
+        (isset($params['EmpreendimentoSearch'])?$this->load($params):$this->load($params,''));
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
@@ -66,6 +67,7 @@ class EmpreendimentoSearch extends Empreendimento
             'extensao_km' => $this->extensao_km,
             'ordensdeservico_id' => $this->ordensdeservico_id,
             'oficio_id' => $this->oficio_id,
+            'contrato_id' => $this->contrato_id,
         ]);
 
         $query->andFilterWhere(['like', 'status', $this->status])

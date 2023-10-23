@@ -82,8 +82,9 @@ class EmpreendimentoController extends Controller
      */
     public function actionIndex()
     {
+        $contrato_id = $_REQUEST['contrato'];
         $searchModel = new EmpreendimentoSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider = $searchModel->search(['contrato_id'=>$contrato_id]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,

@@ -19,7 +19,7 @@ function tacadiv($col, $conteudo) {
 }
 ?>
 
-<div class="oficio-form">
+<div class="oficio-form" id="oficio-form-oficial">
 
     <?php $form = ActiveForm::begin([
         'action' => [$action]
@@ -42,7 +42,7 @@ function tacadiv($col, $conteudo) {
                 'pluginOptions' => [
                     'selectLabel' => true,
                     'allowClear' => true,
-                    'dropdownParent' => '#cadastrar-novo-oficio',
+                    'dropdownParent' => $id_externo ? '#cadastrar-novo-oficio' : '#oficio-form-oficial',
                     'tags' => true
                 ],
             ]));
@@ -82,7 +82,7 @@ function tacadiv($col, $conteudo) {
                 'pluginOptions' => [
                     'selectLabel' => true,
                     'allowClear' => true,
-                    'dropdownParent' => '#cadastrar-novo-oficio',
+                    'dropdownParent' => $id_externo ? '#cadastrar-novo-oficio' : '#oficio-form-oficial',
                     'tags' => true
                 ],
             ]));
@@ -103,7 +103,7 @@ function tacadiv($col, $conteudo) {
                 'pluginOptions' => [
                     'selectLabel' => true,
                     'allowClear' => true,
-                    'dropdownParent' => '#cadastrar-novo-oficio',
+                    'dropdownParent' => $id_externo ? '#cadastrar-novo-oficio' : '#oficio-form-oficial',
                     'tags' => true
                 ],
             ]));
@@ -124,7 +124,7 @@ function tacadiv($col, $conteudo) {
                 'pluginOptions' => [
                     'selectLabel' => true,
                     'allowClear' => true,
-                    'dropdownParent' => '#cadastrar-novo-oficio',
+                    'dropdownParent' => $id_externo ? '#cadastrar-novo-oficio' : '#oficio-form-oficial',
                     'tags' => true
                 ],
             ]));

@@ -106,10 +106,10 @@ Yii::$app->params['contratoidGlobal'] = $contrato_id;
         <?= Html::a('Create Oficio', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     */?>
-    <?php /*  // echo $this->render('_search', ['model' => $searchModel]); 
+    <?php /*  // echo $this->render('_search', ['model' => $searchModel]);
         use Box\Spout\Reader\Common\Creator\ReaderEntityFactory;
 
-        $path = Yii::$app->basePath.'/web/arquivo/exportar.xlsx';
+        $path = Yii::$app->basePath.'/web/arquivos/loteA.xlsx';
         # open the file
         $reader = ReaderEntityFactory::createXLSXReader();
         $reader->open($path);
@@ -156,22 +156,23 @@ Yii::$app->params['contratoidGlobal'] = $contrato_id;
                 $novooficio->diretorio = (string)$row->getCells()[11];
                 $novooficio->status = (string)$row->getCells()[12];
                 //Definições
-                $novooficio->contrato_id = $id;
+                $novooficio->link_diretorio = 'definir';
+                $novooficio->contrato_id = 2;
                 $novooficio->datacadastro = date('Y-m-d H:i:s');
                 //Definições
-                echo '<td>';
-                if ($novooficio->save()) {
-                    echo "loucuuura papai";
-                } else {
-                    echo "deu m";
-                }
-                echo '</td>';
+                // echo '<td>';
+                // if ($novooficio->save()) {
+                //     echo "deu certo";
+                // } else {
+                //     echo "não deu certo";
+                // }
+                // echo '</td>';
                 echo '</tr>';
             }
         }
         echo '</table>';
         $reader->close();
-        */
+         */
     ?>
     <div class="clearfix">
         <br />
@@ -424,6 +425,12 @@ Yii::$app->params['contratoidGlobal'] = $contrato_id;
                                 'Abril',
                                 'Maio',
                                 'Junho',
+                                'Julho',
+                                'Agosto',
+                                'Setembro',
+                                'Outubro',
+                                'Novembro',
+                                'Dezembro',
                             ]
                         ],
                         'yAxis' => [
@@ -449,6 +456,12 @@ Yii::$app->params['contratoidGlobal'] = $contrato_id;
                                     retornaserie('status', 'Não Resolvido', '2023', '04'),
                                     retornaserie('status', 'Não Resolvido', '2023', '05'),
                                     retornaserie('status', 'Não Resolvido', '2023', '06'),
+                                    retornaserie('status', 'Não Resolvido', '2023', '07'),
+                                    retornaserie('status', 'Não Resolvido', '2023', '08'),
+                                    retornaserie('status', 'Não Resolvido', '2023', '09'),
+                                    retornaserie('status', 'Não Resolvido', '2023', '10'),
+                                    retornaserie('status', 'Não Resolvido', '2023', '11'),
+                                    retornaserie('status', 'Não Resolvido', '2023', '12'),
                                 ], 
                                 'color' => 'red'
                             ],
@@ -471,6 +484,12 @@ Yii::$app->params['contratoidGlobal'] = $contrato_id;
                                     retornaserie('status', 'Resolvido', '2023', '04'),
                                     retornaserie('status', 'Resolvido', '2023', '05'),
                                     retornaserie('status', 'Resolvido', '2023', '06'),
+                                    retornaserie('status', 'Resolvido', '2023', '07'),
+                                    retornaserie('status', 'Resolvido', '2023', '08'),
+                                    retornaserie('status', 'Resolvido', '2023', '09'),
+                                    retornaserie('status', 'Resolvido', '2023', '10'),
+                                    retornaserie('status', 'Resolvido', '2023', '11'),
+                                    retornaserie('status', 'Resolvido', '2023', '12'),
                                 ], 
                                 'color' => 'lightgreen'
                             ],
@@ -493,6 +512,12 @@ Yii::$app->params['contratoidGlobal'] = $contrato_id;
                                     retornaserie('status', 'Informativo', '2023', '04'),
                                     retornaserie('status', 'Informativo', '2023', '05'),
                                     retornaserie('status', 'Informativo', '2023', '06'),
+                                    retornaserie('status', 'Informativo', '2023', '07'),
+                                    retornaserie('status', 'Informativo', '2023', '08'),
+                                    retornaserie('status', 'Informativo', '2023', '09'),
+                                    retornaserie('status', 'Informativo', '2023', '10'),
+                                    retornaserie('status', 'Informativo', '2023', '11'),
+                                    retornaserie('status', 'Informativo', '2023', '12'),
                                 ], 
                                 'color' => 'lightgray'
                             ],
@@ -515,6 +540,12 @@ Yii::$app->params['contratoidGlobal'] = $contrato_id;
                                     retornaserie('status', 'Em Andamento', '2023', '04'),
                                     retornaserie('status', 'Em Andamento', '2023', '05'),
                                     retornaserie('status', 'Em Andamento', '2023', '06'),
+                                    retornaserie('status', 'Em Andamento', '2023', '07'),
+                                    retornaserie('status', 'Em Andamento', '2023', '08'),
+                                    retornaserie('status', 'Em Andamento', '2023', '09'),
+                                    retornaserie('status', 'Em Andamento', '2023', '10'),
+                                    retornaserie('status', 'Em Andamento', '2023', '11'),
+                                    retornaserie('status', 'Em Andamento', '2023', '12'),
                                 ], 
                                 'color' => '#f3f0c6'
                             ],
@@ -528,6 +559,12 @@ Yii::$app->params['contratoidGlobal'] = $contrato_id;
                                     retornaserie('emissor', 'CGMAB', '2023', '04'),
                                     retornaserie('emissor', 'CGMAB', '2023', '05'),
                                     retornaserie('emissor', 'CGMAB', '2023', '06'),
+                                    retornaserie('emissor', 'CGMAB', '2023', '07'),
+                                    retornaserie('emissor', 'CGMAB', '2023', '08'),
+                                    retornaserie('emissor', 'CGMAB', '2023', '09'),
+                                    retornaserie('emissor', 'CGMAB', '2023', '10'),
+                                    retornaserie('emissor', 'CGMAB', '2023', '11'),
+                                    retornaserie('emissor', 'CGMAB', '2023', '12'),
                                 ],
                                 'marker' => [
                                     'lineWidth' => 2
@@ -543,6 +580,12 @@ Yii::$app->params['contratoidGlobal'] = $contrato_id;
                                     retornaserie('emissor', 'PROSUL', '2023', '04'),
                                     retornaserie('emissor', 'PROSUL', '2023', '05'),
                                     retornaserie('emissor', 'PROSUL', '2023', '06'),
+                                    retornaserie('emissor', 'PROSUL', '2023', '07'),
+                                    retornaserie('emissor', 'PROSUL', '2023', '08'),
+                                    retornaserie('emissor', 'PROSUL', '2023', '09'),
+                                    retornaserie('emissor', 'PROSUL', '2023', '10'),
+                                    retornaserie('emissor', 'PROSUL', '2023', '11'),
+                                    retornaserie('emissor', 'PROSUL', '2023', '12'),
                                 ],
                                 'marker' => [
                                     'lineWidth' => 2
@@ -558,6 +601,12 @@ Yii::$app->params['contratoidGlobal'] = $contrato_id;
                                     retornaserie('emprrendimento_desc', 'Administrativo', '2023', '04'),
                                     retornaserie('emprrendimento_desc', 'Administrativo', '2023', '05'),
                                     retornaserie('emprrendimento_desc', 'Administrativo', '2023', '06'),
+                                    retornaserie('emprrendimento_desc', 'Administrativo', '2023', '07'),
+                                    retornaserie('emprrendimento_desc', 'Administrativo', '2023', '08'),
+                                    retornaserie('emprrendimento_desc', 'Administrativo', '2023', '09'),
+                                    retornaserie('emprrendimento_desc', 'Administrativo', '2023', '10'),
+                                    retornaserie('emprrendimento_desc', 'Administrativo', '2023', '11'),
+                                    retornaserie('emprrendimento_desc', 'Administrativo', '2023', '12'),
                                 ],
                                 'marker' => [
                                     'lineWidth' => 2
@@ -927,7 +976,9 @@ Yii::$app->params['contratoidGlobal'] = $contrato_id;
                 ]
             ],
             'tipo',
+            'fluxo',
             'emissor',
+            'receptor',
             // 'emprrendimento_desc',
             [
                 'attribute' => 'emprrendimento_desc',
@@ -946,8 +997,6 @@ Yii::$app->params['contratoidGlobal'] = $contrato_id;
                     return date('d/m/Y', strtotime($data->data));
                 }
             ],
-            // 'fluxo',
-            //'receptor',
             //'num_processo',
             //'num_protocolo',
             //'assunto:ntext',
@@ -956,7 +1005,11 @@ Yii::$app->params['contratoidGlobal'] = $contrato_id;
                 'attribute' => 'diretorio',
                 'format' => 'raw',
                 'value' => function($data) {
-                    return '<a class="btn btn-link" target="_blank" href="'.$data->link_diretorio.'">'.$data->diretorio.'</a>';
+                    // return '<a class="btn btn-link" target="_blank" href="'.$data->link_diretorio.'">'.$data->diretorio.'</a>';
+                    return '<a class="btn btn-link" target="_blank" href="'.$data->link_diretorio.'" 
+                        alt="'.$data->diretorio.'"
+                        title="'.$data->diretorio.'"
+                    >Acessar</a>';
                     // return $data->emprrendimento_desc;
                 }
             ],

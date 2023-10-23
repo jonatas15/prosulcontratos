@@ -147,7 +147,7 @@ $g_drive = '<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 51
     ]);
     $contratos = \app\models\Contrato::find()->all();
     $contratoslistados = [];
-    $empreendimentos_all = [];
+    
     $contratoseempreendimentos = [];
     foreach ($contratos as $k => $contrato):
         array_push($contratoslistados, [
@@ -168,12 +168,6 @@ $g_drive = '<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 51
             if (strpos(Url::current(), 'update')) {
                 $preview = 'update';
             }
-            array_push($empreendimentos_all, [
-                'label' => substr($emps->titulo, 0, 20),
-                'icon' => 'road',
-                'url' => ['empreendimento/'.$preview.'?id='.$emps->id],
-                'active' => $_REQUEST['id'] == $emps->id ? true : false
-            ]);
         }
         array_push($contratoseempreendimentos, [
             'label' => $contrato->titulo, 
@@ -181,6 +175,22 @@ $g_drive = '<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 51
             'items' => $empreendimentos,
         ]);
     endforeach;
+    $empreendimentos_all = [];
+
+    $contrato_ativo = \app\models\Contrato::find()->where([
+        'id' => $_REQUEST['contrato'] ? $_REQUEST['contrato'] : 1,
+    ])->one();
+
+    foreach ($contrato_ativo->empreendimentos as $emp) {
+        # code...
+        array_push($empreendimentos_all, [
+            'label' => substr($emp->titulo, 0, 20),
+            'icon' => 'road',
+            'url' => ['empreendimento/'.$preview.'?id='.$emp->id],
+            'active' => $_REQUEST['id'] == $emp->id ? true : false
+        ]);
+    }
+
     // foreach ($contrato->empreendimentos as $emps) {
     //     array_push($empreendimentos, [
     //         'label' => $emps->titulo,
@@ -197,12 +207,12 @@ $g_drive = '<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 51
         'activateParents' => true,
         'items' => [
             // ['label' => 'Início', 'url' => ['/site/index']],
-            [
-                'class' => 'bg-primary',
-                'label' => '<i class="fa fa-calendar"></i> Calendar', 
-                'url' => ['site/calendar'],
-                'visible' => !Yii::$app->user->isGuest,
-            ],
+            // [
+            //     'class' => 'bg-primary',
+            //     'label' => '<i class="fa fa-calendar"></i> Calendar', 
+            //     'url' => ['site/calendar'],
+            //     'visible' => !Yii::$app->user->isGuest,
+            // ],
             [
                 'class' => 'bg-primary',
                 'label' => '<i class="fa fa-list"></i> Contratos', 
