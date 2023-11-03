@@ -17,7 +17,6 @@ use yii\bootstrap5\Accordion;
 use dosamigos\google\maps\LatLng;
 use dosamigos\google\maps\services\DirectionsWayPoint;
 use dosamigos\google\maps\services\TravelMode;
-use dosamigos\google\maps\overlays\PolylineOptions;
 use dosamigos\google\maps\services\DirectionsRenderer;
 use dosamigos\google\maps\services\DirectionsService;
 use dosamigos\google\maps\overlays\InfoWindow;
@@ -26,6 +25,7 @@ use dosamigos\google\maps\Map;
 use dosamigos\google\maps\services\DirectionsRequest;
 use dosamigos\google\maps\overlays\Polygon;
 use dosamigos\google\maps\overlays\Polyline;
+use dosamigos\google\maps\overlays\PolylineOptions;
 use dosamigos\google\maps\layers\BicyclingLayer;
 
 // MAPA fim
@@ -43,10 +43,17 @@ switch (Yii::$app->user->identity->nivel) {
 }
 
 
-$json = file_get_contents(Yii::$app->basePath.'/web/arquivos/Trecho_SNV.geojson');
-  
+// $json_br_080 = file_get_contents(Yii::$app->basePath.'/web/arquivos/Trecho_SNV.geojson');
+$json_br_080_1 = file_get_contents(Yii::$app->basePath.'/web/arquivos/br080dffdprojetada.geojson');
+$json_br_080_2 = file_get_contents(Yii::$app->basePath.'/web/arquivos/eixoprojetado23s.geojson');
+$json_br_080_3 = file_get_contents(Yii::$app->basePath.'/web/arquivos/hidrografiaibge250mil2021ae.geojson');
+$json_br_080_4 = file_get_contents(Yii::$app->basePath.'/web/arquivos/travessiacursodagua.geojson');
+
 // Decode the JSON file
-$json_data = json_decode($json,true);
+$json_data_1 = json_decode($json_br_080_1,true);
+$json_data_2 = json_decode($json_br_080_2,true);
+$json_data_3 = json_decode($json_br_080_3,true);
+$json_data_4 = json_decode($json_br_080_4,true);
   
 // Display data
 // echo '<pre>';
@@ -150,7 +157,7 @@ $json_data = json_decode($json,true);
 
                     // $coord = new LatLng(['lat' => -27.5969, 'lng' => -48.5495]);
                     // Manaus
-                    $coord = new LatLng(['lat' => -3.119027, 'lng' => -60.021731]);
+                    $coord = new LatLng(['lat' => -15.7801, 'lng' => -47.9292]);
                     $map = new Map([
                         'center' => $coord,
                         'zoom' => 7,
@@ -228,12 +235,58 @@ $json_data = json_decode($json,true);
                         new LatLng(['lng' => -61.6436715,   'lat' => -2.9214318])
                     ];
                     
+                    echo '<pre>';
+                    // print_r($json_data_1);
+                    // print_r($json_data_1);
+                    // print_r($json_data_2);
+                    // print_r($json_data_3);
+                    // print_r($json_data_4);
+                    echo '</pre>';
                     
-                    $vet_coord_grupo = $json_data['features'];
-                    // echo '<pre>';
-                    // print_r($vet_coord_grupo);
-                    // echo '</pre>';
-                    
+                    // FOREACHS que IMPRIMEM OS MAPAS ===================================================================
+                    $vet_coord_grupo = $json_data_1['features'];
+                    foreach($vet_coord_grupo as $coor_grupo) {
+                        $linha = [];
+                        // echo '<pre>';
+                        // print_r($coor_grupo);
+                        // echo '</pre>';
+                        // echo '<br><<<< - separador - >>>><br><hr><br>';
+                        $vet_coord = $coor_grupo['geometry']['coordinates'][0];
+                        foreach($vet_coord as $coor) {
+                            array_push($linha, new LatLng(['lat' => $coor[1],   'lng' => $coor[0]]));
+                        }
+                        // $opcoes = new PolylineOptions([
+                        //     'strokeColor' => '#FF0000',
+                        //     'strokeOpacity' => 0.8,
+                        //     'strokeWeight' => 2,
+                        // ]);
+                        $polyline = new Polyline([
+                            'path' => $linha,
+                            'options' => [
+                                'strokeColor' => '#FF0000',
+                                'strokeOpacity' => 0.8,
+                                'strokeWeight' => 2
+                            ],
+                            // 'options' => $opcoes,
+                            // 'strokeColor' => 'rgb(' . rand(0, 255) . ',' . rand(0, 255) . ',' . rand(0, 255) . ')',
+                            // 'strokeOpacity' => 1,
+                            // 'strokeWeight' => 5
+                        ]);
+                        $marker = new Marker([
+                            'position' => $linha[0], // Posição do rótulo
+                            'label' => ' '.$coor_grupo['properties']['Name'],
+                            'icon' => 'flag'
+                        ]);
+                        // $polyline->attachEvent('mouseover', $marker);
+                        // $polyline->options->label = 'Sua etiqueta aqui';
+                        // $polyline->attachInfoWindow(new InfoWindow([
+                        //     'content' => '<p>This is my super cool Polygon</p>'
+                        // ]));
+                        $map->addOverlay($polyline);
+                        $map->addOverlay($marker);
+                        
+                    }
+                    $vet_coord_grupo = $json_data_2['features'];
                     foreach($vet_coord_grupo as $coor_grupo) {
                         $linha = [];
                         // echo '<pre>';
@@ -250,9 +303,69 @@ $json_data = json_decode($json,true);
                             'strokeOpacity' => 1,
                             'strokeWeight' => 3,
                         ]);
+                        $marker = new Marker([
+                            'position' => $linha[0], // Posição do rótulo
+                            'title' => '<div style="color: white !important">'.$coor_grupo['properties']['Name'].'</div>',
+                            'icon' => 'flag'
+                                
+                        ]);
+                        // $marker->setLabelStyle(['color' => 'blue']);
                         $map->addOverlay($polyline);
-
+                        $map->addOverlay($marker);
+                        
                     }
+                    $vet_coord_grupo = $json_data_3['features'];
+                    foreach($vet_coord_grupo as $coor_grupo) {
+                        $linha = [];
+                        // echo '<pre>';
+                        // print_r($coor_grupo);
+                        // echo '</pre>';
+                        // echo '<br><<<< - separador - >>>><br><hr><br>';
+                        $vet_coord = $coor_grupo['geometry']['coordinates'][0];
+                        foreach($vet_coord as $coor) {
+                            array_push($linha, new LatLng(['lat' => $coor[1],   'lng' => $coor[0]]));
+                        }
+                        $polyline = new Polyline([
+                            'path' => $linha,
+                            'strokeColor' => 'rgb(' . rand(0, 255) . ',' . rand(0, 255) . ',' . rand(0, 255) . ')',
+                            'strokeOpacity' => 1,
+                            'strokeWeight' => 3,
+                        ]);
+                        $marker = new Marker([
+                            'position' => $linha[0], // Posição do rótulo
+                            'label' => ' '.$coor_grupo['properties']['Name'],
+                            'icon' => 'flag'
+                        ]);
+                        $map->addOverlay($polyline);
+                        $map->addOverlay($marker);
+                        
+                    }
+                    $vet_coord_grupo = $json_data_4['features'];
+                    foreach($vet_coord_grupo as $coor_grupo) {
+                        $linha = [];
+                        // echo '<pre>';
+                        // print_r($coor_grupo);
+                        // echo '</pre>';
+                        // echo '<br><<<< - separador - >>>><br><hr><br>';
+                        $vet_coord = $coor_grupo['geometry']['coordinates'][0];
+                        foreach($vet_coord as $coor) {
+                            array_push($linha, new LatLng(['lat' => $coor[1],   'lng' => $coor[0]]));
+                        }
+                        $polyline = new Polyline([
+                            'path' => $linha,
+                            'strokeColor' => 'rgb(' . rand(0, 255) . ',' . rand(0, 255) . ',' . rand(0, 255) . ')',
+                            'strokeOpacity' => 1,
+                            'strokeWeight' => 3,
+                        ]);
+                        // $marker = new Marker([
+                        //     'position' => $linha[0], // Posição do rótulo
+                        //     'label' => ' '.$coor_grupo['properties']['Name']
+                        // ]);
+                        $map->addOverlay($polyline);
+                        // $map->addOverlay($marker);
+                        
+                    }
+                    // FOREACHS que IMPRIMEM OS MAPAS ===================================================================
 
                     $polygon = new Polygon([
                         'paths' => $coords

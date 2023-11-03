@@ -327,7 +327,7 @@ $g_drive = '<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 51
                                 [
                                     'label' => 'Empreendimentos',
                                     'icon' => 'road',
-                                    'url' => ['/empreendimento'],
+                                    'url' => ['/empreendimento?contrato='.$contratoativo->id],
                                 ],
                                 [
                                     'label' => 'Dados Contratuais',

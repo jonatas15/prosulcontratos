@@ -34,7 +34,12 @@ $ordensdeservico = ArrayHelper::map(Ordensdeservico::find()->all(), 'id', 'titul
             'prompt' => 'Selecione'
         ]) ?></div>
         <div class="col-md-4"> <?= $form->field($model, 'prazo')->textInput() ?></div>
-        <div class="col-md-4"> <?= $form->field($model, 'status')->textInput(['maxlength' => true]) ?></div>
+        <div class="col-md-4"> <?= $form->field($model, 'status')->dropDownList([
+            'Empreendimento' => 'Empreendimento',
+            'Ref. Produtos' => 'Ref. Produtos',
+        ], [
+            'prompt' => 'Selecione'
+        ])->label('Categoria') ?></div>
         <div class="col-md-4"> <?= $form->field($model, 'uf')->textInput(['maxlength' => true]) ?></div>
         <div class="col-md-4"> <?= $form->field($model, 'segmento')->textInput(['maxlength' => true]) ?></div>
         <div class="col-md-4"> <?= $form->field($model, 'extensao_km')->textInput(['maxlength' => true]) ?></div>

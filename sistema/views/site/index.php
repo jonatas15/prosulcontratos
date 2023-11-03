@@ -29,6 +29,12 @@ $this->title = 'PROSUL-DNIT';
         background-color: #0167A8 !important;
         color: white !important;
     }
+    .bg-primary {
+        background-color: #0167A8 !important;
+    }
+    .bg-success {
+        background-color: #198754 !important;
+    }
 </style>
 <div class="site-index">
     
@@ -302,15 +308,23 @@ $this->title = 'PROSUL-DNIT';
             </div>
 
             */ ?>
-            <?php $contratos = Contrato::find()->all(); ?>
+            <?php $contratos = Contrato::find()->orderBy([
+                'id' => SORT_DESC
+            ])->all(); ?>
             <?php foreach ($contratos as $k => $contrato): ?>
-            <div class="col-6 my-3">
+                <?php
+                    $cardcolor = 'primary';
+                    if($contrato->titulo == '093-22 - Lote A') {
+                        $cardcolor = 'success';
+                    }    
+                ?>
+            <div class="col-4 my-3">
                 <div class="card">
-                    <div class="card-header bg-primary"><?=$contrato->titulo?></div>
+                    <div class="card-header bg-<?=$cardcolor?>"><?=$contrato->titulo?></div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12">
-                                <label class="label form-label fw-bolder">Processo administrativo</label>
+                                <label class="label form-label fw-bolder">Descrição</label>
                                 <br>
                                 <label class="caption form-label"><?=$contrato->lote?></label>
                             </div>
@@ -329,7 +343,7 @@ $this->title = 'PROSUL-DNIT';
                         </div>
                         <div class="row">
                             <center>
-                                <a href="<?=Yii::$app->homeUrl.'contrato/view?id='.$contrato->id?>" type="button" class="w-50 px-4 button-adicionar btn btn-primary">
+                                <a href="<?=Yii::$app->homeUrl.'contrato/view?id='.$contrato->id?>" type="button" class="w-50 px-4 button-adicionar btn btn-<?=$cardcolor?>">
                                     <!-- Acessar <i class="fa fa-search fa-flip-horizontal"></i> -->
                                     Acessar <i class="fa fa-search"></i>
                                 </a>

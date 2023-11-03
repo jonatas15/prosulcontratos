@@ -71,6 +71,7 @@ class EmpreendimentoSearch extends Empreendimento
         ]);
 
         $query->andFilterWhere(['like', 'status', $this->status])
+            ->andFilterWhere(['<>','status', 'Ref. Produtos'])
             ->andFilterWhere(['like', 'uf', $this->uf])
             ->andFilterWhere(['like', 'titulo', $this->titulo])
             ->andFilterWhere(['like', 'segmento', $this->segmento])

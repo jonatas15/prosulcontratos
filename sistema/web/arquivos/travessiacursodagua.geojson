@@ -1,0 +1,17 @@
+{
+"type": "FeatureCollection",
+"name": "Travessia_curso_dagua",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "Name": "Ribeirão Rodeador Est. 551+10 Projetado", "FID": 0, "Field_1": "Ribeirão Rodeador", "Id": 0, "Nome": "Ribeirão Rodeador", "Status": "Projetado", "km": "Est. 551+10" }, "geometry": { "type": "Point", "coordinates": [ -48.17278349, -15.730946859507 ] } },
+{ "type": "Feature", "properties": { "Name": "Córrego Olaria Est. 776+10 Existente", "FID": 1, "Field_1": "Córrego Olaria", "Id": 0, "Nome": "Córrego Olaria", "Status": "Existente", "km": "Est. 776+10" }, "geometry": { "type": "Point", "coordinates": [ -48.199536493048797, -15.7097613487778 ] } },
+{ "type": "Feature", "properties": { "Name": "Córrego Pulador Est. 875+15 Existente", "FID": 2, "Field_1": "Córrego Pulador", "Id": 0, "Nome": "Córrego Pulador", "Status": "Existente", "km": "Est. 875+15" }, "geometry": { "type": "Point", "coordinates": [ -48.204916954625197, -15.692505438615999 ] } },
+{ "type": "Feature", "properties": { "Name": "Rio Descoberto Est. 1263+11 Projetado", "FID": 3, "Field_1": "Rio Descoberto", "Id": 0, "Nome": "Rio Descoberto", "Status": "Projetado", "km": "Est. 1263+11" }, "geometry": { "type": "Point", "coordinates": [ -48.199142253999803, -15.6229459982136 ] } },
+{ "type": "Feature", "properties": { "Name": "Rio do Sal Est. 1470+7 Projetado", "FID": 4, "Field_1": "Rio do Sal", "Id": 0, "Nome": "Rio do Sal", "Status": "Projetado", "km": "Est. 1470+7" }, "geometry": { "type": "Point", "coordinates": [ -48.1968932699071, -15.5918308617079 ] } },
+{ "type": "Feature", "properties": { "Name": "Córrego Salinas Est. 1785+6 Existente", "FID": 5, "Field_1": "Córrego Salinas", "Id": 0, "Nome": "Córrego Salinas", "Status": "Existente", "km": "Est. 1785+6" }, "geometry": { "type": "Point", "coordinates": [ -48.196761981323597, -15.547263816216899 ] } },
+{ "type": "Feature", "properties": { "Name": "Córrego Curralinho Est. 1889 Existente", "FID": 6, "Field_1": "Córrego Curralinho", "Id": 0, "Nome": "Córrego Curralinho", "Status": "Existente", "km": "Est. 1889" }, "geometry": { "type": "Point", "coordinates": [ -48.190317063347202, -15.5298190388694 ] } },
+{ "type": "Feature", "properties": { "Name": "Rio do Sal Est. 1967+11 Existente", "FID": 7, "Field_1": "Rio do Sal", "Id": 0, "Nome": "Rio do Sal", "Status": "Existente", "km": "Est. 1967+11" }, "geometry": { "type": "Point", "coordinates": [ -48.194441292577103, -15.5162589842381 ] } },
+{ "type": "Feature", "properties": { "Name": "Passarela de Brazlândia 977+17,80 Projetado", "FID": 8, "Field_1": "Passarela de Brazlândia", "Id": 0, "Nome": "Passarela de Brazlândia", "Status": "Projetado", "km": "977+17,80" }, "geometry": { "type": "Point", "coordinates": [ -48.204692434992303, -15.674323670323499 ] } },
+{ "type": "Feature", "properties": { "Name": "Ponte 09 – Rio do Sal (implantar) 1521+19,00 Projetado", "FID": 9, "Field_1": "Ponte 09 – Rio do Sal (implantar)", "Id": 0, "Nome": "Ponte 09 – Rio do Sal (implantar)", "Status": "Projetado", "km": "1521+19,00" }, "geometry": { "type": "Point", "coordinates": [ -48.188558457064403, -15.586974857076701 ] } }
+]
+}

@@ -200,7 +200,7 @@ function formatar_campo($campo, $valor) {
                                     'fase' => 'OS Emitida'
                                 ])->count()).' OS Emitidas'; ?>
                             </p>
-                            <a href="<?=Yii::$app->homeUrl.'contrato/view?id='.$model->id.'&abativa=aba_oficios'?>" class="btn btn-info text-white">Visualizar</a>
+                            <a href="<?=Yii::$app->homeUrl.'contrato/view?id='.$model->id.'&abativa=aba_ordens'?>" class="btn btn-info text-white">Visualizar</a>
                         </div>
                         <div class="card-footer text-muted">
                             0 dias atrás
@@ -231,7 +231,7 @@ function formatar_campo($campo, $valor) {
                                     'fase' => 'Aprovado'
                                 ])->count()).' Aprovados'; ?>
                             </p>
-                            <a href="<?=Yii::$app->homeUrl.'contrato/view?id='.$model->id.'&abativa=aba_oficios'?>" class="btn btn-info text-white">Visualizar</a>
+                            <a href="<?=Yii::$app->homeUrl.'contrato/view?id='.$model->id.'&abativa=aba_produtos'?>" class="btn btn-info text-white">Visualizar</a>
                         </div>
                         <div class="card-footer text-muted">
                             0 dias atrás

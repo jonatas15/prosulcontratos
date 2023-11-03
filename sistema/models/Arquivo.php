@@ -50,7 +50,7 @@ class Arquivo extends \yii\db\ActiveRecord
         return [
             [['tipo', 'src'], 'required'],
             [['imageFiles'], 'file', 'skipOnEmpty' => false, 
-                'extensions' => 'png, jpg, jpeg, tif, doc, pdf, odt, docx, xls, xlsx, kml, KML, kmz, KMZ',
+                'extensions' => 'png, jpg, jpeg, tif, doc, pdf, odt, docx, xls, xlsx, kml, KML, kmz, KMZ, geojson',
                 'maxFiles' => 5
             ],
             [['tipo', 'src'], 'string'],

@@ -84,7 +84,9 @@ class EmpreendimentoController extends Controller
     {
         $contrato_id = $_REQUEST['contrato'];
         $searchModel = new EmpreendimentoSearch();
-        $dataProvider = $searchModel->search(['contrato_id'=>$contrato_id]);
+        $dataProvider = $searchModel->search([
+            'contrato_id'=>$contrato_id
+        ]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
