@@ -82,28 +82,45 @@
 <div class="container">
     <!-- Área Gerencial -->
     <?php $novafase = new Fase(); ?>
-    <div class="row my-1">
-        <div class="col-md-9"></div>
-        <div class="col-md-3">
-            <?= $this->render('/fase/create', [
-                'model' => $novafase,
+    <div class="row my-3">
+        <?php /*
+        *
+            <div class="col-md-2">
+                <?= $this->render('/fase/create', [
+                    'model' => $novafase,
+                    'licenciamento_id' => $licenciamento_id,
+                    'licenciamento' => $model->numero
+                ]) ?>
+            </div>
+        */?>    
+        <div class="col-md-10"></div>
+        <div class="col-md-2">
+            <?= $this->render('definicaofases', [
+                'fases' => $model->fases,
+                'licenciamento' => $model->numero,
                 'licenciamento_id' => $licenciamento_id,
-                'licenciamento' => $model->numero
             ]) ?>
         </div>
     </div>
     <!-- Área Gerencial -->
-    <div class="row text-center justify-content-center mb-5 mt-5">
+    <div class="row text-center justify-content-center mb-5 mt-2">
         <!-- <div class="col-12">
             <h4 class="font-weight-bold">Evolução do Empreendimento</h4>
         </div> -->
+        <!-- <?=$model->id?> -->
     </div>
 
     <div class="row">
         <div class="col">
             <div class="timeline-steps aos-init aos-animate" data-aos="fade-up">
                 <?php $i = 1; ?>
-                <?php foreach ($model->fases as $fase): ?>
+                <?php 
+                    $fases = \app\models\Fase::find()->where([
+                        'licenciamento_id' => $model->id,
+                        'ativo' => 1
+                    ])->all();
+                ?>
+                <?php foreach ($fases as $fase): ?>
                     <?php 
                     $innerBg = "";
                         switch ($fase->status) {

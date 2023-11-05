@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 // use yii\bootstrap5\Tabs;
 use kartik\tabs\TabsX as Tabs;
+use app\models\Fase;
 
 $bgphp = 'rgba(0, 0, 0, 0.05)';
 
@@ -78,8 +79,60 @@ $this->params['breadcrumbs'][] = 'Licenciamentos';
     <?php 
     $items = [];
     foreach ($model->licenciamentos as $item) {
+        // DEFINIÇÃO DE FASES DO ITEM ===========================================================
+        $fases = [
+            ['fase' => 'Em Análise', 'orgao' => 0],
+            ['fase' => 'Emitida', 'orgao' => 0],
+            ['fase' => 'Em andamento', 'orgao' => 0],
+            ['fase' => 'Finalizada', 'orgao' => 0],
+        ];
+        $fases_lap = \app\models\Faselai::find()->all();
+        foreach ($fases_lap as $nfase) {
+            // echo $nfase->st_descricao . '<br>';
+            array_push($fases, [
+                'fase' => $nfase->st_descricao,
+                'orgao' => $nfase->orgao,
+                'id' => $nfase->id,
+                'natureza' => 'LAI'
+            ]);
+        }
+        // echo '<hr>'; 
+        $fases_lai = \app\models\Faselap::find()->all();
+        foreach ($fases_lai as $nfase) {
+            // echo $nfase->st_descricao . '<br>';
+            array_push($fases, [
+                'fase' => $nfase->st_descricao,
+                'orgao' => $nfase->orgao,
+                'id' => $nfase->id,
+                'natureza' => 'LAP'
+            ]);
+        }
+        $fases = json_encode($fases);
+        $fases = json_decode($fases);
+        foreach($fases as $key => $fase) {
+            echo $key.'=>   '.$fase->fase.' - '.$fase->orgao.'<br>';
+            $licenciamento_tem_fase = Fase::find()->where([
+                'licenciamento_id' => $item->id,
+                'fase' => $fase->fase,
+                'ambito' => (string)$fase->orgao,
+                'produto_id' => $fase->id
+            ])->one();
+            if($licenciamento_tem_fase->fase == '') {
+                $nova_fase = new Fase;
+                $nova_fase->fase = $fase->fase;
+                $nova_fase->licenciamento_id = $item->id;
+                $nova_fase->ordem = $key;
+                $nova_fase->ambito = (string)$fase->orgao;
+                $nova_fase->produto_id = $fase->id;
+                $nova_fase->save();
+            }
+        }
+        // DEFINIÇÃO DE FASES DO ITEM ===========================================================
         $searchModelFases = new \app\models\FaseSearch();
-        $dataProviderFases = $searchModelFases->search(['licenciamento_id' => $item->id]);
+        $dataProviderFases = $searchModelFases->search([
+            'licenciamento_id' => $item->id,
+            'ativo' => 1
+        ]);
         
         $gestaofase = $this->render('/empreendimento/timeline', [
             'licenciamento_id' => $item->id,

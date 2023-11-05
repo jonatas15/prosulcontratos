@@ -47,7 +47,7 @@ class EmpreendimentoController extends Controller
            ],
            'access' => [
                'class' => AccessControl::className(),
-               'only' => ['index', 'view', 'update', 'create',  'delete', 'novafase', 'editfase', 'empgerencial', 'preview'],
+               'only' => ['index', 'view', 'update', 'create',  'delete', 'novafase', 'editfase', 'empgerencial', 'preview', 'definicaofases'],
                'rules' => [
                    [
                        'allow' => false,
@@ -56,7 +56,7 @@ class EmpreendimentoController extends Controller
                    ],
                    [
                        'allow' => true,
-                       'actions' => ['index', 'view', 'update', 'create',  'delete', 'novafase', 'editfase', 'empgerencial', 'preview'],
+                       'actions' => ['index', 'view', 'update', 'create',  'delete', 'novafase', 'editfase', 'empgerencial', 'preview', 'definicaofases'],
                        'roles' => ['@']
                    ],
                ],
@@ -91,6 +91,12 @@ class EmpreendimentoController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+        ]);
+    }
+    public function actionDefinicaofases()
+    {
+        return $this->render('definicaofases', [
+            'fases' => $fases
         ]);
     }
 

@@ -14,7 +14,7 @@ Modal::begin([
     ],
     'size' => 'modal-md',
     'toggleButton' => [
-        'label' => '<i class="bi bi-card-list"></i> Nova Fase em '.$licenciamento,
+        'label' => '<i class="bi bi-card-list"></i> Nova Fase ['.$licenciamento.']',
         'class' => 'btn btn-success text-white float-right'
     ],
 ]);
