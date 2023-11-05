@@ -22,7 +22,7 @@ use kartik\widgets\FileInput;
     ]); ?>
     <div class="row">
         <div class="col-md-6">
-            <?= $form->field($model, 'tipo')->dropDownList([ 'imagem' => 'Imagem', 'logo' => 'Logo', 'video' => 'Video', 'documento' => 'Documento', 'planilia' => 'Planilia', 'outros' => 'Outros', ], ['prompt' => 'Selecione']) ?>
+            <?= $form->field($model, 'tipo')->dropDownList([ 'imagem' => 'Imagem', 'logo' => 'Logo', 'video' => 'Video', 'documento' => 'Documento', 'planilia' => 'Planilha', 'outros' => 'Arquivos Espaciais', ], ['prompt' => 'Selecione']) ?>
             <?= $form->field($model, 'src')->hiddenInput(['value' => 'arquivos'])->label(false) ?>
             <?php // = $form->field($model, 'contrato_id')->hiddenInput(['value' => $contrato_id])->label(false) ?>
             <?php // = $form->field($model, 'oficio_id')->hiddenInput(['value' => $oficio_id])->label(false) ?>

@@ -36,6 +36,29 @@ $gestaoarquivos .= $this->render('/arquivo/index', [
 $gestaoarquivos .= '</div>';
 $gestaoarquivos .= '</div>';
 
+$ativo = $_REQUEST['abativa'];
+switch ($ativo) {
+    case 'aba_dados':
+        $aba_view = true;
+        $aba_update = false;
+        $aba_arquivos = false;
+    break;
+    case 'aba_update':
+        $aba_view = false;
+        $aba_update = true;
+        $aba_arquivos = false;
+    break;
+    case 'aba_arquivos':
+        $aba_view = false;
+        $aba_update = false;
+        $aba_arquivos = true;
+    break;
+    
+    default:
+        
+        break;
+}
+
 
 /** @var yii\web\View $this */
 /** @var app\models\Oficio $model */
@@ -66,7 +89,7 @@ $this->params['breadcrumbs'][] = 'Detalhes do Empreendimento';
                     'model' => $model,
                     'action' => 'empreendimento/update?id='.$model->id //A Yii->homeUrl fica na _form
                 ]).'</div>',
-                'options' => ['id' => 'aba_dados'],
+                'options' => ['id' => 'aba_update'],
                 'active' => $aba_dados
             ],
             [

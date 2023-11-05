@@ -86,7 +86,8 @@ $json_data = json_decode($json,true);
             <?php //= //Html::a('Novo Empreendimento', ['create'], ['class' => 'btn btn-success', 'style'=>"float: right !important"]) ?>
             <?php $nEmpModel = new Empreendimento(); ?>
             <?= $this->render('create', [
-                'model' => $nEmpModel
+                'model' => $nEmpModel,
+                'contrato_id' => $contrato
             ]) ?>
         </div>
         <div class="col-md-12">

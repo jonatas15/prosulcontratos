@@ -80,7 +80,8 @@ class Empreendimento extends \yii\db\ActiveRecord
             'orgao_licenciador' => 'Órgao Licenciador',
             'ordensdeservico_id' => 'Ordem de servico',
             'oficio_id' => 'Ofício',
-            'titulo' => 'Empreendimento'
+            'titulo' => 'Empreendimento',
+            'contrato_id' => 'Contrato'
         ];
     }
 
