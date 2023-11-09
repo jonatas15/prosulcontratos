@@ -43,10 +43,10 @@ class Fase extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['empreendimento_id', 'licenciamento_id', 'ordem', 'produto_id', 'fase_lai_id', 'fase_lap_id', 'ativo'], 'integer'],
+            [['empreendimento_id', 'licenciamento_id', 'ordem', 'produto_id', 'fase_lai_id', 'fase_lap_id', 'ativo', 'fase_id'], 'integer'],
             [['licenciamento_id', 'fase'], 'required'],
             [['datacadastro', 'data'], 'safe'],
-            [['fase', 'exigencias', 'ambito', 'status'], 'string', 'max' => 200],
+            [['fase', 'exigencias', 'ambito', 'status', 'natureza'], 'string', 'max' => 200],
             [['empreendimento_id'], 'exist', 'skipOnError' => true, 'targetClass' => Empreendimento::class, 'targetAttribute' => ['empreendimento_id' => 'id']],
             [['fase_lai_id'], 'exist', 'skipOnError' => true, 'targetClass' => FaseLai::class, 'targetAttribute' => ['fase_lai_id' => 'id']],
             [['fase_lap_id'], 'exist', 'skipOnError' => true, 'targetClass' => FaseLap::class, 'targetAttribute' => ['fase_lap_id' => 'id']],

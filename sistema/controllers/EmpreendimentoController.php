@@ -47,7 +47,7 @@ class EmpreendimentoController extends Controller
            ],
            'access' => [
                'class' => AccessControl::className(),
-               'only' => ['index', 'view', 'update', 'create',  'delete', 'novafase', 'editfase', 'empgerencial', 'preview', 'definicaofases'],
+               'only' => ['index', 'view', 'update', 'create',  'delete', 'novafase', 'editfase', 'empgerencial', 'preview', 'definicaofases', 'ativandoetapa'],
                'rules' => [
                    [
                        'allow' => false,
@@ -56,7 +56,7 @@ class EmpreendimentoController extends Controller
                    ],
                    [
                        'allow' => true,
-                       'actions' => ['index', 'view', 'update', 'create',  'delete', 'novafase', 'editfase', 'empgerencial', 'preview', 'definicaofases'],
+                       'actions' => ['index', 'view', 'update', 'create',  'delete', 'novafase', 'editfase', 'empgerencial', 'preview', 'definicaofases', 'ativandoetapa'],
                        'roles' => ['@']
                    ],
                ],
@@ -98,6 +98,22 @@ class EmpreendimentoController extends Controller
         return $this->render('definicaofases', [
             'fases' => $fases
         ]);
+    }
+    public function actionAtivandoetapa()
+    {
+        $Fase = \app\models\Fase::findOne([
+            'id' => $_REQUEST['fase_id']
+        ]);
+        $Fase->ativo = $Fase->ativo == 1 ? 0 : 1;
+        date_default_timezone_set('America/Sao_Paulo');
+        $Fase->data =  date('Y-m-d h:i:s', time());
+        $Fase->datacadastro =  date('Y-m-d h:i:s', time());
+        $Fase->status =  'Pendente';
+        if ($Fase->save()) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
     /**

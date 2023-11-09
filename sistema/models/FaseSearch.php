@@ -17,8 +17,8 @@ class FaseSearch extends Fase
     public function rules()
     {
         return [
-            [['id', 'empreendimento_id', 'licenciamento_id', 'ativo'], 'integer'],
-            [['fase', 'datacadastro', 'data', 'exigencias', 'ambito', 'status'], 'safe'],
+            [['id', 'empreendimento_id', 'licenciamento_id', 'ativo', 'produto_id', 'fase_id'], 'integer'],
+            [['fase', 'datacadastro', 'data', 'exigencias', 'ambito', 'status', 'natureza'], 'safe'],
         ];
     }
 
@@ -68,12 +68,15 @@ class FaseSearch extends Fase
             'licenciamento_id' => $this->licenciamento_id,
             'datacadastro' => $this->datacadastro,
             'data' => $this->data,
-            'ativo' => $this->ativo
+            'ativo' => $this->ativo,
+            'produto_id' => $this->produto_id,
+            'fase_id' => $this->fase_id,
         ]);
 
         $query->andFilterWhere(['like', 'fase', $this->fase])
             ->andFilterWhere(['like', 'exigencias', $this->exigencias])
             ->andFilterWhere(['like', 'ambito', $this->ambito])
+            ->andFilterWhere(['like', 'natureza', $this->natureza])
             ->andFilterWhere(['like', 'status', $this->status]);
 
         return $dataProvider;

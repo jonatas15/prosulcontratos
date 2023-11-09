@@ -144,6 +144,26 @@
                             </div>
                             <p class="h6 mt-3 mb-1"><?=date('d/m/Y', strtotime($fase->data))?></p>
                             <p class="h6 text-muted mb-0 mb-lg-0"><?=$fase->fase?></p>
+                            <p class="h6 text-muted mb-0 mb-lg-0"><?=Editable::widget([
+                                'name'=>'status', 
+                                'asPopover' => true,
+                                'value' => $fase->status,
+                                'header' => 'Status',
+                                'size'=>'md',
+                                'inputType' => Editable::INPUT_DROPDOWN_LIST,
+                                'data' => [
+                                    'Pendente' => 'Pendente',
+                                    'Em andamento' => 'Em andamento',
+                                    'Concluído' => 'Concluído',
+                                ],
+                                'formOptions' => [
+                                    'action' => [
+                                        Yii::$app->homeUrl.'fase/editcampo',
+                                        'id' => $fase->id,
+                                        'campo' => 'status'
+                                    ]
+                                ],
+                            ]);?></p>
                         </div>
                     </div>
                     <?php $i++; ?>

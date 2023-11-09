@@ -81,13 +81,13 @@ $this->params['breadcrumbs'][] = 'Licenciamentos';
     foreach ($model->licenciamentos as $item) {
         // DEFINIÇÃO DE FASES DO ITEM ===========================================================
         $fases = [
-            ['fase' => 'Em Análise', 'orgao' => 0],
-            ['fase' => 'Emitida', 'orgao' => 0],
-            ['fase' => 'Em andamento', 'orgao' => 0],
-            ['fase' => 'Finalizada', 'orgao' => 0],
+            ['fase' => 'Em Análise', 'orgao' => 0, 'id' => 1000, 'natureza' => 'Geral'],
+            ['fase' => 'Emitida', 'orgao' => 0, 'id' => 1000, 'natureza' => 'Geral'],
+            ['fase' => 'Em andamento', 'orgao' => 0, 'id' => 1000, 'natureza' => 'Geral'],
+            ['fase' => 'Finalizada', 'orgao' => 0, 'id' => 1000, 'natureza' => 'Geral'],
         ];
-        $fases_lap = \app\models\Faselai::find()->all();
-        foreach ($fases_lap as $nfase) {
+        $fases_lai = \app\models\Faselai::find()->all();
+        foreach ($fases_lai as $nfase) {
             // echo $nfase->st_descricao . '<br>';
             array_push($fases, [
                 'fase' => $nfase->st_descricao,
@@ -97,8 +97,8 @@ $this->params['breadcrumbs'][] = 'Licenciamentos';
             ]);
         }
         // echo '<hr>'; 
-        $fases_lai = \app\models\Faselap::find()->all();
-        foreach ($fases_lai as $nfase) {
+        $fases_lap = \app\models\Faselap::find()->all();
+        foreach ($fases_lap as $nfase) {
             // echo $nfase->st_descricao . '<br>';
             array_push($fases, [
                 'fase' => $nfase->st_descricao,
@@ -110,12 +110,13 @@ $this->params['breadcrumbs'][] = 'Licenciamentos';
         $fases = json_encode($fases);
         $fases = json_decode($fases);
         foreach($fases as $key => $fase) {
-            echo $key.'=>   '.$fase->fase.' - '.$fase->orgao.'<br>';
+            // echo $key.'=>   '.$fase->fase.' - '.$fase->orgao.'<br>';
             $licenciamento_tem_fase = Fase::find()->where([
                 'licenciamento_id' => $item->id,
                 'fase' => $fase->fase,
                 'ambito' => (string)$fase->orgao,
-                'produto_id' => $fase->id
+                'fase_id' => $fase->id,
+                'natureza' => $fase->natureza
             ])->one();
             if($licenciamento_tem_fase->fase == '') {
                 $nova_fase = new Fase;
@@ -123,7 +124,8 @@ $this->params['breadcrumbs'][] = 'Licenciamentos';
                 $nova_fase->licenciamento_id = $item->id;
                 $nova_fase->ordem = $key;
                 $nova_fase->ambito = (string)$fase->orgao;
-                $nova_fase->produto_id = $fase->id;
+                $nova_fase->natureza = $fase->natureza;
+                $nova_fase->fase_id = $fase->id;
                 $nova_fase->save();
             }
         }

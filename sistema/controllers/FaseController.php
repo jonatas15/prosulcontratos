@@ -186,8 +186,9 @@ class FaseController extends Controller
         $valor = $_REQUEST[$campo];
         $model = $this->findModel($id);
         $model->$campo = $valor != "" ? $valor : $model->$campo;
+        $model->datacadastro =  date('Y-m-d h:i:s', time());
         $model->save();
-        return ['output' => $valor, 'message'=>''];
+        return $this->redirect(\Yii::$app->request->referrer);
     }
     public function dataprobanco ($data) {
         $arr = explode('/', $data);
