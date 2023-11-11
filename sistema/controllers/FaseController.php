@@ -181,6 +181,7 @@ class FaseController extends Controller
         return $this->redirect(\Yii::$app->request->referrer);
     }
     public function actionEditcampo($id) {
+        date_default_timezone_set('America/Sao_Paulo');
         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         $campo = $_REQUEST['campo'];
         $valor = $_REQUEST[$campo];

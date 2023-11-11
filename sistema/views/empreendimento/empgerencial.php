@@ -5,6 +5,8 @@ use yii\helpers\Html;
 use kartik\tabs\TabsX as Tabs;
 use app\models\Fase;
 
+$usernivel = Yii::$app->getUser()->identity->nivel;
+
 $bgphp = 'rgba(0, 0, 0, 0.05)';
 
 ?>
@@ -144,10 +146,27 @@ $this->params['breadcrumbs'][] = 'Licenciamentos';
             'searchModelFases' => $searchModelFases,
             'dataProviderFases' => $dataProviderFases,
         ]);
-        
         array_push($items, [
-            'label' => '<div class="py-4 px-4"><h3 class=""><strong>⌛ '.$item->numero.'</strong></h3><br>'.$item->descricao.'</div>',
-            'content' => $gestaofase,
+            'label' => '
+                <div class="py-4 px-4"><h3 class="">
+                    <strong>⌛ '.$item->numero.'</strong><exp>'.
+                    '</exp>'.
+                    '</h3><br>'.($item->descricao !== '' ? $item->descricao : 'Ver as fases').
+                '</div>',
+            'content' => '<div class="col-md-12">'.
+            // Html::a('<i class="bi bi-pencil"></i> Editar', ['licenciamento/update', 'id' => $item->id], [
+            //     'class' => 'btn btn-primary float-left mx-1']).
+            Html::a('❌ Excluir', ['licenciamento/delete', 'id' => $item->id], [
+                'class' => 'btn btn-warning float-left mx-1',
+                'style' => $usernivel == 'administrador' ? '' : 'display: none;',
+                'data' => [
+                    'confirm' => 'Tem certeza da exclusão desse Licenciamento e suas fases?',
+                    'method' => 'post',
+            ]]).
+            '</div>'.
+            // '<div class="clearfix"></div>'.
+            // '<span>Excluir Licenciamento</span>'.
+            $gestaofase,
             'options' => ['id' => 'aba_fases_'.$item->id],
             'active' => $item->numero == 'IPHAN' ? true : false,
         ]);

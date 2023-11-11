@@ -5,6 +5,7 @@
     use yii\grid\ActionColumn;
     use yii\grid\GridView;
     use kartik\editable\Editable;
+    use yii\helpers\ArrayHelper;
 
     
 ?>
@@ -149,8 +150,8 @@
                                 'asPopover' => true,
                                 'value' => $fase->status,
                                 'header' => 'Status',
-                                'size'=>'md',
-                                'inputType' => Editable::INPUT_DROPDOWN_LIST,
+                                'size'=>'sm',
+                                'inputType' => Editable::INPUT_RADIO_LIST,
                                 'data' => [
                                     'Pendente' => 'Pendente',
                                     'Em andamento' => 'Em andamento',
@@ -158,7 +159,7 @@
                                 ],
                                 'formOptions' => [
                                     'action' => [
-                                        Yii::$app->homeUrl.'fase/editcampo',
+                                        'fase/editcampo',
                                         'id' => $fase->id,
                                         'campo' => 'status'
                                     ]
@@ -187,19 +188,21 @@
                 [
                     'class' => 'yii\grid\SerialColumn'
                 ],
-                // 'empreendimento_id',
-                // 'licenciamento_id',
-                'fase',
                 [
-                    'attribute' => 'datacadastro',
-                    'format' => 'raw',
-                    'headerOptions' => [
-                        'width' => '10%'
-                    ],
+                    'attribute' => 'ambito',
                     'value' => function($data) {
-                        return date('d/m/Y H:i:s', strtotime($data->datacadastro));
+                        $retorno = 'Estadual';
+                        switch ($data->ambito) {
+                            case '1': $retorno = 'Estadual'; break;
+                            case '2': $retorno = 'Federal'; break;
+                            case '3': $retorno = 'Funai'; break;
+                            case '4': $retorno = 'INCRA'; break;
+                            case '5': $retorno = 'IPHAN'; break;
+                        }
+                        return $retorno;
                     }
                 ],
+                'fase',
                 [
                     'attribute' => 'data',
                     'format' => 'raw',
@@ -210,8 +213,43 @@
                         return date('d/m/Y', strtotime($data->data));
                     }
                 ],
-                'exigencias',
-                'ambito',
+                [
+                    'attribute' => 'datacadastro',
+                    'format' => 'raw',
+                    'headerOptions' => [
+                        'width' => '10%'
+                    ],
+                    'value' => function($data) {
+                        return date('d/m/Y H:i:s', strtotime($data->datacadastro));
+                    }
+                ],
+                // 'ordem',
+                [
+                    'format' => 'raw',
+                    'header' => 'Dias passados',
+                    'headerOptions' => [
+                        'width' => '10%'
+                    ],
+                    'value' => function($data) {
+                        /**
+                         * 
+                            $data_update_anterior = \app\models\Fase::find()->where([
+                             'licenciamento_id' => $data->licenciamento_id,
+                             'ativo' => 1,
+                            ])->andWhere([
+                                '<', 'ordem', $data->ordem
+                            ])->andWhere([
+                                '<>', 'id', $data->id
+                            ])->one();
+                            return $data_update_anterior->datacadastro;
+                            // return date('d/m/Y H:i:s', strtotime($data->datacadastro));
+                        */
+                        $dias_passados = $this->context->diasentre($data->data, date('Y-m-d', strtotime($data->datacadastro)));
+                        $return = $dias_passados.($dias_passados != 1 ? ' dias' : ' dia');
+                        return $return;
+                    }
+                ],
+                // 'exigencias',
                 [
                     'attribute' => 'produto_id',
                     'format'=>'raw',
@@ -219,7 +257,24 @@
                         'width' => '20%'
                     ],
                     'value' => function($data) {
-                        return Html::a($data->produto->subproduto, [
+                        $produtos_do_empreendimento = ArrayHelper::map(\app\models\Produto::find()->where([
+                            'empreendimento_id' => $data->licenciamento->empreendimento_id
+                        ])->all(), 'id', 'subproduto');
+                        return Editable::widget([
+                            'name'=>'produto_id', 
+                            'asPopover' => true,
+                            'value' => $data->produto_id,
+                            'size'=>'md',
+                            'inputType' => Editable::INPUT_DROPDOWN_LIST,
+                            'data' => $produtos_do_empreendimento,
+                            'formOptions' => [
+                                'action' => [
+                                    'fase/editcampo',
+                                    'id' => $data->id,
+                                    'campo' => 'produto_id'
+                                ]
+                            ],
+                        ]).Html::a($data->produto->subproduto, [
                             'produto/view', 'id' => $data->produto_id], 
                             [
                                 'class' => 'profile-link',
@@ -237,8 +292,8 @@
                             'asPopover' => true,
                             'value' => $data->status,
                             'header' => 'Status',
-                            'size'=>'md',
-                            'inputType' => Editable::INPUT_DROPDOWN_LIST,
+                            'size'=>'sm',
+                            'inputType' => Editable::INPUT_RADIO_LIST,
                             'data' => [
                                 'Pendente' => 'Pendente',
                                 'Em andamento' => 'Em andamento',
@@ -246,7 +301,7 @@
                             ],
                             'formOptions' => [
                                 'action' => [
-                                    Yii::$app->homeUrl.'fase/editcampo',
+                                    'fase/editcampo',
                                     'id' => $data->id,
                                     'campo' => 'status'
                                 ]
@@ -279,7 +334,6 @@
                         </div>";
                     }
                 ],
-                */
                 [
                     'attribute' => 'id',
                     'header' => 'Edite',
@@ -290,6 +344,7 @@
                         ]);
                     }
                 ]
+                */
             ],
         ]); ?>
     </div>

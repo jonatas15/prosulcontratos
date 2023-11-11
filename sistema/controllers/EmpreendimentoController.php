@@ -101,11 +101,11 @@ class EmpreendimentoController extends Controller
     }
     public function actionAtivandoetapa()
     {
+        date_default_timezone_set('America/Sao_Paulo');
         $Fase = \app\models\Fase::findOne([
             'id' => $_REQUEST['fase_id']
         ]);
         $Fase->ativo = $Fase->ativo == 1 ? 0 : 1;
-        date_default_timezone_set('America/Sao_Paulo');
         $Fase->data =  date('Y-m-d h:i:s', time());
         $Fase->datacadastro =  date('Y-m-d h:i:s', time());
         $Fase->status =  'Pendente';
@@ -282,7 +282,7 @@ class EmpreendimentoController extends Controller
         return $arr[2].'-'.$arr[1].'-'.$arr[0];
     }
 
-    function diasentre($data_inicial, $data_final) {
+    function diasentre ($data_inicial, $data_final) {
         $diferenca = strtotime($data_final) - strtotime($data_inicial);
         $dias = floor($diferenca / (60 * 60 * 24)); 
         return $dias;
