@@ -160,8 +160,8 @@ $json_data_4 = json_decode($json_br_080_4,true);
                     $coord = new LatLng(['lat' => -15.7801, 'lng' => -47.9292]);
                     $map = new Map([
                         'center' => $coord,
-                        'zoom' => 7,
-                        'mapTypeId' => 'hybrid',
+                        'zoom' => 11,
+                        'mapTypeId' => 'satellite',
                     ]);
 
                     // lets use the directions renderer

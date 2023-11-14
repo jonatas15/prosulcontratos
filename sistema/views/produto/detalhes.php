@@ -5,7 +5,7 @@ use yii\widgets\DetailView;
 use yii\bootstrap5\Modal;
 use app\models\Produto;
 
-$model = Produto::find()->where(['id' => $id])->one();
+$model = Produto::findOne(['id' => $id]);
 
 /** @var yii\web\View $this */
 /** @var app\models\Oficio $model */
@@ -24,7 +24,9 @@ Modal::begin([
     'size' => 'modal-xl',
     'toggleButton' => [
         'label' => '<i class="bi bi-card-list"></i>',
-        'class' => 'btn btn-info text-white'
+        'class' => 'btn btn-info text-white',
+        'tittle' => $model->subproduto,
+        'alt' => $model->subproduto,
     ],
     'bodyOptions' => [
         'class' => 'bg-white'

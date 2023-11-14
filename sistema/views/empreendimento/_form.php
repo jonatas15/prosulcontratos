@@ -26,6 +26,9 @@ $ordensdeservico = ArrayHelper::map(Ordensdeservico::find()->all(), 'id', 'titul
     ]); ?>
     <div class="row">
         <div class="col-md-8"><?= $form->field($model, 'titulo')->textInput() ?></div>
+        <div class="col-md-4" style="display: block"> <?= $form->field($model, 'contrato_id')->dropDownList($contratos, [
+            'prompt' => 'Selecione'
+        ]) ?></div>
         <div class="col-md-4"> <?= $form->field($model, 'ordensdeservico_id')->dropDownList($ordensdeservico, [
             'prompt' => 'Selecione'
         ]) ?></div>
@@ -35,9 +38,6 @@ $ordensdeservico = ArrayHelper::map(Ordensdeservico::find()->all(), 'id', 'titul
         <?php 
             $model->contrato_id = $contrato_id;
         ?>
-        <div class="col-md-4" style="display: none"> <?= $form->field($model, 'contrato_id')->dropDownList($contratos, [
-            'prompt' => 'Selecione'
-        ]) ?></div>
         <div class="col-md-4"> <?= $form->field($model, 'prazo')->textInput() ?></div>
         <div class="col-md-4"> <?= $form->field($model, 'status')->dropDownList([
             'Empreendimento' => 'Empreendimento',

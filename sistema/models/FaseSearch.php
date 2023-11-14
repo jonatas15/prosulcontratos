@@ -18,7 +18,7 @@ class FaseSearch extends Fase
     {
         return [
             [['id', 'empreendimento_id', 'licenciamento_id', 'ativo', 'produto_id', 'fase_id'], 'integer'],
-            [['fase', 'datacadastro', 'data', 'exigencias', 'ambito', 'status', 'natureza'], 'safe'],
+            [['fase', 'datacadastro', 'data', 'exigencias', 'ambito', 'status', 'natureza', 'daysBetween'], 'safe'],
         ];
     }
 
@@ -48,7 +48,8 @@ class FaseSearch extends Fase
             'query' => $query,
             'sort'=> [
                 'defaultOrder' => [
-                    'ordem' => SORT_DESC
+                    'ordem' => SORT_ASC
+                    // 'data' => SORT_DESC,
                 ],
             ],
         ]);
@@ -71,6 +72,7 @@ class FaseSearch extends Fase
             'ativo' => $this->ativo,
             'produto_id' => $this->produto_id,
             'fase_id' => $this->fase_id,
+            'daysBetween' => $this->daysBetween
         ]);
 
         $query->andFilterWhere(['like', 'fase', $this->fase])

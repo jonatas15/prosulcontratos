@@ -67,6 +67,12 @@ $config = [
                 ],
             ]
         ],
+        'formatter' => [
+            'class' => 'yii\\i18n\\Formatter',
+            'dateFormat' => 'd/m/Y', // Date format
+            'datetimeFormat' => 'd/m/Y H:i:s', // Date and time format
+            'timeFormat' => 'H:i:s', // Time format
+        ]
     ],
     'modules' => [
         // 'financeiro' => [

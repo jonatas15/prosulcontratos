@@ -130,7 +130,7 @@
                             case 'Pendente': $innerBg = "bg-danger"; break;
                         }    
                     ?>
-                    <div class="timeline-step" style="cursor: pointer">
+                    <div class="timeline-step" style="cursor: pointer" title="<?=date('d/m/Y', strtotime($fase->data))?>" alt="<?=date('d/m/Y', strtotime($fase->data))?>">
                         <span style="position: absolute; top: -5px" class="badge rounded-pill text-<?=$innerBg?> text-white fs-6"><?=$i?></span>
                         <div 
                             class="timeline-content" 
@@ -143,9 +143,10 @@
                             
                             <div class="inner-circle <?=$innerBg?>">
                             </div>
-                            <p class="h6 mt-3 mb-1"><?=date('d/m/Y', strtotime($fase->data))?></p>
-                            <p class="h6 text-muted mb-0 mb-lg-0"><?=$fase->fase?></p>
-                            <p class="h6 text-muted mb-0 mb-lg-0"><?=Editable::widget([
+                            <!-- <p class="h6 mt-3 mb-1"><?=date('d/m/Y', strtotime($fase->data))?></p> -->
+                            <p class="h6 text-muted mb-0 mb-lg-0" data-bs-toggle="tooltip"><?=$fase->fase?></p>
+                            <?php /*
+                            <p class="fs-6 text-muted mb-0 mb-lg-0"><?=Editable::widget([
                                 'name'=>'status', 
                                 'asPopover' => true,
                                 'value' => $fase->status,
@@ -165,6 +166,7 @@
                                     ]
                                 ],
                             ]);?></p>
+                            */?>
                         </div>
                     </div>
                     <?php $i++; ?>
@@ -181,6 +183,16 @@
     </div>
     <div class="row">
         Licenciamento: <?= $licenciamento_id; ?>
+        <?php 
+            $previousDate = null;
+            foreach ($dataProviderFases->models as $model) {
+                if ($previousDate !== null) {
+                    $model->daysBetween = (strtotime($model->data) - strtotime($previousDate)) / 86400;
+                    // Use $daysBetween as needed
+                }
+                $previousDate = $model->data;
+            }
+        ?>
         <?= GridView::widget([
             'dataProvider' => $dataProviderFases,
             // 'filterModel' => $searchModelFases,
@@ -209,20 +221,68 @@
                     'headerOptions' => [
                         'width' => '10%'
                     ],
+                    // 'value' => function($data) {
+                    //     return date('d/m/Y', strtotime($data->data));
+                    // }
                     'value' => function($data) {
-                        return date('d/m/Y', strtotime($data->data));
+                        
+                        return Editable::widget([
+                            'name'=>'data', 
+                            'asPopover' => true,
+                            'value' => date('d/m/Y', strtotime($data->data)),
+                            'size'=>'md',
+                            'inputType' => Editable::INPUT_DATE,
+                            'options' => [
+                                'language' => 'pt_BR',
+                                'pluginOptions' => [
+                                    'timePicker' => true,
+                                    'format' => 'dd/mm/yyyy',
+                                ],
+                            ],
+                            'formOptions' => [
+                                'action' => [
+                                    'fase/editcampo',
+                                    'id' => $data->id,
+                                    'campo' => 'data'
+                                ]
+                            ],
+                        ]);
                     }
                 ],
-                [
-                    'attribute' => 'datacadastro',
-                    'format' => 'raw',
-                    'headerOptions' => [
-                        'width' => '10%'
-                    ],
-                    'value' => function($data) {
-                        return date('d/m/Y H:i:s', strtotime($data->datacadastro));
-                    }
-                ],
+                // [
+                //     'attribute' => 'datacadastro',
+                //     'format' => 'raw',
+                //     'headerOptions' => [
+                //         'width' => '10%'
+                //     ],
+                //     // 'value' => function($data) {
+                //     //     return date('d/m/Y H:i:s', strtotime($data->datacadastro));
+                //     // }
+                //     'value' => function($data) {
+                        
+                //         return Editable::widget([
+                //             'name'=>'datacadastro', 
+                //             'asPopover' => true,
+                //             'value' => date('d/m/Y', strtotime($data->datacadastro)),
+                //             'size'=>'md',
+                //             'inputType' => Editable::INPUT_DATE,
+                //             'options' => [
+                //                 'language' => 'pt_BR',
+                //                 'pluginOptions' => [
+                //                     'timePicker' => true,
+                //                     'format' => 'dd/mm/yyyy',
+                //                 ],
+                //             ],
+                //             'formOptions' => [
+                //                 'action' => [
+                //                     'fase/editcampo',
+                //                     'id' => $data->id,
+                //                     'campo' => 'datacadastro'
+                //                 ]
+                //             ],
+                //         ]);
+                //     }
+                // ],
                 // 'ordem',
                 [
                     'format' => 'raw',
@@ -243,30 +303,41 @@
                             ])->one();
                             return $data_update_anterior->datacadastro;
                             // return date('d/m/Y H:i:s', strtotime($data->datacadastro));
+                            $dias_passados = $this->context->diasentre($data->data, date('Y-m-d', strtotime($data->datacadastro)));
+                            $return = $dias_passados.($dias_passados != 1 ? ' dias' : ' dia');
+                            return $return;
                         */
-                        $dias_passados = $this->context->diasentre($data->data, date('Y-m-d', strtotime($data->datacadastro)));
-                        $return = $dias_passados.($dias_passados != 1 ? ' dias' : ' dia');
-                        return $return;
+                        return ($data->daysBetween != '' ? '' : '0').$data->daysBetween.($data->daysBetween != 1 ? ' dias' : ' dia');
                     }
                 ],
                 // 'exigencias',
+                // 'produto_id',
                 [
                     'attribute' => 'produto_id',
                     'format'=>'raw',
                     'headerOptions' => [
-                        'width' => '20%'
+                        'width' => '10%'
                     ],
                     'value' => function($data) {
                         $produtos_do_empreendimento = ArrayHelper::map(\app\models\Produto::find()->where([
                             'empreendimento_id' => $data->licenciamento->empreendimento_id
                         ])->all(), 'id', 'subproduto');
+                        $renderizaProduto = '';
+                        if (!in_array($data->produto_id, ['', ' ', 0, 'null', 'NULL', NULL, null])) {
+                            $renderizaProduto = $this->render('/produto/detalhes', [
+                                'id' => $data->produto_id
+                            ]);
+                        }
+                        
                         return Editable::widget([
                             'name'=>'produto_id', 
                             'asPopover' => true,
                             'value' => $data->produto_id,
+                            'displayValue' => ' ',
                             'size'=>'md',
                             'inputType' => Editable::INPUT_DROPDOWN_LIST,
                             'data' => $produtos_do_empreendimento,
+                            'format' => 'button',
                             'formOptions' => [
                                 'action' => [
                                     'fase/editcampo',
@@ -274,13 +345,7 @@
                                     'campo' => 'produto_id'
                                 ]
                             ],
-                        ]).Html::a($data->produto->subproduto, [
-                            'produto/view', 'id' => $data->produto_id], 
-                            [
-                                'class' => 'profile-link',
-                                'target' => '_blank',
-                            ]
-                        );
+                        ]).$renderizaProduto;
                     }
                 ],
                 [

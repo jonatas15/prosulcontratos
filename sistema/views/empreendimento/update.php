@@ -87,6 +87,7 @@ $this->params['breadcrumbs'][] = 'Detalhes do Empreendimento';
                 'label' => '📋 Editar Empreendimento',
                 'content' => '<div class="row pt-3">'.$this->render('_form', [
                     'model' => $model,
+                    'contrato_id' => $model->contrato_id,
                     'action' => 'empreendimento/update?id='.$model->id //A Yii->homeUrl fica na _form
                 ]).'</div>',
                 'options' => ['id' => 'aba_update'],

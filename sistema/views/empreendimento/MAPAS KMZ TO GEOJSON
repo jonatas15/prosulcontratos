@@ -1,0 +1,16 @@
+MAPAS KMZ TO GEOJSON
+composer require kmltools/php-kml-tools
+
+use KMLTools\Converter\KMZConverter;
+use KMLTools\Converter\GeoJSONConverter;
+
+$kmzFile = '/path/to/file.kmz';
+$geojsonFile = '/path/to/output/file.geojson';
+
+$converter = new KMZConverter();
+$kml = $converter->convert($kmzFile);
+
+$converter = new GeoJSONConverter();
+$geojson = $converter->convert($kml);
+
+file_put_contents($geojsonFile, $geojson);

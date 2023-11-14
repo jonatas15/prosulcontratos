@@ -66,6 +66,13 @@ class ProdutoController extends Controller
             'model' => $this->findModel($id),
         ]);
     }
+    // public function actionDetalhes($id)
+    // {
+    //     return $this->render('detalhes', [
+    //         'model' => $this->findModel($id),
+    //         'id' => $id,
+    //     ]);
+    // }
 
     /**
      * Creates a new Produto model.

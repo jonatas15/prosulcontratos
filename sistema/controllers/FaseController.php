@@ -186,8 +186,12 @@ class FaseController extends Controller
         $campo = $_REQUEST['campo'];
         $valor = $_REQUEST[$campo];
         $model = $this->findModel($id);
-        $model->$campo = $valor != "" ? $valor : $model->$campo;
-        $model->datacadastro =  date('Y-m-d h:i:s', time());
+        // $model->datacadastro =  date('Y-m-d h:i:s', time());
+        if(in_array($campo, ['data', 'datacadastro'])) {
+            $model->$campo = $this->dataprobanco($valor);
+        } else {
+            $model->$campo = $valor != "" ? $valor : $model->$campo;
+        }
         $model->save();
         return $this->redirect(\Yii::$app->request->referrer);
     }

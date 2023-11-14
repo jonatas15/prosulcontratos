@@ -29,6 +29,8 @@ use Yii;
  */
 class Fase extends \yii\db\ActiveRecord
 {
+    // Variáveis do Jonatas
+    public $daysBetween = '';
     /**
      * {@inheritdoc}
      */
@@ -45,7 +47,7 @@ class Fase extends \yii\db\ActiveRecord
         return [
             [['empreendimento_id', 'licenciamento_id', 'ordem', 'produto_id', 'fase_lai_id', 'fase_lap_id', 'ativo', 'fase_id'], 'integer'],
             [['licenciamento_id', 'fase'], 'required'],
-            [['datacadastro', 'data'], 'safe'],
+            [['datacadastro', 'data', 'daysBetween'], 'safe'],
             [['fase', 'exigencias', 'ambito', 'status', 'natureza'], 'string', 'max' => 200],
             [['empreendimento_id'], 'exist', 'skipOnError' => true, 'targetClass' => Empreendimento::class, 'targetAttribute' => ['empreendimento_id' => 'id']],
             [['fase_lai_id'], 'exist', 'skipOnError' => true, 'targetClass' => FaseLai::class, 'targetAttribute' => ['fase_lai_id' => 'id']],
@@ -64,10 +66,10 @@ class Fase extends \yii\db\ActiveRecord
             'empreendimento_id' => 'Empreendimento ID',
             'licenciamento_id' => 'Licenciamento ID',
             'fase' => 'Fase',
-            'datacadastro' => 'Última Alteração',
-            'data' => 'Ativação',
+            'datacadastro' => 'Atualização',
+            'data' => 'Início',
             'exigencias' => 'Exigencias',
-            'ambito' => 'Ambito',
+            'ambito' => 'Órgão',
             'status' => 'Status',
             'ordem' => 'Ordem',
             'produto_id' => 'Produtos',
