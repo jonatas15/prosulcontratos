@@ -1,0 +1,832 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.opengis.net/kml/2.2 http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd http://www.google.com/kml/ext/2.2 http://code.google.com/apis/kml/schema/kml22gx.xsd">
+<Document id="Lagoa_Mirim">
+  <name>Lagoa Mirim</name>
+  <Snippet></Snippet>
+  <Style id="LineStyle00">
+    <LabelStyle>
+      <color>00000000</color>
+      <scale>0.000000</scale>
+    </LabelStyle>
+    <LineStyle>
+      <color>ff732600</color>
+      <width>1.500000</width>
+    </LineStyle>
+    <PolyStyle>
+      <color>00000000</color>
+      <outline>0</outline>
+    </PolyStyle>
+  </Style>
+  <Style id="LineStyle10">
+    <LabelStyle>
+      <color>00000000</color>
+      <scale>0.000000</scale>
+    </LabelStyle>
+    <LineStyle>
+      <color>ffa900e6</color>
+      <width>1.500000</width>
+    </LineStyle>
+    <PolyStyle>
+      <color>00000000</color>
+      <outline>0</outline>
+    </PolyStyle>
+  </Style>
+  <Style id="LineStyle20">
+    <LabelStyle>
+      <color>00000000</color>
+      <scale>0.000000</scale>
+    </LabelStyle>
+    <LineStyle>
+      <color>ffff00c5</color>
+      <width>1.500000</width>
+    </LineStyle>
+    <PolyStyle>
+      <color>00000000</color>
+      <outline>0</outline>
+    </PolyStyle>
+  </Style>
+  <Style id="LineStyle30">
+    <LabelStyle>
+      <color>00000000</color>
+      <scale>0.000000</scale>
+    </LabelStyle>
+    <LineStyle>
+      <color>ff0055ff</color>
+      <width>1.500000</width>
+    </LineStyle>
+    <PolyStyle>
+      <color>00000000</color>
+      <outline>0</outline>
+    </PolyStyle>
+  </Style>
+  <Style id="LineStyle50">
+    <LabelStyle>
+      <color>00000000</color>
+      <scale>0.000000</scale>
+    </LabelStyle>
+    <LineStyle>
+      <color>ff0000ff</color>
+      <width>1.000000</width>
+    </LineStyle>
+    <PolyStyle>
+      <color>00000000</color>
+      <outline>0</outline>
+    </PolyStyle>
+  </Style>
+  <Style id="PolyStyle70">
+    <LabelStyle>
+      <color>00000000</color>
+      <scale>0.000000</scale>
+    </LabelStyle>
+    <LineStyle>
+      <color>ff00ffff</color>
+      <width>2.000000</width>
+    </LineStyle>
+    <PolyStyle>
+      <color>00f0f0f0</color>
+      <outline>1</outline>
+    </PolyStyle>
+  </Style>
+  <Folder id="FeatureLayer0">
+    <name>Hidrovia_DNIT</name>
+    <Snippet></Snippet>
+    <Placemark id="ID_00000">
+      <name>Lagoa Mirim</name>
+      <Snippet></Snippet>
+      <description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+<td>Lagoa Mirim</td>
+</tr>
+<tr>
+<td>
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+<tr>
+<td>FID</td>
+<td>0</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>id_snv</td>
+<td>18</td>
+</tr>
+<tr>
+<td>Nome</td>
+<td>Lagoa Mirim</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Codigo</td>
+<td>HF-702</td>
+</tr>
+<tr>
+<td>Sequencia_</td>
+<td>0010</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Trecho</td>
+<td>Pelotas a Santa Vitxria do Palmar.</td>
+</tr>
+<tr>
+<td>Extensao_k</td>
+<td>283,4</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Administra</td>
+<td>AHSUL</td>
+</tr>
+<tr>
+<td>Regiao_Hid</td>
+<td>Atlantico Sul</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>dt_ini</td>
+<td>01/01/2013</td>
+</tr>
+<tr>
+<td>dt_fim</td>
+<td>30/10/2029</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>"CPF"</td>
+<td>020.086.790-39</td>
+</tr>
+<tr>
+<td>"CREA"</td>
+<td>162279-9</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
+]]></description>
+      <styleUrl>#LineStyle00</styleUrl>
+      <MultiGeometry>
+        <LineString>
+          <extrude>0</extrude>
+          <tessellate>1</tessellate><altitudeMode>clampToGround</altitudeMode>
+          <coordinates> -53.43879464325136,-33.49690638659299,0 -53.44894970472797,-33.46622732005728,0 -53.47285110225641,-33.44013499006343,0 -53.49959067361806,-33.41177472767841,0 -53.51346450733939,-33.39040439330674,0 -53.5097149321258,-33.35482158896847,0 -53.49950099999995,-33.28363799913396,0 -53.49551151826574,-33.22819116924618,0 -53.45672051208618,-33.15427797645894,0 -53.4249714158417,-33.09624940760308,0 -53.38396896958761,-33.06585750660741,0 -53.35636399999999,-33.04673499913704,0 -53.31972009900579,-33.02330297220091,0 -53.29864515655772,-33.0125981378015,0 -53.26349266796387,-33.01462082015639,0 -53.249074343345,-33.01495068485511,0 -53.24196430120861,-33.01053863107786,0 -53.22238991836531,-32.98371512024553,0 -53.21078520560957,-32.93995499680306,0 -53.18670461891168,-32.84264878783118,0 -53.17029418196314,-32.81119770168615,0 -53.15267938389371,-32.78112319028627,0 -53.13691523727073,-32.77689284653522,0 -53.11041830369339,-32.78253269102114,0 -53.10105795872886,-32.78229914314047,0 -53.09642830699278,-32.77960732451935,0 -53.08825566518703,-32.76622624943238,0 -53.06770842751297,-32.73258175432921,0 -53.06054503578775,-32.72085226048453,0 -53.01609466297459,-32.64819069935519,0 -52.99403694008691,-32.64380514087488,0 -52.97894133420834,-32.64164252996562,0 -52.76337158704826,-32.49167484643798,0 -52.74792300062263,-32.48090035654133,0 -52.71864026648512,-32.4364845893777,0 -52.7111873507028,-32.40775590025437,0 -52.70948496896342,-32.38170855653673,0 -52.70904229543953,-32.37493541678572,0 -52.70830168106943,-32.36360362403035,0 -52.70622545553459,-32.33183627192072,0 -52.70489655006497,-32.31150331325783,0 -52.70432159311184,-32.30294302103493,0 -52.70281125975407,-32.29381716420939,0 -52.69474655021735,-32.26592020031576,0 -52.6897904346601,-32.24877629995247,0 -52.68106471551255,-32.2214176711076,0 -52.67701966446037,-32.2101627167828,0 -52.67000470333204,-32.19461306386874,0 -52.66540838979012,-32.18371508961825,0 -52.66338231533058,-32.18070573201312,0 -52.65782835641312,-32.17504693351339,0 -52.64950724177879,-32.16656874494417,0 -52.64437036047837,-32.16142949870734,0 -52.63920395650745,-32.15634324137879,0 -52.63610919666296,-32.15353646450457,0 -52.63164523946239,-32.15082091867055,0 -52.62698724832217,-32.1486476077559,0 -52.62471499792849,-32.14686574606139,0 -52.62377644790678,-32.14602548702163,0 -52.62293921850408,-32.14488058554846,0 -52.62177799999995,-32.14154999914945,0 -52.62013199999996,-32.1346609991496,0 -52.6193254814122,-32.13229344357238,0 -52.61915293267344,-32.13190748677599,0 -52.6183155952948,-32.13054627350216,0 -52.61722893170207,-32.12953659564404,0 -52.61639719286945,-32.12901722221399,0 -52.61466373409417,-32.12827958018201,0 -52.61187959790272,-32.12769697027338,0 -52.60883405462994,-32.12708984967906,0 -52.60635941518387,-32.12587632456616,0 -52.6046569792623,-32.12424095977367,0 -52.60339049417871,-32.12340774590287,0 -52.59904115629513,-32.12127314612851,0 -52.59800170297336,-32.12104465052747,0 -52.59571743994036,-32.12030634110082,0 -52.59500938618606,-32.12011802893213,0 -52.59182090843824,-32.11942798524045,0 -52.58865465565049,-32.11829252948588,0 -52.58567335125684,-32.11630022912627,0 -52.58346717374786,-32.11453029448489,0 -52.58167158046387,-32.11332627783931,0 -52.58001878184933,-32.11262272676388,0 -52.57978157910259,-32.11257168313481,0 -52.57859666193018,-32.11217640570041,0 -52.5776393208435,-32.1115043800912,0 -52.57703587697796,-32.11056659910076,0 -52.5764927066482,-32.10938119165764,0 -52.57566436820866,-32.10748309099135,0 -52.57523606522761,-32.10660269041927,0 -52.57456703824846,-32.10553698151752,0 -52.57297442963431,-32.10372070027454,0 -52.56859820262702,-32.10006223188292,0 -52.56592130899548,-32.09902716634535,0 -52.56463640005234,-32.09899147443024,0 -52.56259309904817,-32.09913884069514,0 -52.55836568669628,-32.10008296726326,0 -52.55365435390473,-32.10077301095495,0 -52.55015654622605,-32.10079680556512,0 -52.54758672833982,-32.100749216345,0 -52.5449693212334,-32.10027332414373,0 -52.54261365483768,-32.09927395052141,0 -52.53923482020941,-32.09772730086765,0 -52.53497558500897,-32.0955144021322,0 -52.53024045760731,-32.09313494112641,0 -52.52791299999996,-32.09146999915014,0 -52.5240509554294,-32.08750100848992,0 -52.5230306907597,-32.08628209342975,0 -52.52262618238871,-32.08502097909663,0 -52.5225597712918,-32.08477525803838,0 -52.52247313281794,-32.0837290404795,0 -52.52257999999995,-32.08321099915032,0 -52.52301798963588,-32.08121914660713,0 -52.52339988394993,-32.07948239966543,0 -52.52347973822077,-32.07911924510739,0 -52.52351085313382,-32.07795969973212,0 -52.52319725303005,-32.07714496316744,0 -52.522792744659,-32.07628835720531,0 -52.52226926323783,-32.07540795663328,0 -52.52199516446655,-32.0750836015141,0 -52.52109876269595,-32.07432407226543,0 -52.52024993444957,-32.07388197422054,0 -52.51804655355807,-32.07183325829452,0 -52.51677592138088,-32.06955532095853,0 -52.51761767950643,-32.06634847377178,0 -52.51658499999996,-32.06346699915062,0 -52.51386696888903,-32.06164722839181,0 -52.51174499999996,-32.06021799915064,0 -52.50890103997591,-32.0571429122509,0 -52.50582301155379,-32.05380635956075,0 -52.50438699999995,-32.05224199915084,0 -52.50165024508851,-32.05036981721958,0 -52.50007486161684,-32.04929699915092,0 -52.49736300000006,-32.04915599915088,0 -52.49259499999994,-32.05065999915076,0 -52.48847360877954,-32.05363356509198,0 -52.48540299999996,-32.0558579991508,0 -52.48046827518431,-32.0566665994854,0 -52.47425064127998,-32.05569585017756,0 -52.46839758570411,-32.05669766884867,0 -52.46444418614431,-32.05828119547881,0 -52.45995254308878,-32.06063689157875,0 -52.45567299999999,-32.06171999915063,0 -52.44976999999994,-32.0638659991507,0 -52.44448499999993,-32.06447799915063,0 -52.44267645007244,-32.06448222611208,0 -52.44010788218879,-32.06404868720841,0 -52.4375561240559,-32.0619599428306,0 -52.43725499999999,-32.06110699915065,0 -52.43583330459023,-32.0546841576329,0 -52.43464450002142,-32.05181334370087,0 -52.43335514880255,-32.05003872811313,0 -52.43075699999997,-32.04846699915082,0 -52.42064999999991,-32.044995999151,0 -52.41354899999993,-32.04234699915089,0 -52.41053386161695,-32.04050599915102,0 -52.40776959963728,-32.03678930450921,0 -52.4075554481467,-32.03450502194358,0 -52.40734129665617,-32.0321493555479,0 -52.40837899999998,-32.02959599915121,0 -52.41093432552992,-32.02792858251358,0 -52.41365472926873,-32.02733796407767,0 -52.41764505064702,-32.02637619430954,0 -52.41863924056327,-32.02536158963383,0 -52.41950820334307,-32.02319770192754,0 -52.41945899999996,-32.01940999915126,0 -52.41902953800724,-32.0171041466418,0 -52.41899905280064,-32.01694046652253,0 -52.41874892615391,-32.01024891791856,0 -52.42043650040858,-32.00349773438114,0 -52.42125674651857,-32.00009438960549,0 -52.42151816736572,-31.99702330620179,0 -52.42113146005743,-31.99428384851578,0 -52.42045709556288,-31.99170536473803,0 -52.41859342944286,-31.98766761487805,0 -52.41790999999995,-31.98447799915179,0 -52.41831999999994,-31.97787399915185,0 -52.41898808188012,-31.9726606199515,0 -52.41864613143145,-31.96967213665711,0 -52.41760994798091,-31.96801414020308,0 -52.41545899999994,-31.96641399915209,0 -52.41181635350944,-31.96422883037422,0 -52.40598500388279,-31.9619076666568,0 -52.40234442854392,-31.9602658385628,0 -52.39977461065769,-31.9580529398273,0 -52.39448406852694,-31.95176672600809,0 -52.39006640975391,-31.94634599167888,0 -52.38806766250894,-31.9423484971891,0 -52.38729521670518,-31.9362993328561,0 -52.38354799999991,-31.92300299915271,0 -52.3798995076408,-31.91033734498965,0 -52.3799408982125,-31.90650853151444,0 -52.38042430517675,-31.9030615753937,0 -52.38249972375536,-31.898376057802,0 -52.38449847100019,-31.8955207045951,0 -52.38809209229169,-31.89163341368268,0 -52.39839021509056,-31.88268903472607,0 -52.40251333278269,-31.87715129005448,0 -52.4054275845549,-31.87136291390128,0 -52.40700611792874,-31.86822758255296,0 -52.40751862021096,-31.86541566998472,0 -52.40712514896256,-31.86168497962966,0 -52.4060138956865,-31.85933474102879,0 -52.40434317578882,-31.85804419375382,0 -52.40088535731093,-31.85786872966717,0 -52.39320729828148,-31.8568306686408,0 -52.39106578337623,-31.85540299203732,0 -52.39044031041863,-31.85468369813617,0 -52.38962677673237,-31.85261984377243,0 -52.38960820444663,-31.85074898330059,0 -52.38947199999996,-31.84758099915381,0 -52.39285599999999,-31.82793999915411,0 -52.39144699999997,-31.81843599915426,0 -52.38441539725437,-31.80701479736707,0 -52.38386567817895,-31.80627762636455,0 -52.38270584454705,-31.80512696996259,0 -52.3821589035506,-31.80466566599828,0 -52.38023795078192,-31.80344987310678,0 -52.37724845225967,-31.80173856327414,0 -52.37623805928848,-31.80119959203737,0 -52.37280317027989,-31.80005644948494,0 -52.36895768553984,-31.80048372556715,0 -52.36596675296425,-31.80069736360819,0 -52.36233490626523,-31.80069736360821,0 -52.35720759327853,-31.79984281144374,0 -52.35336210853848,-31.79856098319716,0 -52.35037117596272,-31.79557005062156,0 -52.34887570967504,-31.7919382039226,0 -52.34695296730501,-31.78873363330596,0 -52.34310748256485,-31.78638361485368,0 -52.33733925545483,-31.78381995836043,0 -52.33157102834475,-31.78253813011363,0 -52.3270846294813,-31.78296540619585,0 -52.32217095453564,-31.78253813011369,0 -52.31789819371324,-31.78232449207266,0 -52.31469362309662,-31.78061538774363,0 -52.3112754144388,-31.7778380932093,0 -52.30721629165754,-31.77463352259254,0 -52.30358444495869,-31.77335169434592,0 -52.30144806454751,-31.77335169434592,0 -52.29439800919062,-31.77399260846929,0 -52.28713431579274,-31.77420624651032,0 -52.27816151806587,-31.77506079867483,0 -52.27153873879143,-31.77506079867485,0 -52.26192502694114,-31.77741081712706,0 -52.25551588570772,-31.78125630186705,0 -52.24440670756979,-31.78595633877146,0 -52.23714301417192,-31.78745180505922,0 -52.2268883881984,-31.78916090938822,0 -52.22280264900513,-31.78778257862395,0</coordinates>
+        </LineString>
+      </MultiGeometry>
+    </Placemark>
+  </Folder>
+  <Folder id="FeatureLayer1">
+    <name>Canal_SVP</name>
+    <Snippet></Snippet>
+    <Placemark id="ID_10000">
+      <name>LWPolyline</name>
+      <Snippet></Snippet>
+      <description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+<td>LWPolyline</td>
+</tr>
+<tr>
+<td>
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+<tr>
+<td>FID</td>
+<td>0</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>FID_</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Entity</td>
+<td>LWPolyline</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Layer</td>
+<td>Canal de Santa Vitória do Palmar</td>
+</tr>
+<tr>
+<td>Color</td>
+<td>160</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Linetype</td>
+<td>Continuous</td>
+</tr>
+<tr>
+<td>comp</td>
+<td>10,078603</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>"CPF"</td>
+<td>020.086.790-39</td>
+</tr>
+<tr>
+<td>"CREA"</td>
+<td>162279-9</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
+]]></description>
+      <styleUrl>#LineStyle10</styleUrl>
+      <MultiGeometry>
+        <LineString>
+          <extrude>0</extrude>
+          <tessellate>1</tessellate><altitudeMode>clampToGround</altitudeMode>
+          <coordinates> -53.4935978936135,-33.42049371455808,0 -53.4513838781809,-33.46477035583763,0 -53.44141584981713,-33.48417250932835,0 -53.43880603288911,-33.49702885597043,0</coordinates>
+        </LineString>
+      </MultiGeometry>
+    </Placemark>
+  </Folder>
+  <Folder id="FeatureLayer2">
+    <name>Canal_Sangradouro</name>
+    <Snippet></Snippet>
+    <Placemark id="ID_20000">
+      <name>LWPolyline</name>
+      <Snippet></Snippet>
+      <description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+<td>LWPolyline</td>
+</tr>
+<tr>
+<td>
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+<tr>
+<td>FID</td>
+<td>0</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>FID_</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Entity</td>
+<td>LWPolyline</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Layer</td>
+<td>Canal do Sangradouro</td>
+</tr>
+<tr>
+<td>Color</td>
+<td>4</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Linetype</td>
+<td>DASHED2</td>
+</tr>
+<tr>
+<td>LineWt</td>
+<td>80</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>"CPF"</td>
+<td>020.086.790-39</td>
+</tr>
+<tr>
+<td>"CREA"</td>
+<td>162279-9</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
+]]></description>
+      <styleUrl>#LineStyle20</styleUrl>
+      <MultiGeometry>
+        <LineString>
+          <extrude>0</extrude>
+          <tessellate>1</tessellate><altitudeMode>clampToGround</altitudeMode>
+          <coordinates> -52.6316303851499,-32.1542653879033,0 -52.63504320286145,-32.15623199433188,0 -52.66242659395686,-32.18378067873959,0 -52.67443629611885,-32.211062554191,0 -52.68270256635673,-32.23403570987475,0 -52.70046052949855,-32.29501992455144,0 -52.70097802885519,-32.30000433627298,0</coordinates>
+        </LineString>
+      </MultiGeometry>
+    </Placemark>
+  </Folder>
+  <Folder id="FeatureLayer3">
+    <name>Area_despejo_SVP</name>
+    <Snippet></Snippet>
+    <Placemark id="ID_30000">
+      <name>LWPolyline</name>
+      <Snippet></Snippet>
+      <description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+<td>LWPolyline</td>
+</tr>
+<tr>
+<td>
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+<tr>
+<td>FID</td>
+<td>0</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>FID_</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Entity</td>
+<td>LWPolyline</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Layer</td>
+<td>Canal de Santa Vitória do Palmar</td>
+</tr>
+<tr>
+<td>Color</td>
+<td>4</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Linetype</td>
+<td>DASHED2</td>
+</tr>
+<tr>
+<td>"CPF"</td>
+<td>020.086.790-39</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>"CREA"</td>
+<td>162279-9</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
+]]></description>
+      <styleUrl>#LineStyle30</styleUrl>
+      <MultiGeometry>
+        <LineString>
+          <extrude>0</extrude>
+          <tessellate>1</tessellate><altitudeMode>clampToGround</altitudeMode>
+          <coordinates> -53.49611725109524,-33.42218164022947,0 -53.45417541379303,-33.46617440775068,0 -53.4445326006402,-33.48494481839097,0 -53.44198797286214,-33.49748227605067,0</coordinates>
+        </LineString>
+      </MultiGeometry>
+    </Placemark>
+  </Folder>
+  <Folder id="FeatureLayer4">
+    <name>Area_despejo_Sangradouro</name>
+    <Snippet></Snippet>
+    <Placemark id="ID_40000">
+      <name>LWPolyline</name>
+      <Snippet></Snippet>
+      <description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+<td>LWPolyline</td>
+</tr>
+<tr>
+<td>
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+<tr>
+<td>FID</td>
+<td>0</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>FID_</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Entity</td>
+<td>LWPolyline</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Layer</td>
+<td>Canal do Sangradouro</td>
+</tr>
+<tr>
+<td>Color</td>
+<td>5</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Linetype</td>
+<td>Continuous</td>
+</tr>
+<tr>
+<td>comp</td>
+<td>18,421063</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>"CPF"</td>
+<td>020.086.790-39</td>
+</tr>
+<tr>
+<td>"CREA"</td>
+<td>162279-9</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
+]]></description>
+      <styleUrl>#LineStyle30</styleUrl>
+      <MultiGeometry>
+        <LineString>
+          <extrude>0</extrude>
+          <tessellate>1</tessellate><altitudeMode>clampToGround</altitudeMode>
+          <coordinates> -52.630380377378,-32.1502112501019,0 -52.6371980411913,-32.15420937798971,0 -52.66521258438598,-32.18239228630703,0 -52.67745096746459,-32.21019174980448,0 -52.68577186586207,-32.23331461600939,0 -52.70361185445148,-32.29457336683257,0 -52.70415121578824,-32.29976662444609,0</coordinates>
+        </LineString>
+      </MultiGeometry>
+    </Placemark>
+  </Folder>
+  <Folder id="FeatureLayer5">
+    <name>ADA_SVP</name>
+    <Snippet></Snippet>
+    <Placemark id="ID_50000">
+      <name>LWPolyline</name>
+      <Snippet></Snippet>
+      <description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+<td>LWPolyline</td>
+</tr>
+<tr>
+<td>
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+<tr>
+<td>FID</td>
+<td>0</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>FID_</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Entity</td>
+<td>LWPolyline</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Color</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Linetype</td>
+<td>Continuous</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>"CPF"</td>
+<td>020.086.790-39</td>
+</tr>
+<tr>
+<td>"CREA"</td>
+<td>162279-9</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
+]]></description>
+      <styleUrl>#LineStyle50</styleUrl>
+      <MultiGeometry>
+        <LineString>
+          <extrude>0</extrude>
+          <tessellate>1</tessellate><altitudeMode>clampToGround</altitudeMode>
+          <coordinates> -53.44293384007491,-33.49762574007789,0 -53.44545675959364,-33.48519458084384,0 -53.4549912001758,-33.46663476195368,0 -53.49684237037752,-33.42273665772586,0 -53.49264344507107,-33.41992344419607,0 -53.48670772409905,-33.42615256605924,0 -53.45033864405305,-33.46429467095995,0 -53.44026217674437,-33.48390739415825,0 -53.43763060794232,-33.49687003495888,0 -53.44293384007491,-33.49762574007789,0</coordinates>
+        </LineString>
+      </MultiGeometry>
+    </Placemark>
+  </Folder>
+  <Folder id="FeatureLayer6">
+    <name>ADA_Sangradouro</name>
+    <Snippet></Snippet>
+    <Placemark id="ID_60000">
+      <name>LWPolyline</name>
+      <Snippet></Snippet>
+      <description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+<td>LWPolyline</td>
+</tr>
+<tr>
+<td>
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+<tr>
+<td>FID</td>
+<td>0</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>FID_</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Entity</td>
+<td>LWPolyline</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Color</td>
+<td>10</td>
+</tr>
+<tr>
+<td>Linetype</td>
+<td>Continuous</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>"CPF"</td>
+<td>020.086.790-39</td>
+</tr>
+<tr>
+<td>"CREA"</td>
+<td>162279-9</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
+]]></description>
+      <styleUrl>#LineStyle50</styleUrl>
+      <MultiGeometry>
+        <LineString>
+          <extrude>0</extrude>
+          <tessellate>1</tessellate><altitudeMode>clampToGround</altitudeMode>
+          <coordinates> -52.62991052140037,-32.14831109838027,0 -52.63719436540843,-32.15258272174415,0 -52.66604992835062,-32.18161189398661,0 -52.67859253870927,-32.2101017640488,0 -52.67915953787219,-32.21167775277673,0 -52.68203349367553,-32.2196650461002,0 -52.68698567304596,-32.23342444868477,0 -52.69155434083684,-32.24909883541086,0 -52.70493337291418,-32.29504969874566,0 -52.70550174285733,-32.30052143286521,0 -52.70021305152208,-32.3009176330693,0 -52.69968113157223,-32.2957939739732,0 -52.68187015732327,-32.23462628003084,0 -52.67356807801934,-32.21155311038088,0 -52.66140662426164,-32.18392587766966,0 -52.63360297645165,-32.1559537286134,0 -52.62690190600794,-32.15202378262873,0 -52.62991052140037,-32.14831109838027,0</coordinates>
+        </LineString>
+      </MultiGeometry>
+    </Placemark>
+  </Folder>
+  <Folder id="FeatureLayer7">
+    <name>Setores_amostragem</name>
+    <Snippet></Snippet>
+    <Placemark id="ID_70000">
+      <name>S2</name>
+      <Snippet></Snippet>
+      <description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+<td>S2</td>
+</tr>
+<tr>
+<td>
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+<tr>
+<td>FID</td>
+<td>0</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>OID_</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Name</td>
+<td>S2</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>FolderPath</td>
+<td>Setores de amostragem.kmz/Setores de amostragem</td>
+</tr>
+<tr>
+<td>Shape_Leng</td>
+<td>0,187371</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>"CPF"</td>
+<td>020.086.790-39</td>
+</tr>
+<tr>
+<td>"CREA"</td>
+<td>162279-9</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
+]]></description>
+      <styleUrl>#PolyStyle70</styleUrl>
+      <MultiGeometry>
+        <Polygon>
+          <extrude>0</extrude><altitudeMode>clampToGround</altitudeMode>
+          <outerBoundaryIs><LinearRing><coordinates> -53.52747369199994,-33.38719386699995,0 -53.52049279699997,-33.39766698999993,0 -53.48093249699997,-33.44244060299995,0 -53.46038091099996,-33.43235375699992,0 -53.50081170699997,-33.38744977499994,0 -53.50666082899994,-33.379796566,0 -53.52747369199994,-33.38719386699995,0</coordinates></LinearRing></outerBoundaryIs>
+        </Polygon>
+      </MultiGeometry>
+    </Placemark>
+    <Placemark id="ID_70001">
+      <name>S4</name>
+      <Snippet></Snippet>
+      <description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+<td>S4</td>
+</tr>
+<tr>
+<td>
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+<tr>
+<td>FID</td>
+<td>1</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>OID_</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Name</td>
+<td>S4</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>FolderPath</td>
+<td>Setores de amostragem.kmz/Setores de amostragem</td>
+</tr>
+<tr>
+<td>Shape_Leng</td>
+<td>0,216526</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>"CPF"</td>
+<td>020.086.790-39</td>
+</tr>
+<tr>
+<td>"CREA"</td>
+<td>162279-9</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
+]]></description>
+      <styleUrl>#PolyStyle70</styleUrl>
+      <MultiGeometry>
+        <Polygon>
+          <extrude>0</extrude><altitudeMode>clampToGround</altitudeMode>
+          <outerBoundaryIs><LinearRing><coordinates> -52.69405630599994,-32.21803254499996,0 -52.72337674499994,-32.29726869999997,0 -52.69805035699994,-32.30324433399995,0 -52.67203412699995,-32.22430057499995,0 -52.69405630599994,-32.21803254499996,0</coordinates></LinearRing></outerBoundaryIs>
+        </Polygon>
+      </MultiGeometry>
+    </Placemark>
+    <Placemark id="ID_70002">
+      <name>S1</name>
+      <Snippet></Snippet>
+      <description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+<td>S1</td>
+</tr>
+<tr>
+<td>
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+<tr>
+<td>FID</td>
+<td>2</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>OID_</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Name</td>
+<td>S1</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>FolderPath</td>
+<td>Setores de amostragem.kmz/Setores de amostragem</td>
+</tr>
+<tr>
+<td>Shape_Leng</td>
+<td>0,250071</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>"CPF"</td>
+<td>020.086.790-39</td>
+</tr>
+<tr>
+<td>"CREA"</td>
+<td>162279-9</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
+]]></description>
+      <styleUrl>#PolyStyle70</styleUrl>
+      <MultiGeometry>
+        <Polygon>
+          <extrude>0</extrude><altitudeMode>clampToGround</altitudeMode>
+          <outerBoundaryIs><LinearRing><coordinates> -53.46044230399997,-33.43236336099996,0 -53.48090241899996,-33.44246035099997,0 -53.44734979399994,-33.48469823699995,0 -53.44639794499995,-33.49574520099998,0 -53.45227437199998,-33.51621092899996,0 -53.41247924699996,-33.50779830799996,0 -53.41835947599998,-33.468853509,0 -53.43168246799996,-33.47014871399995,0 -53.46044230399997,-33.43236336099996,0</coordinates></LinearRing></outerBoundaryIs>
+        </Polygon>
+      </MultiGeometry>
+    </Placemark>
+    <Placemark id="ID_70003">
+      <name>S3</name>
+      <Snippet></Snippet>
+      <description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+<td>S3</td>
+</tr>
+<tr>
+<td>
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+<tr>
+<td>FID</td>
+<td>3</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>OID_</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Name</td>
+<td>S3</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>FolderPath</td>
+<td>Setores de amostragem.kmz/Setores de amostragem</td>
+</tr>
+<tr>
+<td>Shape_Leng</td>
+<td>0,286422</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>"CPF"</td>
+<td>020.086.790-39</td>
+</tr>
+<tr>
+<td>"CREA"</td>
+<td>162279-9</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
+]]></description>
+      <styleUrl>#PolyStyle70</styleUrl>
+      <MultiGeometry>
+        <Polygon>
+          <extrude>0</extrude><altitudeMode>clampToGround</altitudeMode>
+          <outerBoundaryIs><LinearRing><coordinates> -52.67224244299996,-32.22448402999993,0 -52.65885896599997,-32.18712104999998,0 -52.63478931499997,-32.16402125799995,0 -52.62539960799995,-32.16987017199996,0 -52.60811759599994,-32.15523023199998,0 -52.64564665499996,-32.13128463699995,0 -52.66255664799996,-32.14333809699995,0 -52.65346665599998,-32.15240260399996,0 -52.67742869399996,-32.17609977799999,0 -52.69405558999995,-32.21800741599997,0 -52.67224244299996,-32.22448402999993,0</coordinates></LinearRing></outerBoundaryIs>
+        </Polygon>
+      </MultiGeometry>
+    </Placemark>
+  </Folder>
+</Document>
+</kml>

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>Pontos de amostragem de água.kmz</name>
+	<Style id="s_ylw-pushpin_hl0">
+		<IconStyle>
+			<scale>1.3</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+	</Style>
+	<StyleMap id="m_ylw-pushpin">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#s_ylw-pushpin</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#s_ylw-pushpin_hl</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="m_ylw-pushpin0">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#s_ylw-pushpin0</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#s_ylw-pushpin_hl0</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="s_ylw-pushpin">
+		<IconStyle>
+			<scale>1.1</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+	</Style>
+	<Style id="s_ylw-pushpin_hl">
+		<IconStyle>
+			<scale>1.3</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+	</Style>
+	<Style id="s_ylw-pushpin0">
+		<IconStyle>
+			<scale>1.1</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+	</Style>
+	<Folder id="FeatureLayer0">
+		<name>Trecho_Rodoviario</name>
+		<open>1</open>
+		<Snippet maxLines="0"></Snippet>
+		<Placemark>
+			<name>Ponto 01</name>
+			<LookAt>
+				<longitude>-48.17116785765577</longitude>
+				<latitude>-15.73141060913274</latitude>
+				<altitude>0</altitude>
+				<heading>-0.004139390420721083</heading>
+				<tilt>23.04898078753683</tilt>
+				<range>539.9219141610309</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-48.17272530931974,-15.73111808249928,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Ponto 02</name>
+			<LookAt>
+				<longitude>-48.19951295565519</longitude>
+				<latitude>-15.62325341076264</latitude>
+				<altitude>0</altitude>
+				<heading>0.006618779646555249</heading>
+				<tilt>15.75287261990928</tilt>
+				<range>264.8510324571152</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-48.19928932280451,-15.62293103257542,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Ponto 03</name>
+			<LookAt>
+				<longitude>-48.19731680158129</longitude>
+				<latitude>-15.5944122642715</latitude>
+				<altitude>0</altitude>
+				<heading>-0.00275836874955698</heading>
+				<tilt>10.37825793041053</tilt>
+				<range>2048.097707783287</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-48.19700702971831,-15.5914585869133,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Ponto 04</name>
+			<LookAt>
+				<longitude>-48.18925281270872</longitude>
+				<latitude>-15.58638079240867</latitude>
+				<altitude>0</altitude>
+				<heading>-0.00577676317025784</heading>
+				<tilt>13.31902116675618</tilt>
+				<range>581.2585218976373</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-48.18859877126194,-15.58661965300806,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Ponto 05</name>
+			<LookAt>
+				<longitude>-48.19323737904859</longitude>
+				<latitude>-15.51664321011567</latitude>
+				<altitude>0</altitude>
+				<heading>0.6997886376773216</heading>
+				<tilt>30.0018486695208</tilt>
+				<range>411.5898962031264</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin0</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-48.19198497860166,-15.51677290063613,0</coordinates>
+			</Point>
+		</Placemark>
+	</Folder>
+</Document>
+</kml>

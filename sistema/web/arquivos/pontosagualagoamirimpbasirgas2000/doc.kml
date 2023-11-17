@@ -1,0 +1,980 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.opengis.net/kml/2.2 http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd http://www.google.com/kml/ext/2.2 http://code.google.com/apis/kml/schema/kml22gx.xsd">
+<Document id="Lagoa_Mirim_-_Pontos_agua_PBA_-_SIRGAS2000">
+  <name>Lagoa Mirim - Pontos agua PBA - SIRGAS2000</name>
+  <Snippet></Snippet>
+  <Style id="IconStyle00">
+    <IconStyle>
+      <scale>0.750000</scale>
+      <Icon><href>Layer0_Symbol_11595c20_0.png</href></Icon>
+    </IconStyle>
+    <LabelStyle>
+      <color>ffe65c00</color>
+      <scale>0.666667</scale>
+    </LabelStyle>
+    <PolyStyle>
+      <color>ff000000</color>
+      <outline>0</outline>
+    </PolyStyle>
+  </Style>
+  <Folder id="FeatureLayer0">
+    <name>Pts_agua_sirgas</name>
+    <Snippet></Snippet>
+    <Placemark id="ID_00000">
+      <name>1</name>
+      <Snippet></Snippet>
+      <description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+<td>1 Sangradouro</td>
+</tr>
+<tr>
+<td>
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+<tr>
+<td>FID</td>
+<td>0</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Nome</td>
+<td>1 Sangradouro</td>
+</tr>
+<tr>
+<td>X</td>
+<td>340040</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Y</td>
+<td>6425681</td>
+</tr>
+<tr>
+<td>Ponto</td>
+<td>1</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Local</td>
+<td>Sangradouro</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
+]]></description>
+      <styleUrl>#IconStyle00</styleUrl>
+      <Point>
+        <extrude>0</extrude><altitudeMode>clampToGround</altitudeMode>
+        <coordinates> -52.69937332694521,-32.29463874450172,0</coordinates>
+      </Point>
+    </Placemark>
+    <Placemark id="ID_00001">
+      <name>2</name>
+      <Snippet></Snippet>
+      <description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+<td>2 Sangradouro</td>
+</tr>
+<tr>
+<td>
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+<tr>
+<td>FID</td>
+<td>1</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Nome</td>
+<td>2 Sangradouro</td>
+</tr>
+<tr>
+<td>X</td>
+<td>340152</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Y</td>
+<td>6429651</td>
+</tr>
+<tr>
+<td>Ponto</td>
+<td>2</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Local</td>
+<td>Sangradouro</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
+]]></description>
+      <styleUrl>#IconStyle00</styleUrl>
+      <Point>
+        <extrude>0</extrude><altitudeMode>clampToGround</altitudeMode>
+        <coordinates> -52.69751729788498,-32.25885557679287,0</coordinates>
+      </Point>
+    </Placemark>
+    <Placemark id="ID_00002">
+      <name>3</name>
+      <Snippet></Snippet>
+      <description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+<td>3 Sangradouro</td>
+</tr>
+<tr>
+<td>
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+<tr>
+<td>FID</td>
+<td>2</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Nome</td>
+<td>3 Sangradouro</td>
+</tr>
+<tr>
+<td>X</td>
+<td>341800</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Y</td>
+<td>6433113</td>
+</tr>
+<tr>
+<td>Ponto</td>
+<td>3</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Local</td>
+<td>Sangradouro</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
+]]></description>
+      <styleUrl>#IconStyle00</styleUrl>
+      <Point>
+        <extrude>0</extrude><altitudeMode>clampToGround</altitudeMode>
+        <coordinates> -52.67945348606999,-32.22787065508777,0</coordinates>
+      </Point>
+    </Placemark>
+    <Placemark id="ID_00003">
+      <name>4</name>
+      <Snippet></Snippet>
+      <description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+<td>4 Sangradouro</td>
+</tr>
+<tr>
+<td>
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+<tr>
+<td>FID</td>
+<td>3</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Nome</td>
+<td>4 Sangradouro</td>
+</tr>
+<tr>
+<td>X</td>
+<td>342054</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Y</td>
+<td>6436473</td>
+</tr>
+<tr>
+<td>Ponto</td>
+<td>4</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Local</td>
+<td>Sangradouro</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
+]]></description>
+      <styleUrl>#IconStyle00</styleUrl>
+      <Point>
+        <extrude>0</extrude><altitudeMode>clampToGround</altitudeMode>
+        <coordinates> -52.67620283289303,-32.19760725573558,0</coordinates>
+      </Point>
+    </Placemark>
+    <Placemark id="ID_00004">
+      <name>5</name>
+      <Snippet></Snippet>
+      <description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+<td>5 Sangradouro</td>
+</tr>
+<tr>
+<td>
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+<tr>
+<td>FID</td>
+<td>4</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Nome</td>
+<td>5 Sangradouro</td>
+</tr>
+<tr>
+<td>X</td>
+<td>344560</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Y</td>
+<td>6439513</td>
+</tr>
+<tr>
+<td>Ponto</td>
+<td>5</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Local</td>
+<td>Sangradouro</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
+]]></description>
+      <styleUrl>#IconStyle00</styleUrl>
+      <Point>
+        <extrude>0</extrude><altitudeMode>clampToGround</altitudeMode>
+        <coordinates> -52.64913141188913,-32.17054277556893,0</coordinates>
+      </Point>
+    </Placemark>
+    <Placemark id="ID_00005">
+      <name>6</name>
+      <Snippet></Snippet>
+      <description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+<td>6 Sangradouro</td>
+</tr>
+<tr>
+<td>
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+<tr>
+<td>FID</td>
+<td>5</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Nome</td>
+<td>6 Sangradouro</td>
+</tr>
+<tr>
+<td>X</td>
+<td>346294</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Y</td>
+<td>6441794</td>
+</tr>
+<tr>
+<td>Ponto</td>
+<td>6</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Local</td>
+<td>Sangradouro</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
+]]></description>
+      <styleUrl>#IconStyle00</styleUrl>
+      <Point>
+        <extrude>0</extrude><altitudeMode>clampToGround</altitudeMode>
+        <coordinates> -52.63038056787977,-32.15021130167897,0</coordinates>
+      </Point>
+    </Placemark>
+    <Placemark id="ID_00006">
+      <name>11</name>
+      <Snippet></Snippet>
+      <description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+<td>11                           Sangradouro</td>
+</tr>
+<tr>
+<td>
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+<tr>
+<td>FID</td>
+<td>6</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Nome</td>
+<td>11                           Sangradouro</td>
+</tr>
+<tr>
+<td>X</td>
+<td>346440</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Y</td>
+<td>6441920</td>
+</tr>
+<tr>
+<td>Ponto</td>
+<td>11</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Local</td>
+<td>Sangradouro</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
+]]></description>
+      <styleUrl>#IconStyle00</styleUrl>
+      <Point>
+        <extrude>0</extrude><altitudeMode>clampToGround</altitudeMode>
+        <coordinates> -52.62881275516632,-32.14909497490515,0</coordinates>
+      </Point>
+    </Placemark>
+    <Placemark id="ID_00007">
+      <name>12</name>
+      <Snippet></Snippet>
+      <description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+<td>12                           Sangradouro</td>
+</tr>
+<tr>
+<td>
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+<tr>
+<td>FID</td>
+<td>7</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Nome</td>
+<td>12                           Sangradouro</td>
+</tr>
+<tr>
+<td>X</td>
+<td>346570</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Y</td>
+<td>6441770</td>
+</tr>
+<tr>
+<td>Ponto</td>
+<td>12</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Local</td>
+<td>Sangradouro</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
+]]></description>
+      <styleUrl>#IconStyle00</styleUrl>
+      <Point>
+        <extrude>0</extrude><altitudeMode>clampToGround</altitudeMode>
+        <coordinates> -52.62745880575712,-32.15046539555122,0</coordinates>
+      </Point>
+    </Placemark>
+    <Placemark id="ID_00008">
+      <name>13</name>
+      <Snippet></Snippet>
+      <description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+<td>13                           Sangradouro</td>
+</tr>
+<tr>
+<td>
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+<tr>
+<td>FID</td>
+<td>8</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Nome</td>
+<td>13                           Sangradouro</td>
+</tr>
+<tr>
+<td>X</td>
+<td>339630</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Y</td>
+<td>6424580</td>
+</tr>
+<tr>
+<td>Ponto</td>
+<td>13</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Local</td>
+<td>Sangradouro</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
+]]></description>
+      <styleUrl>#IconStyle00</styleUrl>
+      <Point>
+        <extrude>0</extrude><altitudeMode>clampToGround</altitudeMode>
+        <coordinates> -52.70391184236561,-32.30450818328306,0</coordinates>
+      </Point>
+    </Placemark>
+    <Placemark id="ID_00009">
+      <name>7</name>
+      <Snippet></Snippet>
+      <description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+<td>7 Santa Vitória do Palmar</td>
+</tr>
+<tr>
+<td>
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+<tr>
+<td>FID</td>
+<td>9</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Nome</td>
+<td>7 Santa Vitória do Palmar</td>
+</tr>
+<tr>
+<td>X</td>
+<td>268770</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Y</td>
+<td>6299140</td>
+</tr>
+<tr>
+<td>Ponto</td>
+<td>7</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Local</td>
+<td>S Vitória do Palmar</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
+]]></description>
+      <styleUrl>#IconStyle00</styleUrl>
+      <Point>
+        <extrude>0</extrude><altitudeMode>clampToGround</altitudeMode>
+        <coordinates> -53.48742445323833,-33.422593681118,0</coordinates>
+      </Point>
+    </Placemark>
+    <Placemark id="ID_00010">
+      <name>9</name>
+      <Snippet></Snippet>
+      <description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+<td>9 Santa Vitória do Palmar</td>
+</tr>
+<tr>
+<td>
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+<tr>
+<td>FID</td>
+<td>10</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Nome</td>
+<td>9 Santa Vitória do Palmar</td>
+</tr>
+<tr>
+<td>X</td>
+<td>272807</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Y</td>
+<td>6294155</td>
+</tr>
+<tr>
+<td>Ponto</td>
+<td>9</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Local</td>
+<td>S Vitória do Palmar</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
+]]></description>
+      <styleUrl>#IconStyle00</styleUrl>
+      <Point>
+        <extrude>0</extrude><altitudeMode>clampToGround</altitudeMode>
+        <coordinates> -53.44530195692035,-33.46837877369114,0</coordinates>
+      </Point>
+    </Placemark>
+    <Placemark id="ID_00011">
+      <name>10</name>
+      <Snippet></Snippet>
+      <description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+<td>10                  Santa Vitória do Palmar</td>
+</tr>
+<tr>
+<td>
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+<tr>
+<td>FID</td>
+<td>11</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Nome</td>
+<td>10                  Santa Vitória do Palmar</td>
+</tr>
+<tr>
+<td>X</td>
+<td>272991</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Y</td>
+<td>6291482</td>
+</tr>
+<tr>
+<td>Ponto</td>
+<td>10</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Local</td>
+<td>S Vitória do Palmar</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
+]]></description>
+      <styleUrl>#IconStyle00</styleUrl>
+      <Point>
+        <extrude>0</extrude><altitudeMode>clampToGround</altitudeMode>
+        <coordinates> -53.44400025867046,-33.49250536949062,0</coordinates>
+      </Point>
+    </Placemark>
+    <Placemark id="ID_00012">
+      <name>15</name>
+      <Snippet></Snippet>
+      <description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+<td>15                  Santa Vitória do Palmar</td>
+</tr>
+<tr>
+<td>
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+<tr>
+<td>FID</td>
+<td>12</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Nome</td>
+<td>15                  Santa Vitória do Palmar</td>
+</tr>
+<tr>
+<td>X</td>
+<td>267870</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Y</td>
+<td>6299750</td>
+</tr>
+<tr>
+<td>Ponto</td>
+<td>15</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Local</td>
+<td>S Vitória do Palmar</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
+]]></description>
+      <styleUrl>#IconStyle00</styleUrl>
+      <Point>
+        <extrude>0</extrude><altitudeMode>clampToGround</altitudeMode>
+        <coordinates> -53.49693856243756,-33.41690244013848,0</coordinates>
+      </Point>
+    </Placemark>
+    <Placemark id="ID_00013">
+      <name>16</name>
+      <Snippet></Snippet>
+      <description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+<td>16                  Santa Vitória do Palmar</td>
+</tr>
+<tr>
+<td>
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+<tr>
+<td>FID</td>
+<td>13</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Nome</td>
+<td>16                  Santa Vitória do Palmar</td>
+</tr>
+<tr>
+<td>X</td>
+<td>267650</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Y</td>
+<td>6299550</td>
+</tr>
+<tr>
+<td>Ponto</td>
+<td>16</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Local</td>
+<td>S Vitória do Palmar</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
+]]></description>
+      <styleUrl>#IconStyle00</styleUrl>
+      <Point>
+        <extrude>0</extrude><altitudeMode>clampToGround</altitudeMode>
+        <coordinates> -53.49935421801231,-33.41865703635256,0</coordinates>
+      </Point>
+    </Placemark>
+    <Placemark id="ID_00014">
+      <name>17</name>
+      <Snippet></Snippet>
+      <description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+<td>17                  Santa Vitória do Palmar</td>
+</tr>
+<tr>
+<td>
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+<tr>
+<td>FID</td>
+<td>14</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Nome</td>
+<td>17                  Santa Vitória do Palmar</td>
+</tr>
+<tr>
+<td>X</td>
+<td>273560</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Y</td>
+<td>6290510</td>
+</tr>
+<tr>
+<td>Ponto</td>
+<td>17</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Local</td>
+<td>S Vitória do Palmar</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
+]]></description>
+      <styleUrl>#IconStyle00</styleUrl>
+      <Point>
+        <extrude>0</extrude><altitudeMode>clampToGround</altitudeMode>
+        <coordinates> -53.43812619554232,-33.50138511408642,0</coordinates>
+      </Point>
+    </Placemark>
+    <Placemark id="ID_00015">
+      <name>18</name>
+      <Snippet></Snippet>
+      <description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+<td>18                  Santa Vitória do Palmar</td>
+</tr>
+<tr>
+<td>
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+<tr>
+<td>FID</td>
+<td>15</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Nome</td>
+<td>18                  Santa Vitória do Palmar</td>
+</tr>
+<tr>
+<td>X</td>
+<td>273270</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Y</td>
+<td>6290470</td>
+</tr>
+<tr>
+<td>Ponto</td>
+<td>18</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Local</td>
+<td>S Vitória do Palmar</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
+]]></description>
+      <styleUrl>#IconStyle00</styleUrl>
+      <Point>
+        <extrude>0</extrude><altitudeMode>clampToGround</altitudeMode>
+        <coordinates> -53.44125565358446,-33.50168411378219,0</coordinates>
+      </Point>
+    </Placemark>
+    <Placemark id="ID_00016">
+      <name>14</name>
+      <Snippet></Snippet>
+      <description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+<td>14                           Sangradouro</td>
+</tr>
+<tr>
+<td>
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+<tr>
+<td>FID</td>
+<td>16</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Nome</td>
+<td>14                           Sangradouro</td>
+</tr>
+<tr>
+<td>X</td>
+<td>339930</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Y</td>
+<td>6424580</td>
+</tr>
+<tr>
+<td>Ponto</td>
+<td>14</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Local</td>
+<td>Sangradouro</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
+]]></description>
+      <styleUrl>#IconStyle00</styleUrl>
+      <Point>
+        <extrude>0</extrude><altitudeMode>clampToGround</altitudeMode>
+        <coordinates> -52.70072657530768,-32.30455114922717,0</coordinates>
+      </Point>
+    </Placemark>
+    <Placemark id="ID_00017">
+      <name>8</name>
+      <Snippet></Snippet>
+      <description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+<td>8 Santa Vitória do Palmar</td>
+</tr>
+<tr>
+<td>
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+<tr>
+<td>FID</td>
+<td>17</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Nome</td>
+<td>8 Santa Vitória do Palmar</td>
+</tr>
+<tr>
+<td>X</td>
+<td>270096</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Y</td>
+<td>6296610</td>
+</tr>
+<tr>
+<td>Ponto</td>
+<td>8</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Local</td>
+<td>S Vitória do Palmar</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
+]]></description>
+      <styleUrl>#IconStyle00</styleUrl>
+      <Point>
+        <extrude>0</extrude><altitudeMode>clampToGround</altitudeMode>
+        <coordinates> -53.47382206170992,-33.44567736093986,0</coordinates>
+      </Point>
+    </Placemark>
+  </Folder>
+</Document>
+</kml>

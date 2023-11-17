@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.opengis.net/kml/2.2 http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd http://www.google.com/kml/ext/2.2 http://code.google.com/apis/kml/schema/kml22gx.xsd">
+<Document id="BR116_RS_-_2ª_Ponte_Jaguarão_-_Ictiofauna">
+  <name>BR116/RS - 2ª Ponte Jaguarão - Ictiofauna</name>
+  <Snippet></Snippet>
+  <Style id="IconStyle00">
+    <IconStyle>
+      <scale>0.687500</scale>
+      <Icon><href>Layer0_Symbol_14416778_0.png</href></Icon>
+    </IconStyle>
+    <LabelStyle>
+      <color>00000000</color>
+      <scale>0.000000</scale>
+    </LabelStyle>
+    <PolyStyle>
+      <color>ff000000</color>
+      <outline>0</outline>
+    </PolyStyle>
+  </Style>
+  <Style id="LineStyle10">
+    <LabelStyle>
+      <color>00000000</color>
+      <scale>0.000000</scale>
+    </LabelStyle>
+    <LineStyle>
+      <color>ff3737ff</color>
+      <width>3.400000</width>
+    </LineStyle>
+    <PolyStyle>
+      <color>00000000</color>
+      <outline>0</outline>
+    </PolyStyle>
+  </Style>
+  <Style id="LineStyle20">
+    <LabelStyle>
+      <color>00000000</color>
+      <scale>0.000000</scale>
+    </LabelStyle>
+    <LineStyle>
+      <color>ff0000ff</color>
+      <width>1.700000</width>
+    </LineStyle>
+    <PolyStyle>
+      <color>00000000</color>
+      <outline>0</outline>
+    </PolyStyle>
+  </Style>
+  <Style id="PolyStyle30">
+    <LabelStyle>
+      <color>00000000</color>
+      <scale>0.000000</scale>
+    </LabelStyle>
+    <LineStyle>
+      <color>ffff00c5</color>
+      <width>2.000000</width>
+    </LineStyle>
+    <PolyStyle>
+      <color>00f0f0f0</color>
+      <outline>1</outline>
+    </PolyStyle>
+  </Style>
+  <Style id="PolyStyle40">
+    <LabelStyle>
+      <color>00000000</color>
+      <scale>0.000000</scale>
+    </LabelStyle>
+    <LineStyle>
+      <color>ff0000ff</color>
+      <width>2.000000</width>
+    </LineStyle>
+    <PolyStyle>
+      <color>00ffffff</color>
+      <outline>1</outline>
+    </PolyStyle>
+  </Style>
+  <Folder id="FeatureLayer0">
+    <name>Pontos de Coleta de Fauna Aquática - Ictiofauna</name>
+    <Snippet></Snippet>
+    <Placemark id="ID_00000">
+      <name> </name>
+      <Snippet></Snippet>
+      <description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+<td> </td>
+</tr>
+<tr>
+<td>
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+<tr>
+<td>FID</td>
+<td>0</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Lat</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Long</td>
+<td>0</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Nome_curso</td>
+<td></td>
+</tr>
+<tr>
+<td>Ponto</td>
+<td>0</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
+]]></description>
+      <styleUrl>#IconStyle00</styleUrl>
+      <Point>
+        <extrude>0</extrude><altitudeMode>clampToGround</altitudeMode>
+        <coordinates> -53.41435956427676,-32.57113225291118,0</coordinates>
+      </Point>
+    </Placemark>
+    <Placemark id="ID_00001">
+      <name> </name>
+      <Snippet></Snippet>
+      <description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+<td> </td>
+</tr>
+<tr>
+<td>
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+<tr>
+<td>FID</td>
+<td>1</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Lat</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Long</td>
+<td>0</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Nome_curso</td>
+<td></td>
+</tr>
+<tr>
+<td>Ponto</td>
+<td>0</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
+]]></description>
+      <styleUrl>#IconStyle00</styleUrl>
+      <Point>
+        <extrude>0</extrude><altitudeMode>clampToGround</altitudeMode>
+        <coordinates> -53.43034834688211,-32.56691866735274,0</coordinates>
+      </Point>
+    </Placemark>
+    <Placemark id="ID_00002">
+      <name> </name>
+      <Snippet></Snippet>
+      <description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+<td> </td>
+</tr>
+<tr>
+<td>
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+<tr>
+<td>FID</td>
+<td>2</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Lat</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Long</td>
+<td>0</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Nome_curso</td>
+<td></td>
+</tr>
+<tr>
+<td>Ponto</td>
+<td>0</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
+]]></description>
+      <styleUrl>#IconStyle00</styleUrl>
+      <Point>
+        <extrude>0</extrude><altitudeMode>clampToGround</altitudeMode>
+        <coordinates> -53.39787860496187,-32.58321097595183,0</coordinates>
+      </Point>
+    </Placemark>
+    <Placemark id="ID_00003">
+      <name> </name>
+      <Snippet></Snippet>
+      <description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+<td> </td>
+</tr>
+<tr>
+<td>
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+<tr>
+<td>FID</td>
+<td>3</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Lat</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Long</td>
+<td>0</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Nome_curso</td>
+<td></td>
+</tr>
+<tr>
+<td>Ponto</td>
+<td>0</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
+]]></description>
+      <styleUrl>#IconStyle00</styleUrl>
+      <Point>
+        <extrude>0</extrude><altitudeMode>clampToGround</altitudeMode>
+        <coordinates> -53.45305572903427,-32.52594981787477,0</coordinates>
+      </Point>
+    </Placemark>
+    <Placemark id="ID_00004">
+      <name> </name>
+      <Snippet></Snippet>
+      <description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+<td> </td>
+</tr>
+<tr>
+<td>
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+<tr>
+<td>FID</td>
+<td>4</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Lat</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Long</td>
+<td>0</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Nome_curso</td>
+<td></td>
+</tr>
+<tr>
+<td>Ponto</td>
+<td>0</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
+]]></description>
+      <styleUrl>#IconStyle00</styleUrl>
+      <Point>
+        <extrude>0</extrude><altitudeMode>clampToGround</altitudeMode>
+        <coordinates> -53.44445647825324,-32.53684002677276,0</coordinates>
+      </Point>
+    </Placemark>
+  </Folder>
+  <Folder id="FeatureLayer1">
+    <name>2ª Ponte Internacional de Jaguarão</name>
+    <Snippet></Snippet>
+    <Placemark id="ID_10000">
+      <name>Ponte Internacional Alternativa I</name>
+      <Snippet></Snippet>
+      <description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+<td>Ponte Internacional Alternativa I</td>
+</tr>
+<tr>
+<td>
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+<tr>
+<td>FID</td>
+<td>0</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Id</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Descrição</td>
+<td>Ponte Internacional Alternativa I</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>dist</td>
+<td>96,308536</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
+]]></description>
+      <styleUrl>#LineStyle10</styleUrl>
+      <MultiGeometry>
+        <LineString>
+          <extrude>0</extrude>
+          <tessellate>1</tessellate><altitudeMode>clampToGround</altitudeMode>
+          <coordinates> -53.44891628054646,-32.53212327307887,0 -53.44800507118258,-32.53172580163285,0</coordinates>
+        </LineString>
+      </MultiGeometry>
+    </Placemark>
+  </Folder>
+  <Folder id="FeatureLayer2">
+    <name>Traçado de acesso à Ponte (BR-116/RS)</name>
+    <Snippet></Snippet>
+    <Placemark id="ID_20000">
+      <name>Alternativa I</name>
+      <Snippet></Snippet>
+      <description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+<td>Alternativa I</td>
+</tr>
+<tr>
+<td>
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+<tr>
+<td>FID</td>
+<td>0</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Id</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Traçado</td>
+<td>Alternativa I</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>dist</td>
+<td>9,248836</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
+]]></description>
+      <styleUrl>#LineStyle20</styleUrl>
+      <MultiGeometry>
+        <LineString>
+          <extrude>0</extrude>
+          <tessellate>1</tessellate><altitudeMode>clampToGround</altitudeMode>
+          <coordinates> -53.44800507118258,-32.53172580163285,0 -53.43470781945651,-32.52649273292959,0 -53.41062164154113,-32.52344199636972,0 -53.38843348073056,-32.5248697810302,0 -53.35147289189607,-32.52807728199577,0</coordinates>
+        </LineString>
+      </MultiGeometry>
+    </Placemark>
+  </Folder>
+  <Folder id="FeatureLayer3">
+    <name>Área de Influência Indireta (AII)</name>
+    <Snippet></Snippet>
+    <Placemark id="ID_30000">
+      <name>JAGUARÃO</name>
+      <Snippet></Snippet>
+      <description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+<td>JAGUARÃO</td>
+</tr>
+<tr>
+<td>
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+<tr>
+<td>FID</td>
+<td>0</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>NM_MUNICIP</td>
+<td>JAGUARÃO</td>
+</tr>
+<tr>
+<td>CD_GEOCMU</td>
+<td>4311007</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
+]]></description>
+      <styleUrl>#PolyStyle30</styleUrl>
+      <MultiGeometry>
+        <Polygon>
+          <extrude>0</extrude><altitudeMode>clampToGround</altitudeMode>
+          <outerBoundaryIs><LinearRing><coordinates> -53.33385703836782,-32.54484446289465,0 -53.33273284587619,-32.5439955648025,0 -53.33166717625645,-32.54309414496026,0 -53.33066344336871,-32.54214309239887,0 -53.32972486226121,-32.54114545514722,0 -53.32885443887424,-32.54010443044827,0 -53.32805496041916,-32.53902335449845,0 -53.32732898646327,-32.53790569174181,0 -53.32667884074876,-32.53675502375383,0 -53.32610660377194,-32.53557503775126,0 -53.32561410614588,-32.53436951476423,0 -53.3252029227676,-32.53314231750985,0 -53.32487436780819,-32.53189737800452,0 -53.32462949054118,-32.53063868495713,0 -53.32446907202253,-32.52937027098169,0 -53.32439362263127,-32.52809619967158,0 -53.32440338047967,-32.52682055257617,0 -53.32449831069606,-32.52554741612295,0 -53.32467810558313,-32.52428086852525,0 -53.32494218564921,-32.52302496671898,0 -53.32528970151063,-32.52178373336956,0 -53.32571953665634,-32.52056114399105,0 -53.32623031106701,-32.519361114218,0 -53.32682038567539,-32.51818748727135,0 -53.32748786765413,-32.51704402165832,0 -53.32823061651274,-32.515934379145,0 -53.3290462509839,-32.51486211304086,0 -53.32993215667733,-32.51383065683198,0 -53.33088549447572,-32.51284331319891,0 -53.33190320964599,-32.51190324345563,0 -53.33298204163543,-32.51101345744046,0 -53.3341185345234,-32.51017680389448,0 -53.33530904809201,-32.50939596135498,0 -53.33654976948369,-32.50867342959487,0 -53.33783672540489,-32.50801152163424,0 -53.33916579484011,-32.50741235635005,0 -53.34053272223335,-32.50687785170647,0 -53.34193313109625,-32.50640971862831,0 -53.34336253799915,-32.50600945553649,0 -53.34481636690114,-32.50567834356293,0 -53.34628996377276,-32.50541744245973,0 -53.34777861146561,-32.50522758721566,0 -53.34828689672828,-32.50517937327322,0 -53.38523827732453,-32.50197322594119,0 -53.38594153909521,-32.50192008256943,0 -53.40812411565837,-32.50049299382219,0 -53.40841140725654,-32.50047581068366,0 -53.40991567450853,-32.5004289376272,0 -53.41142066078192,-32.5004542413219,0 -53.4129215487631,-32.50055164060146,0 -53.41407669468655,-32.50067624838982,0 -53.43815678264183,-32.50372660695685,0 -53.43849364129169,-32.50377111641901,0 -53.43997204434793,-32.50401125245085,0 -53.44143205568535,-32.50432186328302,0 -53.44286900172307,-32.50470195449512,0 -53.44427828257243,-32.50515030925554,0 -53.44543428969516,-32.5055774148594,0 -53.45872890567588,-32.51080947223449,0 -53.45895002728606,-32.51089752488198,0 -53.46019983993524,-32.51143841365983,0 -53.45995710099999,-32.5117538721443,0 -53.45860987699999,-32.51346486214428,0 -53.45754977399994,-32.51446815114433,0 -53.456960174,-32.51575205114432,0 -53.45694184999999,-32.51579969114426,0 -53.45657680799998,-32.51674871814424,0 -53.45776336700002,-32.51877184014419,0 -53.45814832599999,-32.52059757214425,0 -53.45749911800001,-32.52229592314413,0 -53.4554818089999,-32.52405423914411,0 -53.45336759899993,-32.52597693114409,0 -53.45108774899995,-32.52749173614409,0 -53.45063469199994,-32.52780824314408,0 -53.4498860419999,-32.52833125614409,0 -53.44945332199998,-32.52863355714415,0 -53.44823897799996,-32.53077039214408,0 -53.44697585899998,-32.53259419214405,0 -53.44615223199997,-32.53408794314399,0 -53.44331783999992,-32.53803027114398,0 -53.44281425099992,-32.53879706214391,0 -53.44183493899988,-32.54028821914399,0 -53.44121026899998,-32.54123937814389,0 -53.43889260399988,-32.54502754814385,0 -53.43689588899997,-32.5481619021438,0 -53.43558951899997,-32.5511166151438,0 -53.43550006797915,-32.55137018386235,0 -53.42649720879381,-32.54782722981422,0 -53.40916902071019,-32.54563251762031,0 -53.39031772035408,-32.54684553386116,0 -53.35369974335956,-32.55002355224459,0 -53.35345943124366,-32.55004344014597,0 -53.35195641191041,-32.5501257339516,0 -53.35045030073125,-32.5501358582467,0 -53.34894592584818,-32.55007378040943,0 -53.34744810984692,-32.54993969927521,0 -53.34596165426216,-32.54973404449989,0 -53.34449132415107,-32.54945747518125,0 -53.3430418327845,-32.54911087774392,0 -53.34161782650557,-32.54869536309342,0 -53.34022386980598,-32.54821226304901,0 -53.33886443066579,-32.5476631260678,0 -53.33754386620623,-32.54704971227185,0 -53.33626640870227,-32.54637398779666,0 -53.3350361519974,-32.54563811847724,0 -53.33385703836782,-32.54484446289465,0</coordinates></LinearRing></outerBoundaryIs>
+        </Polygon>
+      </MultiGeometry>
+    </Placemark>
+  </Folder>
+  <Folder id="FeatureLayer4">
+    <name>Área de Influência Direta (AID)</name>
+    <Snippet></Snippet>
+    <Placemark id="ID_40000">
+      <name>JAGUARÃO</name>
+      <Snippet></Snippet>
+      <description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+<td>JAGUARÃO</td>
+</tr>
+<tr>
+<td>
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+<tr>
+<td>FID</td>
+<td>0</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>NM_MUNICIP</td>
+<td>JAGUARÃO</td>
+</tr>
+<tr>
+<td>CD_GEOCMU</td>
+<td>4311007</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
+]]></description>
+      <styleUrl>#PolyStyle40</styleUrl>
+      <MultiGeometry>
+        <Polygon>
+          <extrude>0</extrude><altitudeMode>clampToGround</altitudeMode>
+          <outerBoundaryIs><LinearRing><coordinates> -53.3416692331874,-32.53194897600977,0 -53.34152775073561,-32.53172371943157,0 -53.34139385046882,-32.53149516114232,0 -53.3412676395988,-32.53126348424003,0 -53.34114921917458,-32.53102887431974,0 -53.34103868400209,-32.53079151932487,0 -53.34093612256826,-32.53055160939651,0 -53.34084161697024,-32.53030933672091,0 -53.34075524284994,-32.53006489537589,0 -53.34067706933349,-32.52981848117475,0 -53.34060715897607,-32.52957029150976,0 -53.34054556771207,-32.52932052519404,0 -53.34049234481061,-32.52906938230197,0 -53.34044753283585,-32.52881706400895,0 -53.34041116761356,-32.52856377243067,0 -53.34038327820259,-32.52830971046029,0 -53.34036388687148,-32.52805508160682,0 -53.34035300908116,-32.52780008983147,0 -53.34035065347283,-32.52754493938457,0 -53.34035682186085,-32.52728983464183,0 -53.34037150923209,-32.5270349799404,0 -53.34039470374977,-32.52678057941578,0 -53.3404263867634,-32.52652683683778,0 -53.34046653282367,-32.52627395544757,0 -53.34051510970342,-32.5260221377947,0 -53.34057207842348,-32.52577158557502,0 -53.34063739328393,-32.52552249946914,0 -53.34071100190153,-32.52527507898176,0 -53.34079284525122,-32.52502952228172,0 -53.34088285771386,-32.52478602604354,0 -53.34098096712913,-32.52454478528959,0 -53.34108709485351,-32.52430599323431,0 -53.34120115582307,-32.52406984112934,0 -53.34132305862247,-32.52383651811029,0 -53.34145270555771,-32.52360621104551,0 -53.3415899927348,-32.52337910438615,0 -53.34173481014336,-32.52315538001903,0 -53.34188704174437,-32.5229352171202,0 -53.34204656556386,-32.5227187920125,0 -53.34221325379011,-32.52250627802351,0 -53.34238697287677,-32.52229784534741,0 -53.34256758364933,-32.52209366090838,0 -53.34275494141703,-32.52189388822723,0 -53.34294889608891,-32.5216986872903,0 -53.34314929229387,-32.52150821442154,0 -53.34335596950513,-32.52132262215741,0 -53.34356876216916,-32.52114205912462,0 -53.34378749983794,-32.52096666992138,0 -53.34401200730584,-32.52079659500155,0 -53.34424210474979,-32.52063197056249,0 -53.34447760787319,-32.52047292843547,0 -53.3447183280536,-32.52031959598082,0 -53.34496407249413,-32.52017209598576,0 -53.34521464437701,-32.5200305465661,0 -53.34546984302216,-32.51989506107157,0 -53.34572946404693,-32.51976574799559,0 -53.34599329953026,-32.51964271088806,0 -53.3462611381792,-32.51952604827257,0 -53.34653276549771,-32.51941585356775,0 -53.34680796395836,-32.51931221501241,0 -53.34708651317654,-32.51921521559476,0 -53.34736819008712,-32.51912493298646,0 -53.3476527691224,-32.51904143948003,0 -53.34794002239299,-32.51896480193128,0 -53.3482297198702,-32.51889508170576,0 -53.3485216295699,-32.51883233462961,0 -53.34881551773819,-32.5187766109451,0 -53.34911114903861,-32.51872795527015,0 -53.34940828674034,-32.51868640656283,0 -53.34970669290731,-32.51865199809023,0 -53.349910036552,-32.51863270829833,0 -53.38686680774597,-32.51542583558467,0 -53.38696289129118,-32.51541785673217,0 -53.38714815370174,-32.51540457315136,0 -53.40933399861974,-32.51397711865597,0 -53.40944893221972,-32.51397024357732,0 -53.4097496738848,-32.51395725766783,0 -53.4100507287207,-32.51395148732585,0 -53.41035185565875,-32.51395293716867,0 -53.4106528135729,-32.51396160603171,0 -53.41095336147263,-32.51397748697016,0 -53.4112532586955,-32.51400056726392,0 -53.41155226509994,-32.51403082842808,0 -53.41171538561659,-32.51405041448937,0 -53.43579902370937,-32.51710105313655,0 -53.43593378699337,-32.51711885859196,0 -53.43623031262631,-32.51716334516043,0 -53.43652523393377,-32.5172149229431,0 -53.43681831475614,-32.51727355063575,0 -53.43710932040629,-32.51733918128902,0 -53.43739801785757,-32.51741176234548,0 -53.43768417593019,-32.51749123568244,0 -53.43796756547641,-32.51757753765796,0 -53.43824795956357,-32.51767059916207,0 -53.43852513365587,-32.5177703456717,0 -53.43871041699432,-32.51784146210098,0 -53.45200654603618,-32.52307415348678,0 -53.45209500467357,-32.52310937881238,0 -53.45236510649075,-32.5232222201936,0 -53.45263133164806,-32.5233414915224,0 -53.45289346694702,-32.52346709728729,0 -53.45315130246174,-32.52359893690386,0 -53.45340463170697,-32.52373690479573,0 -53.45365325180339,-32.52388089047847,0 -53.45389696364006,-32.52403077864852,0 -53.45413557203337,-32.52418644927541,0 -53.45436888588401,-32.52434777769732,0 -53.45459671832927,-32.52451463472151,0 -53.45480121230942,-32.52467318324711,0 -53.45336759899993,-32.52597693114409,0 -53.45108774899995,-32.52749173614409,0 -53.45063469199994,-32.52780824314408,0 -53.4498860419999,-32.52833125614409,0 -53.44945332199998,-32.52863355714415,0 -53.44823897799996,-32.53077039214408,0 -53.44697585899998,-32.53259419214405,0 -53.44615223199997,-32.53408794314399,0 -53.44331783999992,-32.53803027114398,0 -53.44281425099992,-32.53879706214391,0 -53.44253222018352,-32.53922649855036,0 -53.43113541478171,-32.53474133400201,0 -53.40975213891049,-32.53203291687078,0 -53.38889860524466,-32.5333747561174,0 -53.35207517493542,-32.53657037990739,0 -53.35197906415626,-32.5365783332397,0 -53.3516787797638,-32.53659839102314,0 -53.35137794541313,-32.53661124176735,0 -53.35107680213987,-32.53661687517255,0 -53.35077559122766,-32.53661528672193,0 -53.35047455401464,-32.53660647768478,0 -53.35017393169969,-32.53659045511583,0 -53.34987396514943,-32.53656723184932,0 -53.34957489470465,-32.53653682648902,0 -53.34927695998775,-32.53649926339322,0 -53.34898039971062,-32.53645457265481,0 -53.34868545148318,-32.53640279007793,0 -53.34839235162262,-32.53634395714855,0 -53.34810133496429,-32.53627812100162,0 -53.34781263467306,-32.53620533438328,0 -53.34752648205662,-32.53612565560815,0 -53.34724310637956,-32.53603914851323,0 -53.34696273468011,-32.53594588240605,0 -53.34668559158772,-32.53584593200974,0 -53.34641189914301,-32.53573937740254,0 -53.34614187662,-32.53562630395399,0 -53.34587574034973,-32.53550680225639,0 -53.34561370354761,-32.53538096805201,0 -53.34535597614188,-32.53524890215653,0 -53.34510276460561,-32.53511071037816,0 -53.34485427179111,-32.53496650343258,0 -53.3446106967674,-32.53481639685466,0 -53.34437223466063,-32.53466051090528,0 -53.34413907649763,-32.53449897047543,0 -53.343911409053,-32.53433190498556,0 -53.34368941469943,-32.53415944828234,0 -53.34347327126117,-32.5339817385308,0 -53.34326315187236,-32.53379891810427,0 -53.34305922483736,-32.53361113346959,0 -53.34286165349692,-32.53341853506986,0 -53.34267059609662,-32.53322127720427,0 -53.34248620566028,-32.53301951790382,0 -53.34230862986789,-32.53281341880486,0 -53.34213801093656,-32.53260314501982,0 -53.34197448550754,-32.53238886500431,0 -53.34181818453617,-32.53217075042264,0 -53.3416692331874,-32.53194897600977,0</coordinates></LinearRing></outerBoundaryIs>
+        </Polygon>
+      </MultiGeometry>
+    </Placemark>
+  </Folder>
+</Document>
+</kml>

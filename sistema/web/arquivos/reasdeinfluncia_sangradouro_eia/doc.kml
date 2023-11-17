@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.opengis.net/kml/2.2 http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd http://www.google.com/kml/ext/2.2 http://code.google.com/apis/kml/schema/kml22gx.xsd">
+<Document id="Áreas_de_influência_-_Sangradouro_-_EIA">
+  <name>Áreas de influência - Sangradouro - EIA</name>
+  <Snippet></Snippet>
+  <Style id="LineStyle00">
+    <LabelStyle>
+      <color>00000000</color>
+      <scale>0.000000</scale>
+    </LabelStyle>
+    <LineStyle>
+      <color>ffc5ff00</color>
+      <width>1.500000</width>
+    </LineStyle>
+    <PolyStyle>
+      <color>00000000</color>
+      <outline>0</outline>
+    </PolyStyle>
+  </Style>
+  <Style id="LineStyle10">
+    <LabelStyle>
+      <color>00000000</color>
+      <scale>0.000000</scale>
+    </LabelStyle>
+    <LineStyle>
+      <color>ffe65c00</color>
+      <width>2.000000</width>
+    </LineStyle>
+    <PolyStyle>
+      <color>00000000</color>
+      <outline>0</outline>
+    </PolyStyle>
+  </Style>
+  <Style id="LineStyle20">
+    <LabelStyle>
+      <color>00000000</color>
+      <scale>0.000000</scale>
+    </LabelStyle>
+    <LineStyle>
+      <color>ff0000e6</color>
+      <width>1.500000</width>
+    </LineStyle>
+    <PolyStyle>
+      <color>00000000</color>
+      <outline>0</outline>
+    </PolyStyle>
+  </Style>
+  <Style id="LineStyle30">
+    <LabelStyle>
+      <color>00000000</color>
+      <scale>0.000000</scale>
+    </LabelStyle>
+    <LineStyle>
+      <color>ff0098e6</color>
+      <width>2.000000</width>
+    </LineStyle>
+    <PolyStyle>
+      <color>00000000</color>
+      <outline>0</outline>
+    </PolyStyle>
+  </Style>
+  <Style id="LineStyle40">
+    <LabelStyle>
+      <color>00000000</color>
+      <scale>0.000000</scale>
+    </LabelStyle>
+    <LineStyle>
+      <color>ff390094</color>
+      <width>2.000000</width>
+    </LineStyle>
+    <PolyStyle>
+      <color>00000000</color>
+      <outline>0</outline>
+    </PolyStyle>
+  </Style>
+  <Folder id="FeatureLayer0">
+    <name>Canal_Sang_AreaDespejo_EIA- sirgas</name>
+    <Snippet></Snippet>
+    <Placemark id="ID_00000">
+      <name> </name>
+      <Snippet></Snippet>
+      <description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+<td> </td>
+</tr>
+<tr>
+<td>
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+<tr>
+<td>FID</td>
+<td>0</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>FID_</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Entity</td>
+<td>LWPolyline</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Layer</td>
+<td>Canal do Sangradouro</td>
+</tr>
+<tr>
+<td>Color</td>
+<td>4</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Linetype</td>
+<td>DASHED2</td>
+</tr>
+<tr>
+<td>Elevation</td>
+<td>0</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>LineWt</td>
+<td>80</td>
+</tr>
+<tr>
+<td>RefName</td>
+<td></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
+]]></description>
+      <styleUrl>#LineStyle00</styleUrl>
+      <MultiGeometry>
+        <LineString>
+          <extrude>0</extrude>
+          <tessellate>1</tessellate><altitudeMode>clampToGround</altitudeMode>
+          <coordinates> -52.6316303851499,-32.1542653879033,0 -52.63504320286145,-32.15623199433188,0 -52.66242659395686,-32.18378067873959,0 -52.67443629611885,-32.211062554191,0 -52.68270256635673,-32.23403570987475,0 -52.70046052949855,-32.29501992455144,0 -52.70097802885519,-32.30000433627298,0</coordinates>
+        </LineString>
+      </MultiGeometry>
+    </Placemark>
+  </Folder>
+  <Folder id="FeatureLayer1">
+    <name>Canal_Sang_EIA- sirgas</name>
+    <Snippet></Snippet>
+    <Placemark id="ID_10000">
+      <name> </name>
+      <Snippet></Snippet>
+      <description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+<td> </td>
+</tr>
+<tr>
+<td>
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+<tr>
+<td>FID</td>
+<td>0</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>FID_</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Entity</td>
+<td>LWPolyline</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Layer</td>
+<td>Canal do Sangradouro</td>
+</tr>
+<tr>
+<td>Color</td>
+<td>5</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Linetype</td>
+<td>Continuous</td>
+</tr>
+<tr>
+<td>Elevation</td>
+<td>0</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>LineWt</td>
+<td>80</td>
+</tr>
+<tr>
+<td>RefName</td>
+<td></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
+]]></description>
+      <styleUrl>#LineStyle10</styleUrl>
+      <MultiGeometry>
+        <LineString>
+          <extrude>0</extrude>
+          <tessellate>1</tessellate><altitudeMode>clampToGround</altitudeMode>
+          <coordinates> -52.630380377378,-32.1502112501019,0 -52.6371980411913,-32.15420937798971,0 -52.66521258438598,-32.18239228630703,0 -52.67745096746459,-32.21019174980448,0 -52.68577186586207,-32.23331461600939,0 -52.70361185445148,-32.29457336683257,0 -52.70415121578824,-32.29976662444609,0</coordinates>
+        </LineString>
+      </MultiGeometry>
+    </Placemark>
+  </Folder>
+  <Folder id="FeatureLayer2">
+    <name>Canal_Sang_ADA_EIA- sirgas</name>
+    <Snippet></Snippet>
+    <Placemark id="ID_20000">
+      <name> </name>
+      <Snippet></Snippet>
+      <description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+<td> </td>
+</tr>
+<tr>
+<td>
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+<tr>
+<td>FID</td>
+<td>0</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>FID_</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Entity</td>
+<td>LWPolyline</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Layer</td>
+<td>AID - 1 km</td>
+</tr>
+<tr>
+<td>Color</td>
+<td>10</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Linetype</td>
+<td>Continuous</td>
+</tr>
+<tr>
+<td>Elevation</td>
+<td>0</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>LineWt</td>
+<td>60</td>
+</tr>
+<tr>
+<td>RefName</td>
+<td></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
+]]></description>
+      <styleUrl>#LineStyle20</styleUrl>
+      <MultiGeometry>
+        <LineString>
+          <extrude>0</extrude>
+          <tessellate>1</tessellate><altitudeMode>clampToGround</altitudeMode>
+          <coordinates> -52.62991052140037,-32.14831109838027,0 -52.63719436540843,-32.15258272174415,0 -52.66604992835062,-32.18161189398661,0 -52.67859253870927,-32.2101017640488,0 -52.67915953787219,-32.21167775277673,0 -52.68203349367553,-32.2196650461002,0 -52.68698567304596,-32.23342444868477,0 -52.69155434083684,-32.24909883541086,0 -52.70493337291418,-32.29504969874566,0 -52.70550174285733,-32.30052143286521,0 -52.70021305152208,-32.3009176330693,0 -52.69968113157223,-32.2957939739732,0 -52.68187015732327,-32.23462628003084,0 -52.67356807801934,-32.21155311038088,0 -52.66140662426164,-32.18392587766966,0 -52.63360297645165,-32.1559537286134,0 -52.62690190600794,-32.15202378262873,0 -52.62991052140037,-32.14831109838027,0</coordinates>
+        </LineString>
+      </MultiGeometry>
+    </Placemark>
+  </Folder>
+  <Folder id="FeatureLayer3">
+    <name>Canal_Sang_AID_1km_EIA- sirgas</name>
+    <Snippet></Snippet>
+    <Placemark id="ID_30000">
+      <name> </name>
+      <Snippet></Snippet>
+      <description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+<td> </td>
+</tr>
+<tr>
+<td>
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+<tr>
+<td>FID</td>
+<td>0</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>FID_</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Entity</td>
+<td>LWPolyline</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Layer</td>
+<td>AID - 1 km</td>
+</tr>
+<tr>
+<td>Color</td>
+<td>2</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Linetype</td>
+<td>Continuous</td>
+</tr>
+<tr>
+<td>Elevation</td>
+<td>0</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>LineWt</td>
+<td>60</td>
+</tr>
+<tr>
+<td>RefName</td>
+<td></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
+]]></description>
+      <styleUrl>#LineStyle30</styleUrl>
+      <MultiGeometry>
+        <LineString>
+          <extrude>0</extrude>
+          <tessellate>1</tessellate><altitudeMode>clampToGround</altitudeMode>
+          <coordinates> -52.62436282729546,-32.15763657596604,0 -52.6230040683834,-32.15669901029826,0 -52.62169140433063,-32.15535329470286,0 -52.62063023085337,-32.15374447641457,0 -52.62001353111414,-32.15206191913386,0 -52.61978499926979,-32.15035112283507,0 -52.61995170389005,-32.14858135057194,0 -52.6205089044308,-32.14692370408729,0 -52.62156220571651,-32.14522183881124,0 -52.62246990333249,-32.1442339437907,0 -52.62334081505672,-32.14303581144346,0 -52.62464814626347,-32.14164507236364,0 -52.6261572661075,-32.14057217143996,0 -52.62798926098003,-32.1396914356915,0 -52.62993747667159,-32.13916066987098,0 -52.6320236801272,-32.13895819747724,0 -52.63407496829231,-32.1391143375154,0 -52.63595944868975,-32.13955936316343,0 -52.63718562972851,-32.14001060513397,0 -52.63820175477557,-32.14055793391384,0 -52.64653457792495,-32.14544431210996,0 -52.67728420925184,-32.17637523734477,0 -52.6905138447364,-32.20641745414552,0 -52.6990715658963,-32.23018903218943,0 -52.7172671969042,-32.29263738577925,0 -52.71790145775396,-32.29873562410229,0 -52.71794337458493,-32.29935077156534,0 -52.71771684004836,-32.30142629296993,0 -52.71696917533493,-32.30334000531643,0 -52.71571150003273,-32.3050662013874,0 -52.7141303876428,-32.30647415823062,0 -52.71208893085566,-32.30756621534232,0 -52.70987191894604,-32.30830242707941,0 -52.70756107018838,-32.30853839868008,0 -52.7043414842187,-32.30878649403822,0 -52.70192593412806,-32.30858371080869,0 -52.69962215968938,-32.30790860660831,0 -52.69762221374312,-32.30688611189122,0 -52.69740158935976,-32.30669463129398,0 -52.69590717689928,-32.3054456916274,0 -52.69465910884082,-32.30382499750137,0 -52.69388839478896,-32.30198798502846,0 -52.69365776571381,-32.30060947247368,0 -52.69340831250681,-32.29896313279156,0 -52.69310730377033,-32.29606159044152,0 -52.67554066640606,-32.23571797821413,0 -52.66740182795458,-32.21309415842862,0 -52.655925613345,-32.1870200321274,0 -52.63001487779788,-32.16095129942342,0 -52.62436282729546,-32.15763657596604,0</coordinates>
+        </LineString>
+      </MultiGeometry>
+    </Placemark>
+  </Folder>
+  <Folder id="FeatureLayer4">
+    <name>Canal_Sang_AII_3km_EIA - sirgas</name>
+    <Snippet></Snippet>
+    <Placemark id="ID_40000">
+      <name> </name>
+      <Snippet></Snippet>
+      <description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body style="margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;">
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px">
+<tr style="text-align:center;font-weight:bold;background:#9CBCE2">
+<td> </td>
+</tr>
+<tr>
+<td>
+<table style="font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px">
+<tr>
+<td>FID</td>
+<td>0</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>FID_</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Entity</td>
+<td>LWPolyline</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Layer</td>
+<td>AID - 1 km</td>
+</tr>
+<tr>
+<td>Color</td>
+<td>82</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>Linetype</td>
+<td>Continuous</td>
+</tr>
+<tr>
+<td>Elevation</td>
+<td>0</td>
+</tr>
+<tr bgcolor="#D4E4F3">
+<td>LineWt</td>
+<td>60</td>
+</tr>
+<tr>
+<td>RefName</td>
+<td></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
+]]></description>
+      <styleUrl>#LineStyle40</styleUrl>
+      <MultiGeometry>
+        <LineString>
+          <extrude>0</extrude>
+          <tessellate>1</tessellate><altitudeMode>clampToGround</altitudeMode>
+          <coordinates> -52.6373487888392,-32.19627356030047,0 -52.64730153342465,-32.21889663398391,0 -52.65507654371688,-32.24052226512108,0 -52.67209705348349,-32.29903544763097,0 -52.67241843493119,-32.30214017602204,0 -52.6735213038941,-32.30723769880222,0 -52.67492234511432,-32.31046431370397,0 -52.67683735556447,-32.31366510295103,0 -52.67924342003447,-32.31665855098836,0 -52.68186121815217,-32.31914772355469,0 -52.68503462311677,-32.32143964171166,0 -52.68863105287333,-32.32339714755839,0 -52.69180877748946,-32.32465233560247,0 -52.69622994989417,-32.32594480315211,0 -52.7016923655784,-32.3266823385515,0 -52.70591848319435,-32.32675372804569,0 -52.71078421362064,-32.32650928617205,0 -52.71616816356064,-32.32551292979494,0 -52.72050823406359,-32.324183098699,0 -52.72379290056266,-32.32265125376692,0 -52.72710263715332,-32.32076750714534,0 -52.7298760879043,-32.31865953159291,0 -52.73275346266708,-32.31583529189972,0 -52.73533318503046,-32.31244731707707,0 -52.73690336327588,-32.30958688434532,0 -52.73844222054927,-32.30563387096039,0 -52.73903910176357,-32.30206629714522,0 -52.73905813711092,-32.29614996564566,0 -52.73827414833759,-32.28965610584159,0 -52.73192702633585,-32.26790079832119,0 -52.7195307446778,-32.22537776539063,0 -52.71060836141447,-32.20060827638143,0 -52.69585276882457,-32.16711608220488,0 -52.66089500435191,-32.13195834307412,0 -52.64944172761594,-32.12526920723319,0 -52.64372644779912,-32.12277023988004,0 -52.6375986229142,-32.12135756968073,0 -52.63161500553781,-32.12089421939236,0 -52.62548661460694,-32.12153976642251,0 -52.61958976777882,-32.12310744465461,0 -52.6139401602171,-32.12573130443418,0 -52.60924127884828,-32.129265076249,0 -52.60554597423602,-32.13316118702875,0 -52.60375511049062,-32.13545447832693,0 -52.60078503819919,-32.14021833357286,0 -52.59911851287555,-32.14527794029598,0 -52.59857461964147,-32.15057319762712,0 -52.59922582558351,-32.15581974397041,0 -52.60114936895387,-32.1609746014661,0 -52.60431046059261,-32.16571357607585,0 -52.60819647212904,-32.16958957135009,0 -52.61564538766219,-32.174433997885,0 -52.6373487888392,-32.19627356030047,0</coordinates>
+        </LineString>
+      </MultiGeometry>
+    </Placemark>
+  </Folder>
+</Document>
+</kml>
