@@ -99,6 +99,10 @@ class EmpreendimentoController extends Controller
             'fases' => $fases
         ]);
     }
+    public function actionOmapa()
+    {
+        return $this->render('omapa');
+    }
     public function actionAtivandoetapa()
     {
         date_default_timezone_set('America/Sao_Paulo');

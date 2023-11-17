@@ -153,9 +153,23 @@ class Arquivo extends \yii\db\ActiveRecord
     public function upload()
     {
         // $model = Arquivo::findOne(['id' => $id]);
-        // if ($this->validate()) { 
+        // if ($this->validate()) {
+            $zip = new \ZipArchive;
             foreach ($this->imageFiles as $file) {
                 $file->saveAs('arquivos/' . $this->clean($file->baseName) . '.' . $this->clean($file->extension));
+                if ($file->extension == 'kmz' or $file->extension == 'KMZ') {
+                    $kmzFile = 'arquivos/' . $this->clean($file->baseName) . '.' . $this->clean($file->extension);
+                    $destPath = 'arquivos/' . $this->clean($file->baseName);
+                    if ($zip->open($kmzFile) === TRUE) {
+                        // Extraia todos os arquivos para o diretório de destino
+                        $zip->extractTo($destPath);
+                        // Feche o arquivo KMZ
+                        $zip->close();
+                        echo 'Arquivo KMZ descompactado com sucesso!';
+                    } else {
+                        echo 'Falha ao descompactar o arquivo KMZ';
+                    }
+                }
             }
             return true;
         // } else {

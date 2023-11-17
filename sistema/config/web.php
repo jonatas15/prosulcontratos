@@ -57,9 +57,8 @@ $config = [
             'bundles' => [
                 'dosamigos\google\maps\MapAsset' => [
                     'options' => [
-                        'key' => 'AIzaSyDv-tA3kggbVmTfLdmgjyK7C3rILSedhvY',
-                        'language' => 'pt',
-                        'version' => '3.1.18'
+                        'key' => 'AIzaSyBTRaW15a_Fxc4im12M8ebgJ4ckj6qbRNo',
+                        'language' => 'pt'
                     ]
                 ],
                 'kartik\form\ActiveFormAsset' => [
@@ -94,6 +93,9 @@ $config = [
         'gridview' =>  [
              'class' => '\kartik\grid\Module'
          ],
+        //  'googlemaps' => [
+        //     'class' => 'dosamigos\google\maps\Module',
+        // ],
     ],
     'params' => $params,
 ];

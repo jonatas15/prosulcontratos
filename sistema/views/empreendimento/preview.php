@@ -28,6 +28,8 @@ use dosamigos\google\maps\overlays\Polyline;
 use dosamigos\google\maps\overlays\PolylineOptions;
 use dosamigos\google\maps\layers\BicyclingLayer;
 
+use dosamigos\google\maps\layers\KmlLayer;
+
 // MAPA fim
 
 $this->title = $model->titulo;
@@ -118,21 +120,26 @@ $json_data_4 = json_decode($json_br_080_4,true);
                             <p><descricao><?= $lic->descricao ?></descricao></p>
                             <?php 
                                 $total_etapas = Fase::find()->where([
-                                    'licenciamento_id' => $lic->id
+                                    'licenciamento_id' => $lic->id,
+                                    'ativo' => 1,
                                 ])->count();
                                 // echo 'Etapas: '.$total_etapas;
                                 $total_etapas_concluidas = Fase::find()->where([
                                     'licenciamento_id' => $lic->id,
+                                    'ativo' => 1,
                                     'status' => 'Concluído'
                                 ])->count();
                                 // echo '<br>Etapas_concluidas: '.$total_etapas_concluidas;
                                 $porcent_etapas_concluidas = 0;
                                 $progressbaranimated = 'progress-bar-striped progress-bar-animated';
                                 if ($total_etapas > 0) {
+                                    // echo $porcent_etapas_concluidas;
+                                    // echo $total_etapas;
                                     $porcent_etapas_concluidas = ($total_etapas_concluidas * 100)/$total_etapas;
                                     if ($porcent_etapas_concluidas == 100) {
                                         $progressbaranimated = '';
                                     }
+                                    $porcent_etapas_concluidas = ceil($porcent_etapas_concluidas);
                                 }
                             ?>
                             <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="<?=$porcent_etapas_concluidas?>" aria-valuemin="0" aria-valuemax="100" style="height: 25px">
@@ -160,7 +167,7 @@ $json_data_4 = json_decode($json_br_080_4,true);
                     $coord = new LatLng(['lat' => -15.7801, 'lng' => -47.9292]);
                     $map = new Map([
                         'center' => $coord,
-                        'zoom' => 11,
+                        'zoom' => 12,
                         'mapTypeId' => 'satellite',
                     ]);
 
@@ -216,7 +223,7 @@ $json_data_4 = json_decode($json_br_080_4,true);
                     );
 
                     // Add marker to the map
-                    $map->addOverlay($marker);
+                    // $map->addOverlay($marker);
 
                     // Now lets write a polygon
                     $coords = [];
@@ -244,6 +251,7 @@ $json_data_4 = json_decode($json_br_080_4,true);
                     echo '</pre>';
                     
                     // FOREACHS que IMPRIMEM OS MAPAS ===================================================================
+                    /*
                     $vet_coord_grupo = $json_data_1['features'];
                     foreach($vet_coord_grupo as $coor_grupo) {
                         $linha = [];
@@ -365,6 +373,7 @@ $json_data_4 = json_decode($json_br_080_4,true);
                         // $map->addOverlay($marker);
                         
                     }
+                    */
                     // FOREACHS que IMPRIMEM OS MAPAS ===================================================================
 
                     $polygon = new Polygon([
@@ -380,12 +389,15 @@ $json_data_4 = json_decode($json_br_080_4,true);
                     $map->addOverlay($polygon);
                     // $map->addOverlay($polyline);
 
+                    $kmlLayer = new KmlLayer([
+                        'url' => Yii::$app->basePath.'/web/arquivos/passivos/doc.kml',
+                        'map' => $map
+                    ]);
+                    $kmlLayer->options = [
+                        'error' => 'function() { console.error("Erro ao carregar KML"); }',
+                    ];
 
-                    // Lets show the BicyclingLayer :)
-                    $bikeLayer = new BicyclingLayer(['map' => $map->getName()]);
-
-                    // Append its resulting script
-                    $map->appendScript($bikeLayer->getJs());
+                    $map->addOverlay($kmlLayer);
 
                     // Display the map -finally :)
                     echo $map->display();
