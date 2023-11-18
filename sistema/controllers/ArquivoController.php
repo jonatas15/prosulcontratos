@@ -97,6 +97,9 @@ class ArquivoController extends Controller
                     
                     $arquivo = $this->clean($file->baseName) . '.' . $this->clean($file->extension);
                     $campos = "tipo, src, $campo_tabela_externa, pasta, ref";
+
+                    $model->ref = $file->baseName;
+
                     $valores = "'$model->tipo', '$arquivo', '$valor_tabela_externa', '$model->pasta', '$model->ref'";
                     \Yii::$app->db->createCommand("insert into arquivo ($campos) VALUES ($valores)")->execute(); 
                 }

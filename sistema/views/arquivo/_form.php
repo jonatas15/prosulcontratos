@@ -32,8 +32,14 @@ use kartik\widgets\FileInput;
             <?php // = $form->field($model, 'licenciamento_id')->hiddenInput(['value' => $licenciamento_id])->label(false) ?>
             <?= $form->field($model, $id_tabela_referencia)->hiddenInput(['value' => $id_valor_referencia])->label(false) ?>
         </div>
-        <div class="col-md-6"><?= $form->field($model, 'pasta')->textInput(['maxlength' => true]) ?></div>
-        <div class="col-md-12"><?= $form->field($model, 'ref')->textInput(['maxlength' => true]) ?></div>
+        <div class="col-md-6"><?= $form->field($model, 'pasta')->dropDownList([
+            'Imagens' => 'Imagens',
+            'Documentos' => 'Documentos',
+            'Vídeos' => 'Vídeos',
+            'Planilhas' => 'Planilhas',
+            'Mapas' => 'Mapas',
+        ]) ?></div>
+        <!-- <div class="col-md-12"><?= $form->field($model, 'ref')->textInput(['maxlength' => true]) ?></div> -->
         <div class="col-md-12">
             <?php
                 echo $form->field($model, 'imageFiles[]')->widget(FileInput::classname(), [

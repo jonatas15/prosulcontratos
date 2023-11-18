@@ -153,7 +153,7 @@ $json_data = json_decode($json,true);
                     ])->all();
                     foreach ($arquivos as $arquivo) {
                         if($arquivo->pasta == 'Mapas') {
-                            array_push($mapas, $arquivo->src);
+                            array_push($mapas, $arquivo);
                         }
                         // echo $arquivo->src . '<br>';
                     }

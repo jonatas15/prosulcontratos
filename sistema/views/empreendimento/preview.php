@@ -158,19 +158,22 @@ $json_data_4 = json_decode($json_br_080_4,true);
             </div>
             <div class="col-md-8">
                 <div class="card">
-                <h4 class="card-header bg-gray">🌐 Mapa e marcadores</h4>
-                <?php
-                    $mapas = [];
-                    foreach ($model->arquivos as $arquivo) {
-                        if($arquivo->pasta == 'Mapas') {
-                            array_push($mapas, $arquivo->src);
+                    <h4 class="card-header bg-gray">🌐 Mapa e marcadores</h4>
+                    <?php
+                        $mapas = [];
+                        foreach ($model->arquivos as $arquivo) {
+                            if($arquivo->pasta == 'Mapas') {
+                                array_push($mapas, $arquivo);
+                            }
+                            // echo $arquivo->src . '<br>';
                         }
-                        // echo $arquivo->src . '<br>';
-                    }
-                ?>
-                <?= $this->render('omapa', [
-                    'mapas' => $mapas
-                ]); ?>
+                    ?>
+                    <?= $this->render('omapa', [
+                        'mapas' => $mapas
+                    ]); ?>
+                    <center>
+                        <a href="/empreendimento/update?id=<?=$model->id?>&abativa=aba_arquivos" class="btn btn-primary w-25 my-2 text-center">Mais arquivos: <i class="bi bi-upload"></i></a>
+                    </center>
                 </div>
             </div>
         </div>

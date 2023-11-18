@@ -1,7 +1,7 @@
 <style>
     #map {
         width: 100% !important;
-        min-height: 1000px !important;
+        min-height: 900px !important;
     }
 </style>
 
@@ -20,9 +20,9 @@
     $legendas_kml = "";
     foreach ($mapas as $mapa) {
         // echo $mapa;
-        $pos = strpos($mapa, 'kmz');
+        $pos = strpos($mapa->src, 'kmz');
         if ($pos) {
-            $pasta = str_replace('.kmz', '', $mapa);
+            $pasta = str_replace('.kmz', '', $mapa->src);
             $kmz_omnivore .= "var kmlLayer_$i = omnivore.kml('/arquivos/$pasta/doc.kml').on('ready', function() {
                 map.fitBounds(kmlLayer_$i.getBounds());
                 this.eachLayer(function(layer) {
@@ -38,7 +38,7 @@
             // });';
 
             $kmz_kmls .= "
-                '$i: $pasta': kmlLayer_$i,
+                '$i: $mapa->ref <a href=\"/arquivos/$pasta.kmz\" class=\"btn btn-link\" download><i class=\"bi bi-download\"></i></a>': kmlLayer_$i,
             ";
             $i++;
         }
