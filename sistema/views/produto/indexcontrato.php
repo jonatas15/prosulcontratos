@@ -194,6 +194,7 @@ use miloschuman\highcharts\Highcharts;
         $ordensdeservico_id = $_REQUEST['ProdutoSearch']['ordensdeservico_id'] ? $_REQUEST['ProdutoSearch']['ordensdeservico_id'] : '';
         $ano_listagem = $_REQUEST['ProdutoSearch']['ano_listagem'] ? $_REQUEST['ProdutoSearch']['ano_listagem'] : '';
         $fase = $_REQUEST['ProdutoSearch']['fase'] ? $_REQUEST['ProdutoSearch']['fase'] : '';
+        $numero_sei = $_REQUEST['ProdutoSearch']['numero_sei'] ? $_REQUEST['ProdutoSearch']['numero_sei'] : '';
         # Intervalo de data #######################################################################
         $data_ini = $_REQUEST['from_date'];
         $data_fim = $_REQUEST['to_date'];
@@ -262,6 +263,7 @@ use miloschuman\highcharts\Highcharts;
             'empreendimento_id' => $empreendimento_id,
             'ordensdeservico_id' => $ordensdeservico_id,
             'fase' => $fase,
+            'numero_sei' => $numero_sei,
         ]);
     ?>
     <div class="row" style="background-color: ghostwhite; padding: 10px 5px">
@@ -281,9 +283,13 @@ use miloschuman\highcharts\Highcharts;
                 $tempo_medio_dnit = 0;
                 $tempo_medio_prosul = 0;
 
-                $empreendimentos = Empreendimento::find()->all();
+                $empreendimentos = Empreendimento::find()->where([
+                    'contrato_id' => $contrato_id
+                ])->all();
                 $graph_empreendimentos = [];
-                $os = \app\models\OrdensdeServico::find()->all();
+                $os = \app\models\OrdensdeServico::find()->where([
+                    'contrato_id' => $contrato_id
+                ])->all();
                 $graph_os = [];
                 $i = 0;
                 $dnit_t = $prosul_t = $cgmab = 0;
@@ -626,8 +632,13 @@ use miloschuman\highcharts\Highcharts;
             <!-- <hr> -->
         </div>
         <div class="row">
-            <div class="col-md-4">
-                <label class="control-label summary" for="pagina-roa_programa">Empreendimento</label>
+            <div class="col-md-2">
+                <label class="control-label summary" for="produto_numero_sei"><b>SEI</b></label>
+                <!-- <br /> -->
+                <?= $form->field($searchModel, 'numero_sei')->textInput(['maxlength' => true, 'placeholder' => 'Nº SEI'])->label(false) ?>
+            </div>
+            <div class="col-md-3">
+                <label class="control-label summary" for="produto_empreendimento_id">Empreendimento</label>
                 <?php $lista_emp = ArrayHelper::map($empreendimentos, 'id', 'titulo'); ?>
                 <?= $form->field($searchModel, 'empreendimento_id')->dropDownList($lista_emp, [
                     'prompt' => 'Selecione'
@@ -635,8 +646,8 @@ use miloschuman\highcharts\Highcharts;
                 <!-- Campos de pesquisa ocultos pros gráficos -->
                 <input type="hidden" name="por_rv" id="por_rv" value="<?=$_REQUEST['por_rv']?>">
             </div>
-            <div class="col-md-4">
-                <label class="control-label summary" for="pagina-roa_programa">Ordem de Serviço</label>
+            <div class="col-md-3">
+                <label class="control-label summary" for="produto_ordensdeservico_id">Ordem de Serviço</label>
                 <?php $lista_os = ArrayHelper::map($os, 'id', 'titulo'); ?>
                 <?= $form->field($searchModel, 'ordensdeservico_id')->dropDownList($lista_os, [
                     'prompt' => 'Selecione'
@@ -765,6 +776,22 @@ use miloschuman\highcharts\Highcharts;
                 ]
             ],
             'subproduto',
+            [
+                'attribute' => 'numero',
+                'headerOptions' => [
+                    'width' => '3%'
+                ],
+                'value' => function($data) {
+                    $return = "";
+                    foreach($data->revisaos as $rv) {
+                        if ($rv->numero_sei) {
+                            $return .= '<br>'.$rv->titulo.' <strong>SEI: '.$rv->numero_sei.'</strong>';
+                        }
+                    }
+                    return $return;
+                },
+                'format' => 'raw',
+            ],
             [
                 'attribute' => 'empreendimento_id',
                 'format' => 'raw',

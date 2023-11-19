@@ -14,6 +14,7 @@ use Yii;
  * @property int|null $tempo_ultima_etapa
  * @property string|null $responsavel
  * @property string|null $status
+ * @property string|null $numero_sei
  *
  * @property Produto $produto
  */
@@ -37,6 +38,7 @@ class Revisao extends \yii\db\ActiveRecord
             [['produto_id', 'tempo_ultima_etapa'], 'integer'],
             [['data'], 'safe'],
             [['titulo'], 'string', 'max' => 100],
+            [['numero_sei'], 'string', 'max' => 120],
             [['responsavel', 'status'], 'string', 'max' => 45],
             [['produto_id'], 'exist', 'skipOnError' => true, 'targetClass' => Produto::class, 'targetAttribute' => ['produto_id' => 'id']],
         ];
@@ -55,6 +57,7 @@ class Revisao extends \yii\db\ActiveRecord
             'tempo_ultima_etapa' => 'Tempo Ultima Etapa',
             'responsavel' => 'Responsavel',
             'status' => 'Status',
+            'numero_sei' => 'Número SEI',
         ];
     }
 

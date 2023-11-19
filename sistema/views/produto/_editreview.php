@@ -26,6 +26,7 @@ $modelRevisao->data = $modelRevisao->data != '' ? date('d/m/Y', strtotime($model
                 'type' => 'number'
             ]) ?></div>
             <div class="col-md-6"><?= $form->field($modelRevisao, 'responsavel')->textInput(['maxlength' => true]) ?></div>
+            <div class="col-md-6"><?= $form->field($modelRevisao, 'numero_sei')->textInput(['maxlength' => true]) ?></div>
             <div class="col-md-6"><?= $form->field($modelRevisao, 'status')->dropDownList([
                 'Em andamento' => 'Em andamento',
                 'Aprovado' => 'Aprovado',

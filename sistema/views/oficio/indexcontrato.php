@@ -1,6 +1,7 @@
 <?php
 
 use app\models\Oficio;
+use app\models\Empreendimento;
 use yii\helpers\Html;
 use yii\web\JsExpression;
 use yii\helpers\Url;
@@ -230,6 +231,7 @@ Yii::$app->params['contratoidGlobal'] = $contrato_id;
         $datainicial = $data_ini;
         $datafinial = $data_fim;
         $intervalo_data = $_REQUEST['OficioSearch']['intervalo_data'];
+        $emprrendimento_desc = $_REQUEST['OficioSearch']['emprrendimento_desc'];
         
         // echo Yii::$app->formatter->asDate($data_ini, 'yyyy-MM-dd');
         if (!empty($data_ini) AND !empty($data_fim)) :
@@ -292,6 +294,7 @@ Yii::$app->params['contratoidGlobal'] = $contrato_id;
             'to_date'=> $data_fim,
             'ano_listagem' => $ano_listagem,
             'status' => $status,
+            'emprrendimento_desc' => $emprrendimento_desc,
         ]);
     ?>
     <div class="row">
@@ -820,6 +823,27 @@ Yii::$app->params['contratoidGlobal'] = $contrato_id;
                 <!-- <br /> -->
                 <?= $form->field($searchModel, 'Num_sei')->textInput(['maxlength' => true, 'placeholder' => 'Nº ou trecho'])->label(false) ?>
             </div>
+            <div class="col-md-2">
+                <?php 
+                    $empreendimentos = Oficio::find()->where([
+                        'contrato_id' => $contrato_id
+                    ])->all();
+                    $arr_empreendimentos_oficios = [
+                        'Administrativo' => 'Administrativo'
+                    ];
+                    foreach ($empreendimentos as $emp) {
+                        $arr_empreendimentos_oficios[$emp->emprrendimento_desc] = $emp->emprrendimento_desc;
+                    }
+                    // $lista_emp = ArrayHelper::map($empreendimentos, 'id', 'titulo');
+                ?>
+                <label class="control-label summary" for="oficio_emprrendimento_desc">Empreendimento</label>
+                <?php $lista_emp = $arr_empreendimentos_oficios; ?>
+                <?= $form->field($searchModel, 'emprrendimento_desc')->dropDownList($lista_emp, [
+                    'prompt' => 'Selecione'
+                ])->label(false) ?>
+                <!-- Campos de pesquisa ocultos pros gráficos -->
+                <input type="hidden" name="por_rv" id="por_rv" value="<?=$_REQUEST['por_rv']?>">
+            </div>
             <div class="col-md-4">
                 <label class="control-label summary" for="from_date"><b>Por data</b></label>
                 <!-- <br /> -->
@@ -852,7 +876,24 @@ Yii::$app->params['contratoidGlobal'] = $contrato_id;
                     ]);
                 ?>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-2">
+                <?= $form->field($searchModel, 'ano_listagem')->dropDownList([
+                    'all'=>'Todos os registros',
+                    '2023'=>'Ano 2023',
+                    '2022'=>'Ano 2022',
+                ])->label('Ano') ?>
+            </div>
+            <div class="col-md-2">
+                <?= $form->field($searchModel, 'tipo')->dropDownList([
+                    'all'=>'Selecione o Tipo',
+                    'NT' => 'NT',
+                    'Ofícios DNIT' => 'Ofícios DNIT',
+                    'Ofícios Prosul' => 'Ofícios Prosul',
+                    'OS' => 'OS',
+                    'OSE' => 'OSE',
+                ]) ?>
+            </div>
+            <div class="col-md-6 card px-2 py-1 my-2" style="background-color: transparent;    border-radius: 0px !important;">
                 <div class="row">
                     <label class="control-label summary"><b>Últimos dias</b></label>
                     <br>
@@ -884,50 +925,34 @@ Yii::$app->params['contratoidGlobal'] = $contrato_id;
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-2">
-                <?= $form->field($searchModel, 'ano_listagem')->dropDownList([
-                    'all'=>'Todos os registros',
-                    '2023'=>'Ano 2023',
-                    '2022'=>'Ano 2022',
-                ])->label(false) ?>
-            </div>    
-            <div class="col-md-2">
-                <?= $form->field($searchModel, 'tipo')->dropDownList([
-                    'all'=>'Selecione o Tipo',
-                    'NT' => 'NT',
-                    'Ofícios DNIT' => 'Ofícios DNIT',
-                    'Ofícios Prosul' => 'Ofícios Prosul',
-                    'OS' => 'OS',
-                    'OSE' => 'OSE',
-                ])->label(false) ?>
-            </div>    
-            <div class="col-md-7 form-group">
-                <label for="">
-                    <b>Status:</b>
-                </label>
-                <?php // = $form->field($searchModel, 'status')->dropDownList([ 'Não Resolvido' => 'Não Resolvido', 'Parcialmente Resolvido' => 'Parcialmente Resolvido', 'Em andamento' => 'Em andamento', 'Resolvido' => 'Resolvido', ], ['prompt' => '']);?>
-                <label for="nao-resolvido-<?=$tipodepagina?>" style="padding:1%">
-                    <input type="checkbox" name="OficioSearch[status][1]" value="Informativo" id="nao-resolvido-<?=$id?>" style="" <?=$campo_status_1?>>
-                    Informativo
-                </label>
-                <label for="parcialmente-resolvido-<?=$tipodepagina?>" style="padding:1%">
-                    <input type="checkbox" name="OficioSearch[status][2]" value="Em Andamento" id="parcialmente-resolvido-<?=$id?>" style="" <?=$campo_status_2?>>
-                    Em Andamento
-                </label>
-                <label for="em-andamento-<?=$tipodepagina?>" style="padding:1%">
-                    <input type="checkbox" name="OficioSearch[status][3]" value="Resolvido" id="em-andamento-<?=$id?>" style="" <?=$campo_status_3?>>
-                    Resolvido
-                </label>
-                <label for="resolvido-<?=$tipodepagina?>" style="padding:1%">
-                    <input type="checkbox" name="OficioSearch[status][4]" value="Não Resolvido" id="resolvido-<?=$id?>" style="" <?=$campo_status_4?>>
-                    Não Resolvido
-                </label>
-                <!-- <label for="forcomunicados" style="padding:1%">
-                    <input type="checkbox" name="OficioSearch[comunicados]" value="1" style="" id="forcomunicados" >
-                    Com CNC
-                </label> -->
+            <div class="col-md-6 card px-2 py-1 my-2" style="background-color: transparent;    border-radius: 0px !important;">
+            <div class="row">
+                    <label class="control-label summary"><b>Status</b></label>
+                    <br>
+                </div>
+                <div class="row">
+                    <?php // = $form->field($searchModel, 'status')->dropDownList([ 'Não Resolvido' => 'Não Resolvido', 'Parcialmente Resolvido' => 'Parcialmente Resolvido', 'Em andamento' => 'Em andamento', 'Resolvido' => 'Resolvido', ], ['prompt' => '']);?>
+                    <div class="col"><label for="nao-resolvido-<?=$tipodepagina?>" style="padding:1%">
+                        <input type="checkbox" name="OficioSearch[status][1]" value="Informativo" id="nao-resolvido-<?=$id?>" style="" <?=$campo_status_1?>>
+                        Informativo
+                    </label></div>
+                    <div class="col"><label for="parcialmente-resolvido-<?=$tipodepagina?>" style="padding:1%">
+                        <input type="checkbox" name="OficioSearch[status][2]" value="Em Andamento" id="parcialmente-resolvido-<?=$id?>" style="" <?=$campo_status_2?>>
+                        Em Andamento
+                    </label></div>
+                    <div class="col"><label for="em-andamento-<?=$tipodepagina?>" style="padding:1%">
+                        <input type="checkbox" name="OficioSearch[status][3]" value="Resolvido" id="em-andamento-<?=$id?>" style="" <?=$campo_status_3?>>
+                        Resolvido
+                    </label></div>
+                    <div class="col"><label for="resolvido-<?=$tipodepagina?>" style="padding:1%">
+                        <input type="checkbox" name="OficioSearch[status][4]" value="Não Resolvido" id="resolvido-<?=$id?>" style="" <?=$campo_status_4?>>
+                        Não Resolvido
+                    </label></div>
+                    <!-- <label for="forcomunicados" style="padding:1%">
+                        <input type="checkbox" name="OficioSearch[comunicados]" value="1" style="" id="forcomunicados" >
+                        Com CNC
+                    </label> -->
+                </div>
             </div>
             <div class="col-md-1 form-group">
                 <img id="loading1" src="<?=Yii::$app->homeUrl?>arquivos/loading_blue.gif" width="40" style="float:right;margin-left: 12px;margin-top: -3px;display:none">

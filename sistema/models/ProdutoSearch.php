@@ -24,7 +24,7 @@ class ProdutoSearch extends Produto
     {
         return [
             [['id', 'produto_id', 'contrato_id', 'empreendimento_id', 'ordensdeservico_id', 'aprov_tempo_ultima_revisao', 'aprov_tempo_total'], 'integer'],
-            [['numero', 'datacadastro', 'data_validade', 'data_renovacao', 'data_entrega', 'fase', 'entrega', 'servico', 'descricao', 'aprov_data', 'aprov_versao', 'diretorio_texto', 'diretorio_link'], 'safe'],
+            [['numero', 'datacadastro', 'data_validade', 'data_renovacao', 'data_entrega', 'fase', 'entrega', 'servico', 'descricao', 'aprov_data', 'aprov_versao', 'diretorio_texto', 'diretorio_link', 'numero_sei'], 'safe'],
             [['from_date', 'to_date', 'ano_listagem'], 'safe'],
             [['param'], 'string', 'on' => 'MY_SCENARIO'],
         ];
@@ -89,6 +89,11 @@ class ProdutoSearch extends Produto
             'aprov_tempo_ultima_revisao' => $this->aprov_tempo_ultima_revisao,
             'aprov_tempo_total' => $this->aprov_tempo_total,
         ]);
+        if ($this->numero_sei) {
+            $query->joinWith(['revisaos' => function ($query) {
+                $query->andWhere(['like', 'revisao.numero_sei', $this->numero_sei]);
+            }]);
+        }
 
         $query->andFilterWhere(['like', 'numero', $this->numero])
             // ->andFilterWhere(['like', 'fase', $this->fase])

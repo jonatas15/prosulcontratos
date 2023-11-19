@@ -29,13 +29,13 @@ $model->aprov_data = $model->aprov_data != '' ? date('d/m/Y', strtotime($model->
     <div class="row">
         <div class="col-md-12"><br><br></div>
         <div class="col-md-12"><?= $form->field($model, 'subproduto')->textInput() ?></div>
+        <div class="col-md-4"><?= $form->field($model, 'numero')->textInput(['maxlength' => true]) ?></div>
         <div class="col-md-4"><?= $form->field($model, 'empreendimento_id')->dropDownList($empreendimentos, [
             'prompt' => 'Selecione'
         ])->label('Empreendimentos Cadastrados') ?></div>
         <div class="col-md-4"><?= $form->field($model, 'ordensdeservico_id')->dropDownList($ordensdeservico, [
             'prompt' => 'Selecione'
         ])->label('Ordens de Serviço Cadastradas') ?></div>
-        <div class="col-md-4"><?= $form->field($model, 'numero')->textInput(['maxlength' => true]) ?></div>
         <!-- <div class="col-md-6"><?php //= $form->field($model, 'datacadastro')->textInput() ?></div> -->
         <div class="col-md-3"><?= $form->field($model, 'data_validade')->widget(\yii\widgets\MaskedInput::class, [
             'mask' => '99/99/9999',

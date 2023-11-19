@@ -165,9 +165,9 @@ class Arquivo extends \yii\db\ActiveRecord
                         $zip->extractTo($destPath);
                         // Feche o arquivo KMZ
                         $zip->close();
-                        echo 'Arquivo KMZ descompactado com sucesso!';
+                        // echo 'Arquivo KMZ descompactado com sucesso!';
                     } else {
-                        echo 'Falha ao descompactar o arquivo KMZ';
+                        // echo 'Falha ao descompactar o arquivo KMZ';
                     }
                 }
             }

@@ -40,6 +40,7 @@ use Yii;
  */
 class Produto extends \yii\db\ActiveRecord
 {
+    public $numero_sei;
     /**
      * {@inheritdoc}
      */
@@ -77,7 +78,7 @@ class Produto extends \yii\db\ActiveRecord
             'produto_id' => 'Produto',
             'empreendimento_id' => 'Empreendimento',
             'ordensdeservico_id' => 'Ordem de serviço',
-            'numero' => 'Numero',
+            'numero' => 'Número SEI',
             'datacadastro' => 'Data de registro',
             'data_validade' => 'Data de Validade',
             'data_renovacao' => 'Data de Renovação',

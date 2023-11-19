@@ -172,7 +172,7 @@ $json_data_4 = json_decode($json_br_080_4,true);
                         'mapas' => $mapas
                     ]); ?>
                     <center>
-                        <a href="/empreendimento/update?id=<?=$model->id?>&abativa=aba_arquivos" class="btn btn-primary w-25 my-2 text-center">Mais arquivos: <i class="bi bi-upload"></i></a>
+                        <a href="<?=Yii::$app->homeUrl?>empreendimento/update?id=<?=$model->id?>&abativa=aba_arquivos" class="btn btn-primary w-25 my-2 text-center">Mais arquivos: <i class="bi bi-upload"></i></a>
                     </center>
                 </div>
             </div>
