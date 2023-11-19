@@ -9,7 +9,7 @@ $modelRevisao->data = $modelRevisao->data != '' ? date('d/m/Y', strtotime($model
         <?php
         $form = ActiveForm::begin([
             'action' => [
-                Yii::$app->homeUrl.'produto/editreview',
+                'produto/editreview',
                 'id' => $id
             ]
         ]); ?>

@@ -139,9 +139,10 @@ class ProdutoController extends Controller
                     'abativa' => 'reviews'
                 ]);
             }
+        } else {
+            return null;
         }
 
-        return null;
     }
 
     /**

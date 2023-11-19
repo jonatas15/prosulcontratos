@@ -893,7 +893,7 @@ Yii::$app->params['contratoidGlobal'] = $contrato_id;
                     'OSE' => 'OSE',
                 ]) ?>
             </div>
-            <div class="col-md-6 card px-2 py-1 my-2" style="background-color: transparent;    border-radius: 0px !important;">
+            <div class="col-md-6 card py-1 my-2" style="background-color: transparent; border-radius: 0px !important;">
                 <div class="row">
                     <label class="control-label summary"><b>Últimos dias</b></label>
                     <br>
@@ -925,8 +925,8 @@ Yii::$app->params['contratoidGlobal'] = $contrato_id;
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 card px-2 py-1 my-2" style="background-color: transparent;    border-radius: 0px !important;">
-            <div class="row">
+            <div class="col-md-6 card py-1 my-2" style="background-color: transparent; border-radius: 0px !important;">
+                <div class="row">
                     <label class="control-label summary"><b>Status</b></label>
                     <br>
                 </div>

@@ -12,6 +12,7 @@ use kartik\date\DatePicker;
 use yii\helpers\ArrayHelper;
 use yii\web\JsExpression;
 use miloschuman\highcharts\Highcharts;
+use yii\bootstrap5\Accordion;
 
     /**
     
@@ -273,7 +274,15 @@ use miloschuman\highcharts\Highcharts;
             'autocomplete'=>"off",
             'id' => 'form-pesquisa-produto'
         ]]); ?>
-        <div class="row mb-2">
+        <!-- <div class="card"> -->
+        <p class="d-inline-flex gap-1">
+            <h3>
+                <a class="btn btn-warning text-white fw-bolder" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                📊 Gráficos
+                </a>
+            </h3>
+        </p>
+        <div class="row mb-2 collapse" id="collapseExample">
             <?php 
                 $aprovado = 0;
                 $aguardando = 0;
@@ -311,13 +320,13 @@ use miloschuman\highcharts\Highcharts;
                     // tempo médio em revisões dnit
                     $data_comparada = $item->data_entrega;
                     foreach ($item->revisaos as $rv) {
-                       if(in_array($rv->titulo, ["Revisão 01 (DNIT)", "Revisão 03 (DNIT)", "Revisão 05 (DNIT)"])) {
+                    if(in_array($rv->titulo, ["Revisão 01 (DNIT)", "Revisão 03 (DNIT)", "Revisão 05 (DNIT)"])) {
                             $dnit_t += $this->context->diasentre($data_comparada, $rv->data);
-                       }
-                       if(in_array($rv->titulo, ["Revisão 02 (Prosul)", "Revisão 04 (Prosul)", "Revisão 06 (Prosul)"])) {
+                    }
+                    if(in_array($rv->titulo, ["Revisão 02 (Prosul)", "Revisão 04 (Prosul)", "Revisão 06 (Prosul)"])) {
                             $prosul_t += $this->context->diasentre($data_comparada, $rv->data);
-                       }
-                       $data_comparada = $rv->data;
+                    }
+                    $data_comparada = $rv->data;
                     }
 
                     // Incrementa =====================================
@@ -376,7 +385,7 @@ use miloschuman\highcharts\Highcharts;
                     // [ 'name' => 'RV5', 'y' => $RV5, 'url' => 'RV5' ],
                 ];
             ?>
-            <div class="col-md-2">
+            <div class="col-md-2 px-1">
                 <div class="card mb-2">
                 <?= Highcharts::widget([
                         'scripts' => [
@@ -471,7 +480,7 @@ use miloschuman\highcharts\Highcharts;
                 ?>
                 </div>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8 px-1">
                 <div class="card mb-2">
                 <?= Highcharts::widget([
                         'scripts' => [
@@ -513,8 +522,8 @@ use miloschuman\highcharts\Highcharts;
                     ]);
                 ?>
                 </div>
-            <!-- </div>
-            <div class="col-md-4"> -->
+                <!-- </div>
+                <div class="col-md-4"> -->
                 <div class="card">
                 <?= Highcharts::widget([
                         'scripts' => [
@@ -561,7 +570,7 @@ use miloschuman\highcharts\Highcharts;
                 ?>
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2 px-1">
                 <div class="card">
                 <?= Highcharts::widget([
                         'scripts' => [
@@ -624,6 +633,7 @@ use miloschuman\highcharts\Highcharts;
                 </div>
             </div>
         </div>
+        <!-- </div> -->
         <div class="clearfix"><br></div>
         <div class="row mt-2 mb-2 pb-2 pt-2" style="background-color: white;">
             <h3><center>Pesquisa <a href="<?=Yii::$app->homeUrl."contrato/view?id=$contrato_id&abativa=aba_produtos"?>" class="btn btn-primary text-white fs-5" tolltip="" title="Limpar/Reiniciar">

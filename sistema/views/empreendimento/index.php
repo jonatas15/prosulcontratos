@@ -152,7 +152,7 @@ $json_data = json_decode($json,true);
                         'not', ['empreendimento_id' => null]
                     ])->all();
                     foreach ($arquivos as $arquivo) {
-                        if($arquivo->pasta == 'Mapas') {
+                        if($arquivo->pasta == 'Mapas' && $arquivo->empreendimento->contrato_id == $contrato) {
                             array_push($mapas, $arquivo);
                         }
                         // echo $arquivo->src . '<br>';
