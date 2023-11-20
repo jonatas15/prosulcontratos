@@ -186,7 +186,7 @@ $g_drive = '<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 51
         array_push($empreendimentos_all, [
             'label' => substr($emp->titulo, 0, 20),
             'icon' => 'road',
-            'url' => ['empreendimento/'.$preview.'?id='.$emp->id],
+            'url' => ['empreendimento/'.$preview.'?id='.$emp->id.'&contrato='.$contrato_ativo->id],
             'active' => $_REQUEST['id'] == $emp->id ? true : false
         ]);
     }

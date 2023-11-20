@@ -113,7 +113,7 @@ $json_data = json_decode($json,true);
                         # code...
                         $url = Yii::$app->homeUrl.'empreendimento/';
                         echo '<div class="col-6 my-3">';
-                        echo "<a class='card' href='".Yii::$app->homeUrl."empreendimento/preview?id=$row->id' style='text-decoration: none !important'>
+                        echo "<a class='card' href='".Yii::$app->homeUrl."empreendimento/preview?id=$row->id&contrato={$row->contrato->id}' style='text-decoration: none !important'>
                             <div class='card-header bg-prinfo text-grey'>
                             <strong><i class='fa fa-road'></i> $row->titulo</strong>".
                             "</div>

@@ -33,8 +33,8 @@ use dosamigos\google\maps\layers\KmlLayer;
 // MAPA fim
 
 $this->title = $model->titulo;
-$this->params['breadcrumbs'][] = ['label' => $model->contrato->titulo, 'url' => ['contrato/view?id=1']];
-$this->params['breadcrumbs'][] = ['label' => 'Empreendimentos', 'url' => ['/empreendimento']];
+$this->params['breadcrumbs'][] = ['label' => $model->contrato->titulo, 'url' => ['/contrato/view?id='.$model->contrato->id]];
+$this->params['breadcrumbs'][] = ['label' => 'Empreendimentos', 'url' => ['/empreendimento?contrato='.$model->contrato->id]];
 $this->params['breadcrumbs'][] = $this->title;
 
 $templategeral_grid = '';
@@ -79,7 +79,7 @@ $json_data_4 = json_decode($json_br_080_4,true);
     <div class="row">
         <div class="row">
             <div class="col-md-12 pt-2 py-2">
-                <?= Html::a('Voltar aos Empreendimentos <<', ['/empreendimento'], ['class' => 'btn btn-info text-white float-right']) ?>
+                <?= Html::a('Voltar aos Empreendimentos <<', ['/empreendimento?contrato='.$model->contrato->id], ['class' => 'btn btn-info text-white float-right']) ?>
             </div>
         </div>
         <?php //Pjax::begin(); ?>
@@ -101,7 +101,7 @@ $json_data_4 = json_decode($json_br_080_4,true);
                                 'disabled' => 'disabled'
                             ],
                         ]); ?>
-                        <?= Html::a('<i class="bi bi-pencil"></i> Editar', $url.'update?id='.$model->id, [
+                        <?= Html::a('<i class="bi bi-pencil"></i> Editar', $url.'update?id='.$model->id.'&contrato='.$model->contrato->id, [
                             'class' => 'btn btn-link p-1 px-0 mx-1 float-right'
                         ]); ?>
 
@@ -111,7 +111,7 @@ $json_data_4 = json_decode($json_br_080_4,true);
                     <div class="card-body">
                         <h3>Estágio do licenciamento</h3>
                         <?php $url = Yii::$app->homeUrl ?>
-                        <?= Html::a('Acessar', $url.'empreendimento/empgerencial?id='.$model->id, [
+                        <?= Html::a('Acessar', $url.'empreendimento/empgerencial?id='.$model->id.'&contrato='.$model->contrato->id, [
                             'class' => 'btn btn-info text-white p-1 px-5 mx-1'
                         ]) ?>
                         <p class="card-text"><?php foreach ($model->licenciamentos as $lic): ?>

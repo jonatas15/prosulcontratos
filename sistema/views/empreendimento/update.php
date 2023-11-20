@@ -66,7 +66,7 @@ switch ($ativo) {
 $this->title = $model->titulo;
 # Breadcrumbs
 $this->params['breadcrumbs'][] = ['label' => $model->contrato->titulo, 'url' => ['/contrato/view?id='.$model->contrato->id]];
-$this->params['breadcrumbs'][] = ['label' => 'Empreendimentos', 'url' => ['/empreendimento']];
+$this->params['breadcrumbs'][] = ['label' => 'Empreendimentos', 'url' => ['/empreendimento?contrato='.$model->contrato->id]];
 $this->params['breadcrumbs'][] = ['label' => $model->titulo, 'url' => ['/empreendimento/preview?id='.$model->id]];
 $this->params['breadcrumbs'][] = 'Detalhes do Empreendimento';
 ?>

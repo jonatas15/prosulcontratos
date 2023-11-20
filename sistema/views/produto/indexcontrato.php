@@ -18,7 +18,7 @@ use yii\bootstrap5\Accordion;
     
         use Box\Spout\Reader\Common\Creator\ReaderEntityFactory;
 
-        $path = Yii::$app->basePath.'/web/arquivos/produtos.xlsx';
+        $path = Yii::$app->basePath.'/web/arquivos/planilhas/Lote-A-produtos.xlsx';
         # open the file
         $reader = ReaderEntityFactory::createXLSXReader();
         $reader->open($path);
@@ -31,47 +31,61 @@ use yii\bootstrap5\Accordion;
                 //     echo '<td>'.$cell->getValue().'</td>';
                 // }
                 // echo $row->getCells()[0];
-                echo '<td>'.$row->getCells()[0].'</td>'; # ID
-                echo '<td>'.$row->getCells()[1].'</td>'; # Empreendimento
-                echo '<td>'.$row->getCells()[2].'</td>'; # OS
-                echo '<td>'.$row->getCells()[3].'</td>'; # Subproduto
-                echo '<td>'.$row->getCells()[4].'</td>'; # Serviço
-                echo '<td>'.$row->getCells()[5].'</td>'; # Entrega
-                echo '<td>'.$row->getCells()[6].'</td>'; # Data de entrega
-                // REVISÕES
-                // echo '<td>'.$row->getCells()[7].'</td>'; # Revisão 1 -Data
-                // echo '<td>'.$row->getCells()[8].'</td>'; # Revisão 1 -Tempo Decorrido blá blá
-                // echo '<td>'.$row->getCells()[9].'</td>'; # # Revisão 1 -Responsável
-                // echo '<td>'.$row->getCells()[10].'</td>'; # # Revisão 1 -Versão Aprovada
-                // Continuando
-                echo '<td>'.$this->context->dataprobanco($row->getCells()[27]).'</td>'; # Data de aprovação
-                echo '<td>'.$row->getCells()[28].'</td>'; # Tempo decorrido 
-                echo '<td>'.$row->getCells()[29].'</td>'; # Versão Aprovada
-                echo '<td>'.$row->getCells()[30].'</td>'; # Diretório
-                echo '<td>'.$contrato_id.'</td>'; # ID DO CONTRATO
+                // echo '<td>'.$row->getCells()[0].'</td>'; # ID
+                // $dataxxxx1 = $row->getCells()[5];
+                echo '<td>'.$row->getCells()[0].'</td>'; # Empreendimento
+                echo '<td>'.$row->getCells()[1].'</td>'; # OS
+                echo '<td>'.$row->getCells()[2].'</td>'; # Subproduto
+                echo '<td>'.$row->getCells()[3].'</td>'; # Serviço
+                echo '<td>'.$row->getCells()[4].'</td>'; # Entrega
+                // echo '<td>'.$row->getCells()[5].'</td>'; # Data de Entrega
+                
+                $data_entrega_xlsx = $row->getCells()[5]->getValue();
+                if ($data_entrega_xlsx instanceof DateTime) {
+                    $data_entrega_xlsx = $data_entrega_xlsx->format('Y-m-d');
+                    echo '<td>'.$data_entrega_xlsx.'</td>'; # Data
+                }
+                $data_aprovacao_xlsx = $row->getCells()[6]->getValue();
+                if ($data_aprovacao_xlsx instanceof DateTime) {
+                    $data_aprovacao_xlsx = $data_aprovacao_xlsx->format('Y-m-d');
+                    echo '<td>'.$data_aprovacao_xlsx.'</td>'; # Data
+                }
+                
+                // foreach ($cells as $cell) {
+                //     $value = $cell->getValue();
+                //     if ($value instanceof DateTime) {
+                //         $value = $value->format('Y-m-d');
+                //         echo '<td>'.$value.'</td>'; # Data
+                //     }
+                // }
+
+
+                echo '<td>'.$row->getCells()[7].'</td>'; # Dias entre
+                echo '<td>'.$row->getCells()[8].'</td>'; # Desempenho *pulamos por enquanto
+                echo '<td>'.$row->getCells()[9].'</td>'; # aprov_versao
+                echo '<td>'.$row->getCells()[10].'</td>'; # texto do link do documento
                 
                 $novoproduto = new Produto();
                 //Campos importados
                 
-
-                $novoproduto->contrato_id = $contrato_id;
-                $novoproduto->datacadastro = date('Y-m-d H:i:s');
-                $novoproduto->subproduto = (string)$row->getCells()[3];
-                $novoproduto->servico = (string)$row->getCells()[4];
-                $novoproduto->entrega = (string)$row->getCells()[5];
-                $novoproduto->data_entrega = $row->getCells()[6] != '' ? $this->context->dataprobanco($row->getCells()[6]): null;
-                $novoproduto->aprov_data = $row->getCells()[27] != '' ? $this->context->dataprobanco($row->getCells()[27]): null;
-                $novoproduto->aprov_tempo_ultima_revisao = (string)$row->getCells()[28];
-                $novoproduto->aprov_versao = (string)$row->getCells()[29];
-                $novoproduto->diretorio_texto = (string)$row->getCells()[30];
+                
+                 $novoproduto->contrato_id = $contrato_id;
+                 $novoproduto->datacadastro = date('Y-m-d H:i:s');
+                 $novoproduto->subproduto = (string)$row->getCells()[2];
+                 $novoproduto->servico = (string)$row->getCells()[3];
+                 $novoproduto->entrega = (string)$row->getCells()[4];
+                 $novoproduto->data_entrega = $data_entrega_xlsx != '' ? $data_entrega_xlsx  : null;
+                 $novoproduto->aprov_data = $data_aprovacao_xlsx != '' ? $data_aprovacao_xlsx  : null;
+                 $novoproduto->aprov_versao = (string)$row->getCells()[9];
+                 $novoproduto->diretorio_texto = (string)$row->getCells()[10];
                 // Definições
-                echo '<td>';
-                if ($novoproduto->save()) {
-                    echo "loucuuura papai";
-                } else {
-                    echo "deu m";
-                }
-                echo '</td>';
+                // echo '<td>';
+                // if ($novoproduto->save()) {
+                //     echo "loucuuura papai";
+                // } else {
+                //     echo "deu m";
+                // }
+                // echo '</td>';
                 echo '</tr>';
             }
         }
@@ -779,12 +793,12 @@ use yii\bootstrap5\Accordion;
             'class' => 'yii\bootstrap5\LinkPager'
         ],
         'columns' => [
-            [
-                'attribute' => 'id',
-                'headerOptions' => [
-                    'width' => '3%'
-                ]
-            ],
+            // [
+            //     'attribute' => 'id',
+            //     'headerOptions' => [
+            //         'width' => '3%'
+            //     ]
+            // ],
             'subproduto',
             [
                 'attribute' => 'numero',
@@ -806,26 +820,27 @@ use yii\bootstrap5\Accordion;
                 'attribute' => 'empreendimento_id',
                 'format' => 'raw',
                 'value' => function($data) {
-                    return $this->render('_empreendimento', [
-                        'id' => $data->empreendimento_id
-                    ]);
+                    // return $this->render('_empreendimento', [
+                    //     'id' => $data->empreendimento_id
+                    // ]);
+                    return $data->empreendimento->titulo;
                 },
                 'headerOptions' => [
                     'width' => '5%'
                 ]
             ],
-            [
-                'attribute' => 'ordensdeservico_id',
-                'format' => 'raw',
-                'value' => function($data) {
-                    return $this->render('_os', [
-                        'id' => $data->ordensdeservico_id
-                    ]);
-                },
-                'headerOptions' => [
-                    'width' => '5%'
-                ]
-            ],
+            // [
+            //     'attribute' => 'ordensdeservico_id',
+            //     'format' => 'raw',
+            //     'value' => function($data) {
+            //         return $this->render('_os', [
+            //             'id' => $data->ordensdeservico_id
+            //         ]);
+            //     },
+            //     'headerOptions' => [
+            //         'width' => '5%'
+            //     ]
+            // ],
             // [
                 //     'attribute' => 'datacadastro',
             //     'value' => function($data) {
@@ -849,6 +864,9 @@ use yii\bootstrap5\Accordion;
             [
                 'attribute' => 'fase',
                 'format' => 'raw',
+                'headerOptions' => [
+                    'width' => '8%'
+                ],
                 'value' => function($data) {
                     switch ($data->fase) {
                         case 'Em andamento': $faseada = "<b class='text-warning'>$data->fase</b>"; break;
@@ -857,6 +875,20 @@ use yii\bootstrap5\Accordion;
                     }        
                     return "<center>$faseada</center><br>".
                         "<center>[ $data->aprov_versao ]</center>";
+                }
+            ],
+            [
+                'attribute' => 'diretorio_texto',
+                'format' => 'raw',
+                'value' => function($data) {
+                    // return '<a class="btn btn-link" target="_blank" href="'.$data->link_diretorio.'">'.$data->diretorio.'</a>';
+                    if ($data->diretorio_texto != "") {
+                        return '<a class="btn btn-link" target="_blank" href="'.$data->diretorio_link.'" 
+                        alt="'.$data->diretorio_texto.'"
+                        title="'.$data->diretorio_texto.'"
+                        >Acessar</a>';
+                    }
+                    // return $data->emprrendimento_desc;
                 }
             ],
             [

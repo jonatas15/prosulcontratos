@@ -26,6 +26,7 @@ $ordensdeservico = ArrayHelper::map(Ordensdeservico::find()->all(), 'id', 'titul
     ]); ?>
     <div class="row">
         <div class="col-md-8"><?= $form->field($model, 'titulo')->textInput() ?></div>
+        <?php $model->contrato_id = $contrato_id; ?>
         <div class="col-md-4" style="display: block"> <?= $form->field($model, 'contrato_id')->dropDownList($contratos, [
             'prompt' => 'Selecione'
         ]) ?></div>
