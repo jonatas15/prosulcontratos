@@ -22,9 +22,8 @@ class OrdensdeservicoSearch extends Ordensdeservico
     public function rules()
     {
         return [
-            [['id', 'oficio_id', 'contrato_id'], 'integer'],
-            [['fase', 'plano', 'datacadastro', 'titulo'], 'safe'],
-            [['from_date', 'to_date', 'ano_listagem'], 'safe'],
+            [['id', 'oficio_id', 'contrato_id', 'empreendimento_id'], 'integer'],
+            [['fase', 'plano', 'datacadastro', 'titulo', 'numero_sei', 'from_date', 'to_date', 'ano_listagem'], 'safe'],
             [['param'], 'string', 'on' => 'MY_SCENARIO'],
         ];
     }
@@ -77,16 +76,19 @@ class OrdensdeservicoSearch extends Ordensdeservico
             'oficio_id' => $this->oficio_id,
             'contrato_id' => $this->contrato_id,
             'datacadastro' => $this->datacadastro,
+            'dataemissao' => $this->dataemissao,
+            'empreendimento_id' => $this->empreendimento_id,
         ]);
 
         $query->andFilterWhere(['like', 'titulo', $this->titulo])
             ->andFilterWhere(['like', 'fase', $this->fase])
+            ->andFilterWhere(['like', 'numero_sei', $this->numero_sei])
             ->andFilterWhere(['like', 'plano', $this->plano]);
         
-        $query->andFilterWhere(['between', 'datacadastro', $this->from_date, $this->to_date]);
+        $query->andFilterWhere(['between', 'dataemissao', $this->from_date, $this->to_date]);
         if ($this->ano_listagem != 'all') {
             $query->andFilterWhere([
-                'YEAR(datacadastro)' => $this->ano_listagem,
+                'YEAR(dataemissao)' => $this->ano_listagem,
             ]);
         }
 

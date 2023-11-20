@@ -12,12 +12,17 @@ use Yii;
  * @property int|null $oficio_id
  * @property string|null $fase
  * @property string|null $plano
+ * @property string|null $objeto
+ * @property string|null $obs
+ * @property string|null $numero_sei
  * @property int $contrato_id
  * @property string $datacadastro
+ * @property string $dataemissao
  *
  * @property Arquivo[] $arquivos
  * @property Contrato $contrato
  * @property Empreendimento[] $empreendimentos
+ * @property Empreendimento $empreendimento_id
  * @property Licenciamento[] $licenciamentos
  * @property Oficio $oficio
  * @property Produto[] $produtos
@@ -38,10 +43,10 @@ class Ordensdeservico extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['oficio_id', 'contrato_id'], 'integer'],
-            [['fase', 'plano', 'titulo'], 'string'],
+            [['oficio_id', 'contrato_id', 'empreendimento_id'], 'integer'],
+            [['fase', 'plano', 'titulo', 'numero_sei', 'objeto', 'obs'], 'string'],
             [['contrato_id'], 'required'],
-            [['datacadastro'], 'safe'],
+            [['datacadastro', 'dataemissao'], 'safe'],
             [['contrato_id'], 'exist', 'skipOnError' => true, 'targetClass' => Contrato::class, 'targetAttribute' => ['contrato_id' => 'id']],
             [['oficio_id'], 'exist', 'skipOnError' => true, 'targetClass' => Oficio::class, 'targetAttribute' => ['oficio_id' => 'id']],
         ];
@@ -57,9 +62,14 @@ class Ordensdeservico extends \yii\db\ActiveRecord
             'oficio_id' => 'Oficio ID',
             'fase' => 'Fase',
             'plano' => 'Plano',
-            'contrato_id' => 'Contrato ID',
+            'contrato_id' => 'Contrato',
             'datacadastro' => 'Datacadastro',
-            'titulo' => 'Ordem de Serviço'
+            'titulo' => 'Ordem de Serviço',
+            'numero_sei' => 'Número SEI',
+            'objeto' => 'Objeto',
+            'dataemissao' => 'Data de Emissão',
+            'obs' => 'Observações',
+            'empreendimento_id' => 'Empreendimento'
         ];
     }
 
@@ -81,6 +91,10 @@ class Ordensdeservico extends \yii\db\ActiveRecord
     public function getContrato()
     {
         return $this->hasOne(Contrato::class, ['id' => 'contrato_id']);
+    }
+    public function getEmpreendimento()
+    {
+        return $this->hasOne(Empreendimento::class, ['id' => 'empreendimento_id']);
     }
 
     /**

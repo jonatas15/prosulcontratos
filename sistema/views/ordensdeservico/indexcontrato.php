@@ -1,6 +1,7 @@
 <?php
 
 use app\models\Ordensdeservico as OS;
+use app\models\Empreendimento;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -9,6 +10,10 @@ use yii\widgets\Pjax;
 use yii\widgets\ActiveForm;
 use kartik\date\DatePicker;
 use yii\helpers\ArrayHelper;
+
+$empreendimentos = Empreendimento::find()->where([
+    'contrato_id' => $contrato_id
+])->all();
 
 
 /** @var yii\web\View $this */
@@ -109,6 +114,8 @@ use yii\helpers\ArrayHelper;
         $titulo = $_REQUEST['OrdensdeservicoSearch']['titulo'] ? $_REQUEST['OrdensdeservicoSearch']['titulo'] : '';
         $fase = $_REQUEST['OrdensdeservicoSearch']['fase'] ? $_REQUEST['OrdensdeservicoSearch']['fase'] : '';
         $plano = $_REQUEST['OrdensdeservicoSearch']['plano'] ? $_REQUEST['OrdensdeservicoSearch']['plano'] : '';
+        $numero_sei = $_REQUEST['OrdensdeservicoSearch']['numero_sei'] ? $_REQUEST['OrdensdeservicoSearch']['numero_sei'] : '';
+        $empreendimento_id = $_REQUEST['OrdensdeservicoSearch']['empreendimento_id'] ? $_REQUEST['OrdensdeservicoSearch']['empreendimento_id'] : '';
         # Intervalo de data #######################################################################
         $ano_listagem = $_REQUEST['OrdensdeservicoSearch']['ano_listagem'] ? $_REQUEST['OrdensdeservicoSearch']['ano_listagem'] : '';
         $data_ini = $_REQUEST['from_date'];
@@ -174,6 +181,8 @@ use yii\helpers\ArrayHelper;
         endif;
         $dataProvider = $searchModel->search([
             'titulo' => $titulo,
+            'numero_sei' => $numero_sei,
+            'empreendimento_id' =>$empreendimento_id,
             'fase' => $fase,
             'plano' => $plano,
             'from_date'=> $data_ini,
@@ -191,6 +200,27 @@ use yii\helpers\ArrayHelper;
         <div class="row">
             <div class="col-md-3">
                 <?= $form->field($searchModel, 'titulo')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class="col-md-2">
+                <?= $form->field($searchModel, 'numero_sei')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class="col-md-3">
+                <label class="control-label summary" for="ordemdeservico_empreendimento_id">Empreendimento</label>
+                <?php $lista_emp = ArrayHelper::map($empreendimentos, 'id', 'titulo'); ?>
+                <?= $form->field($searchModel, 'empreendimento_id')->dropDownList($lista_emp, [
+                    'prompt' => ''
+                ])->label(false) ?>
+            </div>
+            <div class="col-md-4"><?= $form->field($searchModel, 'fase')->dropDownList([ 'Manifestação de Interesse em Análise' => 'Manifestação de Interesse em Análise', 'OS Emitida' => 'OS Emitida', 'OS em Andamento' => 'OS em Andamento', 'OS Paralisada' => 'OS Paralisada', 'OS Finalizada' => 'OS Finalizada', ], ['prompt' => '']) ?></div>
+            <div class="col-md-3"><?= $form->field($searchModel, 'plano')->dropDownList([ 'Plano de Trabalho Solicitado' => 'Plano de Trabalho Solicitado', 'Plano de Trabalho em Andamento' => 'Plano de Trabalho em Andamento', 'Plano de Trabalho  Entregue DNIT' => 'Plano de Trabalho  Entregue DNIT', 'Plano de Trabalho em Análise DNIT' => 'Plano de Trabalho em Análise DNIT', 'Plano de Trabalho em Revisão' => 'Plano de Trabalho em Revisão', 'Plano de Trabalho Aprovado DNIT' => 'Plano de Trabalho Aprovado DNIT', ], ['prompt' => '']) ?></div>
+            <div class="col-md-2">
+                <?= $form->field($searchModel, 'ano_listagem')->dropDownList([
+                    'all'=>'Todos os registros',
+                    '2023'=>'Ano 2023',
+                    '2022'=>'Ano 2022',
+                    '2021'=>'Ano 2021',
+                    '2020'=>'Ano 2020',
+                ])->label('Ano de vigência') ?>
             </div>
             <div class="col-md-4">
                 <label class="control-label summary" for="from_date">Por data</label>
@@ -223,7 +253,7 @@ use yii\helpers\ArrayHelper;
                     ]);
                 ?>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-4">
                 <label class="control-label summary">Últimos dias</label><br>
                 <label for="check-hoje-<?=$tipodepagina?>" style="padding:1%">
                     <input type="radio" name="OrdensdeservicoSearch[intervalo_data]" value="check-hoje" id="check-hoje-<?=$tipodepagina?>" style="" <?=$radiohoje?>>
@@ -242,19 +272,9 @@ use yii\helpers\ArrayHelper;
                     Todos
                 </label>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-2">
-                <?= $form->field($searchModel, 'ano_listagem')->dropDownList([
-                    '2023'=>'Ano 2023',
-                    '2022'=>'Ano 2022',
-                    '2021'=>'Ano 2021',
-                    '2020'=>'Ano 2020',
-                    'all'=>'Todos os registros',
-                ])->label('Ano de vigência') ?>
-            </div>
-            <div class="col-md-4"><?= $form->field($searchModel, 'fase')->dropDownList([ 'Manifestação de Interesse em Análise' => 'Manifestação de Interesse em Análise', 'OS Emitida' => 'OS Emitida', 'OS em Andamento' => 'OS em Andamento', 'OS Paralisada' => 'OS Paralisada', 'OS Finalisada' => 'OS Finalisada', ], ['prompt' => '']) ?></div>
-            <div class="col-md-4"><?= $form->field($searchModel, 'plano')->dropDownList([ 'Plano de Trabalho Solicitado' => 'Plano de Trabalho Solicitado', 'Plano de Trabalho em Andamento' => 'Plano de Trabalho em Andamento', 'Plano de Trabalho  Entregue DNIT' => 'Plano de Trabalho  Entregue DNIT', 'Plano de Trabalho em Análise DNIT' => 'Plano de Trabalho em Análise DNIT', 'Plano de Trabalho em Revisão' => 'Plano de Trabalho em Revisão', 'Plano de Trabalho Aprovado DNIT' => 'Plano de Trabalho Aprovado DNIT', ], ['prompt' => '']) ?></div>
+        <!-- </div>
+        <div class="row"> -->
+            
             <?php /*
             <div class="col-md-6 form-group">
                 <?php // = $form->field($searchModel, 'status')->dropDownList([ 'Não Resolvido' => 'Não Resolvido', 'Parcialmente Resolvido' => 'Parcialmente Resolvido', 'Em andamento' => 'Em andamento', 'Resolvido' => 'Resolvido', ], ['prompt' => '']);?>
@@ -318,13 +338,21 @@ use yii\helpers\ArrayHelper;
             // 'contrato_id',
             // 'emprrendimento_id',
             // 'tipo',
-            [
-                'attribute' => 'id',
-                'headerOptions' => [
-                    'width' => '3%'
-                ]
-            ],
+            // [
+            //     'attribute' => 'id',
+            //     'headerOptions' => [
+            //         'width' => '3%'
+            //     ]
+            // ],
             'titulo',
+            'numero_sei',
+            // 'empreendimento_id',
+            [
+                'attribute' => 'empreendimento_id',
+                'value' => function($data) {
+                    return $data->empreendimento->titulo;
+                }
+            ],
             // 'tipo',
             // 'emissor',
             // 'emprrendimento_desc',
@@ -333,11 +361,11 @@ use yii\helpers\ArrayHelper;
             // 'Num_sei',
             // 'oficio.tipo',
             'fase',
-            'plano',
+            // 'plano',
             [
-                'attribute' => 'datacadastro',
+                'attribute' => 'dataemissao',
                 'value' => function($data) {
-                    return date('d/m/Y', strtotime($data->datacadastro));
+                    return date('d/m/Y', strtotime($data->dataemissao));
                 }
             ],
             // 'fluxo',
