@@ -12,6 +12,7 @@ use yii\bootstrap5\NavBar;
 
 use kartik\widgets\SideNav;
 use yii\helpers\Url;
+// use yii\web\View;
 
 AppAsset::register($this);
 
@@ -394,6 +395,21 @@ $g_drive = '<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 51
     </div>
 </footer>
 <script type="module" src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<?php /* 
+    $this->registerJs("
+        $(document).ready(function() {
+            $('#floating-back-button').click(function() {
+                history.back();
+            });
+        });
+    ", View::POS_END);
+?>
+<div id="floating-back-button" style="position: fixed; bottom: 20px; right: 20px; cursor: pointer; background-color: #007BFF; color: #fff; padding: 10px; border-radius: 5px;">
+    <?= Html::tag('span', '', ['class' => 'glyphicon glyphicon-chevron-left']) ?>
+    Voltar
+</div>
+*/
+?>
 <?php $this->endBody() ?>
 </body>
 </html>

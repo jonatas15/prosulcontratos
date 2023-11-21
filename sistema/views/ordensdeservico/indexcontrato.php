@@ -176,7 +176,7 @@ $empreendimentos = Empreendimento::find()->where([
                         
                         $radiohoje = 'checked="checked"';
                     break;
-                }        
+                }
             endif;
         endif;
         $dataProvider = $searchModel->search([
@@ -204,14 +204,14 @@ $empreendimentos = Empreendimento::find()->where([
             <div class="col-md-2">
                 <?= $form->field($searchModel, 'numero_sei')->textInput(['maxlength' => true]) ?>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <label class="control-label summary" for="ordemdeservico_empreendimento_id">Empreendimento</label>
                 <?php $lista_emp = ArrayHelper::map($empreendimentos, 'id', 'titulo'); ?>
                 <?= $form->field($searchModel, 'empreendimento_id')->dropDownList($lista_emp, [
                     'prompt' => ''
                 ])->label(false) ?>
             </div>
-            <div class="col-md-4"><?= $form->field($searchModel, 'fase')->dropDownList([ 'Manifestação de Interesse em Análise' => 'Manifestação de Interesse em Análise', 'OS Emitida' => 'OS Emitida', 'OS em Andamento' => 'OS em Andamento', 'OS Paralisada' => 'OS Paralisada', 'OS Finalizada' => 'OS Finalizada', ], ['prompt' => '']) ?></div>
+            <div class="col-md-2"><?= $form->field($searchModel, 'fase')->dropDownList([ 'Manifestação de Interesse em Análise' => 'Manifestação de Interesse em Análise', 'OS Emitida' => 'OS Emitida', 'OS em Andamento' => 'OS em Andamento', 'OS Paralisada' => 'OS Paralisada', 'OS Finalizada' => 'OS Finalizada', ], ['prompt' => '']) ?></div>
             <div class="col-md-3"><?= $form->field($searchModel, 'plano')->dropDownList([ 'Plano de Trabalho Solicitado' => 'Plano de Trabalho Solicitado', 'Plano de Trabalho em Andamento' => 'Plano de Trabalho em Andamento', 'Plano de Trabalho  Entregue DNIT' => 'Plano de Trabalho  Entregue DNIT', 'Plano de Trabalho em Análise DNIT' => 'Plano de Trabalho em Análise DNIT', 'Plano de Trabalho em Revisão' => 'Plano de Trabalho em Revisão', 'Plano de Trabalho Aprovado DNIT' => 'Plano de Trabalho Aprovado DNIT', ], ['prompt' => '']) ?></div>
             <div class="col-md-2">
                 <?= $form->field($searchModel, 'ano_listagem')->dropDownList([
@@ -366,6 +366,14 @@ $empreendimentos = Empreendimento::find()->where([
                 'attribute' => 'dataemissao',
                 'value' => function($data) {
                     return date('d/m/Y', strtotime($data->dataemissao));
+                }
+            ],
+            [
+                'attribute' => 'dataemissao',
+                'header' => 'Dias passados',
+                'value' => function($data) {
+                    $fdias = $this->context->diasentre($data->dataemissao, date('Y-m-d'));
+                    return $fdias !== 1 ? $fdias.' dias' : $fdias.' dia';
                 }
             ],
             // 'fluxo',

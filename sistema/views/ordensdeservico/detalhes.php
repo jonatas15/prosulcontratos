@@ -101,12 +101,21 @@ Modal::begin([
             'titulo',
             'fase',
             'plano',
+            'objeto',
+            'empreendimento.titulo',
             [
                 'attribute'=> 'datacadastro',
                 'value' => function($data) {
                     return date('d/m/Y H:i:s', strtotime($data->datacadastro));
                 }
             ],
+            [
+                'attribute'=> 'dataemissao',
+                'value' => function($data) {
+                    return date('d/m/Y');
+                }
+            ],
+            'obs'
         ],
     ]) ?>
   </div>

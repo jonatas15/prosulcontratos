@@ -31,6 +31,17 @@ class OrdensdeservicoController extends Controller
         );
     }
 
+    public function dataprobanco ($data) {
+        $arr = explode('/', $data);
+        return $arr[2].'-'.$arr[1].'-'.$arr[0];
+    }
+
+    function diasentre($data_inicial, $data_final) {
+        $diferenca = strtotime($data_final) - strtotime($data_inicial);
+        $dias = floor($diferenca / (60 * 60 * 24)); 
+        return $dias;
+    }
+
     /**
      * Lists all Ordensdeservico models.
      *
@@ -70,12 +81,15 @@ class OrdensdeservicoController extends Controller
         $model = new Ordensdeservico();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect([
-                    'update', 
-                    'id' => $model->id,
-                    'abativa' => 'arquivos'
-                ]);
+            if ($model->load($this->request->post())) {
+                $model->dataemissao = $this->dataprobanco($model->dataemissao);
+                if ($model->save()) {
+                    return $this->redirect([
+                        'update', 
+                        'id' => $model->id,
+                        'abativa' => 'arquivos'
+                    ]);
+                }
             }
         } else {
             $model->loadDefaultValues();
@@ -97,12 +111,15 @@ class OrdensdeservicoController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect([
-                'update', 
-                'id' => $model->id,
-                'abativa' => 'arquivos'
-            ]);
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            $model->dataemissao = $this->dataprobanco($model->dataemissao);
+            if ($model->save()) {
+                return $this->redirect([
+                    'update', 
+                    'id' => $model->id,
+                    'abativa' => 'arquivos'
+                ]);
+            }
         }
 
         return $this->render('update', [

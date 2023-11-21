@@ -21,14 +21,20 @@ $empreendimentos = ArrayHelper::map(Empreendimento::find()->where([
 
     <?= $form->field($model, 'titulo')->textInput() ?>
     <?= $form->field($model, 'numero_sei')->textInput() ?>
+    <?= $form->field($model, 'empreendimento_id')->dropDownList($empreendimentos, ['prompt' => '']) ?>
     <?= $form->field($model, 'fase')->dropDownList([ 'Manifestação de Interesse em Análise' => 'Manifestação de Interesse em Análise', 'OS Emitida' => 'OS Emitida', 'OS em Andamento' => 'OS em Andamento', 'OS Paralisada' => 'OS Paralisada', 'OS Finalizada' => 'OS Finalizada', ], ['prompt' => '']) ?>
     <?= $form->field($model, 'plano')->dropDownList([ 'Plano de Trabalho Solicitado' => 'Plano de Trabalho Solicitado', 'Plano de Trabalho em Andamento' => 'Plano de Trabalho em Andamento', 'Plano de Trabalho  Entregue DNIT' => 'Plano de Trabalho  Entregue DNIT', 'Plano de Trabalho em Análise DNIT' => 'Plano de Trabalho em Análise DNIT', 'Plano de Trabalho em Revisão' => 'Plano de Trabalho em Revisão', 'Plano de Trabalho Aprovado DNIT' => 'Plano de Trabalho Aprovado DNIT', ], ['prompt' => '']) ?>
+    <?php $model->dataemissao = date('d/m/Y', strtotime($model->dataemissao)); ?>
+    <?= $form->field($model, 'dataemissao')->textInput()->widget(\yii\widgets\MaskedInput::class, [
+        'mask' => '99/99/9999',
+    ]); ?>
+    <?= $form->field($model, 'objeto')->textInput() ?>
     
     <?= $form->field($model, 'oficio_id')->hiddenInput()->label(false) ?>
-    <?= $form->field($model, 'empreendimento_id')->dropDownList($empreendimentos, ['prompt' => '']) ?>
     <?= $form->field($model, 'contrato_id')->hiddenInput([
         'value' => $contrato_id ? $contrato_id : $model->contrato_id
     ])->label(false) ?>
+    <?= $form->field($model, 'obs')->textArea() ?>
 
     <?php //= $form->field($model, 'datacadastro')->textInput() ?>
 
