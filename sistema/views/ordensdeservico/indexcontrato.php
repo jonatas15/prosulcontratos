@@ -191,7 +191,25 @@ $empreendimentos = Empreendimento::find()->where([
             'status' => $status,
         ]);
     ?>
-    <div class="row" style="background-color: ghostwhite; padding: 10px 5px">
+    <div class="row mt-0 mb-0 pb-1   pt-1 " style="background-color: white;">
+        <h3>
+            <center>
+                <a class="btn btn-link fs-3" href="#collapsePesquisaOS"  data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapsePesquisaOS">
+                    Pesquisa <i class="bi bi-arrow-down"></i>
+                </a> 
+                <a
+                    href="<?=Yii::$app->homeUrl."contrato/view?id=$contrato_id&abativa=aba_ordens"?>" 
+                    class="btn btn-primary text-white fs-5" 
+                    tolltip="" 
+                    title="Limpar/Reiniciar"
+                >
+                    <i class="bi bi-arrow-counterclockwise"></i>
+                </a>
+            </center>
+        </h3>
+        <!-- <hr> -->
+    </div>
+    <div id="collapsePesquisaOS" class="row collapse mb-2" style="background-color: ghostwhite; padding: 10px 5px">
         <!-- <h4 style="padding:5px">Pesquisa:</h4> -->
         <?php $form = ActiveForm::begin(['options' => [
             'data-pjax' => true,
@@ -370,7 +388,7 @@ $empreendimentos = Empreendimento::find()->where([
             ],
             [
                 'attribute' => 'dataemissao',
-                'header' => 'Dias passados',
+                'header' => 'Período transcorrido',
                 'value' => function($data) {
                     $fdias = $this->context->diasentre($data->dataemissao, date('Y-m-d'));
                     return $fdias !== 1 ? $fdias.' dias' : $fdias.' dia';

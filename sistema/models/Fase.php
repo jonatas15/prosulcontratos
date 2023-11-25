@@ -16,6 +16,7 @@ use Yii;
  * @property string|null $exigencias
  * @property string|null $ambito
  * @property string|null $status
+ * @property string|null $numero_sei
  * @property int|null $ordem
  * @property int|null $produto_id
  * @property int|null $fase_lai_id
@@ -48,7 +49,7 @@ class Fase extends \yii\db\ActiveRecord
             [['empreendimento_id', 'licenciamento_id', 'ordem', 'produto_id', 'fase_lai_id', 'fase_lap_id', 'ativo', 'fase_id'], 'integer'],
             [['licenciamento_id', 'fase'], 'required'],
             [['datacadastro', 'data', 'daysBetween'], 'safe'],
-            [['fase', 'exigencias', 'ambito', 'status', 'natureza'], 'string', 'max' => 200],
+            [['fase', 'exigencias', 'ambito', 'status', 'natureza', 'numero_sei'], 'string', 'max' => 200],
             [['empreendimento_id'], 'exist', 'skipOnError' => true, 'targetClass' => Empreendimento::class, 'targetAttribute' => ['empreendimento_id' => 'id']],
             [['fase_lai_id'], 'exist', 'skipOnError' => true, 'targetClass' => FaseLai::class, 'targetAttribute' => ['fase_lai_id' => 'id']],
             [['fase_lap_id'], 'exist', 'skipOnError' => true, 'targetClass' => FaseLap::class, 'targetAttribute' => ['fase_lap_id' => 'id']],
@@ -75,6 +76,7 @@ class Fase extends \yii\db\ActiveRecord
             'produto_id' => 'Produtos',
             'fase_lai_id' => 'Fase Lai ID',
             'fase_lap_id' => 'Fase Lap ID',
+            'numero_sei' => 'Nº SEI',
         ];
     }
 

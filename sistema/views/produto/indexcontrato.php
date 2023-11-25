@@ -289,14 +289,12 @@ use yii\bootstrap5\Accordion;
             'id' => 'form-pesquisa-produto'
         ]]); ?>
         <!-- <div class="card"> -->
-        <p class="d-inline-flex gap-1">
-            <h3>
-                <a class="btn btn-warning text-white fw-bolder" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                📊 Gráficos
-                </a>
-            </h3>
-        </p>
-        <div class="row mb-2 collapse" id="collapseExample">
+        <h3>
+            <a class="btn btn-warning text-white fw-bolder" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                📊 Gráficos <i class="bi bi-arrow-down"></i>
+            </a>
+        </h3>
+        <div class="row mb-0 collapse" id="collapseExample">
             <?php 
                 $aprovado = 0;
                 $aguardando = 0;
@@ -648,137 +646,151 @@ use yii\bootstrap5\Accordion;
             </div>
         </div>
         <!-- </div> -->
-        <div class="clearfix"><br></div>
-        <div class="row mt-2 mb-2 pb-2 pt-2" style="background-color: white;">
-            <h3><center>Pesquisa <a href="<?=Yii::$app->homeUrl."contrato/view?id=$contrato_id&abativa=aba_produtos"?>" class="btn btn-primary text-white fs-5" tolltip="" title="Limpar/Reiniciar">
-            <i class="bi bi-arrow-counterclockwise"></i>
-            </a></center></h3>
+        <div class="clearfix"></div>
+        <div class="row mt-0 mb-2 pb-2 pt-2" style="background-color: white;">
+            <h3>
+                <center>
+                    <a class="btn btn-link fs-3" href="#collapsePesquisa"  data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        Pesquisa <i class="bi bi-arrow-down"></i>
+                    </a> 
+                    <a
+                        href="<?=Yii::$app->homeUrl."contrato/view?id=$contrato_id&abativa=aba_produtos"?>" 
+                        class="btn btn-primary text-white fs-5" 
+                        tolltip="" 
+                        title="Limpar/Reiniciar"
+                    >
+                        <i class="bi bi-arrow-counterclockwise"></i>
+                    </a>
+                </center>
+            </h3>
             <!-- <hr> -->
         </div>
-        <div class="row">
-            <div class="col-md-2">
-                <label class="control-label summary" for="produto_numero_sei"><b>SEI</b></label>
-                <!-- <br /> -->
-                <?= $form->field($searchModel, 'numero_sei')->textInput(['maxlength' => true, 'placeholder' => 'Nº SEI'])->label(false) ?>
+        <div id="collapsePesquisa" class="collapse">
+            <div class="row">
+                <div class="col-md-2">
+                    <label class="control-label summary" for="produto_numero_sei"><b>SEI</b></label>
+                    <!-- <br /> -->
+                    <?= $form->field($searchModel, 'numero_sei')->textInput(['maxlength' => true, 'placeholder' => 'Nº SEI'])->label(false) ?>
+                </div>
+                <div class="col-md-3">
+                    <label class="control-label summary" for="produto_empreendimento_id">Empreendimento</label>
+                    <?php $lista_emp = ArrayHelper::map($empreendimentos, 'id', 'titulo'); ?>
+                    <?= $form->field($searchModel, 'empreendimento_id')->dropDownList($lista_emp, [
+                        'prompt' => 'Selecione'
+                    ])->label(false) ?>
+                    <!-- Campos de pesquisa ocultos pros gráficos -->
+                    <input type="hidden" name="por_rv" id="por_rv" value="<?=$_REQUEST['por_rv']?>">
+                </div>
+                <div class="col-md-3">
+                    <label class="control-label summary" for="produto_ordensdeservico_id">Ordem de Serviço</label>
+                    <?php $lista_os = ArrayHelper::map($os, 'id', 'titulo'); ?>
+                    <?= $form->field($searchModel, 'ordensdeservico_id')->dropDownList($lista_os, [
+                        'prompt' => 'Selecione'
+                    ])->label(false) ?>
+                </div>
+                <div class="col-md-4">
+                    <label class="control-label summary" for="from_date">Por data de Entrada</label>
+                    <?php
+                        $layout3 = '<span class="input-group-addon">De</span>
+                        {input1}
+                        <span class="input-group-addon">Até</span>
+                        {input2}';
+                        echo DatePicker::widget([
+                            'language' => 'pt-BR',
+                            'name' => 'from_date',
+                            'value' => ($datainicial?$datainicial:''),
+                            'type' => DatePicker::TYPE_RANGE,
+                            'name2' => 'to_date',
+                            'value2' => ($datafinial?$datafinial:''),
+                            'options' => [
+                                'placeholder' => 'data inicial',
+                                'tabindex' => false
+                            ],
+                            'options2' => [
+                                'placeholder' => 'data final',
+                                'tabindex' => false
+                            ],
+                            'layout' => $layout3, 
+                            'pluginOptions' => [
+                                'autoclose'=>true,
+                                'format' => 'dd/mm/yyyy',
+                                'tabindex' => false
+                            ]
+                        ]);
+                    ?>
+                </div>
             </div>
-            <div class="col-md-3">
-                <label class="control-label summary" for="produto_empreendimento_id">Empreendimento</label>
-                <?php $lista_emp = ArrayHelper::map($empreendimentos, 'id', 'titulo'); ?>
-                <?= $form->field($searchModel, 'empreendimento_id')->dropDownList($lista_emp, [
-                    'prompt' => 'Selecione'
-                ])->label(false) ?>
-                <!-- Campos de pesquisa ocultos pros gráficos -->
-                <input type="hidden" name="por_rv" id="por_rv" value="<?=$_REQUEST['por_rv']?>">
-            </div>
-            <div class="col-md-3">
-                <label class="control-label summary" for="produto_ordensdeservico_id">Ordem de Serviço</label>
-                <?php $lista_os = ArrayHelper::map($os, 'id', 'titulo'); ?>
-                <?= $form->field($searchModel, 'ordensdeservico_id')->dropDownList($lista_os, [
-                    'prompt' => 'Selecione'
-                ])->label(false) ?>
-            </div>
-            <div class="col-md-4">
-                <label class="control-label summary" for="from_date">Por data de Entrada</label>
-                <?php
-                    $layout3 = '<span class="input-group-addon">De</span>
-                    {input1}
-                    <span class="input-group-addon">Até</span>
-                    {input2}';
-                    echo DatePicker::widget([
-                        'language' => 'pt-BR',
-                        'name' => 'from_date',
-                        'value' => ($datainicial?$datainicial:''),
-                        'type' => DatePicker::TYPE_RANGE,
-                        'name2' => 'to_date',
-                        'value2' => ($datafinial?$datafinial:''),
-                        'options' => [
-                            'placeholder' => 'data inicial',
-                            'tabindex' => false
-                        ],
-                        'options2' => [
-                            'placeholder' => 'data final',
-                            'tabindex' => false
-                        ],
-                        'layout' => $layout3, 
-                        'pluginOptions' => [
-                            'autoclose'=>true,
-                            'format' => 'dd/mm/yyyy',
-                            'tabindex' => false
-                        ]
-                    ]);
-                ?>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-2">
-                <?= $form->field($searchModel, 'ano_listagem')->dropDownList([
-                    'all'=>'Todos os registros',
-                    '2023'=>'Ano 2023',
-                    '2022'=>'Ano 2022',
-                ])->label('Ano') ?>
-            </div> 
-            <div class="col-md-4">
-                <label class="control-label summary">Últimos dias</label><br>
-                <label for="check-hoje-produto" style="padding:1%">
-                    <input type="radio" name="ProdutoSearch[intervalo_data]" value="check-hoje" id="check-hoje-produto" style="" <?=$radiohoje?>>
-                    Hoje
-                </label>
-                <label for="check-ultimos-dias-produto" style="padding:1%">
-                    <input type="radio" name="ProdutoSearch[intervalo_data]" value="check-ultimos-dias" id="check-ultimos-dias-produto" style="" <?=$radiosete?>>
-                    Últimos 7 dias
-                </label>
-                <label for="check-ultimo-mes-produto" style="padding:1%">
-                    <input type="radio" name="ProdutoSearch[intervalo_data]" value="check-ultimo-mes" id="check-ultimo-mes-produto" style="" <?=$radiotrinta?>>
-                    Últimos 30 dias
-                </label>
-                <label for="check-todos-produto" style="padding:1%">
-                    <input type="radio" name="ProdutoSearch[intervalo_data]" value="0" id="check-todos-produto" style="">
-                    Todos
-                </label>
-            </div>
-            <div class="col-md-4 form-group">
-            <label class="control-label summary">Situação</label><br>
-                <?php // = $form->field($searchModel, 'status')->dropDownList([ 'Não Resolvido' => 'Não Resolvido', 'Parcialmente Resolvido' => 'Parcialmente Resolvido', 'Em andamento' => 'Em andamento', 'Resolvido' => 'Resolvido', ], ['prompt' => '']);?>
-                <label for="em_andamento_produto" style="padding:1%">
-                    <input type="checkbox" name="ProdutoSearch[fase][1]" value="Em andamento" id="em_andamento_produto" style="" <?=$campo_status_1?>>
-                    Em Andamento
-                </label>
-                <label for="aprovado_produto" style="padding:1%">
-                    <input type="checkbox" name="ProdutoSearch[fase][2]" value="Aprovado" id="aprovado_produto" style="" <?=$campo_status_2?>>
-                    Aprovado
-                </label>
-                <label for="reprovado_produto" style="padding:1%">
-                    <input type="checkbox" name="ProdutoSearch[fase][3]" value="Reprovado" id="reprovado_produto" style="" <?=$campo_status_3?>>
-                    Reprovado
-                </label>
-                <!-- <label for="forcomunicados" style="padding:1%">
-                    <input type="checkbox" name="ProdutoSearch[comunicados]" value="1" style="" id="forcomunicados" >
-                    Com CNC
-                </label> -->
-            </div>
-            <div class="col-md-2 form-group">
-                <br>
-                <img id="loading1-produtos" src="<?=Yii::$app->homeUrl?>arquivos/loading_blue.gif" width="40" style="float:right;margin-left: 12px;margin-top: -3px;display:none">
-                <?php             
-                    echo Html::submitButton('Pesquisar', [
-                        'class' => 'btn btn-primary',
-                        'style'=>'float:right;margin:1%',
-                        'id'=>'botao-envia-pesquisa-ajax-produto'
-                        // 'onclick'=>'$(this).addClass("disabled");$("#loading1-produtos").show();this.form.submit();this.disabled=true;',
-                        // 'onmouseup'=>'$(this).addClass("disabled");$("#loading1-produtos").show();this.disabled=true;',
-                    ]);
-                    $this->registerJs(<<<JS
-                        $(document).on('pjax:send', function() {
-                            $("#loading1-produtos").show();
-                            $("#botao-envia-pesquisa-ajax-produto").addClass("disabled");
-                        });
-                        $(document).on('pjax:complete', function() {
-                            $('#loading1-produtos').hide();
-                            $("#botao-envia-pesquisa-ajax-produto").removeClass("disabled");
-                        });
-                    JS
-                    );
-                ?>
+            <div class="row">
+                <div class="col-md-2">
+                    <?= $form->field($searchModel, 'ano_listagem')->dropDownList([
+                        'all'=>'Todos os registros',
+                        '2023'=>'Ano 2023',
+                        '2022'=>'Ano 2022',
+                    ])->label('Ano') ?>
+                </div> 
+                <div class="col-md-4">
+                    <label class="control-label summary">Últimos dias</label><br>
+                    <label for="check-hoje-produto" style="padding:1%">
+                        <input type="radio" name="ProdutoSearch[intervalo_data]" value="check-hoje" id="check-hoje-produto" style="" <?=$radiohoje?>>
+                        Hoje
+                    </label>
+                    <label for="check-ultimos-dias-produto" style="padding:1%">
+                        <input type="radio" name="ProdutoSearch[intervalo_data]" value="check-ultimos-dias" id="check-ultimos-dias-produto" style="" <?=$radiosete?>>
+                        Últimos 7 dias
+                    </label>
+                    <label for="check-ultimo-mes-produto" style="padding:1%">
+                        <input type="radio" name="ProdutoSearch[intervalo_data]" value="check-ultimo-mes" id="check-ultimo-mes-produto" style="" <?=$radiotrinta?>>
+                        Últimos 30 dias
+                    </label>
+                    <label for="check-todos-produto" style="padding:1%">
+                        <input type="radio" name="ProdutoSearch[intervalo_data]" value="0" id="check-todos-produto" style="">
+                        Todos
+                    </label>
+                </div>
+                <div class="col-md-4 form-group">
+                <label class="control-label summary">Situação</label><br>
+                    <?php // = $form->field($searchModel, 'status')->dropDownList([ 'Não Resolvido' => 'Não Resolvido', 'Parcialmente Resolvido' => 'Parcialmente Resolvido', 'Em andamento' => 'Em andamento', 'Resolvido' => 'Resolvido', ], ['prompt' => '']);?>
+                    <label for="em_andamento_produto" style="padding:1%">
+                        <input type="checkbox" name="ProdutoSearch[fase][1]" value="Em andamento" id="em_andamento_produto" style="" <?=$campo_status_1?>>
+                        Em Andamento
+                    </label>
+                    <label for="aprovado_produto" style="padding:1%">
+                        <input type="checkbox" name="ProdutoSearch[fase][2]" value="Aprovado" id="aprovado_produto" style="" <?=$campo_status_2?>>
+                        Aprovado
+                    </label>
+                    <label for="reprovado_produto" style="padding:1%">
+                        <input type="checkbox" name="ProdutoSearch[fase][3]" value="Reprovado" id="reprovado_produto" style="" <?=$campo_status_3?>>
+                        Reprovado
+                    </label>
+                    <!-- <label for="forcomunicados" style="padding:1%">
+                        <input type="checkbox" name="ProdutoSearch[comunicados]" value="1" style="" id="forcomunicados" >
+                        Com CNC
+                    </label> -->
+                </div>
+                <div class="col-md-2 form-group">
+                    <br>
+                    <img id="loading1-produtos" src="<?=Yii::$app->homeUrl?>arquivos/loading_blue.gif" width="40" style="float:right;margin-left: 12px;margin-top: -3px;display:none">
+                    <?php             
+                        echo Html::submitButton('Pesquisar', [
+                            'class' => 'btn btn-primary',
+                            'style'=>'float:right;margin:1%',
+                            'id'=>'botao-envia-pesquisa-ajax-produto'
+                            // 'onclick'=>'$(this).addClass("disabled");$("#loading1-produtos").show();this.form.submit();this.disabled=true;',
+                            // 'onmouseup'=>'$(this).addClass("disabled");$("#loading1-produtos").show();this.disabled=true;',
+                        ]);
+                        $this->registerJs(<<<JS
+                            $(document).on('pjax:send', function() {
+                                $("#loading1-produtos").show();
+                                $("#botao-envia-pesquisa-ajax-produto").addClass("disabled");
+                            });
+                            $(document).on('pjax:complete', function() {
+                                $('#loading1-produtos').hide();
+                                $("#botao-envia-pesquisa-ajax-produto").removeClass("disabled");
+                            });
+                        JS
+                        );
+                    ?>
+                </div>
             </div>
         </div>
         <?php ActiveForm::end(); ?>

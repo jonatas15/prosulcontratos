@@ -78,7 +78,8 @@ $this->params['breadcrumbs'][] = 'Licenciamentos';
         ]); */ ?>
     </div>
     <?php endif; ?>
-    <?php 
+    <?php
+    $ativo = $_REQUEST['abativa'];
     $items = [];
     foreach ($model->licenciamentos as $item) {
         // DEFINIÇÃO DE FASES DO ITEM ===========================================================
@@ -168,7 +169,7 @@ $this->params['breadcrumbs'][] = 'Licenciamentos';
             // '<span>Excluir Licenciamento</span>'.
             $gestaofase,
             'options' => ['id' => 'aba_fases_'.$item->id],
-            'active' => $item->numero == 'IPHAN' ? true : false,
+            'active' => $item->numero == $ativo ? true : false,
         ]);
     }
     echo Tabs::widget([

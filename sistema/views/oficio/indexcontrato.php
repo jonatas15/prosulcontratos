@@ -805,12 +805,25 @@ Yii::$app->params['contratoidGlobal'] = $contrato_id;
     <div class="row">
         <br />
     </div>
-    <div class="row" style="border-top: 1px solid lightgray;background-color: ghostwhite;padding-top: 10px !important;position:relative">
-        <h4 style="text-align:center;padding: 5px">Pesquisa  <a href="<?=Yii::$app->homeUrl."contrato/view?id=$contrato_id&abativa=aba_oficios"?>" class="btn btn-primary text-white fs-5" tolltip="" title="Limpar/Reiniciar">
-            <i class="bi bi-arrow-counterclockwise"></i>
-        </a></h4>
+    <div class="row mt-0 mb-0 pb-1   pt-1 " style="background-color: white;">
+        <h3>
+            <center>
+                <a class="btn btn-link fs-3" href="#collapsePesquisaOficios"  data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapsePesquisaOficios">
+                    Pesquisa <i class="bi bi-arrow-down"></i>
+                </a> 
+                <a
+                    href="<?=Yii::$app->homeUrl."contrato/view?id=$contrato_id&abativa=aba_oficios"?>" 
+                    class="btn btn-primary text-white fs-5" 
+                    tolltip="" 
+                    title="Limpar/Reiniciar"
+                >
+                    <i class="bi bi-arrow-counterclockwise"></i>
+                </a>
+            </center>
+        </h3>
+        <!-- <hr> -->
     </div>
-    <div class="row" style="background-color: ghostwhite; padding: 10px 5px">
+    <div id="collapsePesquisaOficios" class="row collapse mb-2" style="background-color: ghostwhite; padding: 10px 5px">
         <!-- <h4 style="padding:5px">Pesquisa:</h4> -->
         <?php $form = ActiveForm::begin(['options' => [
             'data-pjax' => true,
@@ -954,7 +967,7 @@ Yii::$app->params['contratoidGlobal'] = $contrato_id;
                     </label> -->
                 </div>
             </div>
-            <div class="col-md-1 form-group">
+            <div class="col-md-12 form-group float-right">
                 <img id="loading1" src="<?=Yii::$app->homeUrl?>arquivos/loading_blue.gif" width="40" style="float:right;margin-left: 12px;margin-top: -3px;display:none">
                 <?php             
                     echo Html::submitButton('Pesquisar', [

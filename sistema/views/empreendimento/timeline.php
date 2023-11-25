@@ -310,6 +310,27 @@
                         return ($data->daysBetween != '' ? '' : '0').$data->daysBetween.($data->daysBetween != 1 ? ' dias' : ' dia');
                     }
                 ],
+                [
+                    'attribute' => 'numero_sei',
+                    'format'=>'raw',
+                    'value' => function($data) {
+                        return Editable::widget([
+                            'name'=>'numero_sei', 
+                            'asPopover' => true,
+                            'value' => $data->numero_sei,
+                            'header' => 'Nº SEI',
+                            'size'=>'sm',
+                            'inputType' => Editable::INPUT_TEXT,
+                            'formOptions' => [
+                                'action' => [
+                                    'fase/editcampo',
+                                    'id' => $data->id,
+                                    'campo' => 'numero_sei'
+                                ]
+                            ],
+                        ]);
+                    }
+                ],
                 // 'exigencias',
                 // 'produto_id',
                 [

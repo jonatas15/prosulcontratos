@@ -193,7 +193,7 @@ class FaseController extends Controller
             $model->$campo = $valor != "" ? $valor : $model->$campo;
         }
         $model->save();
-        return $this->redirect(\Yii::$app->request->referrer);
+        return $this->redirect(\Yii::$app->request->referrer.'&abativa='.$model->licenciamento->numero);
     }
     public function dataprobanco ($data) {
         $arr = explode('/', $data);

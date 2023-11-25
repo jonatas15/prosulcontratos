@@ -53,10 +53,6 @@ switch ($ativo) {
         $aba_update = false;
         $aba_arquivos = true;
     break;
-    
-    default:
-        
-        break;
 }
 
 
