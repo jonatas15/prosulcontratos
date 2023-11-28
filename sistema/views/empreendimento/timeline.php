@@ -225,11 +225,10 @@
                     //     return date('d/m/Y', strtotime($data->data));
                     // }
                     'value' => function($data) {
-                        
                         return Editable::widget([
                             'name'=>'data', 
                             'asPopover' => true,
-                            'value' => date('d/m/Y', strtotime($data->data)),
+                            'value' => $data->data ? date('d/m/Y', strtotime($data->data)): 'Definir',
                             'size'=>'md',
                             'inputType' => Editable::INPUT_DATE,
                             'options' => [
@@ -286,7 +285,7 @@
                 // 'ordem',
                 [
                     'format' => 'raw',
-                    'header' => 'Dias passados',
+                    'header' => 'Período transcorrido',
                     'headerOptions' => [
                         'width' => '10%'
                     ],
@@ -307,7 +306,11 @@
                             $return = $dias_passados.($dias_passados != 1 ? ' dias' : ' dia');
                             return $return;
                         */
-                        return ($data->daysBetween != '' ? '' : '0').$data->daysBetween.($data->daysBetween != 1 ? ' dias' : ' dia');
+                        if($data->data) {
+                            return ($data->daysBetween != '' ? '' : '0').$data->daysBetween.($data->daysBetween != 1 ? ' dias' : ' dia');
+                        } else {
+                            return 'Definir data';
+                        }
                     }
                 ],
                 [
@@ -333,6 +336,15 @@
                 ],
                 // 'exigencias',
                 // 'produto_id',
+
+                [
+                    'header' => 'OS: Nº SEI',
+                    'format' => 'raw',
+                    'value' => function($data) {
+                        return $data->produto->ordensdeservico->id.':
+                        <br>'.$data->produto->ordensdeservico->numero_sei;
+                    }
+                ],
                 [
                     'attribute' => 'produto_id',
                     'format'=>'raw',

@@ -188,7 +188,11 @@ class FaseController extends Controller
         $model = $this->findModel($id);
         // $model->datacadastro =  date('Y-m-d h:i:s', time());
         if(in_array($campo, ['data', 'datacadastro'])) {
-            $model->$campo = $this->dataprobanco($valor);
+            if (in_array($valor, ['', null, 0])) {
+                $model->$campo = null;
+            } else {
+                $model->$campo = $this->dataprobanco($valor);
+            }
         } else {
             $model->$campo = $valor != "" ? $valor : $model->$campo;
         }

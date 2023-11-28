@@ -79,7 +79,10 @@ $this->params['breadcrumbs'][] = 'Licenciamentos';
     </div>
     <?php endif; ?>
     <?php
-    $ativo = $_REQUEST['abativa'];
+    $ativo = 'IPHAN';
+    if ($_REQUEST['abativa']) {
+        $ativo = $_REQUEST['abativa'];
+    }
     $items = [];
     foreach ($model->licenciamentos as $item) {
         // DEFINIÇÃO DE FASES DO ITEM ===========================================================

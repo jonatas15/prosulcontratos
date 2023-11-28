@@ -811,6 +811,19 @@ use yii\bootstrap5\Accordion;
             //         'width' => '3%'
             //     ]
             // ],
+            [
+                'attribute' => 'empreendimento_id',
+                'format' => 'raw',
+                'value' => function($data) {
+                    // return $this->render('_empreendimento', [
+                    //     'id' => $data->empreendimento_id
+                    // ]);
+                    return $data->empreendimento->titulo;
+                },
+                'headerOptions' => [
+                    'width' => '5%'
+                ]
+            ],
             'subproduto',
             [
                 'attribute' => 'numero',
@@ -827,19 +840,6 @@ use yii\bootstrap5\Accordion;
                     return $return;
                 },
                 'format' => 'raw',
-            ],
-            [
-                'attribute' => 'empreendimento_id',
-                'format' => 'raw',
-                'value' => function($data) {
-                    // return $this->render('_empreendimento', [
-                    //     'id' => $data->empreendimento_id
-                    // ]);
-                    return $data->empreendimento->titulo;
-                },
-                'headerOptions' => [
-                    'width' => '5%'
-                ]
             ],
             // [
             //     'attribute' => 'ordensdeservico_id',

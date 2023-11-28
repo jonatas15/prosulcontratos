@@ -1008,6 +1008,14 @@ Yii::$app->params['contratoidGlobal'] = $contrato_id;
             // 'emprrendimento_id',
             // 'tipo',
             [
+                'attribute' => 'emprrendimento_desc',
+                'format' => 'raw',
+                'value' => function($data) {
+                    // return '<a class="btn btn-link" target="_blank" href="/empreendimento">'.$data->emprrendimento_desc.'</a>';
+                    return $data->emprrendimento_desc;
+                }
+            ],
+            [
                 'attribute' => 'id',
                 'headerOptions' => [
                     'width' => '3%'
@@ -1018,14 +1026,6 @@ Yii::$app->params['contratoidGlobal'] = $contrato_id;
             'emissor',
             'receptor',
             // 'emprrendimento_desc',
-            [
-                'attribute' => 'emprrendimento_desc',
-                'format' => 'raw',
-                'value' => function($data) {
-                    // return '<a class="btn btn-link" target="_blank" href="/empreendimento">'.$data->emprrendimento_desc.'</a>';
-                    return $data->emprrendimento_desc;
-                }
-            ],
             //'datacadastro',
             // 'data',
             'Num_sei',

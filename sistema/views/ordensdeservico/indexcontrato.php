@@ -362,15 +362,15 @@ $empreendimentos = Empreendimento::find()->where([
             //         'width' => '3%'
             //     ]
             // ],
-            'titulo',
-            'numero_sei',
-            // 'empreendimento_id',
             [
                 'attribute' => 'empreendimento_id',
                 'value' => function($data) {
                     return $data->empreendimento->titulo;
                 }
             ],
+            'titulo',
+            'numero_sei',
+            // 'empreendimento_id',
             // 'tipo',
             // 'emissor',
             // 'emprrendimento_desc',
