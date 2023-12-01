@@ -63,12 +63,12 @@ switch ($ativo) {
 
 $this->title = 'Atualizar OS: ' .$model->id . ' - ' . $model->titulo;
 $this->params['breadcrumbs'][] = ['label' => 'Contrato: '.$model->contrato->id, 'url' => ['/contrato/view?id='.$model->contrato->id]];
-$this->params['breadcrumbs'][] = ['label' => 'Ordens de Serviço', 'url' => ['/contrato/view?id='.$model->contrato->id.'&abativa=aba_ordens']];
+$this->params['breadcrumbs'][] = ['label' => 'Ordens de Serviço', 'url' => ['/contrato/os?id='.$model->contrato->id.'&abativa=aba_ordens']];
 $this->params['breadcrumbs'][] = 'Atualizar '.$model->id . '- ' . $model->titulo;
 ?>
 <div class="align-right" style="float: right">
 
-    <?= Html::a('<< Voltar às OSs', ['/contrato/view?id='.$model->contrato->id.'&abativa=aba_ordens'], ['class' => 'btn btn-info']) ?>
+    <?= Html::a('<< Voltar às OSs', ['/contrato/os?id='.$model->contrato->id.'&abativa=aba_ordens'], ['class' => 'btn btn-info']) ?>
 </div>
 <div class="oficio-update">
     <h3><?= Html::encode($this->title) ?></h3>

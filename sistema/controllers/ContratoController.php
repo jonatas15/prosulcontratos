@@ -38,7 +38,7 @@ class ContratoController extends Controller
                'only' => ['index', 'view', 'update', 'create',  'delete', 
                     'impactoscontratuais', 'alteraimpacto', 'alteraimpactocampo', 
                     'porempreendimento', 'porproduto',
-                    'novoimpacto'
+                    'novoimpacto', 'os', 'pr'
                 ],
                'rules' => [
                    [
@@ -51,7 +51,7 @@ class ContratoController extends Controller
                        'actions' => ['index', 'view', 'update', 'create',  'delete', 
                             'impactoscontratuais', 'alteraimpacto', 'alteraimpactocampo', 
                             'porempreendimento', 'porproduto',
-                            'novoimpacto'
+                            'novoimpacto', 'os', 'pr'
                         ],
                        'roles' => ['@'],
                    ],
@@ -206,6 +206,42 @@ class ContratoController extends Controller
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
+        ]);
+    }
+    public function actionOs($id)
+    {
+        // return $this->render('view', [
+        //     'model' => $this->findModel($id),
+        // ]);
+        $searchModelOrdens = new \app\models\OrdensdeservicoSearch();
+        $dataProviderOrdens = $searchModelOrdens->search(['contrato_id' => $id]);
+        return $this->render('/ordensdeservico/indexcontrato', [
+            'searchModel' => $searchModelOrdens,
+            'dataProvider' => $dataProviderOrdens,
+            'contrato' => $this->findModel($id),
+            'contrato_id' => $id
+        ]);
+    }
+    public function actionPr($id)
+    {
+        $searchModelProduto = new \app\models\ProdutoSearch();
+        $dataProviderProduto = $searchModelProduto->search(['contrato_id'=>$id]);
+        return $this->render('/produto/indexcontrato', [
+            'searchModel' => $searchModelProduto,
+            'dataProvider' => $dataProviderProduto,
+            'contrato' => $this->findModel($id),
+            'contrato_id' => $id
+        ]);
+    }
+    public function actionGo($id)
+    {
+        $searchModelOficio = new \app\models\OficioSearch();
+        $dataProviderOficio = $searchModelOficio->search(['contrato_id'=>$id]);
+        return $this->render('/oficio/indexcontrato', [
+            'searchModel' => $searchModelOficio,
+            'dataProvider' => $dataProviderOficio,
+            'contrato' => $this->findModel($id),
+            'contrato_id' => $id
         ]);
     }
     public function actionImpactoscontratuais() {

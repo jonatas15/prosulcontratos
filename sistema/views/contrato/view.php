@@ -252,20 +252,20 @@ function formatar_campo($campo, $valor) {
                         'options' => ['id' => 'aba_impactos'],
                         'active' => $aba_impactos
                     ],
-                    [
-                        'label' => '📋 Gestão de Ofícios',
-                        'content' => $gestaooficios,
-                        'headerOptions' => ['...'],
-                        'options' => ['id' => 'aba_oficios'],
-                        'active' => $aba_oficios
-                    ],
-                    [
-                        'label' => '📋 Ordens de Serviço',
-                        'content' => $gestaoordens,
-                        'headerOptions' => ['...'],
-                        'options' => ['id' => 'aba_ordens'],
-                        'active' => $aba_ordens
-                    ],
+                    // [
+                    //     'label' => '📋 Gestão de Ofícios',
+                    //     'content' => $gestaooficios,
+                    //     'headerOptions' => ['...'],
+                    //     'options' => ['id' => 'aba_oficios'],
+                    //     'active' => $aba_oficios
+                    // ],
+                    // [
+                    //     'label' => '📋 Ordens de Serviço',
+                    //     'content' => $gestaoordens,
+                    //     'headerOptions' => ['...'],
+                    //     'options' => ['id' => 'aba_ordens'],
+                    //     'active' => $aba_ordens
+                    // ],
                     /**
                         [
                             'label' => '📋 Licenciamentos',
@@ -275,13 +275,13 @@ function formatar_campo($campo, $valor) {
                             'active' => $aba_licensas
                         ],
                     **/
-                    [
-                        'label' => '📋 Produtos',
-                        'content' => $gestaoprodutos,
-                        'headerOptions' => ['...'],
-                        'options' => ['id' => 'aba_produtos'],
-                        'active' => $aba_produtos
-                    ],
+                    // [
+                    //     'label' => '📋 Produtos',
+                    //     'content' => $gestaoprodutos,
+                    //     'headerOptions' => ['...'],
+                    //     'options' => ['id' => 'aba_produtos'],
+                    //     'active' => $aba_produtos
+                    // ],
                     // [
                     //     'label' => 'Dropdown',
                     //     'items' => [

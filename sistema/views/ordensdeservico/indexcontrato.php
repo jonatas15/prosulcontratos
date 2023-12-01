@@ -65,9 +65,12 @@ $empreendimentos = Empreendimento::find()->where([
         z-index: 1151 !important;
     }
 </style>
-<div class="ordensdeservico-index">
+<div class="ordensdeservico-index mt-5">
+    <?php
 
-    <h3><img src="<?=Yii::$app->homeUrl?>logo/upload-files-icon.png" class="icone-modulo" width="25" />  Contrato: Ordens de Serviço</h3>
+    ?>
+    <h3>
+        <img src="<?=Yii::$app->homeUrl?>logo/upload-files-icon.png" class="icone-modulo" width="25" /> <span class="text-primary text-opacity-50 fs-5">Contrato: <?=$contrato->titulo?></span><br><b>Ordens de Serviço</b></h3>
     <div class="row">
         <div class="col-md-12">
             <?php $modelOrdensdeservico = new OS(); ?>

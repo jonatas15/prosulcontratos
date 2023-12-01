@@ -159,9 +159,11 @@ use yii\bootstrap5\Accordion;
         z-index: 1151 !important;
     }
 </style>
-<div class="produto-index">
+<div class="produto-index mt-5">
 
-    <h3><img src="<?=Yii::$app->homeUrl?>logo/upload-files-icon.png" class="icone-modulo" width="25" /> Contrato: Produtos</h3>
+    <h3>
+        <img src="<?=Yii::$app->homeUrl?>logo/upload-files-icon.png" class="icone-modulo" width="25" /> <span class="text-primary text-opacity-50 fs-5">Contrato: <?=$contrato->titulo?></span><br><b>Produtos</b>
+    </h3>
     <div class="row">
         <div class="col-md-12">
             <?php $modelProduto = new Produto(); ?>

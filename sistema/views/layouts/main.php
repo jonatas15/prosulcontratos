@@ -336,12 +336,12 @@ $g_drive = '<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 51
                                     'url' => ['contrato/view?id='.$contratoativo->id.'&abativa=aba_dados'],
                                     'active' => $_REQUEST['abativa'] == 'aba_dados' ? true : false
                                 ],
-                                [
-                                    'label' => 'Impactos Contratuais',
-                                    'icon' => 'book',
-                                    'url' => ['contrato/view?id='.$contratoativo->id.'&abativa=aba_impactos'],
-                                    'active' => $_REQUEST['abativa'] == 'aba_impactos' ? true : false
-                                ],
+                                // [
+                                //     'label' => 'Impactos Contratuais',
+                                //     'icon' => 'book',
+                                //     'url' => ['contrato/view?id='.$contratoativo->id.'&abativa=aba_impactos'],
+                                //     'active' => $_REQUEST['abativa'] == 'aba_impactos' ? true : false
+                                // ],
                                 [
                                     'label' => 'Gestão de Ofícios',
                                     'icon' => 'book',
@@ -351,7 +351,7 @@ $g_drive = '<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 51
                                 [
                                     'label' => 'Ordens de Serviço',
                                     'icon' => 'book',
-                                    'url' => ['contrato/view?id='.$contratoativo->id.'&abativa=aba_ordens'],
+                                    'url' => ['contrato/os?id='.$contratoativo->id.'&abativa=aba_ordens'],
                                     'active' => $_REQUEST['abativa'] == 'aba_ordens' ? true : false
                                 ],
                                 [

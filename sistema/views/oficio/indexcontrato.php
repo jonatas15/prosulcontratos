@@ -90,9 +90,11 @@ Yii::$app->params['contratoidGlobal'] = $contrato_id;
         background-color: gainsboro;
     }
 </style>
-<div class="oficio-index">
+<div class="oficio-index mt-5">
 
-    <h3><img src="<?=Yii::$app->homeUrl?>logo/upload-files-icon.png" class="icone-modulo" width="25" />  Contrato: Gestão de Ofícios</h3>
+    <h3>
+        <img src="<?=Yii::$app->homeUrl?>logo/upload-files-icon.png" class="icone-modulo" width="25" /> <span class="text-primary text-opacity-50 fs-5">Contrato: <?=$contrato->titulo?></span><br><b>Gestão de Ofícios</b>
+    </h3>
     <div class="row">
         <div class="col-md-12">
             <?php $modelnovooficio = new Oficio(); ?>
@@ -1015,12 +1017,12 @@ Yii::$app->params['contratoidGlobal'] = $contrato_id;
                     return $data->emprrendimento_desc;
                 }
             ],
-            [
-                'attribute' => 'id',
-                'headerOptions' => [
-                    'width' => '3%'
-                ]
-            ],
+            // [
+            //     'attribute' => 'id',
+            //     'headerOptions' => [
+            //         'width' => '3%'
+            //     ]
+            // ],
             'tipo',
             'fluxo',
             'emissor',
