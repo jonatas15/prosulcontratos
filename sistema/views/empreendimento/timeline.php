@@ -210,6 +210,7 @@
                             case '3': $retorno = 'Funai'; break;
                             case '4': $retorno = 'INCRA'; break;
                             case '5': $retorno = 'IPHAN'; break;
+                            default: $retorno = $data->ambito; break;
                         }
                         return $retorno;
                     }
@@ -314,6 +315,27 @@
                     }
                 ],
                 [
+                    'attribute' => 'ordem',
+                    'format'=>'raw',
+                    'value' => function($data) {
+                        return Editable::widget([
+                            'name'=>'ordem', 
+                            'asPopover' => true,
+                            'value' => $data->ordem,
+                            'header' => 'Ordem',
+                            'size'=>'sm',
+                            'inputType' => Editable::INPUT_TEXT,
+                            'formOptions' => [
+                                'action' => [
+                                    'fase/editcampo',
+                                    'id' => $data->id,
+                                    'campo' => 'ordem'
+                                ]
+                            ],
+                        ]);
+                    }
+                ],
+                [
                     'attribute' => 'numero_sei',
                     'format'=>'raw',
                     'value' => function($data) {
@@ -337,14 +359,14 @@
                 // 'exigencias',
                 // 'produto_id',
 
-                [
-                    'header' => 'OS: Nº SEI',
-                    'format' => 'raw',
-                    'value' => function($data) {
-                        return $data->produto->ordensdeservico->id.':
-                        <br>'.$data->produto->ordensdeservico->numero_sei;
-                    }
-                ],
+                // [
+                //     'header' => 'OS: Nº SEI',
+                //     'format' => 'raw',
+                //     'value' => function($data) {
+                //         return $data->produto->ordensdeservico->id.':
+                //         <br>'.$data->produto->ordensdeservico->numero_sei;
+                //     }
+                // ],
                 [
                     'attribute' => 'produto_id',
                     'format'=>'raw',

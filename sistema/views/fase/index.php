@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'datacadastro',
             //'data',
             //'exigencias',
-            //'ambito',
+            'ambito',
             //'status',
             [
                 'class' => ActionColumn::className(),

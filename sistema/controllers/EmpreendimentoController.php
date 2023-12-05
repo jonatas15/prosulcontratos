@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Empreendimento;
 use app\models\Licenciamento;
+use app\models\Fase;
 use app\models\EmpreendimentoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -47,7 +48,7 @@ class EmpreendimentoController extends Controller
            ],
            'access' => [
                'class' => AccessControl::className(),
-               'only' => ['index', 'view', 'update', 'create',  'delete', 'novafase', 'editfase', 'empgerencial', 'preview', 'definicaofases', 'ativandoetapa'],
+               'only' => ['index', 'view', 'update', 'create',  'delete', 'novafase', 'editfase', 'empgerencial', 'preview', 'definicaofases', 'ativandoetapa', 'savechecklist'],
                'rules' => [
                    [
                        'allow' => false,
@@ -56,7 +57,7 @@ class EmpreendimentoController extends Controller
                    ],
                    [
                        'allow' => true,
-                       'actions' => ['index', 'view', 'update', 'create',  'delete', 'novafase', 'editfase', 'empgerencial', 'preview', 'definicaofases', 'ativandoetapa'],
+                       'actions' => ['index', 'view', 'update', 'create',  'delete', 'novafase', 'editfase', 'empgerencial', 'preview', 'definicaofases', 'ativandoetapa', 'savechecklist'],
                        'roles' => ['@']
                    ],
                ],
@@ -106,7 +107,7 @@ class EmpreendimentoController extends Controller
     public function actionAtivandoetapa()
     {
         date_default_timezone_set('America/Sao_Paulo');
-        $Fase = \app\models\Fase::findOne([
+        $Fase = Fase::findOne([
             'id' => $_REQUEST['fase_id']
         ]);
         $Fase->ativo = $Fase->ativo == 1 ? 0 : 1;
@@ -286,9 +287,68 @@ class EmpreendimentoController extends Controller
         return $arr[2].'-'.$arr[1].'-'.$arr[0];
     }
 
-    function diasentre ($data_inicial, $data_final) {
+    public function diasentre ($data_inicial, $data_final) {
         $diferenca = strtotime($data_final) - strtotime($data_inicial);
         $dias = floor($diferenca / (60 * 60 * 24)); 
         return $dias;
     }
+    public function grupo_de_fases ($titulo, $conteudo, $ref) {
+        return '<div class="accordion-item">
+            <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#'.$ref.'" aria-expanded="false" aria-controls="'.$ref.'">
+                '.$titulo.'
+            </button>
+            </h2>
+            <div id="'.$ref.'" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">
+                '.$conteudo.'
+            </div>
+            </div>
+        </div>';
+    }
+    public function actionSavechecklist() {
+        // $model = new Fase();
+        
+        // if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            // Processar os dados e salvar os registros
+            $postData = Yii::$app->request->post('Fase');
+            $orgao = $postData['orgao_grupo'];
+            // echo 'Órgão: '.$orgao;
+            // echo '<pre>';
+            // print_r($postData);
+            // echo '</pre>';
+            // echo '<hr>';
+            // echo '<hr>';
+            // echo '<hr>';
+            // exit();
+            $arr_models = [];
+            foreach ($postData as $k => $data) {
+                // echo $k;
+                if ($k != 'orgao_grupo') {
+                    $data['ambito'] = $orgao;
+                    array_push($arr_models, $data);
+                }
+            }
+            foreach ($arr_models as $data) {
+                $checklistItem = new Fase();
+                $checklistItem->attributes = $data;
+                $checklistItem->save();
+            }
+            // Yii::$app->session->setFlash('success', 'Registros salvos com sucesso.');
+            return $this->redirect(\Yii::$app->request->referrer.'&abativa='.$model->licenciamento->numero);
+        // }
+
+        // return $this->render('checklistForm', ['model' => $model]);
+    }
+
+    public function limparString($string) {
+        // Remove caracteres especiais
+        $string = preg_replace('/[^a-zA-Z0-9]/', '', $string);
+    
+        // Remove espaços
+        $string = str_replace(' ', '', $string);
+    
+        return $string;
+    }
+
 }
