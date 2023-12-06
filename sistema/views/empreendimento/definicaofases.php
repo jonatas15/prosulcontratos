@@ -3,6 +3,8 @@ use kartik\checkbox\CheckboxX;
 use kartik\editable\Editable;
 use yii\bootstrap5\Modal;
 use yii\helpers\Html;
+use yii\web\JsExpression;
+
 $pluginOptions = [
     'inline'=>false,
     'threeState'=>false,
@@ -11,7 +13,14 @@ $pluginOptions = [
 ];
 ?>
 <?php
-Modal::begin([
+    if($_REQUEST['modalativa']) {
+        $this->registerJs(new JsExpression('
+            $(document).ready(function(){
+                $("#'.'gerenciar-fases-em-'.$licenciamento_id.'").modal("show");
+            });
+        '));
+    }
+    Modal::begin([
     'title' => "Fases do Licenciamento",
     'options' => [
         'id' => 'gerenciar-fases-em-'.$licenciamento_id,

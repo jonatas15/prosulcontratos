@@ -18,6 +18,7 @@ use yii\web\UploadedFile;
  * @property int|null $empreendimento_id
  * @property int|null $produto_id
  * @property int|null $licenciamento_id
+ * @property int|null $fase_id
  * @property string|null $pasta
  * @property string|null $ref
  *
@@ -27,6 +28,7 @@ use yii\web\UploadedFile;
  * @property Oficio $oficio
  * @property Ordensdeservico $ordensdeservico
  * @property Produto $produto
+ * @property Fase $fase
  */
 class Arquivo extends \yii\db\ActiveRecord
 {
@@ -64,6 +66,7 @@ class Arquivo extends \yii\db\ActiveRecord
             [['oficio_id'], 'exist', 'skipOnError' => true, 'targetClass' => Oficio::class, 'targetAttribute' => ['oficio_id' => 'id']],
             [['ordensdeservico_id'], 'exist', 'skipOnError' => true, 'targetClass' => Ordensdeservico::class, 'targetAttribute' => ['ordensdeservico_id' => 'id']],
             [['produto_id'], 'exist', 'skipOnError' => true, 'targetClass' => Produto::class, 'targetAttribute' => ['produto_id' => 'id']],
+            [['fase_id'], 'exist', 'skipOnError' => true, 'targetClass' => Produto::class, 'targetAttribute' => ['fase_id' => 'id']],
         ];
     }
 
@@ -116,6 +119,10 @@ class Arquivo extends \yii\db\ActiveRecord
     public function getLicenciamento()
     {
         return $this->hasOne(Licenciamento::class, ['id' => 'licenciamento_id']);
+    }
+    public function getFase()
+    {
+        return $this->hasOne(Fase::class, ['id' => 'fase_id']);
     }
 
     /**

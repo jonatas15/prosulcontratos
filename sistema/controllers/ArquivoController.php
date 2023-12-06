@@ -84,6 +84,7 @@ class ArquivoController extends Controller
                     $valor_tabela_externa .= $model->empreendimento_id != '' ? $model->empreendimento_id : '';
                     $valor_tabela_externa .= $model->produto_id != '' ? $model->produto_id : '';
                     $valor_tabela_externa .= $model->licenciamento_id != '' ? $model->licenciamento_id : '';
+                    $valor_tabela_externa .= $model->fase_id != '' ? $model->fase_id : '';
 
                     // Define o campo vindo campo vindo da tabela externa
                     $campo_tabela_externa = "";
@@ -93,6 +94,7 @@ class ArquivoController extends Controller
                     $campo_tabela_externa .= $model->empreendimento_id != '' ? 'empreendimento_id' : '';
                     $campo_tabela_externa .= $model->produto_id != '' ? 'produto_id' : '';
                     $campo_tabela_externa .= $model->licenciamento_id != '' ? 'licenciamento_id' : '';
+                    $campo_tabela_externa .= $model->fase_id != '' ? 'fase_id' : '';
                     
                     
                     $arquivo = $this->clean($file->baseName) . '.' . $this->clean($file->extension);

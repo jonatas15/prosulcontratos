@@ -79,7 +79,7 @@ $this->params['breadcrumbs'][] = 'Licenciamentos';
     </div>
     <?php endif; ?>
     <?php
-    $ativo = 'IPHAN';
+    $ativo = 'SemTag';
     if ($_REQUEST['abativa']) {
         $ativo = $_REQUEST['abativa'];
     }
@@ -150,6 +150,9 @@ $this->params['breadcrumbs'][] = 'Licenciamentos';
             'searchModelFases' => $searchModelFases,
             'dataProviderFases' => $dataProviderFases,
         ]);
+        if ($ativo == 'SemTag') {
+            $ativo = $item->numero; 
+        }
         array_push($items, [
             'label' => '
                 <div class="py-4 px-4"><h3 class="">

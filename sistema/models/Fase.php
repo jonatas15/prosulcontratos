@@ -94,6 +94,10 @@ class Fase extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Produto::class, ['id' => 'produto_id']);
     }
+    public function getArquivos()
+    {
+        return $this->hasMany(Arquivo::class, ['fase_id' => 'id']);
+    }
 
     /**
      * Gets query for [[FaseLai]].

@@ -59,6 +59,12 @@ class FaseController extends Controller
             'model' => $this->findModel($id),
         ]);
     }
+    public function actionDocs($id)
+    {
+        return $this->render('_docs', [
+            'model' => $this->findModel($id),
+        ]);
+    }
 
     /**
      * Creates a new Fase model.

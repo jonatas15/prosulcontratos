@@ -429,6 +429,30 @@
                         ]);
                     } 
                 ],
+                [
+                    'attribute' => 'id',
+                    'header' => 'Docs',
+                    'headerOptions' => [
+                        'width' => '7%'
+                    ],
+                    'format' => 'raw',
+                    'value' => function($data) {
+                        $contados = '';
+                        if(count($data->arquivos) != 0) {
+                            $contados = '('.count($data->arquivos).') ';
+                        }
+                        return '<center>'.
+                        // $this->render('_docs', [
+                        //     'oficio_id' => $data->id
+                        //     ])
+                        // }
+                        "<a class='btn btn-primary' href='".Yii::$app->homeUrl."fase/docs?id=$data->id' target=''>
+                            $contados<i class='bi bi-filetype-doc'></i>
+                        </a>".
+                        '</center>';
+                    },
+                    'visible' => in_array(Yii::$app->user->identity->nivel, ['administrador', 'gestor']) ? true : false
+                ],
                 /*
                 [
                     'attribute' => 'ordem',

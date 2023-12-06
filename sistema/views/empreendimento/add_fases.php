@@ -30,36 +30,34 @@
         });
     ");
 ?>
-<div class="row">
+<div class="row card-header">
+    <h5 style="cursor: pointer" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#area-cadastro-novas-fases" aria-expanded="false" aria-controls="area-cadastro-novas-fases">
+        Novo Grupo de Fases
+    </h5>
+</div>
+<div class="row collapse" id="area-cadastro-novas-fases">
     <div class="col-md-12 my-3">
-        <?= $form->field($model, 'orgao_grupo')->textInput(['required' => true])->label("<h4>Novo Grupo de Fases</h4>") ?>
+        <?= $form->field($model, 'orgao_grupo')->textInput(['required' => true, 'placeholder' => 'Novo Grupo'])->label(false) ?>
     </div>
     <div class="col-md-1">
     </div>
     <div class="col-md-11">
-        <?= $form->field($model, '[1]fase')->textInput()->label('Cadastrar Fases:') ?>
+        <?= $form->field($model, '[1]fase')->textInput(['placeholder' => 'Nova fase 1'])->label('Cadastrar Fases:') ?>
         <?= $form->field($model, '[1]licenciamento_id')->hiddenInput(['value' => $licenciamento_id])->label(false) ?>
         <?php //= $form->field($model, '[1]ambito')->hiddenInput(['value' => $orgao])->label(false) ?>
     </div>
-</div>
-<div class="row">
     <div class="col-md-1"></div>
     <div class="col-md-11" id="camposExtras"></div>
-</div>
-
-<!-- Repita conforme necessário -->
-
-<div class="row my-3">
-    <div class="col-md-12">
+    <div class="col-md-12 my-3">
         <div class="row">
             <div class="col-md-8">
             </div>
             <div class="col-md-4">
-                <?= Html::button('Adicionar Campo <i class="fas fa-plus"></i>', ['class' => 'btn btn-success float-right', 'id' => 'adicionarCampo']) ?>
+                <?= Html::button('Add <i class="fas fa-plus"></i>', ['class' => 'btn btn-success float-right', 'id' => 'adicionarCampo']) ?>
             </div>
         </div>
     </div>
-    <div class="col-md-12">
+    <div class="col-md-12 my-3">
         <?= Html::submitButton('Salvar Tudo', ['class' => 'btn btn-primary']) ?>
     </div>
 </div>
