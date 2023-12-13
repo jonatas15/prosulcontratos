@@ -11,8 +11,12 @@ use app\models\Ordensdeservico;
 /** @var app\models\Produto $model */
 /** @var yii\widgets\ActiveForm $form */
 
-$empreendimentos = ArrayHelper::map(Empreendimento::find()->all(), 'id', 'titulo');
-$ordensdeservico = ArrayHelper::map(Ordensdeservico::find()->all(), 'id', 'titulo');
+$empreendimentos = ArrayHelper::map(Empreendimento::find()->where([
+    'contrato_id' => $contrato_id
+])->all(), 'id', 'titulo');
+$ordensdeservico = ArrayHelper::map(Ordensdeservico::find()->where([
+    'contrato_id' => $contrato_id
+])->all(), 'id', 'titulo');
 
 $model->data_validade = $model->data_validade != '' ? date('d/m/Y', strtotime($model->data_validade)) : '';
 $model->data_renovacao = $model->data_renovacao != '' ? date('d/m/Y', strtotime($model->data_renovacao)) : '';
@@ -31,7 +35,7 @@ $model->aprov_data = $model->aprov_data != '' ? date('d/m/Y', strtotime($model->
         <div class="col-md-12"><?= $form->field($model, 'subproduto')->textInput() ?></div>
         <div class="col-md-4"><?= $form->field($model, 'numero')->textInput(['maxlength' => true]) ?></div>
         <div class="col-md-4"><?= $form->field($model, 'empreendimento_id')->dropDownList($empreendimentos, [
-            'prompt' => 'Selecione'
+            'prompt' => 'Selecione a'
         ])->label('Empreendimentos Cadastrados') ?></div>
         <div class="col-md-4"><?= $form->field($model, 'ordensdeservico_id')->dropDownList($ordensdeservico, [
             'prompt' => 'Selecione'

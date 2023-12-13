@@ -9,6 +9,9 @@ use yii\bootstrap5\Tabs;
         color: white !important;
     }
 </style>
+<div class="align-center my-5">
+    <?= Html::a('<i class="fa fa-arrow-left"></i> Voltar às Gestões de Ofício', ['/contrato/go?id='.$model->contrato->id.'&abativa=aba_oficios'], ['class' => 'btn btn-primary']) ?>
+</div>
 <?php
 ############################### GESTÃO DE ARQUIVOS #############################
 /**

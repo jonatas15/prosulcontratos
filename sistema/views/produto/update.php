@@ -86,6 +86,9 @@ $this->params['breadcrumbs'][] = ['label' => 'Produtos', 'url' => ['/contrato/vi
 $this->params['breadcrumbs'][] = 'Atualizar '.$model->id . '- ' . $model->subproduto;
 ?>
 <div class="oficio-update">
+    <div class="align-center my-4">
+        <?= Html::a('<i class="fa fa-arrow-left"></i> Voltar aos Produtos', ['/contrato/pr?id='.$model->contrato->id.'&abativa=aba_produtos'], ['class' => 'btn btn-primary']) ?>
+    </div>
     <h3><?= Html::encode($this->title) ?></h3>
     <?php 
     echo Tabs::widget([

@@ -66,9 +66,8 @@ $this->params['breadcrumbs'][] = ['label' => 'Contrato: '.$model->contrato->id, 
 $this->params['breadcrumbs'][] = ['label' => 'Ordens de Serviço', 'url' => ['/contrato/os?id='.$model->contrato->id.'&abativa=aba_ordens']];
 $this->params['breadcrumbs'][] = 'Atualizar '.$model->id . '- ' . $model->titulo;
 ?>
-<div class="align-right" style="float: right">
-
-    <?= Html::a('<< Voltar às OSs', ['/contrato/os?id='.$model->contrato->id.'&abativa=aba_ordens'], ['class' => 'btn btn-info']) ?>
+<div class="align-center my-4">
+    <?= Html::a('<i class="fa fa-arrow-left"></i> Voltar às Ordens de Serviço', ['/contrato/os?id='.$model->contrato->id.'&abativa=aba_ordens'], ['class' => 'btn btn-primary']) ?>
 </div>
 <div class="oficio-update">
     <h3><?= Html::encode($this->title) ?></h3>

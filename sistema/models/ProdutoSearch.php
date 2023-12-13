@@ -56,7 +56,7 @@ class ProdutoSearch extends Produto
             'query' => $query,
             'sort'=> [
                 'defaultOrder' => [
-                    'id' => SORT_ASC
+                    'data_entrega' => SORT_DESC
                 ],
             ],
             'pagination' => [

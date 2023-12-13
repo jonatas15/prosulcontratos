@@ -114,58 +114,6 @@ function formatar_campo($campo, $valor) {
         <br>
     <div class="row">
         <?php 
-            ############################ GESTÃO DE OFÍCIOS ###############################
-            $searchModelOficio = new \app\models\OficioSearch();
-            $dataProviderOficio = $searchModelOficio->search(['contrato_id'=>$model->id]);
-            $gestaooficios = '<div class="row">';
-            $gestaooficios .= '<div class="col-md-12">';
-            $gestaooficios .= '<br>';
-            $gestaooficios .= $this->render('/oficio/indexcontrato', [
-                'searchModel' => $searchModelOficio,
-                'dataProvider' => $dataProviderOficio,
-                'contrato_id' => $model->id
-            ]);
-            $gestaooficios .= '</div>';
-            $gestaooficios .= '</div>';
-            ############################# ORDENS DE SERVIÇO #############################
-            $searchModelOrdens = new \app\models\OrdensdeservicoSearch();
-            $dataProviderOrdens = $searchModelOrdens->search(['contrato_id'=>$model->id]);
-            $gestaoordens = '<div class="row">';
-            $gestaoordens .= '<div class="col-md-12">';
-            $gestaoordens .= '<br>';
-            $gestaoordens .= $this->render('/ordensdeservico/indexcontrato', [
-                'searchModel' => $searchModelOrdens,
-                'dataProvider' => $dataProviderOrdens,
-                'contrato_id' => $model->id
-            ]);
-            $gestaoordens .= '</div>';
-            $gestaoordens .= '</div>';
-            ############################# LICENCIAMENTOS ################################
-            // $searchModelLicenciamento = new \app\models\LicenciamentoSearch();
-            // $dataProviderLicenciamento = $searchModelLicenciamento->search(['contrato_id'=>$model->id]);
-            // $gestaolicenciamento = '<div class="row">';
-            // $gestaolicenciamento .= '<div class="col-md-12">';
-            // $gestaolicenciamento .= '<br>';
-            // $gestaolicenciamento .= $this->render('/licenciamento/indexcontrato', [
-            //     'searchModel' => $searchModelLicenciamento,
-            //     'dataProvider' => $dataProviderLicenciamento,
-            //     'contrato_id' => $model->id
-            // ]);
-            // $gestaolicenciamento .= '</div>';
-            // $gestaolicenciamento .= '</div>';
-            ################################ PRODUTOS ###################################
-            $searchModelProduto = new \app\models\ProdutoSearch();
-            $dataProviderProduto = $searchModelProduto->search(['contrato_id'=>$model->id]);
-            $gestaoprodutos = '<div class="row">';
-            $gestaoprodutos .= '<div class="col-md-12">';
-            $gestaoprodutos .= '<br>';
-            $gestaoprodutos .= $this->render('/produto/indexcontrato', [
-                'searchModel' => $searchModelProduto,
-                'dataProvider' => $dataProviderProduto,
-                'contrato_id' => $model->id
-            ]);
-            $gestaoprodutos .= '</div>';
-            $gestaoprodutos .= '</div>';
             ################################ IMPACTOS ###################################
             $searchModelImpacto = new \app\models\ImpactoSearch();
             $dataProviderImpacto = $searchModelImpacto->search(['contrato_id'=>$model->id]);

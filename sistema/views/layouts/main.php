@@ -345,7 +345,7 @@ $g_drive = '<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 51
                                 [
                                     'label' => 'Gestão de Ofícios',
                                     'icon' => 'book',
-                                    'url' => ['contrato/view?id='.$contratoativo->id.'&abativa=aba_oficios'],
+                                    'url' => ['contrato/go?id='.$contratoativo->id.'&abativa=aba_oficios'],
                                     'active' => $_REQUEST['abativa'] == 'aba_oficios' ? true : false
                                 ],
                                 [
@@ -357,11 +357,16 @@ $g_drive = '<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 51
                                 [
                                     'label' => 'Produtos',
                                     'icon' => 'book',
-                                    'url' => ['contrato/view?id='.$contratoativo->id.'&abativa=aba_produtos'],
+                                    'url' => ['contrato/pr?id='.$contratoativo->id.'&abativa=aba_produtos'],
                                     'active' => $_REQUEST['abativa'] == 'aba_produtos' ? true : false
                                 ],
                             ]
-                        ]);?>
+                        ]);
+                    ?>
+                    <?php elseif(strpos(Url::current(), 'produto') ||
+                        strpos(Url::current(), 'oficio') ||
+                        strpos(Url::current(), 'ordensdeservico')): ?>
+                        
                     <?php else: ?>
                         <?= SideNav::widget([
                             'type' => SideNav::TYPE_DEFAULT,
