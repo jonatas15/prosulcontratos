@@ -59,7 +59,7 @@ $this->title = 'PROSUL-DNIT';
         <div class="row">
             <div class="col-md-4"></div>
             <div class="col-md-4">
-                <img style="width:40%" src="<?=Yii::$app->homeUrl.'logo/';?>logoprosul.jpg" alt="">
+                <!-- <img style="width:40%" src="<?=Yii::$app->homeUrl.'logo/';?>logoprosul.jpg" alt=""> -->
             </div>
             <!-- <div class="col-md-5">
                 <img style="width:100%" src="<?php //=Yii::$app->homeUrl.'logo/';?>dnit.jpg" alt="">
