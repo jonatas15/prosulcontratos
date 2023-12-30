@@ -94,19 +94,51 @@ function formatar_campo($campo, $valor) {
     //     // print_r($k);
     //     // print_r($row);
     // }
+    ################################ IMPACTOS ###################################
+    $searchModelImpacto = new \app\models\ImpactoSearch();
+    $dataProviderImpacto = $searchModelImpacto->search(['contrato_id'=>$model->id]);
+    $gestaoimpactos = '<div class="row">';
+    $gestaoimpactos .= '<div class="col-md-12">';
+    $gestaoimpactos .= '<br>';
+    $gestaoimpactos .= $this->render('impactoscontratuais', [
+        'searchModel' => $searchModelImpacto,
+        'dataProvider' => $dataProviderImpacto,
+        'contrato_id' => $model->id
+    ]);
+    $gestaoimpactos .= '</div>';
+    $gestaoimpactos .= '</div>';
+    #############################################################################
     ?>
     <br>
-    <div class="row card">
-            <div class="card-header bg-default">
-                <a class="btn fw-bolder" data-bs-toggle="collapse" href="#resumo-do-contrato" role="button" aria-expanded="false" aria-controls="collapseExample">
-                    📌 Resumo do Contrato
-                </a>
-            </div>
-            <div id="resumo-do-contrato" class="collapse col-12 my-2">
+    <div class="row">
+            <!-- <div class="card-header bg-default"> -->
+                <!-- <a class="btn fw-bolder" data-bs-toggle="collapse" href="#resumo-do-contrato" role="button" aria-expanded="false" aria-controls="collapseExample"> -->
+                    <!-- 📌 Resumo do Contrato -->
+                <!-- </a> -->
+            <!-- </div> -->
+            <div id="resumo-do-contrato" class="col-12 my-2">
                 <?= $this->render('detalhamentocontrato', [
                     'model' => $model
                 ]);
                 ?>
+                <div class="">
+                    <a class="btn fw-bolder" data-bs-toggle="collapse" href="#edicoes-do-contrato" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        ✏️ Editar
+                    </a>
+                </div>
+                <div id="edicoes-do-contrato" class="collapse col-12 my-2">
+                    <?= '<div class="row">'.$this->render('update', [
+                                'model' => $model
+                    ]).'</div>'; ?>
+                </div>
+            </div>
+            <div class="card-header bg-primary text-white">
+                <a class="btn fw-bolder text-white fs-5" data-bs-toggle="collapse" href="#impactos-do-contrato" role="button" aria-expanded="false" aria-controls="collapseExample">
+                📊 Impactos do Contrato <i class="fas fa-chevron-down"></i>
+                </a>
+            </div>
+            <div id="impactos-do-contrato" class="collapse col-12 my-2">
+                <?= $gestaoimpactos ?>
             </div>
     </div>
         
@@ -114,137 +146,6 @@ function formatar_campo($campo, $valor) {
         <br>
     <div class="row">
         <?php 
-            ################################ IMPACTOS ###################################
-            $searchModelImpacto = new \app\models\ImpactoSearch();
-            $dataProviderImpacto = $searchModelImpacto->search(['contrato_id'=>$model->id]);
-            $gestaoimpactos = '<div class="row">';
-            $gestaoimpactos .= '<div class="col-md-12">';
-            $gestaoimpactos .= '<br>';
-            $gestaoimpactos .= $this->render('impactoscontratuais', [
-                'searchModel' => $searchModelImpacto,
-                'dataProvider' => $dataProviderImpacto,
-                'contrato_id' => $model->id
-            ]);
-            $gestaoimpactos .= '</div>';
-            $gestaoimpactos .= '</div>';
-            #############################################################################
-            $ativo = $_REQUEST['abativa'];
-            switch ($ativo) {
-                case 'aba_dados':
-                    $aba_dados = true;
-                    $aba_oficios = false;
-                    $aba_ordens = false;
-                    $aba_licensas = false;
-                    $aba_produtos = false;
-                    $aba_imactos = false;
-                    break;
-                case 'aba_oficios':
-                    $aba_dados = false;
-                    $aba_oficios = true;
-                    $aba_ordens = false;
-                    $aba_licensas = false;
-                    $aba_produtos = false;
-                    $aba_imactos = false;
-                    break;
-                case 'aba_ordens':
-                    $aba_dados = false;
-                    $aba_oficios = false;
-                    $aba_ordens = true;
-                    $aba_licensas = false;
-                    $aba_produtos = false;
-                    $aba_imactos = false;
-                    break;
-                case 'aba_licensas':
-                    $aba_dados = false;
-                    $aba_oficios = false;
-                    $aba_ordens = false;
-                    $aba_licensas = true;
-                    $aba_produtos = false;
-                    $aba_imactos = false;
-                    break;
-                case 'aba_produtos':
-                    $aba_dados = false;
-                    $aba_oficios = false;
-                    $aba_ordens = false;
-                    $aba_licensas = false;
-                    $aba_produtos = true;
-                    $aba_imactos = false;
-                    break;
-                case 'aba_impactos':
-                    $aba_dados = false;
-                    $aba_oficios = false;
-                    $aba_ordens = false;
-                    $aba_licensas = false;
-                    $aba_produtos = false;
-                    $aba_imactos = true;
-                    break;
-                
-                default:
-                    
-                    break;
-            }
-            echo Tabs::widget([
-                'items' => [
-                    [
-                        'label' => '📄 Dados Contratuais',
-                        'content' => '<div class="row">'.$this->render('update', [
-                            'model' => $model
-                        ]).'</div>',
-                        'options' => ['id' => 'aba_dados'],
-                        'active' => $aba_dados
-                    ],
-                    [
-                        'label' => '📋 Impactos Contratuais',
-                        'content' => $gestaoimpactos,
-                        'headerOptions' => ['...'],
-                        'options' => ['id' => 'aba_impactos'],
-                        'active' => $aba_impactos
-                    ],
-                    // [
-                    //     'label' => '📋 Gestão de Ofícios',
-                    //     'content' => $gestaooficios,
-                    //     'headerOptions' => ['...'],
-                    //     'options' => ['id' => 'aba_oficios'],
-                    //     'active' => $aba_oficios
-                    // ],
-                    // [
-                    //     'label' => '📋 Ordens de Serviço',
-                    //     'content' => $gestaoordens,
-                    //     'headerOptions' => ['...'],
-                    //     'options' => ['id' => 'aba_ordens'],
-                    //     'active' => $aba_ordens
-                    // ],
-                    /**
-                        [
-                            'label' => '📋 Licenciamentos',
-                            'content' => $gestaolicenciamento,
-                            'headerOptions' => ['...'],
-                            'options' => ['id' => 'aba_licensas'],
-                            'active' => $aba_licensas
-                        ],
-                    **/
-                    // [
-                    //     'label' => '📋 Produtos',
-                    //     'content' => $gestaoprodutos,
-                    //     'headerOptions' => ['...'],
-                    //     'options' => ['id' => 'aba_produtos'],
-                    //     'active' => $aba_produtos
-                    // ],
-                    // [
-                    //     'label' => 'Dropdown',
-                    //     'items' => [
-                    //          [
-                    //              'label' => 'DropdownA',
-                    //              'content' => 'DropdownA, Anim pariatur cliche...',
-                    //          ],
-                    //          [
-                    //              'label' => 'DropdownB',
-                    //              'content' => 'DropdownB, Anim pariatur cliche...',
-                    //          ],
-                    //     ],
-                    // ],
-                ],
-            ]);
         ?>
     </div>
         
@@ -255,5 +156,3 @@ $this->registerJs(<<<JS
     $('.accordion').collapse("hide");
 JS);
 ?>
-
-

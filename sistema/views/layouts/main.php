@@ -326,15 +326,15 @@ $g_drive = '<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 51
                             'heading' => '<strong><i class="fas fa-globe"></i> Contratos:</strong><br>Componentes',
                             'items' => [
                                 [
-                                    'label' => 'Empreendimentos',
-                                    'icon' => 'road',
-                                    'url' => ['/empreendimento?contrato='.$contratoativo->id],
-                                ],
-                                [
                                     'label' => 'Dados Contratuais',
                                     'icon' => 'book',
                                     'url' => ['contrato/view?id='.$contratoativo->id.'&abativa=aba_dados'],
-                                    'active' => $_REQUEST['abativa'] == 'aba_dados' ? true : false
+                                    'active' => $_REQUEST['abativa'] == 'aba_dados' || $_REQUEST['abativa'] == '' ? true : false
+                                ],
+                                [
+                                    'label' => 'Empreendimentos',
+                                    'icon' => 'road',
+                                    'url' => ['/empreendimento?contrato='.$contratoativo->id],
                                 ],
                                 // [
                                 //     'label' => 'Impactos Contratuais',

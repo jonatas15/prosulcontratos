@@ -19,7 +19,7 @@
     #Globais ou quase
     $contrato = Contrato::findOne(['id' => $contrato_id]);
     $empreendimentos = Empreendimento::find()->where([
-        '<>', 'id', 3
+        'contrato_id' => $contrato_id
     ])->all();
     $groups = Impc::find()->select('produto, count(id) as contaservicos')->where([
         'contrato_id' => $contrato_id

@@ -37,10 +37,10 @@ use app\models\Produto;
                         <span class="visually-hidden">mensagens não lidas</span>
                     </span>
                 </div>
-                <div class="card-body">
-                    <h1 class="card-title" style="font-size: 50px">
+                <div class="card-body bg-primary text-white">
+                    <h5 class="card-title" style="font-size: 47px">
                         <i class="fas fa-road"></i>
-                    </h1>
+                    </h5>
                     <p class="card-text">
                         <?= (count($model->empreendimentos)).' registros feitos' ?><br>
                         <?= (count(\app\models\Licenciamento::find()->all())).' licenciamentos' ?><br>
@@ -48,9 +48,9 @@ use app\models\Produto;
                     </p>
                     <a href="<?=Yii::$app->homeUrl.'empreendimento'?>" class="btn btn-info text-white">Visualizar</a>
                 </div>
-                <div class="card-footer text-muted">
+                <!-- <div class="card-footer text-muted">
                     0 dias atrás
-                </div>
+                </div> -->
             </div>
         </div>
         <div class="col my-2">
@@ -67,7 +67,7 @@ use app\models\Produto;
                     <img src="<?=Yii::$app->homeUrl.'logo/upload-files-icon.png'?>" width="50" class="icone-modulo" />
                     </h5>
                     <p class="card-text">
-                        <?= (count($model->oficios)).' registros feitos' ?><br>
+                        <?= (count($model->oficios)).' registros' ?><br>
                         <?= (Oficio::find()->where([
                             'contrato_id' => $model->id,
                             'status' => 'Em Andamento'
@@ -77,11 +77,11 @@ use app\models\Produto;
                             'status' => 'Resolvido'
                         ])->count()).' concluídos'; ?>
                     </p>
-                    <a href="<?=Yii::$app->homeUrl.'contrato/view?id='.$model->id.'&abativa=aba_oficios'?>" class="btn btn-info text-white">Visualizar</a>
+                    <a href="<?=Yii::$app->homeUrl.'contrato/os?id='.$model->id.'&abativa=aba_oficios'?>" class="btn btn-info text-white">Visualizar</a>
                 </div>
-                <div class="card-footer text-muted">
+                <!-- <div class="card-footer text-muted">
                     0 dias atrás
-                </div>
+                </div> -->
             </div>
         </div>
         <div class="col my-2">
@@ -98,7 +98,7 @@ use app\models\Produto;
                     <img src="<?=Yii::$app->homeUrl.'logo/upload-files-icon.png'?>" width="50" class="icone-modulo" />
                     </h5>
                     <p class="card-text">
-                        <?= (count($model->ordensdeservicos)).' registros feitos' ?><br>
+                        <?= (count($model->ordensdeservicos)).' registros' ?><br>
                         <?= (Ordens::find()->where([
                             'contrato_id' => $model->id,
                             'fase' => 'OS em Andamento'
@@ -108,11 +108,11 @@ use app\models\Produto;
                             'fase' => 'OS Emitida'
                         ])->count()).' OS Emitidas'; ?>
                     </p>
-                    <a href="<?=Yii::$app->homeUrl.'contrato/view?id='.$model->id.'&abativa=aba_ordens'?>" class="btn btn-info text-white">Visualizar</a>
+                    <a href="<?=Yii::$app->homeUrl.'contrato/os?id='.$model->id.'&abativa=aba_ordens'?>" class="btn btn-info text-white">Visualizar</a>
                 </div>
-                <div class="card-footer text-muted">
+                <!-- <div class="card-footer text-muted">
                     0 dias atrás
-                </div>
+                </div> -->
             </div>
         </div>
         <div class="col my-2">
@@ -129,7 +129,7 @@ use app\models\Produto;
                     <img src="<?=Yii::$app->homeUrl.'logo/upload-files-icon.png'?>" width="50" class="icone-modulo" />
                     </h5>
                     <p class="card-text">
-                        <?= (count($model->produtos)).' registros feitos' ?><br>
+                        <?= (count($model->produtos)).' registros' ?><br>
                         <?= (Produto::find()->where([
                             'contrato_id' => $model->id,
                             'fase' => 'Em Andamento'
@@ -139,11 +139,11 @@ use app\models\Produto;
                             'fase' => 'Aprovado'
                         ])->count()).' Aprovados'; ?>
                     </p>
-                    <a href="<?=Yii::$app->homeUrl.'contrato/view?id='.$model->id.'&abativa=aba_produtos'?>" class="btn btn-info text-white">Visualizar</a>
+                    <a href="<?=Yii::$app->homeUrl.'contrato/pr?id='.$model->id.'&abativa=aba_produtos'?>" class="btn btn-info text-white">Visualizar</a>
                 </div>
-                <div class="card-footer text-muted">
+                <!-- <div class="card-footer text-muted">
                     0 dias atrás
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
