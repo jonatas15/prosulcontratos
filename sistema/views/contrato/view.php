@@ -6,6 +6,7 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\bootstrap5\Accordion;
+use yii\bootstrap5\Modal;
 
 use yii\bootstrap5\Tabs;
 use app\models\Oficio;
@@ -107,6 +108,212 @@ function formatar_campo($campo, $valor) {
     ]);
     $gestaoimpactos .= '</div>';
     $gestaoimpactos .= '</div>';
+    #############################################################################
+    // MODAL API
+    Modal::begin([
+        'title' => "⚙️ Dados no DNIT (API)",
+        'toggleButton' => [
+            'label' => "⚙️ Dados no DNIT (API)",
+            'class' => 'btn btn-primary'
+        ],
+        'size' => 'modal-xl',
+        'options' => [
+            'id' => 'ver-os-detalhes-do-contrato-'.$model->id,
+            'tabindex' => false,
+        ],
+        'bodyOptions' => [
+            'class' => 'bg-white'
+        ]
+    ]);
+    $num_contrato = $this->context->numeros_limpos($model->titulo);
+    // echo $num_contrato;
+    // $json = file_get_contents('https://servicos.dnit.gov.br/DPP/api/contrato/dnit/0000'.$num_contrato);
+    $json_B = '{
+        "status": 200,
+        "error": null,
+        "data": [
+            {
+                "NU_CNPJ_CPF": "80996861000100",
+                "SK_CONTRATO": 14041,
+                "NU_CON_FORMATADO": "00 00095/2022",
+                "SK_CONTRATO_SUPERVISOR": 1,
+                "NU_CON_FORMATADO_SUPERVISOR": "-1",
+                "DT_BASE": "2021-01-01 00:00:00.000",
+                "DT_CORRENTE": "2024-01-11",
+                "DT_TERMINO_VIGENCIA": "2027-05-24 00:00:00.000",
+                "DT_APROVACAO": "2022-03-07 00:00:00.000",
+                "DT_ASSINATURA": "2022-03-22 00:00:00.000",
+                "DT_PROPOSTA": "2022-01-07 00:00:00.000",
+                "DT_PUBLICACAO": "2022-04-04",
+                "SK_DT_APROVACAO": 33685,
+                "DT_DIA": "2022-03-22 00:00:00.000",
+                "DT_INICIO": "2022-06-01 00:00:00.000",
+                "DT_TER_ATZ": "2027-05-06 00:00:00.000",
+                "DT_TER_PRV": "2027-05-06 00:00:00.000",
+                "SK_EMPRESA": 200,
+                "NO_EMPRESA": "PROSUL - PROJETOS SUPER. PLANEJ. LTDA",
+                "SK_EMPRESA_SUPERVISOR": -3,
+                "SG_EMPRESA_SUPERVISOR": "NA",
+                "SK_FISCAL": 39,
+                "NM_FISCAL": "MARTONCHELES BORGES DE SOUZA",
+                "DS_GRUPO_INTERVENCAO": "ESTUDOS E PROJETOS",
+                "SK_MODAL": 2,
+                "DS_MODAL": "RODOVIARIO",
+                "MODALIDADE_LICITACAO": "Regime Diferenciado de Contratação",
+                "SK_MUNICIPIO": 810,
+                "NO_MUNICIPIO": "BRASILIA",
+                "CO_MUNICIPIO": "3846",
+                "NO_MUNICIPIO0": "FLORIANÓPOLIS",
+                "NU_EDITAL": "000257/2021-00",
+                "NU_LOTE_LICITACAO": "3",
+                "NU_PROCESSO": "50600.012334/2022-59",
+                "DS_OBJETO": "Consultoria ambiental especializada na elaboração de estudos ambientais necessários para obtenção de licença prévia (LP) licença de instalação (LI) autorização de supressão de vegetação (ASV) de empreendimentos prioritários para o DNIT",
+                "SK_PROGRAMA": 5,
+                "NM_PROGRAMA": "CONSULTORIA",
+                "NU_DIA_PARALISACAO": 0,
+                "NU_DIA_PRORROGACAO": "0",
+                "SK_SITUACAO_CONTRATO": 3,
+                "DS_FAS_CONTRATO": "ATIVO",
+                "CO_TIP_CONTRATO": "4",
+                "DS_TIP_CONTRATO": "CONSULTORIA/SERVIÇOS",
+                "SK_TIPO_INTERVENCAO": 12,
+                "ds_tip_intervencao": "MEIO AMBIENTE",
+                "TIPO_LICITACAO": "TÉCNICA E PREÇO",
+                "DESCRICAO_BR": "BR-080 BR-153 BR-251 BR-259 BR-265 BR-285 BR-364 BR-365 BR-381 BR-461 BR-470 BR-476",
+                "SK_UF_UNIDADE_LOCAL": 9,
+                "SG_UF_UNIDADE_LOCAL": "DF",
+                "CO_UF": "24",
+                "SG_UF": "SC",
+                "SK_UNIDADE_FISCAL": 7,
+                "NM_UND_FISCAL": "COORDENAÇÃO-GERAL DE MEIO AMBIENTE",
+                "SG_UND_FISCAL": "CGMAB",
+                "SK_UNIDADE_GESTORA": 6,
+                "NM_UND_GESTORA": "COORDENAÇÃO-GERAL DE MEIO AMBIENTE",
+                "SG_UND_GESTORA": "CGMAB",
+                "SK_UNIDADE_LOCAL": 5,
+                "NM_UND_LOCAL": "COORDENAÇÃO-GERAL DE MEIO AMBIENTE",
+                "SG_UND_LOCAL": "CGMAB",
+                "SK_UNIDADE_PAGAMENTO": 11,
+                "NM_UND_PAGAMENTO": "COORDENAÇÃO-GERAL DE MEIO AMBIENTE",
+                "SG_UND_PAGAMENTO": "CGMAB",
+                "Extensao_Total": "1359.17",
+                "Valor_Inicial": "33776980.00",
+                "Valor_Total_de_Aditivos": ".00",
+                "Valor_Total_de_Reajuste": "4146633.49",
+                "Valor_Inicial_Adit_Reajustes": "37923613.49",
+                "Valor_Empenhado": 12157391,
+                "Valor_Saldo": 35821358.85,
+                "Valor_Medicao_PI_R": 2273431.42,
+                "Valor_PI_Medicao": 2071686.69,
+                "Valor_Reajuste_Medicao": 201744.73,
+                "Valor_Oficio_Pagamento": 12236553.31,
+                "Ajuste_Contratual_Acumulado": -23769.37,
+                "Valor_Medicao_PI_R_Ajuste_Acumulado": 2297200.79
+            }
+        ]
+    }';
+    $json_A = '{
+        "status": 200,
+        "error": null,
+        "data": [
+            {
+                "NU_CNPJ_CPF": "80996861000100",
+                "SK_CONTRATO": 14053,
+                "NU_CON_FORMATADO": "00 00093/2022",
+                "SK_CONTRATO_SUPERVISOR": 1,
+                "NU_CON_FORMATADO_SUPERVISOR": "-1",
+                "DT_BASE": "2021-01-01 00:00:00.000",
+                "DT_CORRENTE": "2024-01-11",
+                "DT_TERMINO_VIGENCIA": "2027-05-25 00:00:00.000",
+                "DT_APROVACAO": "2022-03-11 00:00:00.000",
+                "DT_ASSINATURA": "2022-03-22 00:00:00.000",
+                "DT_PROPOSTA": "2022-01-07 00:00:00.000",
+                "DT_PUBLICACAO": "2022-03-29",
+                "SK_DT_APROVACAO": 33685,
+                "DT_DIA": "2022-03-22 00:00:00.000",
+                "DT_INICIO": "2022-03-22 00:00:00.000",
+                "DT_TER_ATZ": "2027-02-24 00:00:00.000",
+                "DT_TER_PRV": "2027-02-24 00:00:00.000",
+                "SK_EMPRESA": 200,
+                "NO_EMPRESA": "PROSUL - PROJETOS SUPER. PLANEJ. LTDA",
+                "SK_EMPRESA_SUPERVISOR": -3,
+                "SG_EMPRESA_SUPERVISOR": "NA",
+                "SK_FISCAL": 49,
+                "NM_FISCAL": "LEANDRO LIMA DE SOUSA",
+                "DS_GRUPO_INTERVENCAO": "ESTUDOS E PROJETOS",
+                "SK_MODAL": 2,
+                "DS_MODAL": "RODOVIARIO",
+                "MODALIDADE_LICITACAO": "Regime Diferenciado de Contratação",
+                "SK_MUNICIPIO": 810,
+                "NO_MUNICIPIO": "BRASILIA",
+                "CO_MUNICIPIO": "3846",
+                "NO_MUNICIPIO0": "FLORIANÓPOLIS",
+                "NU_EDITAL": "000257/2021-00",
+                "NU_LOTE_LICITACAO": "1",
+                "NU_PROCESSO": "50600.000865/2021-18",
+                "DS_OBJETO": "Consultoria Ambiental Especializada na Elaboração de Estudos Ambientais necessários para a Obtenção de\r\nLicença Prévia (LP), Licença de Instalação (LI), Autorização de Supressão De Vegetação (ASV), de\r\nEmpreendimentos Prioritários para DNIT, Lote A.",
+                "SK_PROGRAMA": 5,
+                "NM_PROGRAMA": "CONSULTORIA",
+                "NU_DIA_PARALISACAO": 0,
+                "NU_DIA_PRORROGACAO": "0",
+                "SK_SITUACAO_CONTRATO": 3,
+                "DS_FAS_CONTRATO": "ATIVO",
+                "CO_TIP_CONTRATO": "4",
+                "DS_TIP_CONTRATO": "CONSULTORIA/SERVIÇOS",
+                "SK_TIPO_INTERVENCAO": 12,
+                "ds_tip_intervencao": "MEIO AMBIENTE",
+                "TIPO_LICITACAO": "TÉCNICA E PREÇO",
+                "DESCRICAO_BR": "BR-010 BR-070 BR-155 BR-156 BR-163 BR-174 BR-222 BR-226 BR-230 BR-242 BR-262 BR-267 BR-307 BR-317 BR-364 BR-401 BR-409",
+                "SK_UF_UNIDADE_LOCAL": 9,
+                "SG_UF_UNIDADE_LOCAL": "DF",
+                "CO_UF": "24",
+                "SG_UF": "SC",
+                "SK_UNIDADE_FISCAL": 7,
+                "NM_UND_FISCAL": "COORDENAÇÃO-GERAL DE MEIO AMBIENTE",
+                "SG_UND_FISCAL": "CGMAB",
+                "SK_UNIDADE_GESTORA": 6,
+                "NM_UND_GESTORA": "COORDENAÇÃO-GERAL DE MEIO AMBIENTE",
+                "SG_UND_GESTORA": "CGMAB",
+                "SK_UNIDADE_LOCAL": 5,
+                "NM_UND_LOCAL": "COORDENAÇÃO-GERAL DE MEIO AMBIENTE",
+                "SG_UND_LOCAL": "CGMAB",
+                "SK_UNIDADE_PAGAMENTO": 11,
+                "NM_UND_PAGAMENTO": "COORDENAÇÃO-GERAL DE MEIO AMBIENTE",
+                "SG_UND_PAGAMENTO": "CGMAB",
+                "Extensao_Total": "3664.68",
+                "Valor_Inicial": "47493500.00",
+                "Valor_Total_de_Aditivos": ".00",
+                "Valor_Total_de_Reajuste": "5841035.67",
+                "Valor_Inicial_Adit_Reajustes": "53334535.67",
+                "Valor_Empenhado": 16023373.08,
+                "Valor_Saldo": 51349393.1,
+                "Valor_Medicao_PI_R": 1985142.57,
+                "Valor_PI_Medicao": 1838271.2,
+                "Valor_Reajuste_Medicao": 146871.37,
+                "Valor_Oficio_Pagamento": 22413179.56,
+                "Ajuste_Contratual_Acumulado": -35565.17,
+                "Valor_Medicao_PI_R_Ajuste_Acumulado": 2020707.74
+            }
+        ]
+    }';
+    if ($model->id == 1) {
+        $obj = json_decode($json_B);
+    } elseif ($model->id == 2) {
+        $obj = json_decode($json_A);
+    }
+    // print_r($obj->data);
+    // echo "<hr>";
+    $dataex = $obj->data[0];
+    echo '<table class="table table-striped table-bordered">';
+    $i = 0;
+    foreach($dataex as $k => $v) {
+        echo '<tr>';
+        echo "<td>".$this->context->formatatituloscampos($k)."</td><td><b>".$this->context->formatacampos($k, $v)."</b></td>";
+        echo '</tr>';
+        $i++;
+    }
+    echo '</table>';
+    Modal::end();
     #############################################################################
     ?>
     <br>
