@@ -2,7 +2,6 @@
 use app\models\Oficio;
 use app\models\Ordensdeservico as Ordens;
 use app\models\Produto;
-
 ?>
 <div class="row">
 <div class="col-5">
@@ -46,7 +45,7 @@ use app\models\Produto;
                         <?= (count(\app\models\Licenciamento::find()->all())).' licenciamentos' ?><br>
                         <?= (count(\app\models\Fase::find()->all())).' processos' ?>
                     </p>
-                    <a href="<?=Yii::$app->homeUrl.'empreendimento'?>" class="btn btn-info text-white">Visualizar</a>
+                    <a href="<?=Yii::$app->homeUrl.'empreendimento?contrato='.$model->id?>" class="btn btn-info text-white">Visualizar</a>
                 </div>
                 <!-- <div class="card-footer text-muted">
                     0 dias atrás

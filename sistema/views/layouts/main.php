@@ -160,7 +160,7 @@ $g_drive = '<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 51
             array_push($empreendimentos, [
                 'label' => substr($emps->titulo, 0, 20),
                 'icon' => 'road',
-                'url' => ['empreendimento/preview?id='.$emps->id],
+                'url' => ['empreendimento/preview?id='.$emps->id.'&contrato='.$emps->contrato_id],
             ]);
             $preview = 'preview';
             if (strpos(Url::current(), 'empgerencial')) {

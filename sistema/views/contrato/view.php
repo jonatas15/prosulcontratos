@@ -304,15 +304,25 @@ function formatar_campo($campo, $valor) {
     // print_r($obj->data);
     // echo "<hr>";
     $dataex = $obj->data[0];
+    echo '<div class="row">';
+    echo '<div class="col-md-6">';
     echo '<table class="table table-striped table-bordered">';
-    $i = 0;
+    $i = 1;
     foreach($dataex as $k => $v) {
         echo '<tr>';
         echo "<td>".$this->context->formatatituloscampos($k)."</td><td><b>".$this->context->formatacampos($k, $v)."</b></td>";
         echo '</tr>';
+        if ($i%40==0) {
+            echo '</table>';
+            echo '</div>';
+            echo '<div class="col-md-6">';
+            echo '<table class="table table-striped table-bordered">';
+        }
         $i++;
     }
     echo '</table>';
+    echo '</div>';
+    echo '</div>';
     Modal::end();
     #############################################################################
     ?>

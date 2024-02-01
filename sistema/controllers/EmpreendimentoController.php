@@ -168,7 +168,8 @@ class EmpreendimentoController extends Controller
                 return $this->redirect([
                     'update', 
                     'id' => $model->id,
-                    'abativa' => 'arquivos'
+                    'abativa' => 'arquivos',
+                    'contrato' => $model->contrato_id
                 ]);
             }
         } else {
@@ -195,7 +196,8 @@ class EmpreendimentoController extends Controller
             return $this->redirect([
                 'update', 
                 'id' => $model->id,
-                'abativa' => 'fases'
+                'abativa' => 'fases',
+                'contrato' => $model->contrato_id
             ]);
         }
 
