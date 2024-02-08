@@ -76,7 +76,7 @@ use app\models\Produto;
                             'status' => 'Resolvido'
                         ])->count()).' concluídos'; ?>
                     </p>
-                    <a href="<?=Yii::$app->homeUrl.'contrato/os?id='.$model->id.'&abativa=aba_oficios'?>" class="btn btn-info text-white">Visualizar</a>
+                    <a href="<?=Yii::$app->homeUrl.'contrato/go?id='.$model->id.'&abativa=aba_oficios'?>" class="btn btn-info text-white">Visualizar</a>
                 </div>
                 <!-- <div class="card-footer text-muted">
                     0 dias atrás
