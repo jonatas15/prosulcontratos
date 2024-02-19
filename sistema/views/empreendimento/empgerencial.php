@@ -66,7 +66,8 @@ $this->params['breadcrumbs'][] = 'Licenciamentos';
             <?php $modelLicenciamentos = new \app\models\Licenciamento(); ?>
             <?= $this->render('/licenciamento/create', [
                 'model' => $modelLicenciamentos,
-                'empreendimento_id' => $model->id
+                'empreendimento_id' => $model->id,
+                'contrato_id' => $model->contrato_id
             ]) ?>
         </div>
     </div>

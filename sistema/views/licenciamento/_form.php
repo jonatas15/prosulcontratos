@@ -10,8 +10,12 @@ use app\models\Ordensdeservico;
 /** @var app\models\Licenciamento $model */
 /** @var yii\widgets\ActiveForm $form */
 
-$empreendimentos = ArrayHelper::map(Empreendimento::find()->all(), 'id', 'titulo');
-$ordensdeservico = ArrayHelper::map(Ordensdeservico::find()->all(), 'id', 'titulo');
+$empreendimentos = ArrayHelper::map(Empreendimento::find()->where([
+    'contrato_id' => $contrato_id
+])->all(), 'id', 'titulo');
+$ordensdeservico = ArrayHelper::map(Ordensdeservico::find()->where([
+    'contrato_id' => $contrato_id
+])->all(), 'id', 'titulo');
 
 $model->data_validade = $model->data_validade != '' ? date('d/m/Y', strtotime($model->data_validade)) : '';
 $model->data_renovacao = $model->data_renovacao != '' ? date('d/m/Y', strtotime($model->data_renovacao)) : '';
@@ -36,7 +40,7 @@ $model->data_renovacao = $model->data_renovacao != '' ? date('d/m/Y', strtotime(
         </div>
         <div class="col-md-5"><?= $form->field($model, 'ordensdeservico_id')->dropDownList($ordensdeservico, [
             'prompt' => 'Selecione'
-        ])->label('Ordens de Serviço Cadastradas') ?></div>
+        ])->label('Ordens de Serviço Cadastradas x') ?></div>
         <div class="col-md-3">
             <div class="">
                 <?= $form->field($model, 'data_validade')->widget(\yii\widgets\MaskedInput::class, [

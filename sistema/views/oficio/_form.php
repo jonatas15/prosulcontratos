@@ -9,7 +9,9 @@ use kartik\select2\Select2;
 use kartik\date\DatePicker;
  
 
-$empreendimentos = ArrayHelper::map(Empreendimento::find()->all(), 'id', 'titulo');
+$empreendimentos = ArrayHelper::map(Empreendimento::find()->where([
+    'contrato_id' => $contrato_id
+])->all(), 'id', 'titulo');
 
 /** @var yii\web\View $this */
 /** @var app\models\Oficio $model */

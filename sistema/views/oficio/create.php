@@ -9,6 +9,11 @@ Modal::begin([
         'id' => 'cadastrar-novo-oficio',
         'tabindex' => false,
     ],
+    'bodyOptions' => [
+        'style' => [
+            'background-color'=> 'darkslategray'
+        ],
+    ],
     'size' => 'modal-xl',
     'toggleButton' => [
         'label' => '<i class="bi bi-card-list"></i> Novo Ofício',

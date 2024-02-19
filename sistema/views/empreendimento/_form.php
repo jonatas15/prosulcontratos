@@ -15,7 +15,9 @@ $oficios = ArrayHelper::map(Oficio::find()->where([
     'tipo' => 'OSE'
 ])->all(), 'id', 'diretorio');
 $contratos = ArrayHelper::map(Contrato::find()->all(), 'id', 'titulo');
-$ordensdeservico = ArrayHelper::map(Ordensdeservico::find()->all(), 'id', 'titulo');
+$ordensdeservico = ArrayHelper::map(Ordensdeservico::find()->where([
+    'contrato_id' => $contrato_id
+])->all(), 'id', 'titulo');
 
 ?>
 

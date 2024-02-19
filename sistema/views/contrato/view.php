@@ -110,21 +110,21 @@ function formatar_campo($campo, $valor) {
     $gestaoimpactos .= '</div>';
     #############################################################################
     // MODAL API
-    Modal::begin([
-        'title' => "⚙️ Dados no DNIT (API)",
-        'toggleButton' => [
-            'label' => "⚙️ Dados no DNIT (API)",
-            'class' => 'btn btn-primary'
-        ],
-        'size' => 'modal-xl',
-        'options' => [
-            'id' => 'ver-os-detalhes-do-contrato-'.$model->id,
-            'tabindex' => false,
-        ],
-        'bodyOptions' => [
-            'class' => 'bg-white'
-        ]
-    ]);
+    // Modal::begin([
+    //     'title' => "⚙️ Dados no DNIT (API)",
+    //     'toggleButton' => [
+    //         'label' => "⚙️ Dados no DNIT (API)",
+    //         'class' => 'btn btn-primary'
+    //     ],
+    //     'size' => 'modal-xl',
+    //     'options' => [
+    //         'id' => 'ver-os-detalhes-do-contrato-'.$model->id,
+    //         'tabindex' => false,
+    //     ],
+    //     'bodyOptions' => [
+    //         'class' => 'bg-white'
+    //     ]
+    // ]);
     $num_contrato = $this->context->numeros_limpos($model->titulo);
     // echo $num_contrato;
     // $json = file_get_contents('https://servicos.dnit.gov.br/DPP/api/contrato/dnit/0000'.$num_contrato);
@@ -296,6 +296,27 @@ function formatar_campo($campo, $valor) {
             }
         ]
     }';
+    $_nao_relevantes = [
+        'SK_CONTRATO_SUPERVISOR',
+        'NU_CON_FORMATADO_SUPERVISOR',
+        'SK_EMPRESA_SUPERVISOR',
+        'SK_FISCAL',
+        'SK_MODAL',
+        'NU_LOTE_LICITACAO',
+        'SK_PROGRAMA',
+        'NU_DIA_PARALISACAO',
+        'NU_DIA_PRORROGACAO',
+        'SK_SITUACAO_CONTRATO',
+        'CO_TIP_CONTRATO',
+        'SK_TIPO_INTERVENCAO',
+        'SK_UF_UNIDADE_LOCAL',
+        'CO_UF',
+        'SK_UNIDADE_FISCAL',
+        'SK_UNIDADE_GESTORA',
+        'SK_UNIDADE_LOCAL',
+        'SK_UNIDADE_PAGAMENTO',
+        'Valor_Total_de_Aditivos',
+    ];
     if ($model->id == 1) {
         $obj = json_decode($json_B);
     } elseif ($model->id == 2) {
@@ -304,26 +325,34 @@ function formatar_campo($campo, $valor) {
     // print_r($obj->data);
     // echo "<hr>";
     $dataex = $obj->data[0];
-    echo '<div class="row">';
-    echo '<div class="col-md-6">';
-    echo '<table class="table table-striped table-bordered">';
+    $api_contrato_dnit .= '<div class="row">';
+    $api_contrato_dnit .= '<div class="col-md-6">';
+    $api_contrato_dnit .= '<table class="table table-striped table-bordered">';
     $i = 1;
+    $dados_api = [];
     foreach($dataex as $k => $v) {
-        echo '<tr>';
-        echo "<td>".$this->context->formatatituloscampos($k)."</td><td><b>".$this->context->formatacampos($k, $v)."</b></td>";
-        echo '</tr>';
-        if ($i%40==0) {
-            echo '</table>';
-            echo '</div>';
-            echo '<div class="col-md-6">';
-            echo '<table class="table table-striped table-bordered">';
-        }
-        $i++;
+        if (!in_array($k, $_nao_relevantes)):
+            $api_contrato_dnit .= '<tr>';
+            $api_contrato_dnit .= "<td>".$this->context->formatatituloscampos($k)."</td><td><b>".$this->context->formatacampos($k, $v)."</b></td>";
+            $api_contrato_dnit .= '</tr>';
+            if ($i%15==0) {
+                $api_contrato_dnit .= '</table>';
+                $api_contrato_dnit .= '</div>';
+                $api_contrato_dnit .= '<div class="col-md-6">';
+                $api_contrato_dnit .= '<table class="table table-striped table-bordered">';
+            }
+            $i++;
+            array_push($dados_api, [
+                'campo' => $this->context->formatatituloscampos($k),
+                'valor' => $this->context->formatacampos($k, $v),
+            ]);
+        endif;
     }
-    echo '</table>';
-    echo '</div>';
-    echo '</div>';
-    Modal::end();
+    $api_contrato_dnit .= '</table>';
+    $api_contrato_dnit .= '</div>';
+    $api_contrato_dnit .= '</div>';
+    // echo $api_contrato_dnit;
+    // Modal::end();
     #############################################################################
     ?>
     <br>
@@ -335,7 +364,8 @@ function formatar_campo($campo, $valor) {
             <!-- </div> -->
             <div id="resumo-do-contrato" class="col-12 my-2">
                 <?= $this->render('detalhamentocontrato', [
-                    'model' => $model
+                    'model' => $model,
+                    'dados' => $dados_api
                 ]);
                 ?>
                 <div class="">
@@ -345,7 +375,7 @@ function formatar_campo($campo, $valor) {
                 </div>
                 <div id="edicoes-do-contrato" class="collapse col-12 my-2">
                     <?= '<div class="row">'.$this->render('update', [
-                                'model' => $model
+                        'model' => $model
                     ]).'</div>'; ?>
                 </div>
             </div>
