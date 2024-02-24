@@ -11,6 +11,21 @@ use app\models\Produto;
 use yii\bootstrap5\Modal;
 
 $this->title = 'PROSUL-DNIT';
+
+// Reunião dia 20
+/**
+ * *
+ * JONATAS, RHUAN, Jordan e outros programadores...
+ * Conhecimentos sobre as metodologias de desenvolvimento
+ * Organização dos arquivos do sistema
+ * MUDANÇA em relação ao modo clássico do MVC
+ * Controllers de apenas uma função - mais fáceis de gerenciair e encontrar os comandos
+ * Organização no JIRA (equivale ao Trello)
+ * Organização da forma de git (estudar melhor, branchs e tudo mais)
+ * Acesso ao GITHUB
+ * 
+ */
+
 ?>
 <style>
     .card-header {
@@ -311,7 +326,7 @@ $this->title = 'PROSUL-DNIT';
             <?php $contratos = Contrato::find()->orderBy([
                 'id' => SORT_DESC
             ])->all(); ?>
-            <div class="col-1 my-5"></div>
+            <!-- <div class="col-1 my-5"></div> -->
             <?php foreach ($contratos as $k => $contrato): ?>
                 <?php
                     $cardcolor = 'primary';
@@ -319,7 +334,7 @@ $this->title = 'PROSUL-DNIT';
                         $cardcolor = 'success';
                     }    
                 ?>
-            <div class="col-4 my-5">
+            <div class="col-4 my-3">
                 <div class="card">
                     <div class="card-header bg-<?=$cardcolor?>"><?=$contrato->titulo?></div>
                     <div class="card-body">

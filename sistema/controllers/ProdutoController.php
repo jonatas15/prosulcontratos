@@ -162,7 +162,10 @@ class ProdutoController extends Controller
             $model->data_entrega = $model->data_entrega != '' ? $this->dataprobanco($model->data_entrega): '';
             $model->aprov_data = $model->aprov_data != '' ? $this->dataprobanco($model->aprov_data): '';
             if ($model->save()) {
-                return $this->redirect(['update', 'id' => $model->id]);
+                return $this->redirect(['update', 
+                    'id' => $model->id,
+                    'abativa' => 'reviews'
+                ]);
             }
         }
 

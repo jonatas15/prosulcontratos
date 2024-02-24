@@ -13,6 +13,7 @@ use yii\helpers\ArrayHelper;
 use yii\web\JsExpression;
 use miloschuman\highcharts\Highcharts;
 use yii\bootstrap5\Accordion;
+use kartik\tabs\TabsX as Tabs;
 
     /**
     
@@ -158,13 +159,27 @@ use yii\bootstrap5\Accordion;
     .datepicker {
         z-index: 1151 !important;
     }
+    .tab-content {
+        border: 1px solid lightgray;
+        /* border-top: 0 !important; */
+        background-color: lightgray !important;
+    }
+    .nav-link {
+        border: none !important;
+        font-size: 20px !important;
+    }
+    .nav-link.active {
+        background-color: lightgray !important;
+        color: black !important;
+        font-weight: bolder;
+        border-bottom: none !important;
+    }
 </style>
 <div class="produto-index mt-5">
-
     <h3>
         <img src="<?=Yii::$app->homeUrl?>logo/upload-files-icon.png" class="icone-modulo" width="25" /> <span class="text-primary text-opacity-50 fs-5">Contrato: <?=$contrato->titulo?></span><br><b>Produtos</b>
     </h3>
-    <div class="row">
+    <div class="left">
         <div class="col-md-12">
             <?php $modelProduto = new Produto(); ?>
             <?= $this->render('create', [
@@ -208,6 +223,10 @@ use yii\bootstrap5\Accordion;
 
 
         $empreendimento_id = $_REQUEST['ProdutoSearch']['empreendimento_id'] ? $_REQUEST['ProdutoSearch']['empreendimento_id'] : '';
+        if($empreendimento_id == "" && $_REQUEST['empreendimento']) {
+            $empreendimento_id = $_REQUEST['empreendimento'];
+        }
+        $produto_servico = $_REQUEST['ProdutoSearch']['servico'] ? $_REQUEST['ProdutoSearch']['servico'] : '';
         $ordensdeservico_id = $_REQUEST['ProdutoSearch']['ordensdeservico_id'] ? $_REQUEST['ProdutoSearch']['ordensdeservico_id'] : '';
         $ano_listagem = $_REQUEST['ProdutoSearch']['ano_listagem'] ? $_REQUEST['ProdutoSearch']['ano_listagem'] : '';
         $fase = $_REQUEST['ProdutoSearch']['fase'] ? $_REQUEST['ProdutoSearch']['fase'] : '';
@@ -273,17 +292,8 @@ use yii\bootstrap5\Accordion;
                 }        
             endif;
         endif;
-        $dataProvider = $searchModel->search([
-            'from_date'=> $data_ini,
-            'to_date'=> $data_fim,
-            'ano_listagem' => $ano_listagem,
-            'empreendimento_id' => $empreendimento_id,
-            'ordensdeservico_id' => $ordensdeservico_id,
-            'fase' => $fase,
-            'numero_sei' => $numero_sei,
-        ]);
     ?>
-    <div class="row" style="background-color: ghostwhite; padding: 10px 5px">
+    <div class="row" style="background-color: white; padding: 10px 5px">
         <!-- <h4 style="padding:5px">Pesquisa:</h4> -->
         <?php $form = ActiveForm::begin(['options' => [
             'data-pjax' => true,
@@ -291,372 +301,373 @@ use yii\bootstrap5\Accordion;
             'id' => 'form-pesquisa-produto'
         ]]); ?>
         <!-- <div class="card"> -->
-        <h3>
-            <a class="btn btn-warning text-white fw-bolder" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                📊 Gráficos <i class="bi bi-arrow-down"></i>
-            </a>
-        </h3>
-        <div class="row mb-0 collapse" id="collapseExample">
-            <?php 
-                $aprovado = 0;
-                $aguardando = 0;
-                $reprovado = 0;
-                $RV0 = $RV1 = $RV2 = $RV3 = $RV4 = $RV5 = 0;
-                $RV0_t = $RV1_t = $RV2_t = $RV3_t = $RV4_t = $RV5_t = 0;
-                $tempo_medio_dnit = 0;
-                $tempo_medio_prosul = 0;
+        <div class="row card my-2" style="">
+            <h3>
+                <a class="btn btn-default text-black fw-bolder fs-3" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    📊 Gráficos <i class="bi bi-arrow-down"></i>
+                </a>
+            </h3>
+            <div class="row mb-0 collapse mb-3" id="collapseExample">
+                <?php 
+                    $aprovado = 0;
+                    $aguardando = 0;
+                    $reprovado = 0;
+                    $RV0 = $RV1 = $RV2 = $RV3 = $RV4 = $RV5 = 0;
+                    $RV0_t = $RV1_t = $RV2_t = $RV3_t = $RV4_t = $RV5_t = 0;
+                    $tempo_medio_dnit = 0;
+                    $tempo_medio_prosul = 0;
 
-                $empreendimentos = Empreendimento::find()->where([
-                    'contrato_id' => $contrato_id
-                ])->all();
-                $graph_empreendimentos = [];
-                $os = \app\models\OrdensdeServico::find()->where([
-                    'contrato_id' => $contrato_id
-                ])->all();
-                $graph_os = [];
-                $i = 0;
-                $dnit_t = $prosul_t = $cgmab = 0;
-                foreach($dataProvider->getModels() as $item) {
-                    switch ($item->fase) {
-                        case 'Em andamento': $aguardando += 1; break;
-                        case 'Aprovado': $aprovado += 1; break;
-                        case 'Reprovado': $reprovado += 1; break;
-                    }
-                    switch ($item->aprov_versao) {
-                        case 'RV0': $RV0 += 1; break;
-                        case 'RV1': $RV1 += 1; break;
-                        case 'RV2': $RV2 += 1; break;
-                        case 'RV3': $RV3 += 1; break;
-                        case 'RV4': $RV4 += 1; break;
-                        case 'RV5': $RV5 += 1; break;
-                    }
-                    
-                    // tempo médio em revisões dnit
-                    $data_comparada = $item->data_entrega;
-                    foreach ($item->revisaos as $rv) {
-                    if(in_array($rv->titulo, ["Revisão 01 (DNIT)", "Revisão 03 (DNIT)", "Revisão 05 (DNIT)"])) {
-                            $dnit_t += $this->context->diasentre($data_comparada, $rv->data);
-                    }
-                    if(in_array($rv->titulo, ["Revisão 02 (Prosul)", "Revisão 04 (Prosul)", "Revisão 06 (Prosul)"])) {
-                            $prosul_t += $this->context->diasentre($data_comparada, $rv->data);
-                    }
-                    $data_comparada = $rv->data;
-                    }
+                    $empreendimentos = Empreendimento::find()->where([
+                        'contrato_id' => $contrato_id
+                    ])->all();
+                    $graph_empreendimentos = [];
+                    $os = \app\models\OrdensdeServico::find()->where([
+                        'contrato_id' => $contrato_id
+                    ])->all();
+                    $graph_os = [];
+                    $i = 0;
+                    $dnit_t = $prosul_t = $cgmab = 0;
+                    foreach($dataProvider->getModels() as $item) {
+                        switch ($item->fase) {
+                            case 'Em andamento': $aguardando += 1; break;
+                            case 'Aprovado': $aprovado += 1; break;
+                            case 'Reprovado': $reprovado += 1; break;
+                        }
+                        switch ($item->aprov_versao) {
+                            case 'RV0': $RV0 += 1; break;
+                            case 'RV1': $RV1 += 1; break;
+                            case 'RV2': $RV2 += 1; break;
+                            case 'RV3': $RV3 += 1; break;
+                            case 'RV4': $RV4 += 1; break;
+                            case 'RV5': $RV5 += 1; break;
+                        }
+                        
+                        // tempo médio em revisões dnit
+                        $data_comparada = $item->data_entrega;
+                        foreach ($item->revisaos as $rv) {
+                        if(in_array($rv->titulo, ["Revisão 01 (DNIT)", "Revisão 03 (DNIT)", "Revisão 05 (DNIT)"])) {
+                                $dnit_t += $this->context->diasentre($data_comparada, $rv->data);
+                        }
+                        if(in_array($rv->titulo, ["Revisão 02 (Prosul)", "Revisão 04 (Prosul)", "Revisão 06 (Prosul)"])) {
+                                $prosul_t += $this->context->diasentre($data_comparada, $rv->data);
+                        }
+                        $data_comparada = $rv->data;
+                        }
 
-                    // Incrementa =====================================
-                    $i++;
-                }
-                if ($i == 0) {
-                    $i = 1;
-                }
-                $media_t_dnit = $dnit_t/$i;
-                $media_t_prosul = $prosul_t/$i;
-                $media_t_dnit = (int)number_format($media_t_dnit, 0);
-                $media_t_prosul = (int)number_format($media_t_prosul, 0);
-                // echo 'Produtos: '.$i;
-                // echo '<pre>';
-                // echo "Tempo médio de Revisão(DNIT): ".$dnit_t/$i." dias";
-                // echo '</pre>';
-                // echo '<pre>';
-                // echo "Tempo médio de Revisão(PROSUL): ".$prosul_t/$i." dias";
-                // echo '</pre>';
-                // echo $RV0.'<br>';
-                // echo $RV1.'<br>';
-                // echo $RV2.'<br>';
-                // echo $RV3.'<br>';
-                // echo $RV4.'<br>';
-                // echo $RV5.'<br>';
-                // echo $aprovado.'<br>';
-                // echo $aguardando.'<br>';
-                foreach ($empreendimentos as $emp) {
-                    $countaprodutos = 0;
-                    foreach($dataProvider->getModels() as $item) {
-                        if ($item->empreendimento_id == $emp->id) {
-                            $countaprodutos += 1;
-                        }
+                        // Incrementa =====================================
+                        $i++;
                     }
-                    array_push($graph_empreendimentos, [
-                        'name' => $emp->titulo, 'y' => $countaprodutos, 'url' => $emp->id
-                    ]);
-                }
-                foreach ($os as $emp) {
-                    $countaprodutos = 0;
-                    foreach($dataProvider->getModels() as $item) {
-                        if ($item->ordensdeservico_id == $emp->id) {
-                            $countaprodutos += 1;
-                        }
+                    if ($i == 0) {
+                        $i = 1;
                     }
-                    array_push($graph_os, [
-                        'name' => $emp->titulo, 'y' => $countaprodutos, 'url' => $emp->id
-                    ]);
-                }
-                $reviews_aprov = [
-                    [ 'name' => 'RV 0', 'y' => $RV0, 'url' => 'RV0', 'color' => '#87CEEB' ],
-                    [ 'name' => 'RV 1', 'y' => $RV1, 'url' => 'RV1', 'color' => '#00BFFF' ],
-                    [ 'name' => 'RV 2', 'y' => $RV2, 'url' => 'RV2', 'color' => '#6495ED' ],
-                    [ 'name' => 'RV 3', 'y' => $RV3, 'url' => 'RV3', 'color' => '#4169E1' ],
-                    // [ 'name' => 'RV4', 'y' => $RV4, 'url' => 'RV4' ],
-                    // [ 'name' => 'RV5', 'y' => $RV5, 'url' => 'RV5' ],
-                ];
-            ?>
-            <div class="col-md-2 px-1">
-                <div class="card mb-2">
-                <?= Highcharts::widget([
-                        'scripts' => [
-                            'modules/exporting',
-                            'themes/grid-light',
-                        ],
-                        'options' => [
-                            'chart' => [
-                                'type' => 'pie'
-                            ],
-                            'title' => ['text' => 'Situação'],
-                            'yAxis' => [
-                                'title' => ['text' => 'Status']
-                            ],
-                            'series' =>  [
-                                [
-                                    'name' => 'Produtos',
-                                    "cursor" => "pointer",
-                                    "point" => [
-                                        "events" => [
-                                            "click" => new JsExpression('function(){
-                                                $(":checkbox[value=\'" + this.options.url + "\']").prop("checked","true");
-                                                $("#form-pesquisa-produto").submit();
-                                            }')
-                                        ],
-                                    ],
-                                    'data' => [
-                                        [
-                                            'name' => 'Aprovado',
-                                            'y' => $aprovado,
-                                            'color' => 'lightgreen',
-                                            'url' => 'Aprovado'
-                                        ],
-                                        [
-                                            'name' => 'Em análise',
-                                            'y' => $aguardando,
-                                            'color' => '#f3f0c6',
-                                            'url' => 'Em andamento'
-                                        ],
-                                        [
-                                            'name' => 'Reprovado',
-                                            'y' => $reprovado,
-                                            'color' => '#F08080',
-                                            'url' => 'Reprovado'
-                                        ],
-                                    ],
-                                    'showInLegend' => true,
-                                    'dataLabels' => [
-                                        'enabled' => false,
-                                    ],
-                                ],
-                            ],
-                        ]
-                    ]);
+                    $media_t_dnit = $dnit_t/$i;
+                    $media_t_prosul = $prosul_t/$i;
+                    $media_t_dnit = (int)number_format($media_t_dnit, 0);
+                    $media_t_prosul = (int)number_format($media_t_prosul, 0);
+                    // echo 'Produtos: '.$i;
+                    // echo '<pre>';
+                    // echo "Tempo médio de Revisão(DNIT): ".$dnit_t/$i." dias";
+                    // echo '</pre>';
+                    // echo '<pre>';
+                    // echo "Tempo médio de Revisão(PROSUL): ".$prosul_t/$i." dias";
+                    // echo '</pre>';
+                    // echo $RV0.'<br>';
+                    // echo $RV1.'<br>';
+                    // echo $RV2.'<br>';
+                    // echo $RV3.'<br>';
+                    // echo $RV4.'<br>';
+                    // echo $RV5.'<br>';
+                    // echo $aprovado.'<br>';
+                    // echo $aguardando.'<br>';
+                    foreach ($empreendimentos as $emp) {
+                        $countaprodutos = 0;
+                        foreach($dataProvider->getModels() as $item) {
+                            if ($item->empreendimento_id == $emp->id) {
+                                $countaprodutos += 1;
+                            }
+                        }
+                        array_push($graph_empreendimentos, [
+                            'name' => $emp->titulo, 'y' => $countaprodutos, 'url' => $emp->id
+                        ]);
+                    }
+                    foreach ($os as $emp) {
+                        $countaprodutos = 0;
+                        foreach($dataProvider->getModels() as $item) {
+                            if ($item->ordensdeservico_id == $emp->id) {
+                                $countaprodutos += 1;
+                            }
+                        }
+                        array_push($graph_os, [
+                            'name' => $emp->titulo, 'y' => $countaprodutos, 'url' => $emp->id
+                        ]);
+                    }
+                    $reviews_aprov = [
+                        [ 'name' => 'RV 0', 'y' => $RV0, 'url' => 'RV0', 'color' => '#87CEEB' ],
+                        [ 'name' => 'RV 1', 'y' => $RV1, 'url' => 'RV1', 'color' => '#00BFFF' ],
+                        [ 'name' => 'RV 2', 'y' => $RV2, 'url' => 'RV2', 'color' => '#6495ED' ],
+                        [ 'name' => 'RV 3', 'y' => $RV3, 'url' => 'RV3', 'color' => '#4169E1' ],
+                        // [ 'name' => 'RV4', 'y' => $RV4, 'url' => 'RV4' ],
+                        // [ 'name' => 'RV5', 'y' => $RV5, 'url' => 'RV5' ],
+                    ];
                 ?>
-                </div>
-                <div class="card">
-                <?= Highcharts::widget([
-                        'scripts' => [
-                            'modules/exporting',
-                            'themes/grid-light',
-                        ],
-                        'options' => [
-                            'chart' => [
-                                'type' => 'pie'
+                <div class="col-md-2 px-1">
+                    <div class="card mb-2">
+                    <?= Highcharts::widget([
+                            'scripts' => [
+                                'modules/exporting',
+                                'themes/grid-light',
                             ],
-                            'title' => ['text' => 'Por versão aprovada'],
-                            'yAxis' => [
-                                'title' => ['text' => 'Versão']
-                            ],
-                            'series' =>  [
-                                [
-                                    'name' => 'Produtos',
-                                    "cursor" => "pointer",
-                                    "point" => [
-                                        "events" => [
-                                            "click" => new JsExpression('function(){
-                                                $("#por_rv").val(this.options.url);
-                                                $("#form-pesquisa-produto").submit();
-                                            }')
+                            'options' => [
+                                'chart' => [
+                                    'type' => 'pie'
+                                ],
+                                'title' => ['text' => 'Situação'],
+                                'yAxis' => [
+                                    'title' => ['text' => 'Status']
+                                ],
+                                'series' =>  [
+                                    [
+                                        'name' => 'Produtos',
+                                        "cursor" => "pointer",
+                                        "point" => [
+                                            "events" => [
+                                                "click" => new JsExpression('function(){
+                                                    $(":checkbox[value=\'" + this.options.url + "\']").prop("checked","true");
+                                                    $("#form-pesquisa-produto").submit();
+                                                }')
+                                            ],
                                         ],
-                                    ],
-                                    'data' => $reviews_aprov,
-                                    'showInLegend' => true,
-                                    'dataLabels' => [
-                                        'enabled' => false,
+                                        'data' => [
+                                            [
+                                                'name' => 'Aprovado',
+                                                'y' => $aprovado,
+                                                'color' => 'lightgreen',
+                                                'url' => 'Aprovado'
+                                            ],
+                                            [
+                                                'name' => 'Em análise',
+                                                'y' => $aguardando,
+                                                'color' => '#f3f0c6',
+                                                'url' => 'Em andamento'
+                                            ],
+                                            [
+                                                'name' => 'Reprovado',
+                                                'y' => $reprovado,
+                                                'color' => '#F08080',
+                                                'url' => 'Reprovado'
+                                            ],
+                                        ],
+                                        'showInLegend' => true,
+                                        'dataLabels' => [
+                                            'enabled' => false,
+                                        ],
                                     ],
                                 ],
+                            ]
+                        ]);
+                    ?>
+                    </div>
+                    <div class="card">
+                    <?= Highcharts::widget([
+                            'scripts' => [
+                                'modules/exporting',
+                                'themes/grid-light',
                             ],
-                        ]
-                    ]);
-                ?>
-                </div>
-            </div>
-            <div class="col-md-8 px-1">
-                <div class="card mb-2">
-                <?= Highcharts::widget([
-                        'scripts' => [
-                            'modules/exporting',
-                            'themes/grid-light',
-                        ],
-                        'options' => [
-                            'chart' => [
-                                'type' => 'column'
-                            ],
-                            'title' => ['text' => 'Por Empreendimento'],
-                            'yAxis' => [
-                                'title' => ['text' => 'Produtos']
-                            ],
-                            'xAxis' => [
-                                'type' => 'category'
-                            ],
-                            'series' =>  [
-                                [
-                                    'name' => 'Produtos',
-                                    "cursor" => "pointer",
-                                    'colorByPoint' => false,
-                                    "point" => [
-                                        "events" => [
-                                            "click" => new JsExpression('function(){
-                                                $("#produtosearch-empreendimento_id").val(this.options.url);
-                                                $("#form-pesquisa-produto").submit();
-                                            }')
+                            'options' => [
+                                'chart' => [
+                                    'type' => 'pie'
+                                ],
+                                'title' => ['text' => 'Por versão aprovada'],
+                                'yAxis' => [
+                                    'title' => ['text' => 'Versão']
+                                ],
+                                'series' =>  [
+                                    [
+                                        'name' => 'Produtos',
+                                        "cursor" => "pointer",
+                                        "point" => [
+                                            "events" => [
+                                                "click" => new JsExpression('function(){
+                                                    $("#por_rv").val(this.options.url);
+                                                    $("#form-pesquisa-produto").submit();
+                                                }')
+                                            ],
                                         ],
-                                    ],
-                                    'data' => $graph_empreendimentos,
-                                    'showInLegend' => false,
-                                    'dataLabels' => [
-                                        'enabled' => false,
+                                        'data' => $reviews_aprov,
+                                        'showInLegend' => true,
+                                        'dataLabels' => [
+                                            'enabled' => false,
+                                        ],
                                     ],
                                 ],
-                            ],
-                        ]
-                    ]);
-                ?>
+                            ]
+                        ]);
+                    ?>
+                    </div>
                 </div>
-                <!-- </div>
-                <div class="col-md-4"> -->
-                <div class="card">
-                <?= Highcharts::widget([
-                        'scripts' => [
-                            'modules/exporting',
-                            'themes/grid-light',
-                        ],
-                        'options' => [
-                            'chart' => [
-                                'type' => 'column',
-                                'innerSize' => '50%',
+                <div class="col-md-8 px-1">
+                    <div class="card mb-2">
+                    <?= Highcharts::widget([
+                            'scripts' => [
+                                'modules/exporting',
+                                'themes/grid-light',
                             ],
-                            'title' => ['text' => 'Por Ordem de Serviço'],
-                            'yAxis' => [
-                                'title' => ['text' => 'Produtos']
-                            ],
-                            'xAxis' => [
-                                'type' => 'category'
-                            ],
-                            // 'tooltip' => [
-                            //     'pointFormat' => '{series.name}: <b>{point.percentage:.1f}%</b>'
-                            // ],
-                            'series' =>  [
-                                [
-                                    'name' => 'Produtos',
-                                    "cursor" => "pointer",
-                                    'colorByPoint' => false,
-                                    "point" => [
-                                        "events" => [
-                                            "click" => new JsExpression('function(){
-                                                $("#produtosearch-ordensdeservico_id").val(this.options.url);
-                                                $("#form-pesquisa-produto").submit();
-                                            }')
+                            'options' => [
+                                'chart' => [
+                                    'type' => 'column'
+                                ],
+                                'title' => ['text' => 'Por Empreendimento'],
+                                'yAxis' => [
+                                    'title' => ['text' => 'Produtos']
+                                ],
+                                'xAxis' => [
+                                    'type' => 'category'
+                                ],
+                                'series' =>  [
+                                    [
+                                        'name' => 'Produtos',
+                                        "cursor" => "pointer",
+                                        'colorByPoint' => false,
+                                        "point" => [
+                                            "events" => [
+                                                "click" => new JsExpression('function(){
+                                                    $("#produtosearch-empreendimento_id").val(this.options.url);
+                                                    $("#form-pesquisa-produto").submit();
+                                                }')
+                                            ],
                                         ],
-                                    ],
-                                    'data' => $graph_os,
-                                    'showInLegend' => false,
-                                    'dataLabels' => [
-                                        'enabled' => false,
+                                        'data' => $graph_empreendimentos,
+                                        'showInLegend' => false,
+                                        'dataLabels' => [
+                                            'enabled' => false,
+                                        ],
                                     ],
                                 ],
+                            ]
+                        ]);
+                    ?>
+                    </div>
+                    <!-- </div>
+                    <div class="col-md-4"> -->
+                    <div class="card">
+                    <?= Highcharts::widget([
+                            'scripts' => [
+                                'modules/exporting',
+                                'themes/grid-light',
                             ],
-                        ]
-                    ]);
-                ?>
-                </div>
-            </div>
-            <div class="col-md-2 px-1">
-                <div class="card">
-                <?= Highcharts::widget([
-                        'scripts' => [
-                            'modules/exporting',
-                            'themes/grid-light',
-                        ],
-                        'options' => [
-                            'chart' => [
-                                'type' => 'column'
-                            ],
-                            'title' => ['text' => 'Tempo médio para Revisão'],
-                            'yAxis' => [
-                                'title' => ['text' => 'Dias']
-                            ],
-                            'xAxis' => [
-                                'type' => 'category'
-                            ],
-                            'series' =>  [
-                                [
-                                    'name' => 'Dias',
-                                    "cursor" => "pointer",
-                                    "point" => [
-                                        "events" => [
-                                            "click" => new JsExpression('function(){
-                                                console.log(this.options.url)
-                                            }')
+                            'options' => [
+                                'chart' => [
+                                    'type' => 'column',
+                                    'innerSize' => '50%',
+                                ],
+                                'title' => ['text' => 'Por Ordem de Serviço'],
+                                'yAxis' => [
+                                    'title' => ['text' => 'Produtos']
+                                ],
+                                'xAxis' => [
+                                    'type' => 'category'
+                                ],
+                                // 'tooltip' => [
+                                //     'pointFormat' => '{series.name}: <b>{point.percentage:.1f}%</b>'
+                                // ],
+                                'series' =>  [
+                                    [
+                                        'name' => 'Produtos',
+                                        "cursor" => "pointer",
+                                        'colorByPoint' => false,
+                                        "point" => [
+                                            "events" => [
+                                                "click" => new JsExpression('function(){
+                                                    $("#produtosearch-ordensdeservico_id").val(this.options.url);
+                                                    $("#form-pesquisa-produto").submit();
+                                                }')
+                                            ],
                                         ],
-                                    ],
-                                    'data' => [
-                                        [
-                                            'name' => 'DNIT',
-                                            'y' => $media_t_dnit,
-                                            'color' => 'green',
-                                            'url' => 'google.com.br'
+                                        'data' => $graph_os,
+                                        'showInLegend' => false,
+                                        'dataLabels' => [
+                                            'enabled' => false,
                                         ],
-                                        [
-                                            'name' => 'Prosul',
-                                            'y' => $media_t_prosul,
-                                            'color' => 'blue',
-                                            'url' => 'yahoo.com.br'
-                                        ],
-                                    ],
-                                    'showInLegend' => false,
-                                    'dataLabels' => [
-                                        'enabled' => false,
                                     ],
                                 ],
-                                [
-                                    'type' => 'spline',
-                                    'name' => 'Tempo padrão (30 dias)',
-                                    'color' => 'red',
-                                    'data' => [
-                                        30, 30
+                            ]
+                        ]);
+                    ?>
+                    </div>
+                </div>
+                <div class="col-md-2 px-1">
+                    <div class="card">
+                    <?= Highcharts::widget([
+                            'scripts' => [
+                                'modules/exporting',
+                                'themes/grid-light',
+                            ],
+                            'options' => [
+                                'chart' => [
+                                    'type' => 'column'
+                                ],
+                                'title' => ['text' => 'Tempo médio para Revisão'],
+                                'yAxis' => [
+                                    'title' => ['text' => 'Dias']
+                                ],
+                                'xAxis' => [
+                                    'type' => 'category'
+                                ],
+                                'series' =>  [
+                                    [
+                                        'name' => 'Dias',
+                                        "cursor" => "pointer",
+                                        "point" => [
+                                            "events" => [
+                                                "click" => new JsExpression('function(){
+                                                    console.log(this.options.url)
+                                                }')
+                                            ],
+                                        ],
+                                        'data' => [
+                                            [
+                                                'name' => 'DNIT',
+                                                'y' => $media_t_dnit,
+                                                'color' => 'green',
+                                                'url' => 'google.com.br'
+                                            ],
+                                            [
+                                                'name' => 'Prosul',
+                                                'y' => $media_t_prosul,
+                                                'color' => 'blue',
+                                                'url' => 'yahoo.com.br'
+                                            ],
+                                        ],
+                                        'showInLegend' => false,
+                                        'dataLabels' => [
+                                            'enabled' => false,
+                                        ],
+                                    ],
+                                    [
+                                        'type' => 'spline',
+                                        'name' => 'Tempo padrão (30 dias)',
+                                        'color' => 'red',
+                                        'data' => [
+                                            30, 30
+                                        ]
                                     ]
-                                ]
-                            ],
-                        ]
-                    ]);
-                ?>
+                                ],
+                            ]
+                        ]);
+                    ?>
+                    </div>
                 </div>
             </div>
         </div>
-        <!-- </div> -->
         <div class="clearfix"></div>
-        <div class="row mt-0 mb-2 pb-2 pt-2" style="background-color: white;">
+        <div class="row mt-0 mb-0 pb-2 pt-2 card" style="background-color: white;">
             <h3>
                 <center>
-                    <a class="btn btn-link fs-3" href="#collapsePesquisa"  data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    <!-- <a class="btn btn-link fs-3" href="#collapsePesquisa"  data-bs-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseExample"> -->
                         Pesquisa <i class="bi bi-arrow-down"></i>
-                    </a> 
+                    <!-- </a>  -->
                     <a
-                        href="<?=Yii::$app->homeUrl."contrato/view?id=$contrato_id&abativa=aba_produtos"?>" 
+                        href="<?=Yii::$app->homeUrl."contrato/pr?id=$contrato_id&abativa=aba_produtos"?>" 
                         class="btn btn-primary text-white fs-5" 
                         tolltip="" 
                         title="Limpar/Reiniciar"
@@ -666,314 +677,211 @@ use yii\bootstrap5\Accordion;
                 </center>
             </h3>
             <!-- <hr> -->
-        </div>
-        <div id="collapsePesquisa" class="collapse">
-            <div class="row">
-                <div class="col-md-2">
-                    <label class="control-label summary" for="produto_numero_sei"><b>SEI</b></label>
-                    <!-- <br /> -->
-                    <?= $form->field($searchModel, 'numero_sei')->textInput(['maxlength' => true, 'placeholder' => 'Nº SEI'])->label(false) ?>
+            <!-- </div> -->
+            <!-- <div id="collapsePesquisa" class="collapse"> -->
+            <div id="collapsePesquisaXxxxxExpandido" class="">
+                <div class="row">
+                    <div class="col-md-2">
+                        <label class="control-label summary" for="produto_numero_sei"><b>SEI</b></label>
+                        <!-- <br /> -->
+                        <?= $form->field($searchModel, 'numero_sei')->textInput(['maxlength' => true, 'placeholder' => 'Nº SEI'])->label(false) ?>
+                    </div>
+                    <div class="col-md-3" style="display: none !important">
+                        <label class="control-label summary" for="produto_empreendimento_id">Empreendimento</label>
+                        <?php $lista_emp = ArrayHelper::map($empreendimentos, 'id', 'titulo'); ?>
+                        <?php $produtos = Produto::findAll([
+                            'contrato_id' => $contrato_id
+                        ])?>
+                        <?php $lista_servicos = ArrayHelper::map($produtos, 'servico', 'servico'); ?>
+                        <?php $searchModel->empreendimento_id = $empreendimento_id; ?>
+                        <?= $form->field($searchModel, 'empreendimento_id')->dropDownList($lista_emp, [
+                            'prompt' => 'Selecione'
+                        ])->label(false) ?>
+                        <!-- Campos de pesquisa ocultos pros gráficos -->
+                        <input type="hidden" name="por_rv" id="por_rv" value="<?=$_REQUEST['por_rv']?>">
+                    </div>
+                    <div class="col-md-3" style="display: block !important">
+                        <label class="control-label summary" for="produto_empreendimento_id">Produto | Serviço</label>
+                        <?php $lista_emp = ArrayHelper::map($empreendimentos, 'id', 'titulo'); ?>
+                        <?php $searchModel->servico = $produto_servico; ?>
+                        <?= $form->field($searchModel, 'servico')->dropDownList($lista_servicos, [
+                            'prompt' => 'Selecione'
+                        ])->label(false) ?>
+                        <!-- Campos de pesquisa ocultos pros gráficos -->
+                        <input type="hidden" name="por_rv" id="por_rv" value="<?=$_REQUEST['por_rv']?>">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="control-label summary" for="produto_ordensdeservico_id">Ordem de Serviço</label>
+                        <?php $lista_os = ArrayHelper::map($os, 'id', 'titulo'); ?>
+                        <?= $form->field($searchModel, 'ordensdeservico_id')->dropDownList($lista_os, [
+                            'prompt' => 'Selecione'
+                        ])->label(false) ?>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="control-label summary" for="from_date">Por data de Entrada</label>
+                        <?php
+                            $layout3 = '<span class="input-group-addon">De</span>
+                            {input1}
+                            <span class="input-group-addon">Até</span>
+                            {input2}';
+                            echo DatePicker::widget([
+                                'language' => 'pt-BR',
+                                'name' => 'from_date',
+                                'value' => ($datainicial?$datainicial:''),
+                                'type' => DatePicker::TYPE_RANGE,
+                                'name2' => 'to_date',
+                                'value2' => ($datafinial?$datafinial:''),
+                                'options' => [
+                                    'placeholder' => 'data inicial',
+                                    'tabindex' => false
+                                ],
+                                'options2' => [
+                                    'placeholder' => 'data final',
+                                    'tabindex' => false
+                                ],
+                                'layout' => $layout3, 
+                                'pluginOptions' => [
+                                    'autoclose'=>true,
+                                    'format' => 'dd/mm/yyyy',
+                                    'tabindex' => false
+                                ]
+                            ]);
+                        ?>
+                    </div>
                 </div>
-                <div class="col-md-3">
-                    <label class="control-label summary" for="produto_empreendimento_id">Empreendimento</label>
-                    <?php $lista_emp = ArrayHelper::map($empreendimentos, 'id', 'titulo'); ?>
-                    <?= $form->field($searchModel, 'empreendimento_id')->dropDownList($lista_emp, [
-                        'prompt' => 'Selecione'
-                    ])->label(false) ?>
-                    <!-- Campos de pesquisa ocultos pros gráficos -->
-                    <input type="hidden" name="por_rv" id="por_rv" value="<?=$_REQUEST['por_rv']?>">
-                </div>
-                <div class="col-md-3">
-                    <label class="control-label summary" for="produto_ordensdeservico_id">Ordem de Serviço</label>
-                    <?php $lista_os = ArrayHelper::map($os, 'id', 'titulo'); ?>
-                    <?= $form->field($searchModel, 'ordensdeservico_id')->dropDownList($lista_os, [
-                        'prompt' => 'Selecione'
-                    ])->label(false) ?>
-                </div>
-                <div class="col-md-4">
-                    <label class="control-label summary" for="from_date">Por data de Entrada</label>
-                    <?php
-                        $layout3 = '<span class="input-group-addon">De</span>
-                        {input1}
-                        <span class="input-group-addon">Até</span>
-                        {input2}';
-                        echo DatePicker::widget([
-                            'language' => 'pt-BR',
-                            'name' => 'from_date',
-                            'value' => ($datainicial?$datainicial:''),
-                            'type' => DatePicker::TYPE_RANGE,
-                            'name2' => 'to_date',
-                            'value2' => ($datafinial?$datafinial:''),
-                            'options' => [
-                                'placeholder' => 'data inicial',
-                                'tabindex' => false
-                            ],
-                            'options2' => [
-                                'placeholder' => 'data final',
-                                'tabindex' => false
-                            ],
-                            'layout' => $layout3, 
-                            'pluginOptions' => [
-                                'autoclose'=>true,
-                                'format' => 'dd/mm/yyyy',
-                                'tabindex' => false
-                            ]
-                        ]);
-                    ?>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-2">
-                    <?= $form->field($searchModel, 'ano_listagem')->dropDownList([
-                        'all'=>'Todos os registros',
-                        '2023'=>'Ano 2023',
-                        '2022'=>'Ano 2022',
-                    ])->label('Ano') ?>
-                </div> 
-                <div class="col-md-4">
-                    <label class="control-label summary">Últimos dias</label><br>
-                    <label for="check-hoje-produto" style="padding:1%">
-                        <input type="radio" name="ProdutoSearch[intervalo_data]" value="check-hoje" id="check-hoje-produto" style="" <?=$radiohoje?>>
-                        Hoje
-                    </label>
-                    <label for="check-ultimos-dias-produto" style="padding:1%">
-                        <input type="radio" name="ProdutoSearch[intervalo_data]" value="check-ultimos-dias" id="check-ultimos-dias-produto" style="" <?=$radiosete?>>
-                        Últimos 7 dias
-                    </label>
-                    <label for="check-ultimo-mes-produto" style="padding:1%">
-                        <input type="radio" name="ProdutoSearch[intervalo_data]" value="check-ultimo-mes" id="check-ultimo-mes-produto" style="" <?=$radiotrinta?>>
-                        Últimos 30 dias
-                    </label>
-                    <label for="check-todos-produto" style="padding:1%">
-                        <input type="radio" name="ProdutoSearch[intervalo_data]" value="0" id="check-todos-produto" style="">
-                        Todos
-                    </label>
-                </div>
-                <div class="col-md-4 form-group">
-                <label class="control-label summary">Situação</label><br>
-                    <?php // = $form->field($searchModel, 'status')->dropDownList([ 'Não Resolvido' => 'Não Resolvido', 'Parcialmente Resolvido' => 'Parcialmente Resolvido', 'Em andamento' => 'Em andamento', 'Resolvido' => 'Resolvido', ], ['prompt' => '']);?>
-                    <label for="em_andamento_produto" style="padding:1%">
-                        <input type="checkbox" name="ProdutoSearch[fase][1]" value="Em andamento" id="em_andamento_produto" style="" <?=$campo_status_1?>>
-                        Em Andamento
-                    </label>
-                    <label for="aprovado_produto" style="padding:1%">
-                        <input type="checkbox" name="ProdutoSearch[fase][2]" value="Aprovado" id="aprovado_produto" style="" <?=$campo_status_2?>>
-                        Aprovado
-                    </label>
-                    <label for="reprovado_produto" style="padding:1%">
-                        <input type="checkbox" name="ProdutoSearch[fase][3]" value="Reprovado" id="reprovado_produto" style="" <?=$campo_status_3?>>
-                        Reprovado
-                    </label>
-                    <!-- <label for="forcomunicados" style="padding:1%">
-                        <input type="checkbox" name="ProdutoSearch[comunicados]" value="1" style="" id="forcomunicados" >
-                        Com CNC
-                    </label> -->
-                </div>
-                <div class="col-md-2 form-group">
-                    <br>
-                    <img id="loading1-produtos" src="<?=Yii::$app->homeUrl?>arquivos/loading_blue.gif" width="40" style="float:right;margin-left: 12px;margin-top: -3px;display:none">
-                    <?php             
-                        echo Html::submitButton('Pesquisar', [
-                            'class' => 'btn btn-primary',
-                            'style'=>'float:right;margin:1%',
-                            'id'=>'botao-envia-pesquisa-ajax-produto'
-                            // 'onclick'=>'$(this).addClass("disabled");$("#loading1-produtos").show();this.form.submit();this.disabled=true;',
-                            // 'onmouseup'=>'$(this).addClass("disabled");$("#loading1-produtos").show();this.disabled=true;',
-                        ]);
-                        $this->registerJs(<<<JS
-                            $(document).on('pjax:send', function() {
-                                $("#loading1-produtos").show();
-                                $("#botao-envia-pesquisa-ajax-produto").addClass("disabled");
-                            });
-                            $(document).on('pjax:complete', function() {
-                                $('#loading1-produtos').hide();
-                                $("#botao-envia-pesquisa-ajax-produto").removeClass("disabled");
-                            });
-                        JS
-                        );
-                    ?>
+                <div class="row">
+                    <div class="col-md-2">
+                        <?= $form->field($searchModel, 'ano_listagem')->dropDownList([
+                            'all'=>'Todos os registros',
+                            '2024'=>'Ano 2024',
+                            '2023'=>'Ano 2023',
+                            '2022'=>'Ano 2022',
+                        ])->label('Ano') ?>
+                    </div> 
+                    <div class="col-md-4">
+                        <label class="control-label summary">Últimos dias</label><br>
+                        <label for="check-hoje-produto" style="padding:1%">
+                            <input type="radio" name="ProdutoSearch[intervalo_data]" value="check-hoje" id="check-hoje-produto" style="" <?=$radiohoje?>>
+                            Hoje
+                        </label>
+                        <label for="check-ultimos-dias-produto" style="padding:1%">
+                            <input type="radio" name="ProdutoSearch[intervalo_data]" value="check-ultimos-dias" id="check-ultimos-dias-produto" style="" <?=$radiosete?>>
+                            Últimos 7 dias
+                        </label>
+                        <label for="check-ultimo-mes-produto" style="padding:1%">
+                            <input type="radio" name="ProdutoSearch[intervalo_data]" value="check-ultimo-mes" id="check-ultimo-mes-produto" style="" <?=$radiotrinta?>>
+                            Últimos 30 dias
+                        </label>
+                        <label for="check-todos-produto" style="padding:1%">
+                            <input type="radio" name="ProdutoSearch[intervalo_data]" value="0" id="check-todos-produto" style="">
+                            Todos
+                        </label>
+                    </div>
+                    <div class="col-md-4 form-group">
+                    <label class="control-label summary">Situação</label><br>
+                        <?php // = $form->field($searchModel, 'status')->dropDownList([ 'Não Resolvido' => 'Não Resolvido', 'Parcialmente Resolvido' => 'Parcialmente Resolvido', 'Em andamento' => 'Em andamento', 'Resolvido' => 'Resolvido', ], ['prompt' => '']);?>
+                        <label for="em_andamento_produto" style="padding:1%">
+                            <input type="checkbox" name="ProdutoSearch[fase][1]" value="Em andamento" id="em_andamento_produto" style="" <?=$campo_status_1?>>
+                            Em Andamento
+                        </label>
+                        <label for="aprovado_produto" style="padding:1%">
+                            <input type="checkbox" name="ProdutoSearch[fase][2]" value="Aprovado" id="aprovado_produto" style="" <?=$campo_status_2?>>
+                            Aprovado
+                        </label>
+                        <label for="reprovado_produto" style="padding:1%">
+                            <input type="checkbox" name="ProdutoSearch[fase][3]" value="Reprovado" id="reprovado_produto" style="" <?=$campo_status_3?>>
+                            Reprovado
+                        </label>
+                        <!-- <label for="forcomunicados" style="padding:1%">
+                            <input type="checkbox" name="ProdutoSearch[comunicados]" value="1" style="" id="forcomunicados" >
+                            Com CNC
+                        </label> -->
+                    </div>
+                    <div class="col-md-2 form-group">
+                        <br>
+                        <img id="loading1-produtos" src="<?=Yii::$app->homeUrl?>arquivos/loading_blue.gif" width="40" style="float:right;margin-left: 12px;margin-top: -3px;display:none">
+                        <?php             
+                            echo Html::submitButton('Pesquisar', [
+                                'class' => 'btn btn-primary',
+                                'style'=>'float:right;margin:1%',
+                                'id'=>'botao-envia-pesquisa-ajax-produto'
+                                // 'onclick'=>'$(this).addClass("disabled");$("#loading1-produtos").show();this.form.submit();this.disabled=true;',
+                                // 'onmouseup'=>'$(this).addClass("disabled");$("#loading1-produtos").show();this.disabled=true;',
+                            ]);
+                            $this->registerJs(<<<JS
+                                $(document).on('pjax:send', function() {
+                                    $("#loading1-produtos").show();
+                                    $("#botao-envia-pesquisa-ajax-produto").addClass("disabled");
+                                });
+                                $(document).on('pjax:complete', function() {
+                                    $('#loading1-produtos').hide();
+                                    $("#botao-envia-pesquisa-ajax-produto").removeClass("disabled");
+                                });
+                            JS
+                            );
+                        ?>
+                    </div>
                 </div>
             </div>
         </div>
         <?php ActiveForm::end(); ?>
         
     </div>
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        // 'filterModel' => $searchModel,
-        'pager' => [
-            'firstPageLabel' => 'Início',
-            'lastPageLabel'  => 'Fim',
-            'class' => 'yii\bootstrap5\LinkPager'
-        ],
-        'columns' => [
-            // [
-            //     'attribute' => 'id',
-            //     'headerOptions' => [
-            //         'width' => '3%'
-            //     ]
-            // ],
-            [
-                'attribute' => 'empreendimento_id',
-                'format' => 'raw',
-                'value' => function($data) {
-                    // return $this->render('_empreendimento', [
-                    //     'id' => $data->empreendimento_id
-                    // ]);
-                    return $data->empreendimento->titulo;
-                },
-                'headerOptions' => [
-                    'width' => '5%'
-                ]
-            ],
-            'subproduto',
-            [
-                'attribute' => 'numero',
-                'headerOptions' => [
-                    'width' => '3%'
-                ],
-                'value' => function($data) {
-                    $return = "";
-                    foreach($data->revisaos as $rv) {
-                        if ($rv->numero_sei) {
-                            $return .= '<br>'.$rv->titulo.' <strong>SEI: '.$rv->numero_sei.'</strong>';
-                        }
-                    }
-                    return $return;
-                },
-                'format' => 'raw',
-            ],
-            // [
-            //     'attribute' => 'ordensdeservico_id',
-            //     'format' => 'raw',
-            //     'value' => function($data) {
-            //         return $this->render('_os', [
-            //             'id' => $data->ordensdeservico_id
-            //         ]);
-            //     },
-            //     'headerOptions' => [
-            //         'width' => '5%'
-            //     ]
-            // ],
-            // [
-                //     'attribute' => 'datacadastro',
-            //     'value' => function($data) {
-            //         return date('d/m/Y', strtotime($data->datacadastro));
-            //     }
-            // ],
-            [
-                'attribute' => 'data_entrega',
-                'value' => function($data) {
-                    return $data->data_entrega ? date('d/m/Y', strtotime($data->data_entrega)) : '';
-                }
-            ],
-            [
-                'attribute' => 'aprov_data',
-                'value' => function($data) {
-                    return $data->aprov_data ? date('d/m/Y', strtotime($data->aprov_data)) : '';
-                }
-            ],
-            // 'fase',
-            // 'aprov_versao',
-            [
-                'attribute' => 'fase',
-                'format' => 'raw',
-                'headerOptions' => [
-                    'width' => '8%'
-                ],
-                'value' => function($data) {
-                    switch ($data->fase) {
-                        case 'Em andamento': $faseada = "<b class='text-warning'>$data->fase</b>"; break;
-                        case 'Aprovado': $faseada = "<b class='text-success'>$data->fase</b>"; break;
-                        case 'Reprovado': $faseada = "<b class='text-danger'>$data->fase</b>"; break;
-                    }        
-                    return "<center>$faseada</center><br>".
-                        "<center>[ $data->aprov_versao ]</center>";
-                }
-            ],
-            [
-                'attribute' => 'diretorio_texto',
-                'format' => 'raw',
-                'value' => function($data) {
-                    // return '<a class="btn btn-link" target="_blank" href="'.$data->link_diretorio.'">'.$data->diretorio.'</a>';
-                    if ($data->diretorio_texto != "") {
-                        return '<a class="btn btn-link" target="_blank" href="'.$data->diretorio_link.'" 
-                        alt="'.$data->diretorio_texto.'"
-                        title="'.$data->diretorio_texto.'"
-                        >Acessar</a>';
-                    }
-                    // return $data->emprrendimento_desc;
-                }
-            ],
-            [
-                'attribute' => 'id',
-                'header' => 'Detalhes',
-                'headerOptions' => [
-                    'width' => '5%'
-                ],
-                'format' => 'raw',
-                'value' => function($data) {        
-                    return '<center>'.$this->render('detalhes', [
-                        'id' => $data->id
-                    ]).'</center>';
-                }
-            ],
-            [
-                'attribute' => 'id',
-                'header' => 'Revisões',
-                'headerOptions' => [
-                    'width' => '5%'
-                ],
-                'format' => 'raw',
-                'value' => function($data) { 
-                    $count_revisoes = \app\models\Revisao::find()->where([
-                        'produto_id' => $data->id
-                    ])->count();       
-                    return '<center>'.
-                    "<a class='btn btn-primary' href='".Yii::$app->homeUrl."produto/update?id=$data->id&abativa=reviews' target=''>
-                    📋 $count_revisoes)
-                    </a>".
-                    '</center>';
-                }
-            ],
-            [
-                'attribute' => 'id',
-                'header' => 'Docs',
-                'headerOptions' => [
-                    'width' => '5%'
-                ],
-                'format' => 'raw',
-                'value' => function($data) {
-                    return '<center>'.
-                    // $this->render('_docs', [
-                    //     'oficio_id' => $data->id
-                    //     ])
-                    // }
-                    "<a class='btn btn-primary' href='".Yii::$app->homeUrl."produto/update?id=$data->id&abativa=arquivos' target=''>
-                        <i class='bi bi-filetype-doc'></i>
-                    </a>".
-                    '</center>';
-                },
-                'visible' => in_array(Yii::$app->user->identity->nivel, ['administrador', 'gestor']) ? true : false
-            ],
-            [
-                'header' => 'Editar',
-                'format' => 'raw',
-                'headerOptions' => [
-                    'width' => '5%'
-                ],
-                'value' => function($data) {
-                    return '<a href="'.Yii::$app->homeUrl.'produto/update?id='.$data->id.'" class="btn btn-primary"><i class="bi bi-pencil"></i></a>';
-                },
-                'visible' => in_array(Yii::$app->user->identity->nivel, ['administrador', 'gestor']) ? true : false
-            ],
-            // [
-            //     'class' => ActionColumn::className(),
-            //     'urlCreator' => function ($action, Oficio $model, $key, $index, $column) {
-            //         return Url::toRoute([$action, 'id' => $model->id]);
-            //      }
-            // ],
-        ],
-    ]); ?>
+    <br />
+    <br />
+    <?php 
+    $items = [];
+    $primeiro_empreendimento = Produto::findOne([
+        'contrato_id' => $contrato_id
+    ]);
+    $request_empreendimento = 4;
+    if ($empreendimento_id != "") {
+        $request_empreendimento = $empreendimento_id;
+    } else {
+        $request_empreendimento = $primeiro_empreendimento->empreendimento_id;
+    }
+    foreach ($empreendimentos as $emp) {
+        // echo $emp->id . '<br>';
+        $dataProvider = $searchModel->search([
+            'from_date'=> $data_ini,
+            'to_date'=> $data_fim,
+            'ano_listagem' => $ano_listagem,
+            'empreendimento_id' => $emp->id,
+            'ordensdeservico_id' => $ordensdeservico_id,
+            'servico' => $produto_servico,
+            'fase' => $fase,
+            'numero_sei' => $numero_sei,
+        ]);
+        
+        array_push($items, [
+            'label' => '<span onclick="
+                $(\'#produtosearch-empreendimento_id\').val('.$emp->id.');
+                $(\'#produto-empreendimento_id\').val('.$emp->id.');
+                $(\'#produtosearch-servico\').val(\'\');
+                $(\'#form-pesquisa-produto\').submit();
+            ">'.$emp->titulo.'</span>',
+            'content' => $this->render('_gridcontrato', [
+                'dataProvider' => $dataProvider,
+                'searchModel' => $searchModel,
+                'empreendimento_id' => $emp->id
+            ]),
+            'options' => ['id' => 'emp_'.$emp->id],
+            'active' => $emp->id == $request_empreendimento ? true : false,
+
+        ]);
+    }
+    // foreach ($lista_servicos as $serv) {
+    //     # code.
+    //     echo '<br>'.$serv;
+    // }
+    echo Tabs::widget([
+        'items' => $items,
+        'position'=>Tabs::POS_ABOVE,
+        'align'=>Tabs::ALIGN_CENTER,
+        'bordered'=>true,
+        'encodeLabels'=>false
+    ]);
+    ?>
+    <?php  ?>
     <?php Pjax::end(); ?>
 </div>
