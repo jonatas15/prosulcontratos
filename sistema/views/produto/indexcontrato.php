@@ -850,6 +850,13 @@ use kartik\tabs\TabsX as Tabs;
             'fase' => $fase,
             'numero_sei' => $numero_sei,
         ]);
+
+        $arr_titulo = explode(' ',$emp->titulo);
+
+        $prenche_espaco = "";
+        if(count($arr_titulo) < 3) {
+            $prenche_espaco = "<br>";
+        }
         
         array_push($items, [
             'label' => '<span onclick="
@@ -857,7 +864,9 @@ use kartik\tabs\TabsX as Tabs;
                 $(\'#produto-empreendimento_id\').val('.$emp->id.');
                 $(\'#produtosearch-servico\').val(\'\');
                 $(\'#form-pesquisa-produto\').submit();
-            ">'.$emp->titulo.'</span>',
+            "><center>'.$prenche_espaco."{$arr_titulo[0]} {$arr_titulo[1]} {$arr_titulo[2]}
+                <br>
+                {$arr_titulo[3]} {$arr_titulo[4]} {$arr_titulo[5]} {$arr_titulo[6]}".'</center></span>',
             'content' => $this->render('_gridcontrato', [
                 'dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
