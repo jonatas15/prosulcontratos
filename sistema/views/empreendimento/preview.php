@@ -30,6 +30,9 @@ use dosamigos\google\maps\layers\BicyclingLayer;
 
 use dosamigos\google\maps\layers\KmlLayer;
 
+use kartik\tabs\TabsX as Tabs;
+use yii\helpers\ArrayHelper;
+
 // MAPA fim
 
 $this->title = $model->titulo;
@@ -72,6 +75,13 @@ $json_data_4 = json_decode($json_br_080_4,true);
         /* background-color: #0167A8 !important; */
         background-color: #0167A8 !important;
         color: white !important;
+    }
+    .list-group-item:hover {
+        background-color: rgba(var(--bs-body-color-rgb), 0.03);
+        font-weight: bolder;
+    }
+    .bg-gray {
+        background-color: var(--bs-body-bg);
     }
 </style>
 <div class="empreendimento-index">
@@ -157,23 +167,84 @@ $json_data_4 = json_decode($json_br_080_4,true);
                 <!-- </div> -->
             </div>
             <div class="col-md-8">
-                <div class="card">
-                    <h4 class="card-header bg-gray">🌐 Mapa e marcadores</h4>
+                <div class="card my-2 mx-1 bg-gray">
+                    <!-- <h4 class="card-header bg-gray">🌐 Mapa e marcadores</h4> -->
                     <?php
                         $mapas = [];
                         foreach ($model->arquivos as $arquivo) {
-                            if($arquivo->pasta == 'Mapas') {
+                            if ($arquivo->pasta == 'Mapas') {
                                 array_push($mapas, $arquivo);
                             }
                             // echo $arquivo->src . '<br>';
                         }
                     ?>
-                    <?= $this->render('omapa', [
-                        'mapas' => $mapas
-                    ]); ?>
-                    <center>
-                        <a href="<?=Yii::$app->homeUrl?>empreendimento/update?id=<?=$model->id?>&abativa=aba_arquivos" class="btn btn-primary w-25 my-2 text-center">Mais arquivos: <i class="bi bi-upload"></i></a>
-                    </center>
+                    <?php //= $this->render('omapa', ['mapas' => $mapas]); ?>
+                    <?php
+                        $items = [];
+                        array_push($items, [
+                            'label' => '🌐 MAPA E MARCADORES',
+                            'content' => '<div class="">'.$this->render('omapa', [
+                                'mapas' => $mapas
+                            ]).'</div>'.'
+                                <center>
+                                    <a href="'.Yii::$app->homeUrl.'empreendimento/update?id='.$model->id.'&abativa=aba_arquivos" class="btn btn-primary w-25 my-2 text-center">Mais arquivos: <i class="bi bi-upload"></i></a>
+                                </center>
+                            ',
+                            'options' => ['id' => 'emp_mapas'],
+                            'active' => true,
+                
+                        ]);
+                        $produtos = \app\models\Produto::find()->where([
+                            'empreendimento_id' => $model->id
+                        ])->all();
+                        $lista_servicos = ArrayHelper::map($produtos, 'servico', 'servico');
+                        $prdos = "<div class='row'>";
+                        foreach ($lista_servicos as $serv) {
+                            // $prdos .= '<label value="'.$serv.'">'.$serv.'</label>';
+                            $subprodutos = "";
+                            foreach ($produtos as $pr) {
+                                if ($pr->servico == $serv) {
+                                    $subprodutos .= "<li class='list-group-item'>";
+                                    
+                                    $subprodutos .= $pr->subproduto;
+                                    $subprodutos .= '<br>';
+                                    $subprodutos .= '<div class="float-right">'.$this->render('/produto/detalhes', ['id' => $pr->id]).'</div>';
+                                    
+                                    $subprodutos .= "</li>";
+                                }
+                            }
+                            $prdos .= '
+                            <div class="col-md-4 my-2">
+                                <div class="card" style="">
+                                    <div class="card-header">
+                                    '.$serv.'
+                                    </div>
+                                    <ul class="list-group list-group-flush">
+                                        '.$subprodutos.'
+                                    </ul>
+                                </div>
+                            </div>
+                            ';
+                        }
+                        $prdos .= '</div>';
+                        array_push($items, [
+                            'label' => '📦 PRODUTOS',
+                            'content' => $prdos,
+                            'options' => ['id' => 'emp_produtos'],
+                            'active' => false,
+                        ]);
+                        echo '<div class="my-2">';
+                        echo Tabs::widget([
+                            'items' => $items,
+                            'position'=>Tabs::POS_ABOVE,
+                            'align'=>Tabs::ALIGN_CENTER,
+                            'bordered'=>true,
+                            'encodeLabels'=>false
+                        ]);
+                        echo '</div>';
+                    
+                    ?>
+                    
                 </div>
             </div>
         </div>

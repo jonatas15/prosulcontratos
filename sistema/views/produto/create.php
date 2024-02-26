@@ -15,7 +15,7 @@ Modal::begin([
     'size' => 'modal-xl',
     'toggleButton' => [
         'label' => '<i class="bi bi-card-list"></i> Novo Produto',
-        'class' => 'btn btn-primary text-white  float-right'
+        'class' => 'btn btn-primary text-white float-right pl-0'
     ],
 ]);
 ?>

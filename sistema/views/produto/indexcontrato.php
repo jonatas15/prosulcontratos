@@ -179,8 +179,8 @@ use kartik\tabs\TabsX as Tabs;
     <h3>
         <img src="<?=Yii::$app->homeUrl?>logo/upload-files-icon.png" class="icone-modulo" width="25" /> <span class="text-primary text-opacity-50 fs-5">Contrato: <?=$contrato->titulo?></span><br><b>Produtos</b>
     </h3>
-    <div class="left">
-        <div class="col-md-12">
+    <div class="">
+        <div class="float-right">
             <?php $modelProduto = new Produto(); ?>
             <?= $this->render('create', [
                 'model' => $modelProduto,
@@ -827,8 +827,6 @@ use kartik\tabs\TabsX as Tabs;
         <?php ActiveForm::end(); ?>
         
     </div>
-    <br />
-    <br />
     <?php 
     $items = [];
     $primeiro_empreendimento = Produto::findOne([
@@ -874,6 +872,8 @@ use kartik\tabs\TabsX as Tabs;
     //     # code.
     //     echo '<br>'.$serv;
     // }
+    echo '<div class="row" style="background-color: white; padding: 10px 5px">';
+    echo '<div class="card py-2">';
     echo Tabs::widget([
         'items' => $items,
         'position'=>Tabs::POS_ABOVE,
@@ -881,6 +881,8 @@ use kartik\tabs\TabsX as Tabs;
         'bordered'=>true,
         'encodeLabels'=>false
     ]);
+    echo '</div>';
+    echo '</div>';
     ?>
     <?php  ?>
     <?php Pjax::end(); ?>
