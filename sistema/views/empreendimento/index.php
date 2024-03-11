@@ -26,6 +26,9 @@ use dosamigos\google\maps\overlays\Polygon;
 use dosamigos\google\maps\overlays\Polyline;
 use dosamigos\google\maps\layers\BicyclingLayer;
 
+use app\models\UsuarioHasContrato as UHC;
+use app\models\UsuarioHasEmpreendimento as UHE;
+
 // MAPA fim
 
 $r_contrato = 1;
@@ -84,11 +87,13 @@ $json_data = json_decode($json,true);
         </div>
         <div class="col-md-6 pt-2">
             <?php //= //Html::a('Novo Empreendimento', ['create'], ['class' => 'btn btn-success', 'style'=>"float: right !important"]) ?>
+            <?php if (Yii::$app->user->identity->nivel == 'administrador'): ?>
             <?php $nEmpModel = new Empreendimento(); ?>
             <?= $this->render('create', [
                 'model' => $nEmpModel,
                 'contrato_id' => $contrato
             ]) ?>
+            <?php endif; ?>
         </div>
         <div class="col-md-12">
             <br>
@@ -111,33 +116,41 @@ $json_data = json_decode($json,true);
                 <?php
                     foreach ($dataProvider->models as $row) {
                         # code...
-                        $url = Yii::$app->homeUrl.'empreendimento/';
-                        echo '<div class="col-6 my-3">';
-                        echo "<a class='card' href='".Yii::$app->homeUrl."empreendimento/preview?id=$row->id&contrato={$row->contrato->id}' style='text-decoration: none !important'>
-                            <div class='card-header bg-prinfo text-grey'>
-                            <strong><i class='fa fa-road'></i> $row->titulo</strong>".
-                            "</div>
-                            <div class='card-body'>
-                                <p class='card-text'>Segmento: $row->segmento</p>".
-                                "</div>
-                                <div class='card-footer'>Registro: ".date('m/d/Y', strtotime($row->datacadastro)).
-                                // Html::a('<i class="bi bi-trash"></i>', ['delete', 'id' => $row->id], [
-                                //     'class' => 'btn btn-link p-1 px-0 mx-1 float-right',
-                                //     'data' => [
-                                //         'confirm' => 'Certeza que deseja excluir este registro "'.$row->titulo.'"?',
-                                //         'method' => 'post',
-                                //     ],
-                                //     'options' => [
-                                //         'disabled' => 'disabled'
-                                //     ],
-                                // ]).
-                                // Html::a('<i class="bi bi-pencil"></i>', $url.'update?id='.$row->id, ['class' => 'btn btn-link p-1 px-0 mx-1 float-right']).
-                            "</div>
-                            </div>";
-                        echo '</a>';
                         
-                        // <h5 class='card-title'>$row->titulo</h5>
-                        // Html::a('<i class="bi bi-search"></i> Lic   enciamentos', $url.'empgerencial?id='.$row->id, ['class' => 'btn btn-primary text-white p-1 px-2 mx-1']).
+                        if (Yii::$app->user->identity->nivel == 'administrador') {
+                            echo '<div class="col-6 my-3">';
+                            echo "<a class='card' href='".Yii::$app->homeUrl."empreendimento/preview?id=$row->id&contrato={$row->contrato->id}' style='text-decoration: none !important'>
+                                <div class='card-header bg-prinfo text-grey'>
+                                <strong><i class='fa fa-road'></i> $row->titulo</strong>".
+                                "</div>
+                                <div class='card-body'>
+                                    <p class='card-text'>Segmento: $row->segmento</p>".
+                                    "</div>
+                                    <div class='card-footer'>Registro: ".date('m/d/Y', strtotime($row->datacadastro)).
+                                "</div>
+                                </div>";
+                            echo '</a>';
+                        } else {
+                            $emps_permitidos = UhE::findAll(['usuario_id' => Yii::$app->user->identity->id]);
+                            $ids_permitidos = [];
+                            foreach ($emps_permitidos as $k) {
+                                array_push ($ids_permitidos, $k->empreendimento_id);
+                            }
+                            if (in_array($row->id, $ids_permitidos)) {
+                                echo '<div class="col-6 my-3">';
+                                echo "<a class='card' href='".Yii::$app->homeUrl."empreendimento/preview?id=$row->id&contrato={$row->contrato->id}' style='text-decoration: none !important'>
+                                    <div class='card-header bg-prinfo text-grey'>
+                                    <strong><i class='fa fa-road'></i> $row->titulo</strong>".
+                                    "</div>
+                                    <div class='card-body'>
+                                        <p class='card-text'>Segmento: $row->segmento</p>".
+                                        "</div>
+                                        <div class='card-footer'>Registro: ".date('m/d/Y', strtotime($row->datacadastro)).
+                                    "</div>
+                                    </div>";
+                                echo '</a>';
+                            }
+                        }
                     }
                 ?>
                 </div>
@@ -152,10 +165,23 @@ $json_data = json_decode($json,true);
                         'not', ['empreendimento_id' => null]
                     ])->all();
                     foreach ($arquivos as $arquivo) {
-                        if($arquivo->pasta == 'Mapas' && $arquivo->empreendimento->contrato_id == $contrato) {
-                            array_push($mapas, $arquivo);
+                        if (Yii::$app->user->identity->nivel == 'administrador') {
+                            if($arquivo->pasta == 'Mapas' && $arquivo->empreendimento->contrato_id == $contrato) {
+                                array_push($mapas, $arquivo);
+                            }
+                        } else {
+                            // echo $arquivo->src . '<br>';
+                            $emps_permitidos = UhE::findAll(['usuario_id' => Yii::$app->user->identity->id]);
+                            $ids_permitidos = [];
+                            foreach ($emps_permitidos as $k) {
+                                array_push ($ids_permitidos, $k->empreendimento_id);
+                            }
+                            if (in_array($arquivo->empreendimento_id, $ids_permitidos)) {
+                                if($arquivo->pasta == 'Mapas' && $arquivo->empreendimento->contrato_id == $contrato) {
+                                    array_push($mapas, $arquivo);
+                                }
+                            }
                         }
-                        // echo $arquivo->src . '<br>';
                     }
                 ?>
                 <?= $this->render('omapa', [

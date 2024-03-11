@@ -6,7 +6,6 @@
     use yii\grid\GridView;
     use kartik\editable\Editable;
     use yii\helpers\ArrayHelper;
-
     
 ?>
 <style>
@@ -96,11 +95,13 @@
         */?>    
         <div class="col-md-10"></div>
         <div class="col-md-2">
+            <?php if (Yii::$app->user->identity->nivel != 'fiscal'): ?>
             <?= $this->render('definicaofases', [
                 'fases' => $model->fases,
                 'licenciamento' => $model->numero,
                 'licenciamento_id' => $licenciamento_id,
             ]) ?>
+            <?php endif; ?>
         </div>
     </div>
     <!-- Área Gerencial -->
@@ -226,7 +227,7 @@
                     //     return date('d/m/Y', strtotime($data->data));
                     // }
                     'value' => function($data) {
-                        return Editable::widget([
+                        return (Yii::$app->user->identity->nivel != 'fiscal' ? Editable::widget([
                             'name'=>'data', 
                             'asPopover' => true,
                             'value' => $data->data ? date('d/m/Y', strtotime($data->data)): 'Definir',
@@ -246,9 +247,10 @@
                                     'campo' => 'data'
                                 ]
                             ],
-                        ]);
+                        ]) : date('d/m/Y', strtotime($data->data)));
                     }
                 ],
+                // 'data_cadastro',
                 // [
                 //     'attribute' => 'datacadastro',
                 //     'format' => 'raw',
@@ -318,7 +320,7 @@
                     'attribute' => 'ordem',
                     'format'=>'raw',
                     'value' => function($data) {
-                        return Editable::widget([
+                        return (Yii::$app->user->identity->nivel != 'fiscal' ? Editable::widget([
                             'name'=>'ordem', 
                             'asPopover' => true,
                             'value' => $data->ordem,
@@ -332,14 +334,15 @@
                                     'campo' => 'ordem'
                                 ]
                             ],
-                        ]);
-                    }
+                        ]) : $data->ordem);
+                    },
+                    'visible' => Yii::$app->user->identity->nivel != 'fiscal' ? true : false
                 ],
                 [
                     'attribute' => 'numero_sei',
                     'format'=>'raw',
                     'value' => function($data) {
-                        return Editable::widget([
+                        return (Yii::$app->user->identity->nivel != 'fiscal' ? Editable::widget([
                             'name'=>'numero_sei', 
                             'asPopover' => true,
                             'value' => $data->numero_sei,
@@ -353,7 +356,7 @@
                                     'campo' => 'numero_sei'
                                 ]
                             ],
-                        ]);
+                        ]) : $data->numero_sei);
                     }
                 ],
                 // 'exigencias',
@@ -374,6 +377,7 @@
                         'width' => '10%'
                     ],
                     'value' => function($data) {
+                        
                         $produtos_do_empreendimento = ArrayHelper::map(\app\models\Produto::find()->where([
                             'empreendimento_id' => $data->licenciamento->empreendimento_id
                         ])->all(), 'id', 'subproduto');
@@ -384,7 +388,7 @@
                             ]);
                         }
                         
-                        return Editable::widget([
+                        return (Yii::$app->user->identity->nivel != 'fiscal' ? Editable::widget([
                             'name'=>'produto_id', 
                             'asPopover' => true,
                             'value' => $data->produto_id,
@@ -400,33 +404,37 @@
                                     'campo' => 'produto_id'
                                 ]
                             ],
-                        ]).$renderizaProduto;
+                        ]): '').$renderizaProduto;
                     }
                 ],
                 [
                     'attribute' => 'status',
                     'format'=>'raw',
                     'value' => function($data) {
-                        return Editable::widget([
-                            'name'=>'status', 
-                            'asPopover' => true,
-                            'value' => $data->status,
-                            'header' => 'Status',
-                            'size'=>'sm',
-                            'inputType' => Editable::INPUT_RADIO_LIST,
-                            'data' => [
-                                'Pendente' => 'Pendente',
-                                'Em andamento' => 'Em andamento',
-                                'Concluído' => 'Concluído',
-                            ],
-                            'formOptions' => [
-                                'action' => [
-                                    'fase/editcampo',
-                                    'id' => $data->id,
-                                    'campo' => 'status'
-                                ]
-                            ],
-                        ]);
+                        if (Yii::$app->user->identity->nivel != 'fiscal'):
+                            return Editable::widget([
+                                'name'=>'status', 
+                                'asPopover' => true,
+                                'value' => $data->status,
+                                'header' => 'Status',
+                                'size'=>'sm',
+                                'inputType' => Editable::INPUT_RADIO_LIST,
+                                'data' => [
+                                    'Pendente' => 'Pendente',
+                                    'Em andamento' => 'Em andamento',
+                                    'Concluído' => 'Concluído',
+                                ],
+                                'formOptions' => [
+                                    'action' => [
+                                        'fase/editcampo',
+                                        'id' => $data->id,
+                                        'campo' => 'status'
+                                    ]
+                                ],
+                            ]);
+                        else:
+                            return $data->status;
+                        endif;
                     } 
                 ],
                 [

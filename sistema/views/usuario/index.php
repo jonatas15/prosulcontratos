@@ -14,7 +14,7 @@ $this->title = 'Usuarios';
 $this->params['breadcrumbs'][] = $this->title;
 $templategeral_grid = '';
 switch (Yii::$app->user->identity->nivel) {
-    case 'administrador': $templategeral_grid = '{update}{delete}'; break;
+    case 'administrador': $templategeral_grid = '{update}<hr style="margin: 4px 0 !important;">{delete}'; break;
     case 'gestor': $templategeral_grid = '{update}'; break;
 }
 ?>
@@ -62,8 +62,34 @@ switch (Yii::$app->user->identity->nivel) {
             ],
             'email:email',
             // 'cpf',
-            'nivel',
+            // 'nivel',
+            [
+                'attribute' => 'nivel',
+                'format' => 'raw',
+                'value' => function($data) {
+                    switch ($data->nivel) {
+                        case 'gestor': $retorno = 'Editor'; break;
+                        case 'fiscal': $retorno = 'Visualizador'; break;
+                        default: $retorno = $data->nivel; break;
+                    }
+                    return '<label style="text-transform: capitalize">'.$retorno.'</label>';
+                }
+            ],
             'login',
+            [
+                'header' => 'Permissões',
+                'format' => 'raw',
+                'value' => function($data) {
+                    if ($data->nivel == 'administrador') {
+                        return '<strong>Geral</strong>';
+                    } else {
+                        $model = Usuario::findOne(['id' => $data->id]);
+                        return ''.$this->render('acessos', [
+                            'model' => $model
+                        ]).'';
+                    }
+                }
+            ],
             // 'senha',
             [
                 'class' => ActionColumn::className(),

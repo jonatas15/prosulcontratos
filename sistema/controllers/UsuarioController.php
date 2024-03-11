@@ -13,6 +13,10 @@ use yii\web\UploadedFile;
 use yii\filters\AccessControl;
 use yii\web\ForbiddenHttpException;
 
+// Contratos e Empreendimentos Permitidos
+use app\models\UsuarioHasContrato as UhC;
+use app\models\UsuarioHasEmpreendimento as UhE;
+
 use Yii;
 \Yii::$app->language ="pt-BR";
 
@@ -109,6 +113,28 @@ class UsuarioController extends Controller
                 if ($model->save()) {
                     if ($model->imageFile)
                         $model->upload();
+                        $perm_contratos = $_REQUEST['Contrato'];
+                        // remove os de antes pra nova relação
+                        foreach(UhC::findAll(['usuario_id' => $model->id]) as $uhc) {
+                            $uhc->delete();
+                        }
+                        foreach($perm_contratos as $contrato) {
+                            $rel_contrato = new UhC();
+                            $rel_contrato->contrato_id = $contrato;
+                            $rel_contrato->usuario_id = $model->id;
+                            $rel_contrato->save();
+                        }
+                        $perm_empreendimentos = $_REQUEST['Empreendimento'];
+                        // remove os de antes pra nova relação
+                        foreach(UhE::findAll(['usuario_id' => $model->id]) as $uhe) {
+                            $uhe->delete();
+                        }
+                        foreach($perm_empreendimentos as $empreendimento) {
+                            $rel_empreendimento = new UhE();
+                            $rel_empreendimento->empreendimento_id = $empreendimento;
+                            $rel_empreendimento->usuario_id = $model->id;
+                            $rel_empreendimento->save();
+                        }
                     return $this->redirect(['index']);
                 }
             }
@@ -133,6 +159,8 @@ class UsuarioController extends Controller
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post())) {
+
+            
             $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
             if ($model->imageFile) {
                 $model->foto = $model->imageFile->baseName.'.'.$model->imageFile->extension;
@@ -142,6 +170,34 @@ class UsuarioController extends Controller
                 if ($model->imageFile) {
                     $model->upload();
                 }
+                // echo '<pre>'; 
+                // print_r($_REQUEST);
+                // echo '</pre>';
+
+                $perm_contratos = $_REQUEST['Contrato'];
+                // remove os de antes pra nova relação
+                foreach(UhC::findAll(['usuario_id' => $model->id]) as $uhc) {
+                    $uhc->delete();
+                }
+                foreach($perm_contratos as $contrato) {
+                    $rel_contrato = new UhC();
+                    $rel_contrato->contrato_id = $contrato;
+                    $rel_contrato->usuario_id = $model->id;
+                    $rel_contrato->save();
+                }
+                $perm_empreendimentos = $_REQUEST['Empreendimento'];
+                // remove os de antes pra nova relação
+                foreach(UhE::findAll(['usuario_id' => $model->id]) as $uhe) {
+                    $uhe->delete();
+                }
+                foreach($perm_empreendimentos as $empreendimento) {
+                    $rel_empreendimento = new UhE();
+                    $rel_empreendimento->empreendimento_id = $empreendimento;
+                    $rel_empreendimento->usuario_id = $model->id;
+                    $rel_empreendimento->save();
+                }
+
+                // exit();
                 return $this->redirect(['index']);
             }
         }

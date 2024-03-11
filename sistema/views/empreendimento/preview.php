@@ -101,6 +101,7 @@ $json_data_4 = json_decode($json_br_080_4,true);
                     <h3 class="my-3 mx-3"><i class="fa fa-road"></i> <strong><?=$model->titulo?></strong></h3>
                     <div class='card-footer'>
                         <?= '<b>Registro: </b>'. date('m/d/Y', strtotime($model->datacadastro)) ?>
+                        <?php if (Yii::$app->user->identity->nivel == 'administrador'): ?>
                         <?= Html::a('<i class="bi bi-trash"></i>', ['delete', 'id' => $model->id], [
                             'class' => 'btn btn-link p-1 px-0 mx-1 float-right text-danger',
                             'data' => [
@@ -111,9 +112,12 @@ $json_data_4 = json_decode($json_br_080_4,true);
                                 'disabled' => 'disabled'
                             ],
                         ]); ?>
+                        <?php endif; ?>
+                        <?php if(Yii::$app->user->identity->nivel != 'fiscal'): ?>
                         <?= Html::a('<i class="bi bi-pencil"></i> Editar', $url.'update?id='.$model->id.'&contrato='.$model->contrato->id, [
                             'class' => 'btn btn-link p-1 px-0 mx-1 float-right'
                         ]); ?>
+                        <?php endif; ?>
 
                     </div>
                 </div>
@@ -185,11 +189,11 @@ $json_data_4 = json_decode($json_br_080_4,true);
                             'label' => '🌐 MAPA E MARCADORES',
                             'content' => '<div class="">'.$this->render('omapa', [
                                 'mapas' => $mapas
-                            ]).'</div>'.'
+                            ]).'</div>'.(Yii::$app->user->identity->nivel != 'fiscal' ? '
                                 <center>
                                     <a href="'.Yii::$app->homeUrl.'empreendimento/update?id='.$model->id.'&abativa=aba_arquivos" class="btn btn-primary w-25 my-2 text-center">Mais arquivos: <i class="bi bi-upload"></i></a>
                                 </center>
-                            ',
+                            ' : ''),
                             'options' => ['id' => 'emp_mapas'],
                             'active' => true,
                 

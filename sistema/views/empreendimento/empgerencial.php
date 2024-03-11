@@ -64,11 +64,13 @@ $this->params['breadcrumbs'][] = 'Licenciamentos';
     <div class="row">
         <div class="col-md-12">
             <?php $modelLicenciamentos = new \app\models\Licenciamento(); ?>
+            <?php if ($usernivel != 'fiscal'): ?>
             <?= $this->render('/licenciamento/create', [
                 'model' => $modelLicenciamentos,
                 'empreendimento_id' => $model->id,
                 'contrato_id' => $model->contrato_id
             ]) ?>
+            <?php endif; ?>
         </div>
     </div>
     <?php if (count($model->licenciamentos) > 0): ?>

@@ -9,6 +9,10 @@ use app\models\Licenciamento;
 use app\models\Produto;
 
 use yii\bootstrap5\Modal;
+use yii\helpers\Html;
+
+use app\models\UsuarioHasContrato as UHC;
+use app\models\UsuarioHasEmpreendimento as UHE;
 
 $this->title = 'PROSUL-DNIT';
 
@@ -323,14 +327,27 @@ $this->title = 'PROSUL-DNIT';
             </div>
 
             */ ?>
-            <?php $contratos = Contrato::find()->orderBy([
-                'id' => SORT_DESC
-            ])->all(); ?>
+            <?php
+            ?>
+            <?php
+            
+            if (Yii::$app->user->identity->nivel == 'administrador') {
+                $contratos = Contrato::find()->orderBy(['id' => SORT_DESC])->all();                 
+            } else {
+                $contratos_permitidos = UhC::findAll(['usuario_id' => Yii::$app->user->identity->id]);
+                $ids_permitidos = [];
+                foreach ($contratos_permitidos as $k) {
+                    array_push ($ids_permitidos, $k->contrato_id);
+                }
+                $contratos = Contrato::find()->where(['IN', 'id', $ids_permitidos])->orderBy(['id' => SORT_DESC])->all(); 
+            }
+            
+            ?>
             <!-- <div class="col-1 my-5"></div> -->
             <?php foreach ($contratos as $k => $contrato): ?>
                 <?php
                     $cardcolor = 'primary';
-                    if($contrato->titulo == '093-22 - Lote A') {
+                    if($contrato->titulo == '093-2022 - Lote A') {
                         $cardcolor = 'success';
                     }    
                 ?>
@@ -361,8 +378,17 @@ $this->title = 'PROSUL-DNIT';
                             <center>
                                 <a href="<?=Yii::$app->homeUrl.'contrato/view?id='.$contrato->id?>" type="button" class="w-50 px-4 button-adicionar btn btn-<?=$cardcolor?>">
                                     <!-- Acessar <i class="fa fa-search fa-flip-horizontal"></i> -->
-                                    Acessar <i class="fa fa-search"></i>
+                                    <i class="fa fa-search"></i> ® Acessar 
                                 </a>
+                                <?php if(Yii::$app->user->identity->nivel == 'administrador'): ?>
+                                <?= Html::a('<i class="fa fa-trash"></i> Excluir', ['contrato/delete', 'id' => $contrato->id], [
+                                    'class' => 'btn btn-danger',
+                                    'data' => [
+                                        'confirm' => 'Deseja mesmo excluir esse Contrato?',
+                                        'method' => 'post',
+                                    ],
+                                ]); ?>
+                                <?php endif; ?>
                             </center>
                         </div>
                     </div>

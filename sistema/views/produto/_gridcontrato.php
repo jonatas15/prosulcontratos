@@ -19,16 +19,27 @@ echo '<select class="select_servico_produto form-control" onchange="
     $(\'#produtosearch-empreendimento_id\').val('.$empreendimento_id.');
     $(\'#form-pesquisa-produto\').submit();
 ">';
+
 echo '<option value="">Selecione</option>';
+// $radios_servicos = "";
 foreach ($lista_servicos as $serv) {
     echo '<option value="'.$serv.'">'.$serv.'</option>';
+    // $radios_servicos .= "
+    // <label for=\"check-hoje-produto\" style=\"padding:1%\">
+    //     <input type=\"radio\" name=\"ProdutoSearch[$serv]\" value=\"check-hoje\" id=\"check-hoje-produto_".$serv."\">
+    //     $serv
+    // </label>
+    // ";
 }
 echo '</select>';
 echo '</div>';
 echo '</div>';
 echo '</br>';
 ?>
-
+<!-- <div class="col-md-12">
+    <label class="control-label summary">Pastas</label><br>
+    <?php //=$radios_servicos?>
+</div> -->
 <?= GridView::widget([
         'dataProvider' => $dataProvider,
         // 'filterModel' => $searchModel,

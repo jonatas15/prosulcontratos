@@ -12,6 +12,9 @@ use yii\bootstrap5\NavBar;
 
 use kartik\widgets\SideNav;
 use yii\helpers\Url;
+
+use app\models\UsuarioHasContrato as UHC;
+use app\models\UsuarioHasEmpreendimento as UHE;
 // use yii\web\View;
 
 AppAsset::register($this);
@@ -146,7 +149,16 @@ $g_drive = '<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 51
             ]
         ]
     ]);
-    $contratos = \app\models\Contrato::find()->all();
+    if (Yii::$app->user->identity->nivel == 'administrador') {
+        $contratos = \app\models\Contrato::find()->all();
+    } else {
+        $contratos_permitidos = UhC::findAll(['usuario_id' => Yii::$app->user->identity->id]);
+        $ids_permitidos = [];
+        foreach ($contratos_permitidos as $k) {
+            array_push ($ids_permitidos, $k->contrato_id);
+        }
+        $contratos = \app\models\Contrato::find()->where(['IN', 'id', $ids_permitidos])->orderBy(['id' => SORT_DESC])->all(); 
+    }
     $contratoslistados = [];
     
     $contratoseempreendimentos = [];
@@ -157,17 +169,40 @@ $g_drive = '<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 51
         ]);
         $empreendimentos = [];
         foreach ($contrato->empreendimentos as $emps) {
-            array_push($empreendimentos, [
-                'label' => substr($emps->titulo, 0, 20),
-                'icon' => 'road',
-                'url' => ['empreendimento/preview?id='.$emps->id.'&contrato='.$emps->contrato_id],
-            ]);
-            $preview = 'preview';
-            if (strpos(Url::current(), 'empgerencial')) {
-                $preview = 'empgerencial';
-            }
-            if (strpos(Url::current(), 'update')) {
-                $preview = 'update';
+            if (Yii::$app->user->identity->nivel != 'administrador') {
+                $emps_permitidos = UhE::findAll(['usuario_id' => Yii::$app->user->identity->id]);
+                $ids_permitidos = [];
+                foreach ($emps_permitidos as $k) {
+                    array_push ($ids_permitidos, $k->empreendimento_id);
+                }
+                if (in_array($emps->id, $ids_permitidos)) {
+                    array_push($empreendimentos, [
+                        'label' => substr($emps->titulo, 0, 20),
+                        'icon' => 'road',
+                        'url' => ['empreendimento/preview?id='.$emps->id.'&contrato='.$emps->contrato_id],
+                    ]);
+                    $preview = 'preview';
+                    if (strpos(Url::current(), 'empgerencial')) {
+                        $preview = 'empgerencial';
+                    }
+                    if (strpos(Url::current(), 'update')) {
+                        $preview = 'update';
+                    }
+                }
+            } else {
+                array_push($empreendimentos, [
+                    'label' => substr($emps->titulo, 0, 20),
+                    'icon' => 'road',
+                    'url' => ['empreendimento/preview?id='.$emps->id.'&contrato='.$emps->contrato_id],
+                ]);
+                $preview = 'preview';
+                if (strpos(Url::current(), 'empgerencial')) {
+                    $preview = 'empgerencial';
+                }
+                if (strpos(Url::current(), 'update')) {
+                    $preview = 'update';
+                }
+
             }
         }
         array_push($contratoseempreendimentos, [
@@ -183,13 +218,30 @@ $g_drive = '<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 51
     ])->one();
 
     foreach ($contrato_ativo->empreendimentos as $emp) {
-        # code...
-        array_push($empreendimentos_all, [
-            'label' => substr($emp->titulo, 0, 20),
-            'icon' => 'road',
-            'url' => ['empreendimento/'.$preview.'?id='.$emp->id.'&contrato='.$contrato_ativo->id],
-            'active' => $_REQUEST['id'] == $emp->id ? true : false
-        ]);
+        # code..
+        if(Yii::$app->user->identity->nivel != 'administrador') {
+
+            $emps_permitidos = UhE::findAll(['usuario_id' => Yii::$app->user->identity->id]);
+            $ids_permitidos = [];
+            foreach ($emps_permitidos as $k) {
+                array_push ($ids_permitidos, $k->empreendimento_id);
+            }
+            if (in_array($emp->id, $ids_permitidos)) {
+                array_push($empreendimentos_all, [
+                    'label' => substr($emp->titulo, 0, 20),
+                    'icon' => 'road',
+                    'url' => ['empreendimento/'.$preview.'?id='.$emp->id.'&contrato='.$contrato_ativo->id],
+                    'active' => $_REQUEST['id'] == $emp->id ? true : false
+                ]);
+            }
+        } else {
+            array_push($empreendimentos_all, [
+                'label' => substr($emp->titulo, 0, 20),
+                'icon' => 'road',
+                'url' => ['empreendimento/'.$preview.'?id='.$emp->id.'&contrato='.$contrato_ativo->id],
+                'active' => $_REQUEST['id'] == $emp->id ? true : false
+            ]);
+        }
     }
 
     // foreach ($contrato->empreendimentos as $emps) {
@@ -223,15 +275,15 @@ $g_drive = '<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 51
             ],
             [
                 'class' => 'bg-primary',
-                'label' => '<i class="fa fa-link"></i> Links - DRIVE',
+                'label' => '<i class="fa fa-link"></i> SGC-DNIT GoogleDrive',
                 // 'url' => ['/empreendimento'],
                 'visible' => !Yii::$app->user->isGuest,
                 'items' => [
-                    [
-                        'label' => 'Empreendimentos',
-                        'url' => 'http://prosul.bmt.eng.br/#/empreendimentos?contrato_id=1',
-                        'linkOptions' => ['target'=>'_blank'],
-                    ],
+                    // [
+                    //     'label' => 'Empreendimentos',
+                    //     'url' => 'http://prosul.bmt.eng.br/#/empreendimentos?contrato_id=1',
+                    //     'linkOptions' => ['target'=>'_blank'],
+                    // ],
                     [
                         'label' => 'Equipe',
                         'linkOptions' => ['target'=>'_blank'],
@@ -285,7 +337,7 @@ $g_drive = '<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 51
                     ['label' => 'Cadastrar Novo', 'url' => ['/usuario/create']],
                     ['label' => 'Editar meus dados', 'url' => ['/usuario/update', 'id' => Yii::$app->user->identity->id]],
                 ],
-                'visible' => !Yii::$app->user->isGuest
+                'visible' => Yii::$app->user->identity->nivel == 'administrador' ? true : false
             ],
             Yii::$app->user->isGuest
                 ? ['label' => ' Login', 'url'=>['/site/login']]

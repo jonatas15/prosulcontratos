@@ -38,11 +38,12 @@ Modal::begin([
         <?= DetailView::widget([
             'model' => $model,
             'attributes' => [
-                'id',
+                // 'id',
                 // 'produto_id',
+                'servico:ntext',
+                'subproduto',
                 'empreendimento.titulo',
                 'ordensdeservico.titulo',
-                'subproduto',
                 'numero',
                 // 'datacadastro',
                 [
@@ -71,7 +72,6 @@ Modal::begin([
                 ],
                 'fase',
                 'entrega:ntext',
-                'servico:ntext',
                 'descricao:ntext',
                 [
                     'attribute'=> 'aprov_data',
