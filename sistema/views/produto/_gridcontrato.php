@@ -177,7 +177,8 @@ echo '</br>';
                     📋 $count_revisoes)
                     </a>".
                     '</center>';
-                }
+                },
+                'visible' => in_array(Yii::$app->user->identity->nivel, ['administrador', 'gestor']) ? true : false
             ],
             [
                 'attribute' => 'id',

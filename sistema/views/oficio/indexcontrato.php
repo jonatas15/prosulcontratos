@@ -14,6 +14,15 @@ use kartik\date\DatePicker;
 use miloschuman\highcharts\Highcharts;
 
 use yii\bootstrap5\Accordion;
+use app\models\UsuarioHasContrato as UHC;
+use app\models\UsuarioHasEmpreendimento as UHE;
+$empreendimentos_permitidos = UHE::findAll(['usuario_id' => Yii::$app->user->identity->id]);
+$ids_permitidos = [];
+foreach ($empreendimentos_permitidos as $k) {
+    array_push ($ids_permitidos, $k->empreendimento_id);
+    // echo $k->empreendimento_id;
+}
+//->andWhere(['IN', 'id', $ids_permitidos])
 
 // use yii\bootstrap5\Modal;
 // Modal::begin([
@@ -97,11 +106,13 @@ Yii::$app->params['contratoidGlobal'] = $contrato_id;
     </h3>
     <div class="row">
         <div class="col-md-12">
+            <?php if(Yii::$app->user->identity->nivel != 'fiscal'): ?>
             <?php $modelnovooficio = new Oficio(); ?>
             <?= $this->render('create', [
                 'model' => $modelnovooficio,
                 'contrato_id' => $contrato_id
             ]) ?>
+            <?php endif; ?>
         </div>
     </div>
     <?php /**
@@ -846,7 +857,13 @@ Yii::$app->params['contratoidGlobal'] = $contrato_id;
                     $arr_empreendimentos_oficios = [
                         'Administrativo' => 'Administrativo'
                     ];
+                    $emp_ref = Empreendimento::find()->where(['IN', 'id', $ids_permitidos])->all();
+                    $titulos_empreendimentos_no_sistema = [];
+                    foreach ($emp_ref as $emp2) {
+                        array_push($titulos_empreendimentos_no_sistema, $emp2->titulo);
+                    }
                     foreach ($empreendimentos as $emp) {
+                        // if (in_array($emp->emprrendimento_desc, $titulos_empreendimentos_no_sistema))
                         $arr_empreendimentos_oficios[$emp->emprrendimento_desc] = $emp->emprrendimento_desc;
                     }
                     // $lista_emp = ArrayHelper::map($empreendimentos, 'id', 'titulo');

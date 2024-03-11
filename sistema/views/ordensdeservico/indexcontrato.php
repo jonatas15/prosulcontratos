@@ -83,6 +83,15 @@ $empreendimentos = Empreendimento::find()->where([
     <div class="clearfix">
         <br />
     </div>
+    <div class="col-md-12">
+        <?php if ($contrato_id == 1): ?>
+            <a href="https://docs.google.com/spreadsheets/d/1tIbBmo-ogFCphldCIHdGzdrr-WXKndmW/edit#gid=869039581" target="_blank" rel="noopener noreferrer" class="btn btn-primary"><i class="fa fa-link"></i> Planilhas Controle - OS</a>
+            <a href="https://drive.google.com/drive/u/0/folders/17-Zm7Odhqy7-7HK2VBK1cTgGebJAVwyv" target="_blank" rel="noopener noreferrer" class="btn btn-primary"><i class="fa fa-link"></i> Planos de Trabalho</a>
+        <?php else: ?>
+            <a href="https://docs.google.com/spreadsheets/d/1tIbBmo-ogFCphldCIHdGzdrr-WXKndmW/edit#gid=869039581" target="_blank" rel="noopener noreferrer" class="btn btn-success"><i class="fa fa-link"></i> Planilhas Controle - OS</a>
+            <a href="https://drive.google.com/drive/u/0/folders/13ukbs8XIkwkCUMwaZiYNsPee-d5B74Q0" target="_blank" rel="noopener noreferrer" class="btn btn-success"><i class="fa fa-link"></i> Planos de Trabalho</a>
+        <?php endif;?>
+    </div>
     <?php
         ########################################## TIPO ##########################################
         // $search_tipos = OS::find()->select('tipo')->groupBy('tipo')->all();

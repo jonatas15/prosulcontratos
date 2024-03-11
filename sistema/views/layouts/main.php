@@ -274,36 +274,53 @@ $g_drive = '<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 51
                 'items' => $contratoslistados
             ],
             [
-                'class' => 'bg-primary',
-                'label' => '<i class="fa fa-link"></i> SGC-DNIT GoogleDrive',
+                'class' => 'bg-success fs-5',
+                'label' => '<i class="fa fa-link"></i> SGC-DNIT GoogleDrive'
+            ],
+            [
+                'class' => 'bg-success fs-5',
+                'label' => '| Lote A',
                 // 'url' => ['/empreendimento'],
                 'visible' => !Yii::$app->user->isGuest,
                 'items' => [
-                    // [
-                    //     'label' => 'Empreendimentos',
-                    //     'url' => 'http://prosul.bmt.eng.br/#/empreendimentos?contrato_id=1',
-                    //     'linkOptions' => ['target'=>'_blank'],
-                    // ],
                     [
-                        'label' => 'Equipe',
+                        'label' => 'Documentação da Equipe de Coordenação',
+                        'linkOptions' => ['target'=>'_blank'],
+                        'url' => 'https://drive.google.com/drive/u/0/folders/13myUOUlKHmtOFF8psORPAFUJxePYW_Rp'
+                    ],
+                    [
+                        'label' => 'Dados do Edital',
+                        'linkOptions' => ['target'=>'_blank'],
+                        'url' => 'https://drive.google.com/drive/u/0/folders/13ggeu3UmhNyOdoMtMyb06jswJRyrjOEO'
+                    ],
+                    [
+                        'label' => 'Indicadores de Contrato',
+                        'linkOptions' => ['target'=>'_blank'],
+                        'url' => 'https://drive.google.com/drive/u/0/folders/13ddspHkhQsqbKhfEQJ-mUVrEQhYHzhtx'
+                    ]
+                ]
+            ],
+            [
+                'class' => 'bg-primary',
+                'label' => '| Lote C',
+                // 'url' => ['/empreendimento'],
+                'visible' => !Yii::$app->user->isGuest,
+                'items' => [
+                    [
+                        'label' => 'Documentação da Equipe de Coordenação',
                         'linkOptions' => ['target'=>'_blank'],
                         'url' => 'https://drive.google.com/drive/u/0/folders/17tibbErWqOxvXvrIPxtuIeiaVP1ta4vQ'
                     ],
                     [
-                        'label' => 'Cronograma',
+                        'label' => 'Dados do Edital',
                         'linkOptions' => ['target'=>'_blank'],
-                        'url' => 'https://drive.google.com/drive/u/0/folders/1h9QY9ybCKnFm6uh3P9FAKbReBGlSX3aM'
+                        'url' => 'https://drive.google.com/drive/u/0/folders/183w14yqKcB5UnQbiRgsG5uDXK7_KSzEU'
                     ],
                     [
-                        'label' => 'Impacto Contratual',
+                        'label' => 'Indicadores de Contrato',
                         'linkOptions' => ['target'=>'_blank'],
-                        'url' => 'https://drive.google.com/drive/u/0/folders/1rTVS4XHhvJFJTRP5fmWe_WkEFdP4dwhS'
-                    ],
-                    [
-                        'label' => 'Monitoramento Contratual',
-                        'linkOptions' => ['target'=>'_blank'],
-                        'url' => 'https://docs.google.com/spreadsheets/d/1ykXt_3lxOgUdw0l9SLUMDacd-ym1pHmR/edit#gid=574077694'
-                    ],
+                        'url' => 'https://drive.google.com/drive/u/0/folders/187DBWSigapV-9gfkAUoCihbddcOaLwTY'
+                    ]
                 ]
             ],
             // [

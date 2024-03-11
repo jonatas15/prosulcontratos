@@ -114,22 +114,79 @@ $json_data = json_decode($json,true);
             <div class="col-md-6">
                 <div class="row">
                 <?php
+                    /**
+                     * 
+                        Processo Administrativo SEI DNIT: 50600.010067/2018-07
+                        https://sei.dnit.gov.br/sei/processo_acesso_externo_consulta.php?id_acesso_externo=301535&infra_hash=df716deb6343918b9beb608cd380a543
+
+                        Processo Administrativo SEI DNIT: 50600.009812/2021-62
+                        https://sei.dnit.gov.br/sei/processo_acesso_externo_consulta.php?id_acesso_externo=351607&infra_hash=78806fcc71fcc23cdff1a8c61f578486
+
+                        Processo Administrativo SEI DNIT: 50600.018910/2020-18
+                        https://sei.dnit.gov.br/sei/processo_acesso_externo_consulta.php?id_acesso_externo=381782&infra_hash=5970b83627d2e5937d4b80cad44daaf7
+                     */
                     foreach ($dataProvider->models as $row) {
                         # code...
+                        $links_externos = "";
+
+                        switch ($row->id) {
+                            case 4:
+                                $links_externos .= "<a class='btn btn-link' href='https://sei.dnit.gov.br/sei/processo_acesso_externo_consulta.php?id_acesso_externo=301535&infra_hash=df716deb6343918b9beb608cd380a543' target='_blank'>Processo Administrativo SEI DNIT: 50600.010067/2018-07</a>";
+                                $links_externos .= "<a class='btn btn-link' href='https://sei.dnit.gov.br/sei/processo_acesso_externo_consulta.php?id_acesso_externo=351607&infra_hash=78806fcc71fcc23cdff1a8c61f578486' target='_blank'>Processo Administrativo SEI DNIT: 50600.009812/2021-62</a>";
+                                $links_externos .= "<a class='btn btn-link' href='https://sei.dnit.gov.br/sei/processo_acesso_externo_consulta.php?id_acesso_externo=381782&infra_hash=5970b83627d2e5937d4b80cad44daaf7' target='_blank'>Processo Administrativo SEI DNIT: 50600.018910/2020-18</a>";
+                                break;
+                            case 5:
+                                $links_externos .= "<a class='btn btn-link' href='https://sei.dnit.gov.br/sei/processo_acesso_externo_consulta.php?id_acesso_externo=481005&infra_hash=c659a7225da9aaee3e53c53ddb6fc2d8' target='_blank'>Processo Administrativo SEI DNIT: 50600.018471/2010-63</a>";
+                                break;
+                            case 6:
+                                $links_externos .= "<a 
+                                    class='btn btn-link' 
+                                    href='https://sei.dnit.gov.br/sei/processo_acesso_externo_consulta.php?id_acesso_externo=490748&infra_hash=fc7dcb4930e7d50ef53d2e4af424b00f' 
+                                    target='_blank'>
+                                        Processo Administrativo SEI DNIT: 50600.502439/2017-38
+                                    </a>";
+                                break;
+                            case 10:
+                                $links_externos .= "<a 
+                                    class='btn btn-link' 
+                                    href='https://sei.dnit.gov.br/sei/processo_acesso_externo_consulta.php?id_acesso_externo=301565&infra_hash=b89346c2cfb4b588ecd3bc54a6d3cdde' 
+                                    target='_blank'>
+                                        Processo Administrativo SEI DNIT: 50600.010055/2018-74
+                                    </a>";
+                                break;
+                            case 12:
+                                $links_externos .= "<a 
+                                    class='btn btn-link' 
+                                    href='https://sei.dnit.gov.br/sei/processo_acesso_externo_consulta.php?id_acesso_externo=681365&infra_hash=46d028c13286d2f1dc04ee82ec68b2cc' 
+                                    target='_blank'>
+                                        Processo Administrativo SEI DNIT: 50600.028403/2022-46
+                                    </a>";
+                                $links_externos .= "<a 
+                                    class='btn btn-link' 
+                                    href='https://sei.dnit.gov.br/sei/processo_acesso_externo_consulta.php?id_acesso_externo=464174&infra_hash=29cd1bbfcf586c8c86aec2bd41479bd2' 
+                                    target='_blank'>
+                                        Processo Administrativo SEI DNIT: 50600.001843/2020-94
+                                    </a>";
+                                break;
+                            
+                            default: $links_externos .= ""; break;
+                        }
                         
                         if (Yii::$app->user->identity->nivel == 'administrador') {
                             echo '<div class="col-6 my-3">';
-                            echo "<a class='card' href='".Yii::$app->homeUrl."empreendimento/preview?id=$row->id&contrato={$row->contrato->id}' style='text-decoration: none !important'>
-                                <div class='card-header bg-prinfo text-grey'>
-                                <strong><i class='fa fa-road'></i> $row->titulo</strong>".
-                                "</div>
-                                <div class='card-body'>
-                                    <p class='card-text'>Segmento: $row->segmento</p>".
+                                echo "<div class='card'>
+                                    <a class='text-white' href='".Yii::$app->homeUrl."empreendimento/preview?id=$row->id&contrato={$row->contrato->id}' style='text-decoration: none !important'>
+                                    <div class='card-header bg-prinfo text-grey'>
+                                            <strong><i class='fa fa-road'></i> $row->titulo</strong>".
+                                    "</div></a>
+                                    <div class='card-body'>".
+                                        "<p class='card-text'>$links_externos</p>".
+                                        "<p class='card-text'>Segmento: $row->segmento</p>".
+                                        "</div>
+                                        <div class='card-footer'>Registro: ".date('m/d/Y', strtotime($row->datacadastro)).
                                     "</div>
-                                    <div class='card-footer'>Registro: ".date('m/d/Y', strtotime($row->datacadastro)).
-                                "</div>
-                                </div>";
-                            echo '</a>';
+                                    </div>";
+                                echo '</div>';
                         } else {
                             $emps_permitidos = UhE::findAll(['usuario_id' => Yii::$app->user->identity->id]);
                             $ids_permitidos = [];
@@ -138,17 +195,18 @@ $json_data = json_decode($json,true);
                             }
                             if (in_array($row->id, $ids_permitidos)) {
                                 echo '<div class="col-6 my-3">';
-                                echo "<a class='card' href='".Yii::$app->homeUrl."empreendimento/preview?id=$row->id&contrato={$row->contrato->id}' style='text-decoration: none !important'>
+                                echo "<div class='card'>
                                     <div class='card-header bg-prinfo text-grey'>
-                                    <strong><i class='fa fa-road'></i> $row->titulo</strong>".
-                                    "</div>
+                                        <a href='".Yii::$app->homeUrl."empreendimento/preview?id=$row->id&contrato={$row->contrato->id}' style='text-decoration: none !important'>
+                                            <strong><i class='fa fa-road'></i> $row->titulo</strong>".
+                                    "</a></div>
                                     <div class='card-body'>
                                         <p class='card-text'>Segmento: $row->segmento</p>".
                                         "</div>
                                         <div class='card-footer'>Registro: ".date('m/d/Y', strtotime($row->datacadastro)).
                                     "</div>
                                     </div>";
-                                echo '</a>';
+                                echo '</div>';
                             }
                         }
                     }

@@ -363,6 +363,18 @@ function formatar_campo($campo, $valor) {
                 <!-- </a> -->
             <!-- </div> -->
             <div id="resumo-do-contrato" class="col-12 my-2">
+                <div class="col-md-12">
+                    <?php if ($model->id == 1): ?>
+                        <a href="https://www.google.com/url?q=https://sei.dnit.gov.br/sei/processo_acesso_externo_consulta.php?id_acesso_externo%3D351620%26infra_hash%3D304eff0e7d4cf4734089b207085993e1&source=gmail-html&ust=1710258210132000&usg=AOvVaw2TtU8hLLo1_pEOOw5bQwy3" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                            <i class="fa fa-link"></i> Processo Administrativo: 50600.012334/2022-59
+                        </a>
+                    <?php else: ?>
+                        <a href="https://www.google.com/url?q=https://sei.dnit.gov.br/sei/processo_acesso_externo_consulta.php?id_acesso_externo%3D351609%26infra_hash%3D5ea388ed228eb172de7cee57ba8e36ca&source=gmail-html&ust=1710258210132000&usg=AOvVaw0-O1U5qe3j1dhrZbPL9UVE" target="_blank" rel="noopener noreferrer" class="btn btn-success">
+                            <i class="fa fa-link"></i> Processo Administrativo: 50600.000865/2021-18
+                        </a>
+                    <?php endif;?>
+                </div>
+                <div class="clearfix"><br></div>
                 <?= $this->render('detalhamentocontrato', [
                     'model' => $model,
                     'dados' => $dados_api

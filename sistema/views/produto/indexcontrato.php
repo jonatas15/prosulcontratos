@@ -2,6 +2,7 @@
 
 use app\models\Produto;
 use app\models\Empreendimento;
+use app\models\Ordensdeservico;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -14,6 +15,14 @@ use yii\web\JsExpression;
 use miloschuman\highcharts\Highcharts;
 use yii\bootstrap5\Accordion;
 use kartik\tabs\TabsX as Tabs;
+
+use app\models\UsuarioHasContrato as UHC;
+use app\models\UsuarioHasEmpreendimento as UHE;
+$empreendimentos_permitidos = UHE::findAll(['usuario_id' => Yii::$app->user->identity->id]);
+$ids_permitidos = [];
+foreach ($empreendimentos_permitidos as $k) {
+    array_push ($ids_permitidos, $k->empreendimento_id);
+}
 
     /**
     
@@ -182,10 +191,12 @@ use kartik\tabs\TabsX as Tabs;
     <div class="">
         <div class="float-right">
             <?php $modelProduto = new Produto(); ?>
+            <?php if(Yii::$app->user->identity->nivel != 'fiscal'): ?>
             <?= $this->render('create', [
                 'model' => $modelProduto,
                 'contrato_id' => $contrato_id
             ]) ?>
+            <?php endif; ?>
         </div>
     </div>
     <div class="clearfix">
@@ -316,14 +327,22 @@ use kartik\tabs\TabsX as Tabs;
                     $RV0_t = $RV1_t = $RV2_t = $RV3_t = $RV4_t = $RV5_t = 0;
                     $tempo_medio_dnit = 0;
                     $tempo_medio_prosul = 0;
-
-                    $empreendimentos = Empreendimento::find()->where([
-                        'contrato_id' => $contrato_id
-                    ])->all();
+                    if (Yii::$app->user->identity->nivel == 'administrador') {
+                        $empreendimentos = Empreendimento::find()->where([
+                            'contrato_id' => $contrato_id
+                        ])->all();
+                    } else {
+                        $empreendimentos = Empreendimento::find()->where([
+                            'contrato_id' => $contrato_id
+                        ])->andWhere(['IN', 'id', $ids_permitidos])->all();
+                    }
+                    
                     $graph_empreendimentos = [];
-                    $os = \app\models\OrdensdeServico::find()->where([
+                    
+                    $os = Ordensdeservico::find()->where([
                         'contrato_id' => $contrato_id
                     ])->all();
+                    
                     $graph_os = [];
                     $i = 0;
                     $dnit_t = $prosul_t = $cgmab = 0;
