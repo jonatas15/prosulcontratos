@@ -1,6 +1,7 @@
 <?php 
 use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
 
 $produtos = \app\models\Produto::find()->where([
     'empreendimento_id' => $empreendimento_id
@@ -68,23 +69,65 @@ echo '</br>';
             //         'width' => '5%'
             //     ]
             // ],
-            'servico',
-            'subproduto',
+            // 'servico',
+            [
+                'attribute' => 'id',
+                'header' => 'Detalhes',
+                'headerOptions' => [
+                    'width' => '5%'
+                ],
+                'format' => 'raw',
+                'value' => function($data) {        
+                    return '<center>'.$this->render('detalhes', [
+                        'id' => $data->id
+                    ]).'</center>';
+                }
+            ],
+            [
+                'attribute' => 'subproduto',
+                'headerOptions' => [
+                    'width' => '25%'
+                ],
+                'format' => 'raw',
+                'value' => function($data) {
+                    
+                    switch ($data->fase) {
+                        case 'Em análise': $classe = "info"; break;
+                        case 'Em andamento': $classe = "warning"; break;
+                        case 'Aprovado': $classe = "success"; break;
+                        case 'Reprovado': $classe = "danger"; break;
+                        default: $classe = "info"; break;
+                    }
+                    
+                    return $data->subproduto.'<br><span class="float-right badge rounded-pill text-bg-'.$classe.' text-white">'.$data->fase.'</span>';
+                }
+            ],
             [
                 'attribute' => 'numero',
                 'headerOptions' => [
-                    'width' => '3%'
+                    'width' => '20%'
                 ],
+                'format' => 'raw',
                 'value' => function($data) {
                     $return = "";
+                    switch ($data->fase) {
+                        case 'Em análise': $faseada = "<b class='text-info'>$data->fase</b>"; break;
+                        case 'Em andamento': $faseada = "<b class='text-warning'>$data->fase</b>"; break;
+                        case 'Aprovado': $faseada = "<b class='text-success'>$data->fase</b>"; break;
+                        case 'Reprovado': $faseada = "<b class='text-danger'>$data->fase</b>"; break;
+                    } 
                     foreach($data->revisaos as $rv) {
+                        $i = 1;
                         if ($rv->numero_sei) {
-                            $return .= '<br>'.$rv->titulo.' <strong>SEI: '.$rv->numero_sei.'</strong>';
+                            $return .= '<center><strong>'.$rv->titulo.' - SEI: '.$rv->numero_sei.'</strong></center>';
+                            $i++;
                         }
                     }
-                    return $return;
+                    return "".
+                    $return.
+                    // $return."<center>$faseada</center><br>".
+                    ($data->aprov_versao ?"<center>Rev. Aprovada:</center><center>[ $data->aprov_versao ]</center>":"");
                 },
-                'format' => 'raw',
             ],
             // [
             //     'attribute' => 'ordensdeservico_id',
@@ -132,7 +175,8 @@ echo '</br>';
                     }        
                     return "<center>$faseada</center><br>".
                         "<center>[ $data->aprov_versao ]</center>";
-                }
+                },
+                'visible' => false
             ],
             [
                 'attribute' => 'diretorio_texto',
@@ -143,22 +187,9 @@ echo '</br>';
                         return '<a class="btn btn-link" target="_blank" href="'.$data->diretorio_link.'" 
                         alt="'.$data->diretorio_texto.'"
                         title="'.$data->diretorio_texto.'"
-                        >Acessar</a>';
+                        >Link repositório</a>';
                     }
                     // return $data->emprrendimento_desc;
-                }
-            ],
-            [
-                'attribute' => 'id',
-                'header' => 'Detalhes',
-                'headerOptions' => [
-                    'width' => '5%'
-                ],
-                'format' => 'raw',
-                'value' => function($data) {        
-                    return '<center>'.$this->render('detalhes', [
-                        'id' => $data->id
-                    ]).'</center>';
                 }
             ],
             [
@@ -210,6 +241,23 @@ echo '</br>';
                     return '<a href="'.Yii::$app->homeUrl.'produto/update?id='.$data->id.'" class="btn btn-primary"><i class="bi bi-pencil"></i></a>';
                 },
                 'visible' => in_array(Yii::$app->user->identity->nivel, ['administrador', 'gestor']) ? true : false
+            ],
+            [
+                'header' => 'Excluir',
+                'format' => 'raw',
+                'headerOptions' => [
+                    'width' => '5%'
+                ],
+                'value' => function($data) {
+                    return Html::a('<i class="bi bi-trash"></i>', ['produto/delete', 'id' => $data->id], [
+                        'class' => 'btn btn-danger',
+                        'data' => [
+                            'confirm' => 'Tens certeza que quer excluir esse registro?',
+                            'method' => 'post',
+                        ],
+                    ]);
+                },
+                'visible' => false //in_array(Yii::$app->user->identity->nivel, ['administrador']) ? true : false
             ],
             // [
             //     'class' => ActionColumn::className(),

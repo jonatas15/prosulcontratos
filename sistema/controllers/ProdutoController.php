@@ -183,9 +183,16 @@ class ProdutoController extends Controller
      */
     public function actionDelete($id)
     {
+        $model_temporario = $this->findModel($id);
+        $contrato = $model_temporario->contrato_id;
+        $empreendimento = $model_temporario->empreendimento_id;
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['/contrato/pr', 
+            'id' => $contrato,
+            'abativa' => 'aba_produtos',
+            'empreendimento' => $empreendimento
+        ]);
     }
     public function actionDeletereview($id)
     {

@@ -16,3 +16,18 @@ DASHBOARD CONTRATOS
 
 NOVO SUB-Modulo dentro do Empreendimento (semelhante à gestão de ofícios):
 - Número do documento
+
+
+__________________________________________________________________________ AJUSTES DO SISTEMA
+
+Produtos:
+- Listagem:
+    # Botão excluir
+    # Ocultar coluna 'Serviços'
+- Formulário:
+    # Campo Fase: Nova opção "Em Análise"
+    Campo Empreendimento: Adicionar opção de multipla seleção (N:M relação)
+
+Ordens de Serviço:
+- Formulário:
+    Campo Empreendimento: Adicionar opção de multipla seleção (N:M relação)

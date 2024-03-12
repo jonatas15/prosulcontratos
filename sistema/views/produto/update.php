@@ -88,6 +88,13 @@ $this->params['breadcrumbs'][] = 'Atualizar '.$model->id . '- ' . $model->subpro
 <div class="oficio-update">
     <div class="align-center my-4">
         <?= Html::a('<i class="fa fa-arrow-left"></i> Voltar aos Produtos', ['/contrato/pr?id='.$model->contrato->id.'&abativa=aba_produtos&empreendimento='.$model->empreendimento_id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('<i class="bi bi-trash"></i> Excluir Produto', ['delete', 'id' => $model->id], [
+            'class' => 'btn btn-danger float-right',
+            'data' => [
+                'confirm' => 'Tens certeza que quer excluir esse registro?',
+                'method' => 'post',
+            ],
+        ]);?>
     </div>
     <h3><?= Html::encode($this->title) ?></h3>
     <?php 

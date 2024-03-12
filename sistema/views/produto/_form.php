@@ -51,6 +51,7 @@ $model->aprov_data = $model->aprov_data != '' ? date('d/m/Y', strtotime($model->
             'mask' => '99/99/9999',
         ]) ?></div>
         <div class="col-md-3"><?= $form->field($model, 'fase')->dropDownList([
+            'Em análise' => 'Em análise',
             'Em andamento' => 'Em andamento',
             'Aprovado' => 'Aprovado',
             'Reprovado' => 'Reprovado',
