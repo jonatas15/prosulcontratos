@@ -116,7 +116,7 @@ echo '</br>';
                         case 'Aprovado': $faseada = "<b class='text-success'>$data->fase</b>"; break;
                         case 'Reprovado': $faseada = "<b class='text-danger'>$data->fase</b>"; break;
                     } 
-                    foreach($data->revisaos as $rv) {
+                    foreach ($data->revisaos as $rv) {
                         $i = 1;
                         if ($rv->numero_sei) {
                             $return .= '<center><strong>'.$rv->titulo.' - SEI: '.$rv->numero_sei.'</strong></center>';

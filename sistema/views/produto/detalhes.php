@@ -180,9 +180,9 @@ Modal::begin([
                                     aria-valuenow="<?=$review->tempo_ultima_etapa?>" 
                                     aria-valuemin="0" 
                                     aria-valuemax="100" 
-                                    style="width: <?=number_format(($review->tempo_ultima_etapa*100)/$total, 2)?>%"
+                                    style="width: <?=($total>0?number_format(($review->tempo_ultima_etapa*100)/$total, 2):'0')?>%"
                                 >
-                                    <?=number_format(($review->tempo_ultima_etapa*100)/$total, 2)?>%
+                                    <?=($total>0?number_format(($review->tempo_ultima_etapa*100)/$total, 2):'0')?>%
                                 </div>
                             </td>
                         </tr>

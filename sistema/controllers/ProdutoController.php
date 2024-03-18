@@ -181,6 +181,9 @@ class ProdutoController extends Controller
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
+    public function actionUpplan() {
+        return $this->render('upplan');
+    }
     public function actionDelete($id)
     {
         $model_temporario = $this->findModel($id);
@@ -217,8 +220,12 @@ class ProdutoController extends Controller
     }
 
     public function dataprobanco ($data) {
-        $arr = explode('/', $data);
-        return $arr[2].'-'.$arr[1].'-'.$arr[0];
+        if ($data !== '') {
+            $arr = explode('/', $data);
+            return $arr[2].'-'.$arr[1].'-'.$arr[0];
+        } else {
+            return '';
+        }
     }
 
     function diasentre($data_inicial, $data_final) {
