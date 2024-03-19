@@ -80,6 +80,10 @@ class OficioController extends Controller
             'dataProvider' => $dataProvider
         ]);
     }
+    public function actionPlanoficios()
+    {
+        return $this->render('planoficios');
+    }
 
     /**
      * Displays a single Oficio model.
