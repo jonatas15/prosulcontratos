@@ -38,7 +38,7 @@ class ContratoController extends Controller
                'only' => ['index', 'view', 'update', 'create',  'delete', 
                     'impactoscontratuais', 'alteraimpacto', 'alteraimpactocampo', 
                     'porempreendimento', 'porproduto',
-                    'novoimpacto', 'os', 'pr'
+                    'novoimpacto', 'os', 'pr', 'go'
                 ],
                'rules' => [
                    [
@@ -51,7 +51,7 @@ class ContratoController extends Controller
                        'actions' => ['index', 'view', 'update', 'create',  'delete', 
                             'impactoscontratuais', 'alteraimpacto', 'alteraimpactocampo', 
                             'porempreendimento', 'porproduto',
-                            'novoimpacto', 'os', 'pr'
+                            'novoimpacto', 'os', 'pr', 'go'
                         ],
                        'roles' => ['@'],
                    ],

@@ -20,8 +20,10 @@ use app\models\UsuarioHasContrato as UHC;
 use app\models\UsuarioHasEmpreendimento as UHE;
 $empreendimentos_permitidos = UHE::findAll(['usuario_id' => Yii::$app->user->identity->id]);
 $ids_permitidos = [];
+$nomes_permitidos = [];
 foreach ($empreendimentos_permitidos as $k) {
     array_push ($ids_permitidos, $k->empreendimento_id);
+    array_push ($nomes_permitidos, $k->empreendimento->titulo);
     // echo $k->empreendimento_id;
 }
 //->andWhere(['IN', 'id', $ids_permitidos])
@@ -827,7 +829,7 @@ Yii::$app->params['contratoidGlobal'] = $contrato_id;
                     Pesquisa <i class="bi bi-arrow-down"></i>
                 </a> 
                 <a
-                    href="<?=Yii::$app->homeUrl."contrato/view?id=$contrato_id&abativa=aba_oficios"?>" 
+                    href="<?=Yii::$app->homeUrl."contrato/go?id=$contrato_id&abativa=aba_oficios"?>" 
                     class="btn btn-primary text-white fs-5" 
                     tolltip="" 
                     title="Limpar/Reiniciar"
@@ -853,12 +855,20 @@ Yii::$app->params['contratoidGlobal'] = $contrato_id;
             </div>
             <div class="col-md-2">
                 <?php 
-                    $empreendimentos = Oficio::find()->where([
-                        'contrato_id' => $contrato_id
-                    ])->all();
                     $arr_empreendimentos_oficios = [
                         'Administrativo' => 'Administrativo'
                     ];
+                    if (\Yii::$app->user->identity->nivel == 'administrador'):
+                        $empreendimentos = Oficio::find()->where([
+                            'contrato_id' => $contrato_id
+                        ])->all();
+                    else:
+                        $empreendimentos = Oficio::find()->where([
+                            'contrato_id' => $contrato_id
+                        ])->andFilterWhere([
+                            'IN', 'emprrendimento_desc', $nomes_permitidos
+                        ])->all();
+                    endif;
                     $emp_ref = Empreendimento::find()->where(['IN', 'id', $ids_permitidos])->all();
                     $titulos_empreendimentos_no_sistema = [];
                     foreach ($emp_ref as $emp2) {
@@ -1155,3 +1165,9 @@ Yii::$app->params['contratoidGlobal'] = $contrato_id;
     ]); ?>
     <?php Pjax::end(); ?>
 </div>
+<?php 
+$this->registerJs(<<<JS
+    $('#w8-collapse0').collapse("hide");
+    $('.accordion').collapse("hide");
+JS);
+?>
