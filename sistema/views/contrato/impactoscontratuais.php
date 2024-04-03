@@ -16,6 +16,9 @@
     use yii\bootstrap5\Accordion;
     use yii\widgets\Pjax;
 
+    // CONTRATO
+    // $contrato_id = 1;
+
     #Globais ou quase
     $contrato = Contrato::findOne(['id' => $contrato_id]);
     $empreendimentos = Empreendimento::find()->where([
@@ -213,15 +216,15 @@
 <?php 
 $lista_btn_empreendimentos = "<div class='row my-2'>";
 foreach ($empreendimentos as $emp) {    
-    $lista_btn_empreendimentos .= "<div class='col-md-3 my-1'>";
+    $lista_btn_empreendimentos .= "<div class='col my-2'>";
     $lista_btn_empreendimentos .= Html::button($emp->titulo, [ 
-        'class' => 'btn btn-info w-100 text-white btn-seleciona-empreendimento', 
+        'class' => 'btn btn-primary w-100 btn-seleciona-empreendimento h-100', 
         'emp_id' => $emp->id,
         'emp_titulo' => $emp->titulo
     ]);
     $lista_btn_empreendimentos .= "</div>";
 }
-$lista_btn_empreendimentos .= "</div>";
+$lista_btn_empreendimentos .= "</div><hr>";
 // echo '<pre>';
 // var_dump($_POST);
 // echo '</pre>';
@@ -229,8 +232,70 @@ $lista_btn_empreendimentos .= "</div>";
 // echo json_encode($graph_grupos);
 ?>
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-7">
         <?= $lista_btn_empreendimentos ?>
+    </div>
+    <div class="col-md-5">
+    <?= Highcharts::widget([
+                'scripts' => [
+                    'modules/exporting',
+                    'themes/grid-light',
+                ],
+                'options' => [
+                    'chart' => [
+                        'type' => 'column',
+                        'height' => 250
+                    ],
+                    'title' => ['text' => 'Quantitativos nos Serviços por Empreendimento'],
+                    'yAxis' => [
+                        'title' => ['text' => 'Quantitativos']
+                    ],
+                    'xAxis' => [
+                        'type' => 'category'
+                    ],
+                    'series' =>  [
+                        [
+                            'name' => 'Quantitativos',
+                            "cursor" => "pointer",
+                            'colorByPoint' => false,
+                            "states" => [
+                                "select" => [
+                                    "color" => "blue"
+                                ]
+                            ],
+                            'allowPointSelect' => true,
+                            "point" => [
+                                "events" => [
+                                    "click" => new JsExpression('function() {
+                                        $.ajax({
+                                        method: "POST",
+                                            url: "porempreendimento",
+                                            data: { 
+                                                empreendimento: this.options.url,
+                                                contrato_id: '.$contrato_id.',
+                                            }
+                                        }).done(function( msg ) {
+                                            // console.log( msg );
+                                            chartxxxx.series[0].setData(msg);
+                                            chartservicos.series[0].setData([]);
+                                        });
+                                        chartxxxx.setTitle({text: "Empreendimento: " + this.options.name + "<br>" + this.options.y + " quantitativos"});
+                                        $(".linha-empreendimento").removeClass("bg-warning text-dark");
+                                        $(".linha-empreendimento-" + this.options.url).addClass("bg-warning text-dark");
+                                        $(".todos-os-grupos").addClass("d-none");
+                                    }')
+                                ],
+                            ],
+                            'data' => $graph_empreendimentos,
+                            'showInLegend' => false,
+                            'dataLabels' => [
+                                'enabled' => false,
+                            ],
+                        ],
+                    ],
+                ]
+            ]);
+        ?>
     </div>
     <?php /**
     <div class="col-md-7">
@@ -329,208 +394,161 @@ $lista_btn_empreendimentos .= "</div>";
         ?>
     </div>
      */ ?>
-    <div class="col-md-5 card" style="border-radius: 0 !important">
-        <h3 class="text-center">Empreendimentos</h3><hr>
-        <?= Highcharts::widget([
-            'scripts' => [
-                'modules/exporting',
-                'themes/grid-light',
-            ],
-            'options' => [
-                'chart' => [
-                    'type' => 'bar',
-                    'height' => 450
-                ],
-                'title' => ['text' => 'Quantitativos nos Serviços por Empreendimento'],
-                'yAxis' => [
-                    'title' => ['text' => 'Quantitativos']
-                ],
-                'xAxis' => [
-                    'type' => 'category'
-                ],
-                'series' =>  [
-                    [
-                        'name' => 'Quantitativos',
-                        "cursor" => "pointer",
-                        'colorByPoint' => false,
-                        "states" => [
-                            "select" => [
-                                "color" => "blue"
-                            ]
-                        ],
-                        'allowPointSelect' => true,
-                        "point" => [
-                            "events" => [
-                                "click" => new JsExpression('function() {
-                                    $.ajax({
-                                    method: "POST",
-                                        url: "porempreendimento",
-                                        data: { 
-                                            empreendimento: this.options.url,
-                                            contrato_id: '.$contrato_id.',
-                                        }
-                                    }).done(function( msg ) {
-                                        // console.log( msg );
-                                        chartxxxx.series[0].setData(msg);
-                                        chartservicos.series[0].setData([]);
-                                    });
-                                    chartxxxx.setTitle({text: "Empreendimento: " + this.options.name + "<br>" + this.options.y + " quantitativos"});
-                                    $(".linha-empreendimento").removeClass("bg-warning text-dark");
-                                    $(".linha-empreendimento-" + this.options.url).addClass("bg-warning text-dark");
-                                    $(".todos-os-grupos").addClass("d-none");
-                                }')
-                            ],
-                        ],
-                        'data' => $graph_empreendimentos,
-                        'showInLegend' => false,
-                        'dataLabels' => [
-                            'enabled' => false,
-                        ],
-                    ],
-                ],
-            ]
-        ]);
-        ?>
-    </div>
-    <div class="col-md-7 card" style="border-radius: 0 !important">
-        <h3 class="text-center">Produtos por Empreendimento</h3><hr>
-        <div id="visitas"></div>
-        <?php /*= Highcharts::widget([
-                'scripts' => [
-                    'modules/exporting',
-                    'themes/grid-light',
-                ],
-                'id' => 'visitas',
-                'options' => [
-                    'chart' => [
-                        'type' => 'pie',
-                        'height' => 500
-                    ],
-                    'title' => ['text' => 'Grupos por Qtd. de Serviços'],
-                    'yAxis' => [
-                        'title' => ['text' => 'Versão']
-                    ],
-                    'xAxis' => [
-                        'type' => 'category'
-                    ],
-                    'series' =>  [
-                        [
-                            'name' => 'Serviços',
-                            "cursor" => "pointer",
-                            "point" => [
-                                "events" => [
-                                    "click" => new JsExpression('function(){
-                                        // $("#por_rv").val(this.options.url);
-                                        // $("#form-pesquisa-produto").submit();
-                                        // console.log(this.options.url);
-                                        
-                                        $(".accordion-item").children(".collapse").removeClass("show");
-                                        $(".accordion-item").children(".accordion-header").children("h5").children(".accordion-button").addClass("collapsed");
-
-                                        $("#item_"+this.options.url).children(".collapse").toggleClass("show");
-                                        $("#item_"+this.options.url).children(".accordion-header").children("h5").children(".accordion-button").toggleClass("collapsed");
-                                    
-                                    }')
-                                ],
-                            ],
-                            'data' => $graph_grupos,
-                            'showInLegend' => false,
-                            'dataLabels' => [
-                                'enabled' => true,
-                                'alignTo' => 'left'
-                            ],
-                        ],
-                    ],
-                ]
-            ]);
-        */ ?>
-        
-    </div>
-    <div class="col-md-4 card" style="border-radius: 0 !important">
-        <h3 class="text-center">Quantitativos dos Serviços por Produto no Empreendimento</h3><hr>
-        <div class="row px-2 py-2" id="servicos_grupo">
-        </div>
-    </div>
-    <div class="col-md-8 card" style="border-radius: 0 !important">
-        <h3 class="text-center">Detalhes dos Serviços</h3><hr>
-        <div class="row">
-            <?php
-                foreach ($groups as $k => $gr):
-                    $contentItem = '<div class="row todos-os-grupos" def="'.$gr->produto.'">';
-                    $contentItem .= "<h5 class='col-md-12'>$gr->produto</h5>";
-                    foreach ($dataProvider->getModels() as $impacto):
-                        if($impacto->produto == $gr->produto):
-                            // style="min-height: 300px !important;"
-                            $contentItem .= '<div id="supercard-servico-'.$impacto->id.'" class="col-md-4">';
-                            $contentItem .= '<div class="card my-1">';
-                            $contentItem .= "<h6 class='text-center pt-2 pb-2 bg-primary text-white'>$impacto->numeroitem</h6>";
-                            $contentItem .= $this->render('/impacto/view', [
-                                'id' => $impacto->id,
-                                'model' => $impacto
-                            ]);
-                            // botão pra editar
-                            $contentItem .= Html::a('<i class="bi bi-pencil-square"></i>', [
-                                'vieweditable',
-                                'id' => $impacto->id,
-                            ], ['class' => 'btn btn-primary w-25 my-2 mx-2', 'target' => '_blank', 'data-pjax'=>"0"]);
-
-                            $contentItemTB  = '<table class="table table-striped table-bordered detail-view">';
-                            $contentItemTB .= '<tr>';
-                                $contentItemTB .= "<td>Unidade</td>";
-                                $contentItemTB .= "<td>$impacto->unidade</td>";
-                                $contentItemTB .= '</tr>';
-                            foreach ($impacto->impactoEmpreendimentos as $ie) {
-                                if ($ie->impactos > 0) {
-                                    $contentItemTB .= '<tr">';
-                                    $contentItemTB .= "<td class='linha-empreendimento linha-empreendimento-".$ie->empreendimento_id."'>{$ie->empreendimento->titulo}</td>";
-                                    $contentItemTB .= "<td class='linha-empreendimento linha-empreendimento-".$ie->empreendimento_id."'>{$ie->impactos}</td>";
-                                    $contentItemTB .= '</tr>';
-                                }
-                            }
-                            $quantidades = [
-                                'quantidade_a' => 0,
-                                'quantidade_utilizada' => 0,
-                                'qt_restante_real' => 0,
-                                'qt_restante' => 0,
-                            ];
-                            foreach ($quantidades as $key => $value) {
-                                $valor = 0;
-                                $label = "Valor";
-                                foreach($impacto as $chave => $item) {
-                                    $label = $impacto::instance()->getAttributeLabel($key);
-                                    $valor = $impacto->$key;
-                                    if ($key == 'qt_restante') {
-                                        $valor = $impacto->quantidade_a - $impacto->quantidade_utilizada;
+     <div class="col-md-7">
+        <select name="select-servicos" id="select-servicos" class="form-control fs-5 my-3 text-center"></select>
+        <!-- <div class="col-md-12" style="border-radius: 0 !important"> -->
+            <!-- <h3 class="text-center">Detalhes dos Serviços</h3><hr> -->
+            <!-- <div class="row"> -->
+                <?php
+                    foreach ($groups as $k => $gr):
+                        $contentItem = '<div class="row todos-os-grupos" def="'.$gr->produto.'">';
+                        // $contentItem .= "<h5 class='col-md-12'>$gr->produto</h5>";
+                        foreach ($dataProvider->getModels() as $impacto):
+                            if($impacto->produto == $gr->produto):
+                                // style="min-height: 300px !important;"
+                                $contentItem .= '<div id="supercard-servico-'.$impacto->id.'" class="col-md-12">';
+                                $contentItem .= '<div class="card my-1">';
+                                $contentItem .= '<div class="row">';
+                                $contentItem .= '<div class="col-md-7">';
+                                $contentItem .= "<h6 class='text-center pt-2'>$impacto->numeroitem";
+                                $contentItem .= $this->render('/impacto/view', [
+                                    'id' => $impacto->id,
+                                    'model' => $impacto
+                                ]);
+                                // botão pra editar
+                                $contentItem .= Html::a('<i class="bi bi-pencil-square"></i>', [
+                                    'vieweditable',
+                                    'id' => $impacto->id,
+                                ], ['class' => 'btn w-25 my-2 mx-2 float-right', 'target' => '_blank', 'data-pjax'=>"0"]);
+                                $contentItem .= "</h6>";
+                                $contentItemTB  = '<h5 class="my-2">Empreendimentos:</h5>';
+                                $contentItemTB  .= '<table class="table table-striped table-bordered detail-view my-2 mx-0">';
+                                
+                                foreach ($impacto->impactoEmpreendimentos as $ie) {
+                                    if ($ie->impactos > 0) {
+                                        $contentItemTB .= '<tr">';
+                                        $contentItemTB .= "<td class='linha-empreendimento linha-empreendimento-".$ie->empreendimento_id."'>{$ie->empreendimento->titulo}</td>";
+                                        $contentItemTB .= "<td class='linha-empreendimento linha-empreendimento-".$ie->empreendimento_id."'>{$ie->impactos}</td>";
+                                        $contentItemTB .= '</tr>';
                                     }
                                 }
-                                $vetor = "text-primary";
-                                if ($valor < 0) {
-                                    $vetor = "text-danger";
+                                $contentItemTB .= '</table>';
+
+                                // $contentItem .= Accordion::widget([
+                                //     'items' => [
+                                //         [
+                                //             'label' => 'Ver mais',
+                                //             'content' => $contentItemTB
+                                //         ]
+                                //     ]
+                                // ]);
+                                $contentItemTB2 = "<table class='table table-striped table-bordered detail-view'>";
+                                $contentItemTB2 .= '<tr>';
+                                $contentItemTB2 .= "<td>Unidade</td>";
+                                $contentItemTB2 .= "<td>$impacto->unidade</td>";
+                                $contentItemTB2 .= '</tr>';
+                                $quantidades = [
+                                    'quantidade_a' => 0,
+                                    'quantidade_utilizada' => 0,
+                                    'qt_restante_real' => 0,
+                                    'qt_restante' => 0,
+                                ];
+                                foreach ($quantidades as $key => $value) {
+                                    $valor = 0;
+                                    $label = "Valor";
+                                    foreach($impacto as $chave => $item) {
+                                        $label = $impacto::instance()->getAttributeLabel($key);
+                                        $valor = $impacto->$key;
+                                        if ($key == 'qt_restante') {
+                                            $valor = $impacto->quantidade_a - $impacto->quantidade_utilizada;
+                                        }
+                                    }
+                                    $vetor = "text-primary";
+                                    if ($valor < 0) {
+                                        $vetor = "text-danger";
+                                    }
+                                    $contentItemTB2 .= '<tr>';
+                                    $contentItemTB2 .= "<td><strong class='$vetor'>{$label}</strong></td>";
+                                    $contentItemTB2 .= "<td><strong class='$vetor'>{$valor}</strong></td>";
+                                    $contentItemTB2 .= '</tr>';
                                 }
-                                $contentItemTB .= '<tr>';
-                                $contentItemTB .= "<td><strong class='$vetor'>{$label}</strong></td>";
-                                $contentItemTB .= "<td><strong class='$vetor'>{$valor}</strong></td>";
-                                $contentItemTB .= '</tr>';
-                            }
-                            $contentItemTB .= '</table>';
-
-                            $contentItem .= Accordion::widget([
-                                'items' => [
-                                    [
-                                        'label' => 'Ver mais',
-                                        'content' => $contentItemTB
-                                    ]
-                                ]
-                            ]);
-
-                            $contentItem .= '</div>';
-                            $contentItem .= '</div>';
-                        endif;
+                                $contentItemTB2 .= '</table>';
+                                $contentItem .= $contentItemTB2;
+                                $contentItem .= '</div>';
+                                $contentItem .= '<div class="col-md-5">';
+                                $contentItem .= $contentItemTB;
+                                $contentItem .= '</div>';
+                                $contentItem .= '</div>';
+                                $contentItem .= '</div>';
+                                $contentItem .= '</div>';
+                            endif;
+                        endforeach;
+                        $contentItem .= '</div>';
+                        echo $contentItem;
                     endforeach;
-                    $contentItem .= '</div>';
-                    echo $contentItem;
-                endforeach;
-            ?>
+                ?>
+            <!-- </div> -->
+        <!-- </div> -->
+     </div>
+    <div class="col-md-5">
+        <div class="col-md-12" style="border-radius: 0 !important">
+            <!-- <h3 class="text-center">Produtos por Empreendimento</h3><hr> -->
+            <div id="visitas"></div>
+            <?php /*= Highcharts::widget([
+                    'scripts' => [
+                        'modules/exporting',
+                        'themes/grid-light',
+                    ],
+                    'id' => 'visitas',
+                    'options' => [
+                        'chart' => [
+                            'type' => 'pie',
+                            'height' => 500
+                        ],
+                        'title' => ['text' => 'Grupos por Qtd. de Serviços'],
+                        'yAxis' => [
+                            'title' => ['text' => 'Versão']
+                        ],
+                        'xAxis' => [
+                            'type' => 'category'
+                        ],
+                        'series' =>  [
+                            [
+                                'name' => 'Serviços',
+                                "cursor" => "pointer",
+                                "point" => [
+                                    "events" => [
+                                        "click" => new JsExpression('function(){
+                                            // $("#por_rv").val(this.options.url);
+                                            // $("#form-pesquisa-produto").submit();
+                                            // console.log(this.options.url);
+                                            
+                                            $(".accordion-item").children(".collapse").removeClass("show");
+                                            $(".accordion-item").children(".accordion-header").children("h5").children(".accordion-button").addClass("collapsed");
+
+                                            $("#item_"+this.options.url).children(".collapse").toggleClass("show");
+                                            $("#item_"+this.options.url).children(".accordion-header").children("h5").children(".accordion-button").toggleClass("collapsed");
+                                        
+                                        }')
+                                    ],
+                                ],
+                                'data' => $graph_grupos,
+                                'showInLegend' => false,
+                                'dataLabels' => [
+                                    'enabled' => true,
+                                    'alignTo' => 'left'
+                                ],
+                            ],
+                        ],
+                    ]
+                ]);
+            */ ?>
+            
+        </div>
+        <div class="col-md-12" style="border-radius: 0 !important">
+            <h3 class="text-center">Quantitativos dos Serviços por Produto no Empreendimento</h3><hr>
+            <div class="row px-2 py-2" id="servicos_grupo">
+            </div>
         </div>
     </div>
 </div>
@@ -573,6 +591,7 @@ $script = <<< JS
                         chartservicos.setTitle({text: this.options.name + "<br>" + this.options.y + " quantitativos no Emp. " + this.options.empreendimento_titulo });
                         $('.todos-os-grupos').addClass("d-none");
                         $("[def='"+this.options.name+"']").removeClass("d-none");
+                        $("#select-servicos").val(this.options.name);
                         // this.options.color = "red";
                         // $(".accordion-item").children(".collapse").removeClass("show");
                         // $(".accordion-item").children(".accordion-header").children("h5").children(".accordion-button").addClass("collapsed");
@@ -580,6 +599,11 @@ $script = <<< JS
                         // $("#item_"+this.options.url).children(".accordion-header").children("h5").children(".accordion-button").toggleClass("collapsed");
                     }
                 }
+            },
+            showInLegend: false,
+            dataLabels: {
+                enabled: true,
+                alignTo: 'center'
             },
             data: inicio_grafico
         }]
@@ -653,9 +677,77 @@ $js_dos_botoes = <<< JS
         $(".todos-os-grupos").addClass("d-none");
     }
     $('.btn-seleciona-empreendimento').on('click', function(){
-        performAjaxRequest($(this).attr('emp_id'), $(this).attr('emp_titulo'));
+        performAjaxRequest(
+            $(this).attr('emp_id'),
+            $(this).attr('emp_titulo')
+        );
+        $("[def='14. VIAGENS']").removeClass("d-none"),
+        $.ajax({
+            method: "POST",
+            url: "porproduto",
+            data: { 
+                produto: '14. VIAGENS',
+                empreendimento: $(this).attr('emp_id')
+            }
+        }).done(function( servicos ) {
+            console.log( servicos );
+            chartservicos.setTitle({text: "14. VIAGENS" });
+            chartservicos.series[0].setData(servicos);
+        });
+        $("#select-servicos").val("14. VIAGENS");
     })
     $('.collapse').collapse("hide");
+    // Funções de Inicialização:
+    $.ajax({
+        method: "POST",
+        url: "porempreendimento",
+        data: { 
+            empreendimento: 4,
+            contrato_id: 1,
+        }
+    }).done(function( msg ) {
+        // console.log( msg );
+        chartxxxx.series[0].setData(msg);
+        chartservicos.series[0].setData([]);
+        $.each(msg, function( index, value ) {
+            $("#select-servicos").append('<option value="'+value.name+'">'+value.name+'</option>');
+            $("#select-servicos").val("14. VIAGENS");
+        });
+    });
+    chartxxxx.setTitle({text: "Empreendimento: BR-080"});
+    $(".linha-empreendimento").removeClass("bg-warning text-dark");
+    $(".linha-empreendimento-4").addClass("bg-warning text-dark");
+    $(".todos-os-grupos").addClass("d-none");
+    $.ajax({
+        method: "POST",
+        url: "porproduto",
+        data: { 
+            produto: '14. VIAGENS',
+            empreendimento: 4
+        }
+    }).done(function( servicos ) {
+        console.log( servicos );
+        chartservicos.series[0].setData(servicos);
+    });
+    chartservicos.setTitle({text: "Quantitativos no Emp. BR-080" });
+    $('.todos-os-grupos').addClass("d-none");
+    $("[def='14. VIAGENS']").removeClass("d-none");
+    $("#select-servicos").on('change', function() {
+        $.ajax({
+            method: "POST",
+            url: "porproduto",
+            data: { 
+                produto: $(this).find(":selected").val(),
+                empreendimento: 4
+            }
+        }).done(function( servicos ) {
+            // console.log( servicos );
+            chartservicos.series[0].setData(servicos);
+        });
+        chartservicos.setTitle({text: $(this).val() });
+        $('.todos-os-grupos').addClass("d-none");
+        $("[def='"+$(this).find(":selected").val()+"']").removeClass("d-none");
+    });
 JS;
 
 $this->registerJs($js_dos_botoes);

@@ -64,8 +64,6 @@ class ContratoController extends Controller
                        throw new ForbiddenHttpException('Somente administradores podem entrar nessa página.');
                    }                   
                }
-
-
            ],
        ];
     }
@@ -244,10 +242,13 @@ class ContratoController extends Controller
             'contrato_id' => $id
         ]);
     }
-    public function actionImpactoscontratuais() {
+    public function actionImpactoscontratuais($id) {
+        $searchModel = new \app\models\ImpactoSearch();
+        $dataProvider = $searchModel->search(['contrato_id'=>$id]);
         return $this->render('impactoscontratuais', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'contrato_id' => $id
         ]);
     }
     public function actionImpactoscontratuaisiframe() {
